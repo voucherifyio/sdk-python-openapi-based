@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../tmp/python')
+sys.path.insert(0, './')
 
 import os
 import openapi_client
