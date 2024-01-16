@@ -1,0 +1,376 @@
+# openapi_client.RedemptionsApi
+
+All URIs are relative to *https://api.voucherify.io*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**get_redemption**](RedemptionsApi.md#get_redemption) | **GET** /v1/redemptions/{redemptionId} | Get Redemption
+[**get_voucher_redemptions**](RedemptionsApi.md#get_voucher_redemptions) | **GET** /v1/vouchers/{code}/redemption | Get Voucher&#39;s Redemptions
+[**list_redemptions**](RedemptionsApi.md#list_redemptions) | **GET** /v1/redemptions | List Redemptions
+[**rollback_redemption**](RedemptionsApi.md#rollback_redemption) | **POST** /v1/redemptions/{redemptionId}/rollback | Rollback Redemption
+
+
+# **get_redemption**
+> RedemptionsGetResponseBody get_redemption(redemption_id)
+
+Get Redemption
+
+Return a redemption or redemption rollback object. This object can either be a successfull or failed redemption or redemption rollback.
+
+### Example
+
+* Api Key Authentication (X-App-Id-1):
+* Api Key Authentication (X-App-Token-1):
+```python
+import time
+import os
+import openapi_client
+from openapi_client.models.redemptions_get_response_body import RedemptionsGetResponseBody
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id-1
+configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token-1
+configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with openapi_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi_client.RedemptionsApi(api_client)
+    redemption_id = 'redemption_id_example' # str | ID of previously created redemption.
+
+    try:
+        # Get Redemption
+        api_response = api_instance.get_redemption(redemption_id)
+        print("The response of RedemptionsApi->get_redemption:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RedemptionsApi->get_redemption: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **redemption_id** | **str**| ID of previously created redemption. | 
+
+### Return type
+
+[**RedemptionsGetResponseBody**](RedemptionsGetResponseBody.md)
+
+### Authorization
+
+[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a redemption object. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_voucher_redemptions**
+> VouchersRedemptionGetResponseBody get_voucher_redemptions(code)
+
+Get Voucher's Redemptions
+
+Retrieve the number of times a voucher was redeemed and each of the redemption details.
+
+### Example
+
+* Api Key Authentication (X-App-Id-1):
+* Api Key Authentication (X-App-Token-1):
+```python
+import time
+import os
+import openapi_client
+from openapi_client.models.vouchers_redemption_get_response_body import VouchersRedemptionGetResponseBody
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id-1
+configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token-1
+configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with openapi_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi_client.RedemptionsApi(api_client)
+    code = 'code_example' # str | A **code** that identifies the voucher.
+
+    try:
+        # Get Voucher's Redemptions
+        api_response = api_instance.get_voucher_redemptions(code)
+        print("The response of RedemptionsApi->get_voucher_redemptions:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RedemptionsApi->get_voucher_redemptions: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **code** | **str**| A **code** that identifies the voucher. | 
+
+### Return type
+
+[**VouchersRedemptionGetResponseBody**](VouchersRedemptionGetResponseBody.md)
+
+### Authorization
+
+[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A dictionary with a &#x60;redemption_entries&#x60; property that contains an array of voucher&#39;s redemptions. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_redemptions**
+> RedemptionsListResponseBody list_redemptions(limit=limit, page=page, result=result, campaign=campaign, customer=customer, order=order, created_at=created_at, filters=filters)
+
+List Redemptions
+
+Returns a list of redemptions previously created. The redemptions are returned in a sorted order, with the most recent redemptions appearing first. The response returns a list of redemptions of all vouchers.   ## Filtering results The result can be narrowed according to specified (or default) filters, for example, you can sort redemptions by date: `https://api.voucherify.io/v1/redemptions?limit=3&[created_at][before]=2017-09-08T13:52:18.227Z`. A filter based on the object `created_at` field narrows down the results and lists redemptions done before or after a particular date time. You can use the following options: `[created_at][after]`, `[created_at][before]`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`.  ## Failed Redemptions  A redemption may fail for various reasons. You can figure out an exact reason from the `failure_code`: - `resource_not_found` - voucher with given code does not exist - `voucher_not_active` - voucher is not active yet (before start date) - `voucher_expired` - voucher has already expired (after expiration date) - `voucher_disabled` -  voucher has been disabled (`active: false`) - `quantity_exceeded` - voucher's redemptions limit has been exceeded - `gift_amount_exceeded` - gift amount has been exceeded - `customer_rules_violated` - customer did not match the segment - `order_rules_violated` - order did not match validation rules - `invalid_order` - order was specified incorrectly - `invalid_amount` - order amount was specified incorrectly - `missing_amount` - order amount was not specified - `missing_order_items` - order items were not specified - `missing_customer` - customer was not specified
+
+### Example
+
+* Api Key Authentication (X-App-Id-1):
+* Api Key Authentication (X-App-Token-1):
+```python
+import time
+import os
+import openapi_client
+from openapi_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
+from openapi_client.models.parameter_filters_list_redemptions import ParameterFiltersListRedemptions
+from openapi_client.models.parameter_order_list_redemptions import ParameterOrderListRedemptions
+from openapi_client.models.redemptions_list_response_body import RedemptionsListResponseBody
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id-1
+configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token-1
+configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with openapi_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi_client.RedemptionsApi(api_client)
+    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
+    page = 56 # int | Which page of results to return. (optional)
+    result = 'result_example' # str | A filter on the list based on the redemption result. Available options are: `SUCCESS`, `FAILURE`. You can provide multiple values by repeating the param. (optional)
+    campaign = 'campaign_example' # str | A filter by the campaign **name** that the redemption resources originate from. (optional)
+    customer = 'customer_example' # str | Return redemptions performed by the customer with given `id`. (optional)
+    order = openapi_client.ParameterOrderListRedemptions() # ParameterOrderListRedemptions | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
+    created_at = openapi_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z` (optional)
+    filters = openapi_client.ParameterFiltersListRedemptions() # ParameterFiltersListRedemptions | Filters for listing responses. (optional)
+
+    try:
+        # List Redemptions
+        api_response = api_instance.list_redemptions(limit=limit, page=page, result=result, campaign=campaign, customer=customer, order=order, created_at=created_at, filters=filters)
+        print("The response of RedemptionsApi->list_redemptions:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RedemptionsApi->list_redemptions: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
+ **page** | **int**| Which page of results to return. | [optional] 
+ **result** | **str**| A filter on the list based on the redemption result. Available options are: &#x60;SUCCESS&#x60;, &#x60;FAILURE&#x60;. You can provide multiple values by repeating the param. | [optional] 
+ **campaign** | **str**| A filter by the campaign **name** that the redemption resources originate from. | [optional] 
+ **customer** | **str**| Return redemptions performed by the customer with given &#x60;id&#x60;. | [optional] 
+ **order** | [**ParameterOrderListRedemptions**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
+ **created_at** | [**ParameterCreatedBeforeAfter**](.md)| A filter on the list based on the object &#x60;created_at&#x60; field. The value is a dictionary with the following options: &#x60;before&#x60;, &#x60;after&#x60;. A date value must be presented in ISO 8601 format (&#x60;2016-11-16T14:14:31Z&#x60; or &#x60;2016-11-16&#x60;). An example: &#x60;[created_at][before]&#x3D;2017-09-08T13:52:18.227Z&#x60; | [optional] 
+ **filters** | [**ParameterFiltersListRedemptions**](.md)| Filters for listing responses. | [optional] 
+
+### Return type
+
+[**RedemptionsListResponseBody**](RedemptionsListResponseBody.md)
+
+### Authorization
+
+[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a list of redemption objects. Each entry in the array is a separate redemption object. If no more redemptions are available, the resulting array will be empty. If you provide a non-existent customer ID, this call returns an empty object. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **rollback_redemption**
+> RedemptionsRollbackCreateResponseBody rollback_redemption(redemption_id, reason=reason, tracking_id=tracking_id, redemptions_rollback_create_request_body=redemptions_rollback_create_request_body)
+
+Rollback Redemption
+
+Your business logic may include a case when you need to undo a redemption. You can revert a redemption by calling this API endpoint.    ## Effect  The operation  - creates a rollback entry in voucher's redemption history (`redemption.redemption_entries`) and  - gives 1 redemption back to the pool (decreases `redeemed_quantity` by 1).  ## Returned funds  In case of *gift card vouchers*, this method returns funds back according to the source redemption. In case of *loyalty card vouchers*, this method returns points back according to the source redemption.
+
+### Example
+
+* Api Key Authentication (X-App-Id-1):
+* Api Key Authentication (X-App-Token-1):
+```python
+import time
+import os
+import openapi_client
+from openapi_client.models.redemptions_rollback_create_request_body import RedemptionsRollbackCreateRequestBody
+from openapi_client.models.redemptions_rollback_create_response_body import RedemptionsRollbackCreateResponseBody
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = openapi_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id-1
+configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token-1
+configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with openapi_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = openapi_client.RedemptionsApi(api_client)
+    redemption_id = 'redemption_id_example' # str | The original redemption ID to be rolled back (undone).
+    reason = 'reason_example' # str | Reason for the rollback. (optional)
+    tracking_id = 'tracking_id_example' # str | Customer's `source_id`. (optional)
+    redemptions_rollback_create_request_body = {"customer":{"id":"cust_SolpIN5N4oZbCnrxZ5NHrbVB","name":"Annie Lemons","email":"annie@lemon.com","phone":"+1 933 222 3334","birthday":"1900-12-02","birthdate":"1900-12-01","address":{"city":"New York","state":"NY","line_1":"123 Main St.","line_2":"APT 3 BLG 5","country":"United States","postal_code":"100012"},"metadata":{"age":23}},"order":{"source_id":"test_rollback_8"},"metadata":{"location_id":["L2"]}} # RedemptionsRollbackCreateRequestBody | Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body. (optional)
+
+    try:
+        # Rollback Redemption
+        api_response = api_instance.rollback_redemption(redemption_id, reason=reason, tracking_id=tracking_id, redemptions_rollback_create_request_body=redemptions_rollback_create_request_body)
+        print("The response of RedemptionsApi->rollback_redemption:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RedemptionsApi->rollback_redemption: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **redemption_id** | **str**| The original redemption ID to be rolled back (undone). | 
+ **reason** | **str**| Reason for the rollback. | [optional] 
+ **tracking_id** | **str**| Customer&#39;s &#x60;source_id&#x60;. | [optional] 
+ **redemptions_rollback_create_request_body** | [**RedemptionsRollbackCreateRequestBody**](RedemptionsRollbackCreateRequestBody.md)| Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body. | [optional] 
+
+### Return type
+
+[**RedemptionsRollbackCreateResponseBody**](RedemptionsRollbackCreateResponseBody.md)
+
+### Authorization
+
+[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a redemption rollback object indicating the result of the rollback. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
