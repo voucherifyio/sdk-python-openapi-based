@@ -1,4 +1,4 @@
-# openapi_client.SegmentsApi
+# voucherify_client.SegmentsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -21,13 +21,13 @@ This method deletes a customer segment.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -49,9 +49,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.SegmentsApi(api_client)
+    api_instance = voucherify_client.SegmentsApi(api_client)
     segment_id = 'segment_id_example' # str | A unique customer segment ID.
 
     try:

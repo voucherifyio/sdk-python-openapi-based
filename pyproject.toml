@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "openapi_client"
+name = "voucherify_client"
 version = "1.0.0"
 description = "Voucherify API"
 authors = ["Voucherify Team <support@voucherify.io>"]
@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Voucherify API"]
-include = ["openapi_client/py.typed"]
+include = ["voucherify_client/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.7"

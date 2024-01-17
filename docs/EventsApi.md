@@ -1,4 +1,4 @@
-# openapi_client.EventsApi
+# voucherify_client.EventsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -22,15 +22,15 @@ To track a custom event, you create an event object.    The event object must be
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.events_create_request_body import EventsCreateRequestBody
-from openapi_client.models.events_create_response_body import EventsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.events_create_request_body import EventsCreateRequestBody
+from voucherify_client.models.events_create_response_body import EventsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -52,9 +52,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.EventsApi(api_client)
+    api_instance = voucherify_client.EventsApi(api_client)
     events_create_request_body = {"event":"event-name","customer":{"source_id":"referee-source_id"},"referral":{"code":"voucher-code","referrer_id":"referrer-source_id"}} # EventsCreateRequestBody | Specify the details of the custom event. (optional)
 
     try:
@@ -108,15 +108,15 @@ To track a custom event, you create an event object.    The event object must be
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.client_events_create_request_body import ClientEventsCreateRequestBody
-from openapi_client.models.client_events_create_response_body import ClientEventsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.client_events_create_request_body import ClientEventsCreateRequestBody
+from voucherify_client.models.client_events_create_response_body import ClientEventsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -138,9 +138,9 @@ configuration.api_key['X-Client-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-Client-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.EventsApi(api_client)
+    api_instance = voucherify_client.EventsApi(api_client)
     origin = 'origin_example' # str | Indicates the origin (scheme, hostname, and port).
     client_events_create_request_body = {"event":"user_subscribed","customer":{"source_id":"source_customer_event"},"referral":{"code":"46jL0kYI","referrer_id":"cust_Vzck5i8U3OhcEUFY6MKhN9Rv"},"metadata":{"login":"bob","pricing_plan":"PP1","volume_number":4}} # ClientEventsCreateRequestBody | Specify the details of the custom event. (optional)
 

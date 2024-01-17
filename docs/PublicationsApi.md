@@ -1,4 +1,4 @@
-# openapi_client.PublicationsApi
+# voucherify_client.PublicationsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -23,15 +23,15 @@ This method selects vouchers that are suitable for publication, adds a publish e
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.publications_create_request_body import PublicationsCreateRequestBody
-from openapi_client.models.publications_create_response_body import PublicationsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.publications_create_request_body import PublicationsCreateRequestBody
+from voucherify_client.models.publications_create_response_body import PublicationsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -53,9 +53,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PublicationsApi(api_client)
+    api_instance = voucherify_client.PublicationsApi(api_client)
     join_once = True # bool | Through this flag, you can control if a particular person gets only one and always the same code even if the app sends multiple publication requests. It means that if you have a referral program, a referrer is assigned only to one code if an integration sends publication requests more than once for the same customer. (optional)
     publications_create_request_body = {"campaign":{"name":"campaign-name"},"customer":{"source_id":"source-id","Name":"Customer Name","email":"customer email"},"voucher":"voucher-code","metadata":{"key":"value"}} # PublicationsCreateRequestBody | Specify the publication parameters. (optional)
 
@@ -111,15 +111,15 @@ This method selects vouchers that are suitable for publication, adds a publish e
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.create_publication_campaign import CreatePublicationCampaign
-from openapi_client.models.publications_create_response_body import PublicationsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.create_publication_campaign import CreatePublicationCampaign
+from voucherify_client.models.publications_create_response_body import PublicationsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -141,13 +141,13 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PublicationsApi(api_client)
-    customer = openapi_client.Customer() # Customer | Contains information about the customer to whom the publication was directed.
+    api_instance = voucherify_client.PublicationsApi(api_client)
+    customer = voucherify_client.Customer() # Customer | Contains information about the customer to whom the publication was directed.
     join_once = True # bool | Through this flag, you can control if a particular person gets only one and always the same code even if the app sends multiple publication requests. It means that if you have a referral program, a referrer is assigned only to one code if an integration sends publication requests more than once for the same customer. (optional)
     voucher = 'voucher_example' # str | Code of voucher being published. (optional)
-    campaign = openapi_client.CreatePublicationCampaign() # CreatePublicationCampaign | Create publication with campaign. (optional)
+    campaign = voucherify_client.CreatePublicationCampaign() # CreatePublicationCampaign | Create publication with campaign. (optional)
     source_id = 'source_id_example' # str | The merchant’s publication ID if it is different from the Voucherify publication ID. It's an optional tracking identifier of a publication. It is really useful in case of an integration between multiple systems. It can be a publication ID from a CRM system, database or 3rd-party service. If `source_id` is provided only 1 voucher can be published per request. (optional)
     metadata = None # object | The metadata object stores all custom attributes assigned to the publication. A set of key/value pairs that you can attach to a publication object. It can be useful for storing additional information about the publication in a structured format. (optional)
 
@@ -207,17 +207,17 @@ Retrieve a list of publications. To return a **particular** publication, you can
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_order_list_publications import ParameterOrderListPublications
-from openapi_client.models.parameter_result_list_publications import ParameterResultListPublications
-from openapi_client.models.parameter_voucher_type_list_publications import ParameterVoucherTypeListPublications
-from openapi_client.models.publications_list_response_body import PublicationsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_order_list_publications import ParameterOrderListPublications
+from voucherify_client.models.parameter_result_list_publications import ParameterResultListPublications
+from voucherify_client.models.parameter_voucher_type_list_publications import ParameterVoucherTypeListPublications
+from voucherify_client.models.publications_list_response_body import PublicationsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -239,17 +239,17 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PublicationsApi(api_client)
+    api_instance = voucherify_client.PublicationsApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrderListPublications() # ParameterOrderListPublications | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrderListPublications() # ParameterOrderListPublications | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
     campaign = 'campaign_example' # str | Filters by a given campaign name. (optional)
     customer = 'customer_example' # str | Filters by a unique customer ID. (optional)
     voucher = 'voucher_example' # str | Filters by a given voucher code. (optional)
-    result = openapi_client.ParameterResultListPublications() # ParameterResultListPublications | Filters by a publication result. (optional)
-    voucher_type = openapi_client.ParameterVoucherTypeListPublications() # ParameterVoucherTypeListPublications | Filters by a voucher type. (optional)
+    result = voucherify_client.ParameterResultListPublications() # ParameterResultListPublications | Filters by a publication result. (optional)
+    voucher_type = voucherify_client.ParameterVoucherTypeListPublications() # ParameterVoucherTypeListPublications | Filters by a voucher type. (optional)
     is_referral_code = True # bool | This filter works only for the `true` option. If set to `true`, the query returns only publications of codes from referral campaigns.  (optional)
     filters = 'filters_example' # str | Allows for combining the filters mentioned in the endpoint description. (optional)
     source_id = 'source_id_example' # str | Using this endpoint with a particular publication `source_id`, which was sent with the original request to create a publication, returns in the response, exactly the same code published initially because the code was assigned to the given publication. As a result, you can use this endpoint as a reference and return a code that was assigned in a publication by using a particular `source_id`. (optional)

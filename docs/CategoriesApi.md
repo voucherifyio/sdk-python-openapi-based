@@ -1,4 +1,4 @@
-# openapi_client.CategoriesApi
+# voucherify_client.CategoriesApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -25,15 +25,15 @@ Create category with a specific name and hierarchy.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.categories_create_request_body import CategoriesCreateRequestBody
-from openapi_client.models.categories_create_response_body import CategoriesCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.categories_create_request_body import CategoriesCreateRequestBody
+from voucherify_client.models.categories_create_response_body import CategoriesCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -55,9 +55,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CategoriesApi(api_client)
+    api_instance = voucherify_client.CategoriesApi(api_client)
     categories_create_request_body = {"name":"Eighth","hierarchy":8} # CategoriesCreateRequestBody | Specify the details of the category that you would like to create. (optional)
 
     try:
@@ -111,13 +111,13 @@ Delete a category by the category ID.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -139,9 +139,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CategoriesApi(api_client)
+    api_instance = voucherify_client.CategoriesApi(api_client)
     category_id = 'category_id_example' # str | Unique category ID assigned by Voucherify.
 
     try:
@@ -193,14 +193,14 @@ Retrieve a category by the category ID.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.categories_get_response_body import CategoriesGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.categories_get_response_body import CategoriesGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -222,9 +222,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CategoriesApi(api_client)
+    api_instance = voucherify_client.CategoriesApi(api_client)
     category_id = 'category_id_example' # str | Unique category ID assigned by Voucherify.
 
     try:
@@ -278,14 +278,14 @@ List all categories.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.categories_list_response_body import CategoriesListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.categories_list_response_body import CategoriesListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -307,9 +307,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CategoriesApi(api_client)
+    api_instance = voucherify_client.CategoriesApi(api_client)
 
     try:
         # List Categories
@@ -359,15 +359,15 @@ Update category using the category ID.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.categories_update_request_body import CategoriesUpdateRequestBody
-from openapi_client.models.categories_update_response_body import CategoriesUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.categories_update_request_body import CategoriesUpdateRequestBody
+from voucherify_client.models.categories_update_response_body import CategoriesUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -389,9 +389,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CategoriesApi(api_client)
+    api_instance = voucherify_client.CategoriesApi(api_client)
     category_id = 'category_id_example' # str | Unique category ID assigned by Voucherify.
     categories_update_request_body = {"name":"Summer","hierarchy":1} # CategoriesUpdateRequestBody | Specify the details of the category that you would like to update. (optional)
 

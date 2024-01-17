@@ -1,4 +1,4 @@
-# openapi_client.ProductsApi
+# voucherify_client.ProductsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -34,15 +34,15 @@ Creates a product object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you p
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_create_request_body import ProductsCreateRequestBody
-from openapi_client.models.products_create_response_body import ProductsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_create_request_body import ProductsCreateRequestBody
+from voucherify_client.models.products_create_response_body import ProductsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -64,9 +64,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     products_create_request_body = {"source_id":"first_product","name":"Samsung Phone","price":200000,"attributes":["color","memory","processor"],"metadata":{"test":true,"vendor":"Online Store"},"image_url":"https://www.website.com/image.png"} # ProductsCreateRequestBody | Specify the product parameters. (optional)
 
     try:
@@ -120,15 +120,15 @@ This method adds product variants to a <!-- [created product](OpenAPI.json/paths
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_skus_create_request_body import ProductsSkusCreateRequestBody
-from openapi_client.models.products_skus_create_response_body import ProductsSkusCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_skus_create_request_body import ProductsSkusCreateRequestBody
+from voucherify_client.models.products_skus_create_response_body import ProductsSkusCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -150,9 +150,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
     products_skus_create_request_body = {"source_id":"first_product_sku_1","sku":"Samsung phone 256GB","price":1300,"currency":"USD","attributes":{"color":"vintage-black","memory":"256","processor":"Intel"},"image_url":"https://www.website.com/image.png","metadata":{"imported":true}} # ProductsSkusCreateRequestBody | Specify the SKU parameters to be created. (optional)
 
@@ -208,13 +208,13 @@ This method deletes a product.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -236,9 +236,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A Voucherify product ID or source ID.
     force = True # bool | If this flag is set to `true`, the product will be removed permanently. Going forward, the user will be able to create another product with exactly the same `source_id`. (optional)
 
@@ -292,13 +292,13 @@ This method deletes a product SKU.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -320,9 +320,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
     sku_id = 'sku_id_example' # str | A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.
     force = True # bool | If this flag is set to `true`, the SKU will be removed permanently. Going forward, the user will be able to create another SKU with exactly the same `source_id`. (optional)
@@ -378,14 +378,14 @@ Retrieve product details.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_get_response_body import ProductsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_get_response_body import ProductsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -407,9 +407,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A Voucherify product ID or source ID.
 
     try:
@@ -463,14 +463,14 @@ Retrieve details of a SKU.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.skus_get_response_body import SkusGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.skus_get_response_body import SkusGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -492,9 +492,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     sku_id = 'sku_id_example' # str | A Voucherify SKU identifier or SKU source ID.
 
     try:
@@ -548,14 +548,14 @@ Import products into the repository using a CSV file.    Curl Example <!-- title
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_import_csv_create_response_body import ProductsImportCsvCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_import_csv_create_response_body import ProductsImportCsvCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -577,9 +577,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     file = None # bytearray | File path.
 
     try:
@@ -633,14 +633,14 @@ Import SKUs into the repository using a CSV file.  The CSV file has to include h
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.skus_import_csv_create_response_body import SkusImportCsvCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.skus_import_csv_create_response_body import SkusImportCsvCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -662,9 +662,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     file = None # bytearray | File path.
 
     try:
@@ -718,15 +718,15 @@ Retrieve a list of products.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_order import ParameterOrder
-from openapi_client.models.products_list_response_body import ProductsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_order import ParameterOrder
+from voucherify_client.models.products_list_response_body import ProductsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -748,12 +748,12 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
     start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
 
@@ -812,15 +812,15 @@ Retrieve all SKUs for a given product.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_order import ParameterOrder
-from openapi_client.models.products_skus_list_response_body import ProductsSkusListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_order import ParameterOrder
+from voucherify_client.models.products_skus_list_response_body import ProductsSkusListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -842,13 +842,13 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
     start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
 
@@ -908,15 +908,15 @@ Updates the specified product by setting the values of the parameters passed in 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_update_request_body import ProductsUpdateRequestBody
-from openapi_client.models.products_update_response_body import ProductsUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_update_request_body import ProductsUpdateRequestBody
+from voucherify_client.models.products_update_response_body import ProductsUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -938,9 +938,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A Voucherify product ID or source ID.
     products_update_request_body = {"price":210000} # ProductsUpdateRequestBody | Specify the parameters of the product that are to be updated. (optional)
 
@@ -996,15 +996,15 @@ Update several products in one asynchronous operation.   In one request, it is p
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_update_in_bulk_request_body import ProductsUpdateInBulkRequestBody
-from openapi_client.models.products_update_in_bulk_response_body import ProductsUpdateInBulkResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_update_in_bulk_request_body import ProductsUpdateInBulkRequestBody
+from voucherify_client.models.products_update_in_bulk_response_body import ProductsUpdateInBulkResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1026,9 +1026,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     products_update_in_bulk_request_body = [{"source_id":"first_product","name":"Samsung Phone 1","price":220000,"attributes":["color","memory","processor"],"metadata":{"test":true,"vendor":"Online Store - 3"},"image_url":"https://voucherify-uploads.s3.amazonaws.com/org_2qt8DYlM/img_Z2qvs2KFnQyo2Ohz4uhsjGtf.png"},{"source_id":"second_product","name":"Samsung Phone 2","price":230000,"attributes":["color","memory","processor"],"metadata":{"test":true,"vendor":"Online Store - 4"},"image_url":"https://voucherify-uploads.s3.amazonaws.com/org_2qt8DYlM/img_Z2qvs2KFnQyo2Ohz4uhsjGtf.png"}] # List[ProductsUpdateInBulkRequestBody] | Create an array of product objects, each with the parameters which you want to update. (optional)
 
     try:
@@ -1082,15 +1082,15 @@ Update several product metadata properties in one asynchronous operation.   In o
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_metadata_update_in_bulk_request_body import ProductsMetadataUpdateInBulkRequestBody
-from openapi_client.models.products_metadata_update_in_bulk_response_body import ProductsMetadataUpdateInBulkResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_metadata_update_in_bulk_request_body import ProductsMetadataUpdateInBulkRequestBody
+from voucherify_client.models.products_metadata_update_in_bulk_response_body import ProductsMetadataUpdateInBulkResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1112,9 +1112,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     products_metadata_update_in_bulk_request_body = {"source_ids":["123-567-3433","test_volleyball"],"metadata":{"label":true,"origin":"PL"}} # ProductsMetadataUpdateInBulkRequestBody | Specify the list of product source IDs and the metadata key value pairs to be udpated for these products. (optional)
 
     try:
@@ -1168,15 +1168,15 @@ Updates the specified SKU by setting the values of the parameters passed in the 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.products_skus_update_request_body import ProductsSkusUpdateRequestBody
-from openapi_client.models.products_skus_update_response_body import ProductsSkusUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.products_skus_update_request_body import ProductsSkusUpdateRequestBody
+from voucherify_client.models.products_skus_update_response_body import ProductsSkusUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1198,9 +1198,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductsApi(api_client)
+    api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
     sku_id = 'sku_id_example' # str | A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.
     products_skus_update_request_body = {"price":210000,"currency":"PLN"} # ProductsSkusUpdateRequestBody | Specify the parameters to be updated. (optional)

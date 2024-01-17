@@ -1,4 +1,4 @@
-# openapi_client.ValidationRulesApi
+# voucherify_client.ValidationRulesApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -28,15 +28,15 @@ Create validation rules.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.validation_rules_create_request_body import ValidationRulesCreateRequestBody
-from openapi_client.models.validation_rules_create_response_body import ValidationRulesCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.validation_rules_create_request_body import ValidationRulesCreateRequestBody
+from voucherify_client.models.validation_rules_create_response_body import ValidationRulesCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -58,9 +58,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     validation_rules_create_request_body = {"name":"Set of Validation Rules","error":{"message":"Your order does not meet at least one of the required criteria."},"applicable_to":{"included_all":false,"excluded":[{"object":"product","id":"prod_0bae45ffc7003ffc52","source_id":"second_product","strict":false,"effect":"APPLY_TO_EVERY"}],"included":[{"object":"product","id":"prod_0b72b00ffed198e344","source_id":null,"effect":"APPLY_TO_MOST_EXPENSIVE","quantity_limit":1},{"object":"products_collection","id":"pc_4ndRXAsTOzwSdHcQcxf489uU","source_id":null,"effect":"APPLY_TO_EVERY","quantity_limit":5}]},"rules":{"1":{"name":"order.metadata","property":"location","rules":{},"conditions":{"$is":["Santorini"]},"error":{"message":"Your order must be placed at one of our Santorini shops."}},"2":{"name":"custom_event.metadata","property":"test","rules":{},"conditions":{"$greater_than_or_equal":[1]}},"3":{"name":"order.items.every","rules":{"1":{"name":"order.items.metadata","property":"test","rules":{},"conditions":{"$greater_than_or_equal":[1]}}},"conditions":{"$is":[{"id":"<PROD_ID>","effect":"APPLY_TO_EVERY","object":"product","source_id":"<SOURCE_ID>"}]}},"logic":"1 or 2"}} # ValidationRulesCreateRequestBody | Specify the validation rules parameters. (optional)
 
     try:
@@ -114,13 +114,13 @@ This method deletes a validation rule assignment.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -142,9 +142,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     validation_rule_id = 'validation_rule_id_example' # str | A unique validation rule ID.
     assignment_id = 'assignment_id_example' # str | A unique validation rule assignment ID.
 
@@ -198,13 +198,13 @@ This method deletes a validation rule.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -226,9 +226,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     validation_rule_id = 'validation_rule_id_example' # str | A unique validation rule ID.
 
     try:
@@ -280,14 +280,14 @@ Retrieve the details of a validation rule.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.validation_rules_get_response_body import ValidationRulesGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.validation_rules_get_response_body import ValidationRulesGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -309,9 +309,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     validation_rule_id = 'validation_rule_id_example' # str | A unique validation rule ID.
 
     try:
@@ -365,15 +365,15 @@ Retrieve validation rule assignments for a specific validation rule.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_order_list_validation_rule_assignments import ParameterOrderListValidationRuleAssignments
-from openapi_client.models.validation_rules_assignments_list_response_body import ValidationRulesAssignmentsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_order_list_validation_rule_assignments import ParameterOrderListValidationRuleAssignments
+from voucherify_client.models.validation_rules_assignments_list_response_body import ValidationRulesAssignmentsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -395,13 +395,13 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     validation_rule_id = 'validation_rule_id_example' # str | Unique validation rule ID.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrderListValidationRuleAssignments() # ParameterOrderListValidationRuleAssignments | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrderListValidationRuleAssignments() # ParameterOrderListValidationRuleAssignments | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Validation Rule Assignments
@@ -457,15 +457,15 @@ Retrieve validation rules.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_order_list_validation_rules import ParameterOrderListValidationRules
-from openapi_client.models.validation_rules_list_response_body import ValidationRulesListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_order_list_validation_rules import ParameterOrderListValidationRules
+from voucherify_client.models.validation_rules_list_response_body import ValidationRulesListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -487,12 +487,12 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrderListValidationRules() # ParameterOrderListValidationRules | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrderListValidationRules() # ParameterOrderListValidationRules | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
     start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must start on. Represented in ISO 8601 format. (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
 
@@ -551,14 +551,14 @@ List all validation rules' assignments or filter the results using the related o
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.validation_rules_assignments_list_response_body import ValidationRulesAssignmentsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.validation_rules_assignments_list_response_body import ValidationRulesAssignmentsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -580,9 +580,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     related_object_id = 'related_object_id_example' # str | The resource ID to which the validation rule was assigned; this could be, for example, a resource ID of a voucher, campaign, earning rule, reward assignment, promotion tier, or distribution. (optional)
     rule = 'rule_example' # str | Validation rule ID. (optional)
     page = 56 # int | Which page of results to return. (optional)
@@ -644,15 +644,15 @@ Update validation rule parameters.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.validation_rules_update_request_body import ValidationRulesUpdateRequestBody
-from openapi_client.models.validation_rules_update_response_body import ValidationRulesUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.validation_rules_update_request_body import ValidationRulesUpdateRequestBody
+from voucherify_client.models.validation_rules_update_response_body import ValidationRulesUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -674,9 +674,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ValidationRulesApi(api_client)
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
     validation_rule_id = 'validation_rule_id_example' # str | A unique validation rule ID.
     validation_rules_update_request_body = {"name":"Set of Validation Rules Updated","error":{"message":"Your orders do not meet at least one of the required criteria."},"applicable_to":{"included_all":false,"excluded":[{"object":"product","id":"prod_0bae45ffc7003ffccc","source_id":"second_product","strict":false,"effect":"APPLY_TO_EVERY"}],"included":[{"object":"product","id":"prod_0b72b00ffed198e333","source_id":null,"effect":"APPLY_TO_CHEAPEST","quantity_limit":1},{"object":"products_collection","id":"pc_4ndRXAsTOzwSdHcQcxf489uU","source_id":null,"effect":"APPLY_TO_EVERY","quantity_limit":5}]},"rules":{"1":{"name":"order.metadata","property":"place","rules":{},"conditions":{"$is":["Santorini"]},"error":{"message":"Your order must be placed at one of our Santorini shops on the beach."}},"2":{"name":"custom_event.metadata","property":"lining","rules":{},"conditions":{"$greater_than_or_equal":[1]}},"3":{"name":"order.items.every","rules":{"1":{"name":"order.items.metadata","property":"test","rules":{},"conditions":{"$greater_than_or_equal":[1]}}},"conditions":{"$is":[{"id":"<PRODs_ID>","effect":"APPLY_TO_EVERY","object":"product","source_id":"<SOURCEs_ID>"}]}},"logic":"1 and 2"}} # ValidationRulesUpdateRequestBody | Specify the parameters to be updated. (optional)
 

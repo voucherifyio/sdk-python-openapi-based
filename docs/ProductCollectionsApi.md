@@ -1,4 +1,4 @@
-# openapi_client.ProductCollectionsApi
+# voucherify_client.ProductCollectionsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -25,15 +25,15 @@ This method creates a new product collection.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.product_collections_create_request_body import ProductCollectionsCreateRequestBody
-from openapi_client.models.product_collections_create_response_body import ProductCollectionsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.product_collections_create_request_body import ProductCollectionsCreateRequestBody
+from voucherify_client.models.product_collections_create_response_body import ProductCollectionsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -55,10 +55,10 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductCollectionsApi(api_client)
-    product_collections_create_request_body = openapi_client.ProductCollectionsCreateRequestBody() # ProductCollectionsCreateRequestBody |  (optional)
+    api_instance = voucherify_client.ProductCollectionsApi(api_client)
+    product_collections_create_request_body = voucherify_client.ProductCollectionsCreateRequestBody() # ProductCollectionsCreateRequestBody |  (optional)
 
     try:
         # Create Product Collection
@@ -111,13 +111,13 @@ This method deletes a product collection.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -139,9 +139,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductCollectionsApi(api_client)
+    api_instance = voucherify_client.ProductCollectionsApi(api_client)
     product_collection_id = 'product_collection_id_example' # str | A unique product collection ID.
 
     try:
@@ -193,14 +193,14 @@ Retrieves the product collection.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.product_collections_get_response_body import ProductCollectionsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.product_collections_get_response_body import ProductCollectionsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -222,9 +222,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductCollectionsApi(api_client)
+    api_instance = voucherify_client.ProductCollectionsApi(api_client)
     product_collection_id = 'product_collection_id_example' # str | A unique product collection ID.
 
     try:
@@ -278,15 +278,15 @@ This method returns a list of product collections.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_order import ParameterOrder
-from openapi_client.models.product_collections_list_response_body import ProductCollectionsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_order import ParameterOrder
+from voucherify_client.models.product_collections_list_response_body import ProductCollectionsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -308,12 +308,12 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductCollectionsApi(api_client)
+    api_instance = voucherify_client.ProductCollectionsApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Product Collections
@@ -368,15 +368,15 @@ Retrieves list of products from a product collection; works for both dynamic and
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_order import ParameterOrder
-from openapi_client.models.product_collections_products_list_response_body import ProductCollectionsProductsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_order import ParameterOrder
+from voucherify_client.models.product_collections_products_list_response_body import ProductCollectionsProductsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -398,13 +398,13 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ProductCollectionsApi(api_client)
+    api_instance = voucherify_client.ProductCollectionsApi(api_client)
     product_collection_id = 'product_collection_id_example' # str | Unique product collection ID.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
     starting_after = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format. (optional)
 
     try:

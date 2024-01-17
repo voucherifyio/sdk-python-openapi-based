@@ -1,4 +1,4 @@
-# openapi_client.RewardsApi
+# voucherify_client.RewardsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -26,15 +26,15 @@ Assigns a reward to a specified loyalty campaign.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.rewards_assignments_create_request_body import RewardsAssignmentsCreateRequestBody
-from openapi_client.models.rewards_assignments_create_response_body import RewardsAssignmentsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.rewards_assignments_create_request_body import RewardsAssignmentsCreateRequestBody
+from voucherify_client.models.rewards_assignments_create_response_body import RewardsAssignmentsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -56,9 +56,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RewardsApi(api_client)
+    api_instance = voucherify_client.RewardsApi(api_client)
     reward_id = 'reward_id_example' # str | A unique reward ID.
     rewards_assignments_create_request_body = {"campaign":"camp_OTuGGP90PivbvROsRvfM65El","parameters":{"loyalty":{"points":39}}} # RewardsAssignmentsCreateRequestBody | Provide the campaign ID of the campaign to which the reward is to be assigned and define the cost of the reward in terms of loyalty points. (optional)
 
@@ -114,13 +114,13 @@ Delete a reward.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -142,9 +142,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RewardsApi(api_client)
+    api_instance = voucherify_client.RewardsApi(api_client)
     reward_id = 'reward_id_example' # str | A unique reward ID.
 
     try:
@@ -196,13 +196,13 @@ This method deletes a reward assignment for a particular reward.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -224,9 +224,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RewardsApi(api_client)
+    api_instance = voucherify_client.RewardsApi(api_client)
     reward_id = 'reward_id_example' # str | A unique reward ID.
     assignment_id = 'assignment_id_example' # str | A unique reward assignment ID.
 
@@ -280,14 +280,14 @@ Retrieve a reward assignment.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.rewards_assignments_get_response_body import RewardsAssignmentsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.rewards_assignments_get_response_body import RewardsAssignmentsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -309,9 +309,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RewardsApi(api_client)
+    api_instance = voucherify_client.RewardsApi(api_client)
     reward_id = 'reward_id_example' # str | A unique reward ID.
     assignment_id = 'assignment_id_example' # str | A unique reward assignment ID.
 
@@ -367,14 +367,14 @@ Retrieve reward assignments by the reward ID.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.rewards_assignments_list_response_body import RewardsAssignmentsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.rewards_assignments_list_response_body import RewardsAssignmentsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -396,9 +396,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RewardsApi(api_client)
+    api_instance = voucherify_client.RewardsApi(api_client)
     reward_id = 'reward_id_example' # str | A unique reward ID.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
@@ -456,15 +456,15 @@ Update the number of points needed to successfully redeem the reward.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.rewards_assignments_update_request_body import RewardsAssignmentsUpdateRequestBody
-from openapi_client.models.rewards_assignments_update_response_body import RewardsAssignmentsUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.rewards_assignments_update_request_body import RewardsAssignmentsUpdateRequestBody
+from voucherify_client.models.rewards_assignments_update_response_body import RewardsAssignmentsUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -486,9 +486,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RewardsApi(api_client)
+    api_instance = voucherify_client.RewardsApi(api_client)
     reward_id = 'reward_id_example' # str | A unique reward ID.
     assignment_id = 'assignment_id_example' # str | A unique reward assignment ID.
     rewards_assignments_update_request_body = {"parameters":{"loyalty":{"points":35}}} # RewardsAssignmentsUpdateRequestBody | Define the number of points required to exchange for the reward. (optional)
