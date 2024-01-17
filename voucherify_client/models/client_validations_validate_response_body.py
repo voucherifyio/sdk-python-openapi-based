@@ -14,129 +14,108 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.validations_validate_all_response_body import ValidationsValidateAllResponseBody
-from voucherify_client.models.validations_validate_partial_response_body import ValidationsValidatePartialResponseBody
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
 
-CLIENT_VALIDATIONS_VALIDATE_RESPONSE_BODY_ONE_OF_SCHEMAS = ["ValidationsValidateAllResponseBody", "ValidationsValidatePartialResponseBody"]
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from voucherify_client.models.order_calculated import OrderCalculated
+from voucherify_client.models.session import Session
+from voucherify_client.models.stacking_rules import StackingRules
+from voucherify_client.models.validations_redeemable_inapplicable import ValidationsRedeemableInapplicable
+from voucherify_client.models.validations_validate_all_response_body_redeemables_item import ValidationsValidateAllResponseBodyRedeemablesItem
 
 class ClientValidationsValidateResponseBody(BaseModel):
     """
-    Response body schema for POST `/validations`.
+    Response body schema for POST `/validations`.  # noqa: E501
     """
-    # data type: ValidationsValidateAllResponseBody
-    oneof_schema_1_validator: Optional[ValidationsValidateAllResponseBody] = None
-    # data type: ValidationsValidatePartialResponseBody
-    oneof_schema_2_validator: Optional[ValidationsValidatePartialResponseBody] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[ValidationsValidateAllResponseBody, ValidationsValidatePartialResponseBody]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(CLIENT_VALIDATIONS_VALIDATE_RESPONSE_BODY_ONE_OF_SCHEMAS, const=True)
+    valid: StrictBool = Field(..., description="The result of the validation. It takes all of the redeemables into account and returns a `false` if at least one redeemable is inapplicable. Returns `true` if all redeemables are applicable.")
+    redeemables: conlist(ValidationsValidateAllResponseBodyRedeemablesItem) = Field(..., description="Lists validation results of each redeemable. If redeemables_application_mode=\"PARTIAL\" all redeemables here will be \"APPLICABLE\"")
+    skipped_redeemables: Optional[conlist(ValidationsRedeemableInapplicable)] = Field(None, description="Lists validation results of each skipped redeemable.")
+    inapplicable_redeemables: Optional[conlist(ValidationsRedeemableInapplicable)] = Field(None, description="Lists validation results of each inapplicable redeemable.")
+    order: Optional[OrderCalculated] = None
+    tracking_id: Optional[StrictStr] = Field(None, description="Hashed customer source ID.")
+    session: Optional[Session] = None
+    stacking_rules: Optional[StackingRules] = None
+    __properties = ["valid", "redeemables", "skipped_redeemables", "inapplicable_redeemables", "order", "tracking_id", "session", "stacking_rules"]
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = ClientValidationsValidateResponseBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: ValidationsValidateAllResponseBody
-        if not isinstance(v, ValidationsValidateAllResponseBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ValidationsValidateAllResponseBody`")
-        else:
-            match += 1
-        # validate data type: ValidationsValidatePartialResponseBody
-        if not isinstance(v, ValidationsValidatePartialResponseBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ValidationsValidatePartialResponseBody`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ClientValidationsValidateResponseBody with oneOf schemas: ValidationsValidateAllResponseBody, ValidationsValidatePartialResponseBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in ClientValidationsValidateResponseBody with oneOf schemas: ValidationsValidateAllResponseBody, ValidationsValidatePartialResponseBody. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> ClientValidationsValidateResponseBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> ClientValidationsValidateResponseBody:
-        """Returns the object represented by the json string"""
-        instance = ClientValidationsValidateResponseBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of ClientValidationsValidateResponseBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into ValidationsValidateAllResponseBody
-        try:
-            instance.actual_instance = ValidationsValidateAllResponseBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ValidationsValidatePartialResponseBody
-        try:
-            instance.actual_instance = ValidationsValidatePartialResponseBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of each item in redeemables (list)
+        _items = []
+        if self.redeemables:
+            for _item in self.redeemables:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['redeemables'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in skipped_redeemables (list)
+        _items = []
+        if self.skipped_redeemables:
+            for _item in self.skipped_redeemables:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['skipped_redeemables'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in inapplicable_redeemables (list)
+        _items = []
+        if self.inapplicable_redeemables:
+            for _item in self.inapplicable_redeemables:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['inapplicable_redeemables'] = _items
+        # override the default output from pydantic by calling `to_dict()` of order
+        if self.order:
+            _dict['order'] = self.order.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of session
+        if self.session:
+            _dict['session'] = self.session.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of stacking_rules
+        if self.stacking_rules:
+            _dict['stacking_rules'] = self.stacking_rules.to_dict()
+        return _dict
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ClientValidationsValidateResponseBody with oneOf schemas: ValidationsValidateAllResponseBody, ValidationsValidatePartialResponseBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into ClientValidationsValidateResponseBody with oneOf schemas: ValidationsValidateAllResponseBody, ValidationsValidatePartialResponseBody. Details: " + ", ".join(error_messages))
-        else:
-            return instance
-
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
-
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
-
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+    @classmethod
+    def from_dict(cls, obj: dict) -> ClientValidationsValidateResponseBody:
+        """Create an instance of ClientValidationsValidateResponseBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return ClientValidationsValidateResponseBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = ClientValidationsValidateResponseBody.parse_obj({
+            "valid": obj.get("valid"),
+            "redeemables": [ValidationsValidateAllResponseBodyRedeemablesItem.from_dict(_item) for _item in obj.get("redeemables")] if obj.get("redeemables") is not None else None,
+            "skipped_redeemables": [ValidationsRedeemableInapplicable.from_dict(_item) for _item in obj.get("skipped_redeemables")] if obj.get("skipped_redeemables") is not None else None,
+            "inapplicable_redeemables": [ValidationsRedeemableInapplicable.from_dict(_item) for _item in obj.get("inapplicable_redeemables")] if obj.get("inapplicable_redeemables") is not None else None,
+            "order": OrderCalculated.from_dict(obj.get("order")) if obj.get("order") is not None else None,
+            "tracking_id": obj.get("tracking_id"),
+            "session": Session.from_dict(obj.get("session")) if obj.get("session") is not None else None,
+            "stacking_rules": StackingRules.from_dict(obj.get("stacking_rules")) if obj.get("stacking_rules") is not None else None
+        })
+        return _obj
 
 

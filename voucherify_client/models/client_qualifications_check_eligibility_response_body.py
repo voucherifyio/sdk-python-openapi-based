@@ -23,7 +23,7 @@ from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from voucherify_client.models.order_calculated import OrderCalculated
 from voucherify_client.models.qualifications_redeemables import QualificationsRedeemables
-from voucherify_client.models.qualifications_stacking_rules import QualificationsStackingRules
+from voucherify_client.models.stacking_rules import StackingRules
 
 class ClientQualificationsCheckEligibilityResponseBody(BaseModel):
     """
@@ -32,7 +32,7 @@ class ClientQualificationsCheckEligibilityResponseBody(BaseModel):
     redeemables: Optional[QualificationsRedeemables] = None
     tracking_id: Optional[StrictStr] = Field(None, description="This identifier is generated during voucher qualification based on your internal id (e.g., email, database ID). This is a hashed customer source ID.")
     order: Optional[OrderCalculated] = None
-    stacking_rules: Optional[QualificationsStackingRules] = None
+    stacking_rules: Optional[StackingRules] = None
     __properties = ["redeemables", "tracking_id", "order", "stacking_rules"]
 
     class Config:
@@ -83,7 +83,7 @@ class ClientQualificationsCheckEligibilityResponseBody(BaseModel):
             "redeemables": QualificationsRedeemables.from_dict(obj.get("redeemables")) if obj.get("redeemables") is not None else None,
             "tracking_id": obj.get("tracking_id"),
             "order": OrderCalculated.from_dict(obj.get("order")) if obj.get("order") is not None else None,
-            "stacking_rules": QualificationsStackingRules.from_dict(obj.get("stacking_rules")) if obj.get("stacking_rules") is not None else None
+            "stacking_rules": StackingRules.from_dict(obj.get("stacking_rules")) if obj.get("stacking_rules") is not None else None
         })
         return _obj
 
