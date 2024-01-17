@@ -1,4 +1,4 @@
-# openapi_client.LoyaltiesApi
+# voucherify_client.LoyaltiesApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -46,15 +46,15 @@ Creates loyalty tiers for desired campaign.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_tiers_create_in_bulk_request_body_item import LoyaltiesTiersCreateInBulkRequestBodyItem
-from openapi_client.models.loyalty_tier import LoyaltyTier
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_tiers_create_in_bulk_request_body_item import LoyaltiesTiersCreateInBulkRequestBodyItem
+from voucherify_client.models.loyalty_tier import LoyaltyTier
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -76,11 +76,11 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique loyalty campaign ID or name.
-    loyalties_tiers_create_in_bulk_request_body_item = [openapi_client.LoyaltiesTiersCreateInBulkRequestBodyItem()] # List[LoyaltiesTiersCreateInBulkRequestBodyItem] | Provide tier definitions you want to add to existing loyalty campaign. (optional)
+    loyalties_tiers_create_in_bulk_request_body_item = [voucherify_client.LoyaltiesTiersCreateInBulkRequestBodyItem()] # List[LoyaltiesTiersCreateInBulkRequestBodyItem] | Provide tier definitions you want to add to existing loyalty campaign. (optional)
 
     try:
         # Create loyalty tiers
@@ -134,13 +134,13 @@ This method deletes an earning rule for a specific loyalty campaign.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -162,9 +162,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     earning_rule_id = 'earning_rule_id_example' # str | A unique earning rule ID.
 
@@ -218,14 +218,14 @@ This method permanently deletes a loyalty campaign and all related loyalty cards
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_delete_response_body import LoyaltiesDeleteResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_delete_response_body import LoyaltiesDeleteResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -247,9 +247,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     force = True # bool | If this flag is set to `true`, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with the same name. (optional)
 
@@ -305,13 +305,13 @@ This method deletes a reward assignment for a particular loyalty campaign.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -333,9 +333,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     assignment_id = 'assignment_id_example' # str | A unique reward assignment ID.
 
@@ -389,14 +389,14 @@ Disable an earning rule.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_earning_rules_disable_response_body import LoyaltiesEarningRulesDisableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_earning_rules_disable_response_body import LoyaltiesEarningRulesDisableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -418,9 +418,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID or name.
     earning_rule_id = 'earning_rule_id_example' # str | Unique earning rule ID.
 
@@ -476,14 +476,14 @@ Enable an earning rule.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_earning_rules_enable_response_body import LoyaltiesEarningRulesEnableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_earning_rules_enable_response_body import LoyaltiesEarningRulesEnableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -505,9 +505,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID or name.
     earning_rule_id = 'earning_rule_id_example' # str | Unique earning rule ID.
 
@@ -563,15 +563,15 @@ Export transactions that are associated with point movements on a loyalty card. 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_transactions_export_create_request_body import LoyaltiesMembersTransactionsExportCreateRequestBody
-from openapi_client.models.loyalties_members_transactions_export_create_response_body import LoyaltiesMembersTransactionsExportCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_transactions_export_create_request_body import LoyaltiesMembersTransactionsExportCreateRequestBody
+from voucherify_client.models.loyalties_members_transactions_export_create_response_body import LoyaltiesMembersTransactionsExportCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -593,9 +593,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     member_id = 'member_id_example' # str | A unique code identifying the loyalty card that you are looking to export transaction data for.
     loyalties_members_transactions_export_create_request_body = {"parameters":{"order":"-created_at","fields":["id","type","source_id","reason","balance","amount","created_at","voucher_id","campaign_id","details","related_transaction_id"]}} # LoyaltiesMembersTransactionsExportCreateRequestBody | Specify the parameters and filters for the transaction export. (optional)
 
@@ -651,15 +651,15 @@ Export transactions that are associated with point movements on a loyalty card. 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_transactions_export_create_request_body import LoyaltiesMembersTransactionsExportCreateRequestBody
-from openapi_client.models.loyalties_members_transactions_export_create_response_body import LoyaltiesMembersTransactionsExportCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_transactions_export_create_request_body import LoyaltiesMembersTransactionsExportCreateRequestBody
+from voucherify_client.models.loyalties_members_transactions_export_create_response_body import LoyaltiesMembersTransactionsExportCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -681,9 +681,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to export.
     member_id = 'member_id_example' # str | A unique code identifying the loyalty card that you are looking to export transaction data for.
     loyalties_members_transactions_export_create_request_body = {"parameters":{"order":"-created_at","fields":["id","type","source_id","reason","balance","amount","created_at","voucher_id","campaign_id","details","related_transaction_id"]}} # LoyaltiesMembersTransactionsExportCreateRequestBody | Specify the parameters and filters for the transaction export. (optional)
@@ -741,14 +741,14 @@ Retrieves an earning rule assigned to a campaign.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_earning_rules_get_response_body import LoyaltiesEarningRulesGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_earning_rules_get_response_body import LoyaltiesEarningRulesGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -770,9 +770,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     earning_rule_id = 'earning_rule_id_example' # str | A unique earning rule ID.
 
@@ -828,14 +828,14 @@ Retrieve a loyalty tier from a loyalty campaign by the loyalty tier ID.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_tiers_get_response_body import LoyaltiesTiersGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_tiers_get_response_body import LoyaltiesTiersGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -857,9 +857,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique loyalty campaign ID or name.
     loyalty_tier_id = 'loyalty_tier_id_example' # str | Unique loyalty tier ID.
 
@@ -915,14 +915,14 @@ Retrieve specific reward assignment.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_reward_assignments_get_response_body import LoyaltiesRewardAssignmentsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_reward_assignments_get_response_body import LoyaltiesRewardAssignmentsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -944,9 +944,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     assignment_id = 'assignment_id_example' # str | Unique reward assignment ID.
 
@@ -1002,14 +1002,14 @@ Retrieve specific reward assignment.  > 📘 Alternative endpoint > > This endpo
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_rewards_get_response_body import LoyaltiesRewardsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_rewards_get_response_body import LoyaltiesRewardsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1031,9 +1031,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     assignment_id = 'assignment_id_example' # str | A unique reward assignment ID.
 
@@ -1089,14 +1089,14 @@ Get reward details in the context of a loyalty campaign and reward assignment ID
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_reward_assignments_reward_get_response_body import LoyaltiesRewardAssignmentsRewardGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_reward_assignments_reward_get_response_body import LoyaltiesRewardAssignmentsRewardGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1118,9 +1118,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     assignment_id = 'assignment_id_example' # str | Unique reward assignment ID.
 
@@ -1176,14 +1176,14 @@ Retrieve transaction data related to point movements for a specific loyalty card
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_transactions_list_response_body import LoyaltiesMembersTransactionsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_transactions_list_response_body import LoyaltiesMembersTransactionsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1205,9 +1205,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     member_id = 'member_id_example' # str | A unique code identifying the loyalty card that you are looking to retrieve transaction data for.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
@@ -1265,14 +1265,14 @@ Retrieve transaction data related to point movements for a specific loyalty card
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_transactions_list_response_body import LoyaltiesMembersTransactionsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_transactions_list_response_body import LoyaltiesMembersTransactionsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1294,9 +1294,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to return.
     member_id = 'member_id_example' # str | A unique code identifying the loyalty card that you are looking to retrieve transaction data for.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
@@ -1356,14 +1356,14 @@ Retrieve available earning rules for a given tier and the calculation method for
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_tiers_earning_rules_list_response_body import LoyaltiesTiersEarningRulesListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_tiers_earning_rules_list_response_body import LoyaltiesTiersEarningRulesListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1385,9 +1385,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID or name.
     loyalty_tier_id = 'loyalty_tier_id_example' # str | Unique loyalty tier ID.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
@@ -1447,14 +1447,14 @@ Get available rewards for a given tier.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_tiers_rewards_list_response_body import LoyaltiesTiersRewardsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_tiers_rewards_list_response_body import LoyaltiesTiersRewardsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1476,9 +1476,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID or name.
     loyalty_tier_id = 'loyalty_tier_id_example' # str | Unique loyalty tier ID.
 
@@ -1534,15 +1534,15 @@ Retrieve a list of loyalty tiers which were added to the loyalty program.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_tiers_list_response_body import LoyaltiesTiersListResponseBody
-from openapi_client.models.parameter_order_list_loyalty_tiers import ParameterOrderListLoyaltyTiers
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_tiers_list_response_body import LoyaltiesTiersListResponseBody
+from voucherify_client.models.parameter_order_list_loyalty_tiers import ParameterOrderListLoyaltyTiers
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1564,12 +1564,12 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique loyalty campaign ID or name.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    order = openapi_client.ParameterOrderListLoyaltyTiers() # ParameterOrderListLoyaltyTiers | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrderListLoyaltyTiers() # ParameterOrderListLoyaltyTiers | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Loyalty Tiers
@@ -1624,14 +1624,14 @@ Retrieve member tiers using the loyalty card ID.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_tiers_list_response_body import LoyaltiesMembersTiersListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_tiers_list_response_body import LoyaltiesMembersTiersListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1653,9 +1653,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     member_id = 'member_id_example' # str | Unique loyalty card assigned to a particular customer.
 
     try:
@@ -1709,14 +1709,14 @@ Retrieves the list of rewards that the given customer (identified by `member_id`
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_rewards_list_response_body import LoyaltiesMembersRewardsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_rewards_list_response_body import LoyaltiesMembersRewardsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1738,9 +1738,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     member_id = 'member_id_example' # str | Unique loyalty card assigned to a particular customer.
     affordable_only = True # bool | Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to `true` to return rewards which the customer can actually afford. (optional)
 
@@ -1796,14 +1796,14 @@ Retrieve loyalty point expiration buckets for a given loyalty card. Expired poin
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_points_expiration_list_response_body import LoyaltiesMembersPointsExpirationListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_points_expiration_list_response_body import LoyaltiesMembersPointsExpirationListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1825,9 +1825,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. 
     member_id = 'member_id_example' # str | Loyalty card code.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
@@ -1887,15 +1887,15 @@ Redeem Reward
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_redemption_redeem_request_body import LoyaltiesMembersRedemptionRedeemRequestBody
-from openapi_client.models.loyalties_members_redemption_redeem_response_body import LoyaltiesMembersRedemptionRedeemResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_redemption_redeem_request_body import LoyaltiesMembersRedemptionRedeemRequestBody
+from voucherify_client.models.loyalties_members_redemption_redeem_response_body import LoyaltiesMembersRedemptionRedeemResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1917,9 +1917,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     member_id = 'member_id_example' # str | Unique loyalty card assigned to a particular customer.
     loyalties_members_redemption_redeem_request_body = {"reward":{"id":"rew_INt3fGH3n7xIr3ZQcq4kkUZ1","points":100},"order":{"items":[{"product_id":"prod_0c5d6689b39320059b","quantity":"1"},{"product_id":"prod_0b2c36568000039138","quantity":"2"}]}} # LoyaltiesMembersRedemptionRedeemRequestBody | Specify the reward to be redeemed. In case of a pay with points reward, specify the order and the number of points to be applied to the order. Please note that if you do not specify the amount of points, the application will default to applying the number of points to pay for the remainder of the order. If the limit of available points on the card is reached, then only the available points on the card will be applied to the order. (optional)
 
@@ -1975,15 +1975,15 @@ Exchange points from a loyalty card for a specified reward. This API method retu
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_redemption_redeem_request_body import LoyaltiesMembersRedemptionRedeemRequestBody
-from openapi_client.models.loyalties_members_redemption_redeem_response_body import LoyaltiesMembersRedemptionRedeemResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_redemption_redeem_request_body import LoyaltiesMembersRedemptionRedeemRequestBody
+from voucherify_client.models.loyalties_members_redemption_redeem_response_body import LoyaltiesMembersRedemptionRedeemResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -2005,9 +2005,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID.
     member_id = 'member_id_example' # str | A code that identifies the loyalty card.
     loyalties_members_redemption_redeem_request_body = {"reward":{"id":"rew_INt3fGH3n7xIr3ZQcq4kkUZ1","points":100},"order":{"items":[{"product_id":"prod_0c5d6689b39320059b","quantity":"1"},{"product_id":"prod_0b2c36568000039138","quantity":"2"}]}} # LoyaltiesMembersRedemptionRedeemRequestBody | Specify the reward to be redeemed. In case of a pay with points reward, specify the order and the number of points to be applied to the order. Please note that if you do not specify the amount of points, the application will default to applying the number of points to pay for the remainder of the order. If the limit of available points on the card is reached, then only the available points on the card will be applied to the order. (optional)
@@ -2065,15 +2065,15 @@ Transfer points between different loyalty cards. You need to provide the campaig
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_transfers_create_response_body import LoyaltiesMembersTransfersCreateResponseBody
-from openapi_client.models.loyalties_transfer_points import LoyaltiesTransferPoints
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_transfers_create_response_body import LoyaltiesMembersTransfersCreateResponseBody
+from voucherify_client.models.loyalties_transfer_points import LoyaltiesTransferPoints
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -2095,9 +2095,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | A unique identifier of the loyalty campaign containing the voucher to which the loyalty points will be sent (destination).
     member_id = 'member_id_example' # str | A unique code identifying the loyalty card to which the user wants to transfer loyalty points (destination).
     loyalties_transfer_points = [{"code":"0PmQ7JQI","points":1},{"code":"kCeufB8i","points":1}] # List[LoyaltiesTransferPoints] | Provide the loyalty cards you want the points to be transferred from and the number of points to transfer from each card. (optional)
@@ -2155,15 +2155,15 @@ This method gives adds or removes balance to an existing loyalty card. The remov
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_balance_update_request_body import LoyaltiesMembersBalanceUpdateRequestBody
-from openapi_client.models.loyalties_members_balance_update_response_body import LoyaltiesMembersBalanceUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_balance_update_request_body import LoyaltiesMembersBalanceUpdateRequestBody
+from voucherify_client.models.loyalties_members_balance_update_response_body import LoyaltiesMembersBalanceUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -2185,9 +2185,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     member_id = 'member_id_example' # str | Unique loyalty card assigned to a particular customer.
     loyalties_members_balance_update_request_body = {"points":-100} # LoyaltiesMembersBalanceUpdateRequestBody | Specify the point adjustment along with the expiration mechanism. (optional)
 
@@ -2243,15 +2243,15 @@ This method adds or removes balance to an existing loyalty card. The removal of 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.loyalties_members_balance_update_request_body import LoyaltiesMembersBalanceUpdateRequestBody
-from openapi_client.models.loyalties_members_balance_update_response_body import LoyaltiesMembersBalanceUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.loyalties_members_balance_update_request_body import LoyaltiesMembersBalanceUpdateRequestBody
+from voucherify_client.models.loyalties_members_balance_update_response_body import LoyaltiesMembersBalanceUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -2273,9 +2273,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.LoyaltiesApi(api_client)
+    api_instance = voucherify_client.LoyaltiesApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID.
     member_id = 'member_id_example' # str | A code that identifies the loyalty card.
     loyalties_members_balance_update_request_body = {"points":100,"expiration_type":"CUSTOM_DATE","expiration_date":"2023-05-30"} # LoyaltiesMembersBalanceUpdateRequestBody | Specify the point adjustment along with the expiration mechanism. (optional)

@@ -1,4 +1,4 @@
-# openapi_client.ExportsApi
+# voucherify_client.ExportsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -24,15 +24,15 @@ Create export object. The export can be any of the following types: `voucher`, `
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.exports_create_request_body import ExportsCreateRequestBody
-from openapi_client.models.exports_create_response_body import ExportsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.exports_create_request_body import ExportsCreateRequestBody
+from voucherify_client.models.exports_create_response_body import ExportsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -54,10 +54,10 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ExportsApi(api_client)
-    exports_create_request_body = openapi_client.ExportsCreateRequestBody() # ExportsCreateRequestBody | Specify the details of the export that you would like to create. (optional)
+    api_instance = voucherify_client.ExportsApi(api_client)
+    exports_create_request_body = voucherify_client.ExportsCreateRequestBody() # ExportsCreateRequestBody | Specify the details of the export that you would like to create. (optional)
 
     try:
         # Create Export
@@ -110,13 +110,13 @@ This method deletes a previously created export object.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -138,9 +138,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ExportsApi(api_client)
+    api_instance = voucherify_client.ExportsApi(api_client)
     export_id = 'export_id_example' # str | Unique export object ID of previously created export. This object can be a: `voucher`, `redemption`, `publication`, `customer`, `order`, `points_expiration`, or `voucher_transactions`.
 
     try:
@@ -192,14 +192,14 @@ Retrieves the URL of the downloadable file, which was generated via the <!-- [Cr
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.exports_get_response_body import ExportsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.exports_get_response_body import ExportsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -221,9 +221,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ExportsApi(api_client)
+    api_instance = voucherify_client.ExportsApi(api_client)
     export_id = 'export_id_example' # str | Unique export object ID of previously created export. This object can be a: `voucher`, `redemption`, `publication`, `customer`, `order`, `points_expiration`, or `voucher_transactions`.
 
     try:
@@ -277,15 +277,15 @@ List all exports.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.exports_list_response_body import ExportsListResponseBody
-from openapi_client.models.parameter_order_list_exports import ParameterOrderListExports
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.exports_list_response_body import ExportsListResponseBody
+from voucherify_client.models.parameter_order_list_exports import ParameterOrderListExports
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -307,12 +307,12 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.ExportsApi(api_client)
+    api_instance = voucherify_client.ExportsApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrderListExports() # ParameterOrderListExports | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrderListExports() # ParameterOrderListExports | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Exports

@@ -1,4 +1,4 @@
-# openapi_client.CampaignsApi
+# voucherify_client.CampaignsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -31,15 +31,15 @@ This method gives a possibility to add a new voucher to an existing campaign. Th
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_vouchers_create_request_body import CampaignsVouchersCreateRequestBody
-from openapi_client.models.campaigns_vouchers_create_response_body import CampaignsVouchersCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_vouchers_create_request_body import CampaignsVouchersCreateRequestBody
+from voucherify_client.models.campaigns_vouchers_create_response_body import CampaignsVouchersCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -61,9 +61,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the campaign to which voucher will be added. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
     code = 'code_example' # str | A custom **code** that identifies the voucher.
     campaigns_vouchers_create_request_body = {"category_id":"cat_0bb81a481615a37b5e","start_date":"2022-09-24T00:00:00Z","expiration_date":"2022-09-25T23:59:59Z","active":false,"redemption":{"quantity":null},"additional_info":"Voucher added using API","metadata":{"Season":"Fall"}} # CampaignsVouchersCreateRequestBody | Specify the voucher parameters that you would like to overwrite. (optional)
@@ -121,15 +121,15 @@ This method gives the possibility to push new vouchers to an existing campaign. 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_vouchers_create_in_bulk_request_body import CampaignsVouchersCreateInBulkRequestBody
-from openapi_client.models.campaigns_vouchers_create_response_body import CampaignsVouchersCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_vouchers_create_in_bulk_request_body import CampaignsVouchersCreateInBulkRequestBody
+from voucherify_client.models.campaigns_vouchers_create_response_body import CampaignsVouchersCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -151,9 +151,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the campaign to which voucher(s) will be added. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
     vouchers_count = 56 # int | Number of vouchers that should be added. (optional)
     campaigns_vouchers_create_in_bulk_request_body = {"start_date":"2022-09-24T00:00:00Z","expiration_date":"2022-09-25T23:59:59Z","active":false,"redemption":{"quantity":null},"code_config":{"charset":"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ","length":8,"prefix":"Add-","pattern":null,"postfix":"-API"},"additional_info":"Voucher added using API","metadata":{"Season":"Fall"}} # CampaignsVouchersCreateInBulkRequestBody | Specify the voucher parameters that you would like to overwrite. (optional)
@@ -212,15 +212,15 @@ Method to create a batch of vouchers aggregated in one campaign. You can choose 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_create_request_body import CampaignsCreateRequestBody
-from openapi_client.models.campaigns_create_response_body import CampaignsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_create_request_body import CampaignsCreateRequestBody
+from voucherify_client.models.campaigns_create_response_body import CampaignsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -242,9 +242,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaigns_create_request_body = {"name":"Discount Campaign 4","campaign_type":"DISCOUNT_COUPONS","join_once":true,"type":"AUTO_UPDATE","category_id":"cat_0bb343dee3cdb5ec0c","start_date":"2020-08-16T00:00:00Z","expiration_date":"2023-12-26T00:00:00Z","vouchers_count":3,"voucher":{"type":"DISCOUNT_VOUCHER","discount":{"percent_off":10,"type":"PERCENT"},"redemption":{"quantity":10},"code_config":{"pattern":"10OFF-#######"}},"validity_timeframe":{"interval":"P2D","duration":"P1D"},"validity_day_of_week":[0,1,2],"activity_duration_after_publishing":"P24D","use_voucher_metadata_schema":false,"metadata":{"region":"AMER"}} # CampaignsCreateRequestBody | Specify the details of the campaign that you would like to create. (optional)
 
     try:
@@ -298,14 +298,14 @@ Permanently deletes a campaign and all related vouchers. This action cannot be u
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_delete_response_body import CampaignsDeleteResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_delete_response_body import CampaignsDeleteResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -327,9 +327,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
     force = True # bool | If this flag is set to `true`, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with exactly the same name. (optional)
 
@@ -385,14 +385,14 @@ There are various times when you'll want to manage a campaign's accessibility. T
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_disable_response_body import CampaignsDisableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_disable_response_body import CampaignsDisableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -414,9 +414,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the campaign being disabled. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
 
     try:
@@ -470,14 +470,14 @@ There are various times when you'll want to manage a campaign's accessibility. T
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_enable_response_body import CampaignsEnableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_enable_response_body import CampaignsEnableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -499,9 +499,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the campaign being enabled. You can either pass the campaign ID, which was assigned by Voucherify or the name of the campaign as the path parameter value.
 
     try:
@@ -555,14 +555,14 @@ Retrieves the campaign with the given campaign ID or campaign name.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_get_response_body import CampaignsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_get_response_body import CampaignsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -584,9 +584,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
 
     try:
@@ -640,15 +640,15 @@ Imports vouchers to an **existing** campaign.  This API request starts a process
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_import_create_response_body import CampaignsImportCreateResponseBody
-from openapi_client.models.campaigns_import_voucher_item import CampaignsImportVoucherItem
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_import_create_response_body import CampaignsImportCreateResponseBody
+from voucherify_client.models.campaigns_import_voucher_item import CampaignsImportVoucherItem
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -670,9 +670,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The ID of an existing campaign to which you're importing the codes. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
     campaigns_import_voucher_item = [{"code":"CODE7","category":"First","redemption":{"quantity":1},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true},{"code":"CODE8","category":"Second","redemption":{"quantity":18},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true},{"code":"CODE9","category_id":"cat_0bb343dee3cdb5ec0c","redemption":{"quantity":4},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true}] # List[CampaignsImportVoucherItem] | Discount type, expiration date and the remaining attributes will be taken from the <!-- [Campaign](OpenAPI.json/components/schemas/Campaign) -->[Campaign](ref:get-campaign) settings. (optional)
 
@@ -728,14 +728,14 @@ Imports vouchers to an **existing** campaign.     The CSV file has to include he
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_import_csv_create_response_body import CampaignsImportCsvCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_import_csv_create_response_body import CampaignsImportCsvCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -757,9 +757,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the campaign being enabled. You can either pass the campaign ID, which was assigned by Voucherify or the name of the campaign as the path parameter value.
     file = None # bytearray | File path.
 
@@ -815,17 +815,17 @@ Retrieve a list of campaigns in a project.   The campaigns are returned sorted b
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_list_response_body import CampaignsListResponseBody
-from openapi_client.models.parameter_campaign_type import ParameterCampaignType
-from openapi_client.models.parameter_expand_list_campaigns import ParameterExpandListCampaigns
-from openapi_client.models.parameter_order_list_campaigns import ParameterOrderListCampaigns
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_list_response_body import CampaignsListResponseBody
+from voucherify_client.models.parameter_campaign_type import ParameterCampaignType
+from voucherify_client.models.parameter_expand_list_campaigns import ParameterExpandListCampaigns
+from voucherify_client.models.parameter_order_list_campaigns import ParameterOrderListCampaigns
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -847,14 +847,14 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    campaign_type = openapi_client.ParameterCampaignType() # ParameterCampaignType | This attribute allows filtering by campaign type. (optional)
-    expand = openapi_client.ParameterExpandListCampaigns() # ParameterExpandListCampaigns | Include an expanded `categories` object in the response. (optional)
-    order = openapi_client.ParameterOrderListCampaigns() # ParameterOrderListCampaigns | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    campaign_type = voucherify_client.ParameterCampaignType() # ParameterCampaignType | This attribute allows filtering by campaign type. (optional)
+    expand = voucherify_client.ParameterExpandListCampaigns() # ParameterExpandListCampaigns | Include an expanded `categories` object in the response. (optional)
+    order = voucherify_client.ParameterOrderListCampaigns() # ParameterOrderListCampaigns | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Campaigns
@@ -911,15 +911,15 @@ Updates the specified campaign by setting the values of the parameters passed in
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_update_request_body import CampaignsUpdateRequestBody
-from openapi_client.models.campaigns_update_response_body import CampaignsUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_update_request_body import CampaignsUpdateRequestBody
+from voucherify_client.models.campaigns_update_response_body import CampaignsUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -941,9 +941,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CampaignsApi(api_client)
+    api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
     campaigns_update_request_body = {"description":"New description"} # CampaignsUpdateRequestBody | Specify the campaign parameters to be updated. (optional)
 

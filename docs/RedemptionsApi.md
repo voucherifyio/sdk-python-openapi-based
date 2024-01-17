@@ -1,4 +1,4 @@
-# openapi_client.RedemptionsApi
+# voucherify_client.RedemptionsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -24,14 +24,14 @@ Return a redemption or redemption rollback object. This object can either be a s
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.redemptions_get_response_body import RedemptionsGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.redemptions_get_response_body import RedemptionsGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -53,9 +53,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RedemptionsApi(api_client)
+    api_instance = voucherify_client.RedemptionsApi(api_client)
     redemption_id = 'redemption_id_example' # str | ID of previously created redemption.
 
     try:
@@ -109,14 +109,14 @@ Retrieve the number of times a voucher was redeemed and each of the redemption d
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_redemption_get_response_body import VouchersRedemptionGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_redemption_get_response_body import VouchersRedemptionGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -138,9 +138,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RedemptionsApi(api_client)
+    api_instance = voucherify_client.RedemptionsApi(api_client)
     code = 'code_example' # str | A **code** that identifies the voucher.
 
     try:
@@ -194,17 +194,17 @@ Returns a list of redemptions previously created. The redemptions are returned i
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
-from openapi_client.models.parameter_filters_list_redemptions import ParameterFiltersListRedemptions
-from openapi_client.models.parameter_order_list_redemptions import ParameterOrderListRedemptions
-from openapi_client.models.redemptions_list_response_body import RedemptionsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
+from voucherify_client.models.parameter_filters_list_redemptions import ParameterFiltersListRedemptions
+from voucherify_client.models.parameter_order_list_redemptions import ParameterOrderListRedemptions
+from voucherify_client.models.redemptions_list_response_body import RedemptionsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -226,17 +226,17 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RedemptionsApi(api_client)
+    api_instance = voucherify_client.RedemptionsApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
     result = 'result_example' # str | A filter on the list based on the redemption result. Available options are: `SUCCESS`, `FAILURE`. You can provide multiple values by repeating the param. (optional)
     campaign = 'campaign_example' # str | A filter by the campaign **name** that the redemption resources originate from. (optional)
     customer = 'customer_example' # str | Return redemptions performed by the customer with given `id`. (optional)
-    order = openapi_client.ParameterOrderListRedemptions() # ParameterOrderListRedemptions | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
-    created_at = openapi_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z` (optional)
-    filters = openapi_client.ParameterFiltersListRedemptions() # ParameterFiltersListRedemptions | Filters for listing responses. (optional)
+    order = voucherify_client.ParameterOrderListRedemptions() # ParameterOrderListRedemptions | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
+    created_at = voucherify_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z` (optional)
+    filters = voucherify_client.ParameterFiltersListRedemptions() # ParameterFiltersListRedemptions | Filters for listing responses. (optional)
 
     try:
         # List Redemptions
@@ -296,15 +296,15 @@ Your business logic may include a case when you need to undo a redemption. You c
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.redemptions_rollback_create_request_body import RedemptionsRollbackCreateRequestBody
-from openapi_client.models.redemptions_rollback_create_response_body import RedemptionsRollbackCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.redemptions_rollback_create_request_body import RedemptionsRollbackCreateRequestBody
+from voucherify_client.models.redemptions_rollback_create_response_body import RedemptionsRollbackCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -326,9 +326,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.RedemptionsApi(api_client)
+    api_instance = voucherify_client.RedemptionsApi(api_client)
     redemption_id = 'redemption_id_example' # str | The original redemption ID to be rolled back (undone).
     reason = 'reason_example' # str | Reason for the rollback. (optional)
     tracking_id = 'tracking_id_example' # str | Customer's `source_id`. (optional)

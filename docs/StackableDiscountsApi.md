@@ -1,4 +1,4 @@
-# openapi_client.StackableDiscountsApi
+# voucherify_client.StackableDiscountsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -25,15 +25,15 @@ Redeem Stackable Discounts
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.redemptions_redeem_request_body import RedemptionsRedeemRequestBody
-from openapi_client.models.redemptions_redeem_response_body import RedemptionsRedeemResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.redemptions_redeem_request_body import RedemptionsRedeemRequestBody
+from voucherify_client.models.redemptions_redeem_response_body import RedemptionsRedeemResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -55,9 +55,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.StackableDiscountsApi(api_client)
+    api_instance = voucherify_client.StackableDiscountsApi(api_client)
     redemptions_redeem_request_body = {"customer":{"source_id":"sample_customer","metadata":{"key":"value"}},"options":{"expand":["order","redeemable","category"]},"redeemables":[{"object":"voucher","id":"voucher-code"}],"session":{"type":"LOCK","key":"session_key"},"order":{"amount":55000,"status":"PAID","items":[{"quantity":2,"price":20000,"source_id":"sample product1","related_object":"product","product":{"metadata":{"key":"value"}}},{"quantity":1,"price":15000,"source_id":"sample product2","related_object":"product","product":{"metadata":{"key":"value"}}}],"metadata":{"key":"value"}}} # RedemptionsRedeemRequestBody |  (optional)
 
     try:
@@ -111,15 +111,15 @@ This method is accessible through public keys which you can use in client side r
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.client_redemptions_redeem_request_body import ClientRedemptionsRedeemRequestBody
-from openapi_client.models.client_redemptions_redeem_response_body import ClientRedemptionsRedeemResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.client_redemptions_redeem_request_body import ClientRedemptionsRedeemRequestBody
+from voucherify_client.models.client_redemptions_redeem_response_body import ClientRedemptionsRedeemResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -141,9 +141,9 @@ configuration.api_key['X-Client-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-Client-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.StackableDiscountsApi(api_client)
+    api_instance = voucherify_client.StackableDiscountsApi(api_client)
     origin = 'origin_example' # str | Indicates the origin (scheme, hostname, and port).
     client_redemptions_redeem_request_body = {"customer":{"source_id":"sample_customer","metadata":{"key":"value"}},"options":{"expand":["order","redeemable","category"]},"redeemables":[{"object":"voucher","id":"voucher-code"}],"session":{"type":"LOCK","key":"session_key"},"order":{"amount":55000,"status":"PAID","items":[{"quantity":2,"price":20000,"source_id":"sample product1","related_object":"product","product":{"metadata":{"key":"value"}}},{"quantity":1,"price":15000,"source_id":"sample product2","related_object":"product","product":{"metadata":{"key":"value"}}}],"metadata":{"key":"value"}}} # ClientRedemptionsRedeemRequestBody |  (optional)
 
@@ -199,15 +199,15 @@ Rollback a stackable redemption. When you rollback a stacked redemption, all chi
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.redemptions_rollbacks_create_request_body import RedemptionsRollbacksCreateRequestBody
-from openapi_client.models.redemptions_rollbacks_create_response_body import RedemptionsRollbacksCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.redemptions_rollbacks_create_request_body import RedemptionsRollbacksCreateRequestBody
+from voucherify_client.models.redemptions_rollbacks_create_response_body import RedemptionsRollbacksCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -229,9 +229,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.StackableDiscountsApi(api_client)
+    api_instance = voucherify_client.StackableDiscountsApi(api_client)
     parent_redemption_id = 'parent_redemption_id_example' # str | Unique identifier of a parent redemption, e.g. `r_JQfm73zWSJFQxs3bGxweYjgm`.
     reason = 'reason_example' # str | Reason for the rollback. (optional)
     tracking_id = 'tracking_id_example' # str | Customer's `source_id`. (optional)
@@ -291,15 +291,15 @@ Verify redeemables provided in the request. This method is designed for server s
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.validations_validate_request_body import ValidationsValidateRequestBody
-from openapi_client.models.validations_validate_response_body import ValidationsValidateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.validations_validate_request_body import ValidationsValidateRequestBody
+from voucherify_client.models.validations_validate_response_body import ValidationsValidateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -321,9 +321,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.StackableDiscountsApi(api_client)
+    api_instance = voucherify_client.StackableDiscountsApi(api_client)
     validations_validate_request_body = {"customer":{"source_id":"sample_customer","metadata":{"key":"value"}},"options":{"expand":["order","redeemable","category"]},"redeemables":[{"object":"voucher","id":"voucher-code"}],"session":{"type":"LOCK"},"order":{"amount":55000,"status":"PAID","items":[{"quantity":2,"price":20000,"source_id":"sample product1","related_object":"product","product":{"metadata":{"key":"value"}}},{"quantity":1,"price":15000,"source_id":"sample product2","related_object":"product","product":{"metadata":{"key":"value"}}}],"metadata":{"key":"value"}}} # ValidationsValidateRequestBody |  (optional)
 
     try:
@@ -377,15 +377,15 @@ Verify redeemables provided in the request. This method is accessible through pu
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.client_validations_validate_request_body import ClientValidationsValidateRequestBody
-from openapi_client.models.client_validations_validate_response_body import ClientValidationsValidateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.client_validations_validate_request_body import ClientValidationsValidateRequestBody
+from voucherify_client.models.client_validations_validate_response_body import ClientValidationsValidateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -407,9 +407,9 @@ configuration.api_key['X-Client-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-Client-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.StackableDiscountsApi(api_client)
+    api_instance = voucherify_client.StackableDiscountsApi(api_client)
     origin = 'origin_example' # str | Indicates the origin (scheme, hostname, and port).
     client_validations_validate_request_body = {"customer":{"source_id":"sample_customer","metadata":{"key":"value"}},"options":{"expand":["order","redeemable","category"]},"redeemables":[{"object":"voucher","id":"voucher-code"}],"session":{"type":"LOCK"},"order":{"amount":55000,"status":"PAID","items":[{"quantity":2,"price":20000,"source_id":"sample product1","related_object":"product","product":{"metadata":{"key":"value"}}},{"quantity":1,"price":15000,"source_id":"sample product2","related_object":"product","product":{"metadata":{"key":"value"}}}],"metadata":{"key":"value"}}} # ClientValidationsValidateRequestBody |  (optional)
 

@@ -1,4 +1,4 @@
-# openapi_client.PromotionsApi
+# voucherify_client.PromotionsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -32,15 +32,15 @@ Method to create a batch of vouchers aggregated in one campaign. You can choose 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.campaigns_create_request_body import CampaignsCreateRequestBody
-from openapi_client.models.campaigns_create_response_body import CampaignsCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.campaigns_create_request_body import CampaignsCreateRequestBody
+from voucherify_client.models.campaigns_create_response_body import CampaignsCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -62,9 +62,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     campaigns_create_request_body = {"name":"Discount Campaign 4","campaign_type":"DISCOUNT_COUPONS","join_once":true,"type":"AUTO_UPDATE","category_id":"cat_0bb343dee3cdb5ec0c","start_date":"2020-08-16T00:00:00Z","expiration_date":"2023-12-26T00:00:00Z","vouchers_count":3,"voucher":{"type":"DISCOUNT_VOUCHER","discount":{"percent_off":10,"type":"PERCENT"},"redemption":{"quantity":10},"code_config":{"pattern":"10OFF-#######"}},"validity_timeframe":{"interval":"P2D","duration":"P1D"},"validity_day_of_week":[0,1,2],"activity_duration_after_publishing":"P24D","use_voucher_metadata_schema":false,"metadata":{"region":"AMER"}} # CampaignsCreateRequestBody | Specify the details of the campaign that you would like to create. (optional)
 
     try:
@@ -118,15 +118,15 @@ This method creates one promotion stack. The sequence of promotion tier IDs will
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_stacks_create_request_body import PromotionsStacksCreateRequestBody
-from openapi_client.models.promotions_stacks_create_response_body import PromotionsStacksCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_stacks_create_request_body import PromotionsStacksCreateRequestBody
+from voucherify_client.models.promotions_stacks_create_response_body import PromotionsStacksCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -148,9 +148,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID.
     promotions_stacks_create_request_body = {"name":"Fifth Stack","tiers":{"ids":["promo_aaAF8mVAzA0PF1igia2OC63d","promo_t9zdL6XMFk7B8fQ23zxELtdE","promo_dJNhAEeV5sR5oPQq1UrUdnMC"],"hierarchy_mode":"MANUAL"}} # PromotionsStacksCreateRequestBody | Specify the order of promotion tiers for the promotion stack. (optional)
 
@@ -206,13 +206,13 @@ This method deletes a promotion stack.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -234,9 +234,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. 
     stack_id = 'stack_id_example' # str | Promotion stack ID.
 
@@ -290,13 +290,13 @@ This method deletes a promotion tier.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -318,9 +318,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     promotion_tier_id = 'promotion_tier_id_example' # str | Unique promotion tier ID.
 
     try:
@@ -372,14 +372,14 @@ This method disables a promotion tier, i.e. makes the `active` parameter = `fals
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_tiers_disable_response_body import PromotionsTiersDisableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_tiers_disable_response_body import PromotionsTiersDisableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -401,9 +401,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     promotion_tier_id = 'promotion_tier_id_example' # str | Unique promotion tier ID.
 
     try:
@@ -457,14 +457,14 @@ This method enables a promotion tier, i.e. makes the `active` parameter = `true`
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_tiers_enable_response_body import PromotionsTiersEnableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_tiers_enable_response_body import PromotionsTiersEnableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -486,9 +486,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     promotion_tier_id = 'promotion_tier_id_example' # str | Unique promotion tier ID.
 
     try:
@@ -542,14 +542,14 @@ This method returns the details of a promotion stack, including the promotion ti
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_stacks_get_response_body import PromotionsStacksGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_stacks_get_response_body import PromotionsStacksGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -571,9 +571,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. 
     stack_id = 'stack_id_example' # str | Promotion stack ID.
 
@@ -629,14 +629,14 @@ This method enables you to retrieve a specific promotion tier.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_tiers_get_response_body import PromotionsTiersGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_tiers_get_response_body import PromotionsTiersGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -658,9 +658,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     promotion_tier_id = 'promotion_tier_id_example' # str | Unique promotion tier ID.
 
     try:
@@ -714,17 +714,17 @@ This method enables you to list promotion stacks irrespective of the campaign th
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
-from openapi_client.models.parameter_order_list_all_promotion_stacks import ParameterOrderListAllPromotionStacks
-from openapi_client.models.parameter_updated_before_after import ParameterUpdatedBeforeAfter
-from openapi_client.models.promotions_stacks_list_response_body import PromotionsStacksListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
+from voucherify_client.models.parameter_order_list_all_promotion_stacks import ParameterOrderListAllPromotionStacks
+from voucherify_client.models.parameter_updated_before_after import ParameterUpdatedBeforeAfter
+from voucherify_client.models.promotions_stacks_list_response_body import PromotionsStacksListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -746,14 +746,14 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrderListAllPromotionStacks() # ParameterOrderListAllPromotionStacks | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
-    created_at = openapi_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z` (optional)
-    updated_at = openapi_client.ParameterUpdatedBeforeAfter() # ParameterUpdatedBeforeAfter | A filter on the list based on the object `updated_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[updated_at][before]=2017-09-08T13:52:18.227Z` (optional)
+    order = voucherify_client.ParameterOrderListAllPromotionStacks() # ParameterOrderListAllPromotionStacks | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    created_at = voucherify_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z` (optional)
+    updated_at = voucherify_client.ParameterUpdatedBeforeAfter() # ParameterUpdatedBeforeAfter | A filter on the list based on the object `updated_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[updated_at][before]=2017-09-08T13:52:18.227Z` (optional)
 
     try:
         # List Promotion Stacks
@@ -810,14 +810,14 @@ This method enables you to list promotion stacks from a specified campaign.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_stacks_list_response_body import PromotionsStacksListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_stacks_list_response_body import PromotionsStacksListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -839,9 +839,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID.
 
     try:
@@ -895,14 +895,14 @@ This method enables you to list promotion tiers from a specified campaign.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_tiers_list_response_body import PromotionsTiersListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_tiers_list_response_body import PromotionsTiersListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -924,9 +924,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     campaign_id = 'campaign_id_example' # str | Unique campaign ID assigned by Voucherify.
 
     try:
@@ -980,15 +980,15 @@ This methods allows for editing an existing stack.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.promotions_stacks_update_request_body import PromotionsStacksUpdateRequestBody
-from openapi_client.models.promotions_stacks_update_response_body import PromotionsStacksUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.promotions_stacks_update_request_body import PromotionsStacksUpdateRequestBody
+from voucherify_client.models.promotions_stacks_update_response_body import PromotionsStacksUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1010,9 +1010,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.PromotionsApi(api_client)
+    api_instance = voucherify_client.PromotionsApi(api_client)
     campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. 
     stack_id = 'stack_id_example' # str | Promotion stack ID.
     promotions_stacks_update_request_body = {"name":"Fifth Stack Modified","tiers":{"ids":["promo_aaAF8mVAzA0PF1igia2OC63d","promo_t9zdL6XMFk7B8fQ23zxELtdE"],"hierarchy_mode":"MANUAL"}} # PromotionsStacksUpdateRequestBody | Specify the promotion stack parameters that you would like to update. (optional)

@@ -1,4 +1,4 @@
-# openapi_client.QualificationsApi
+# voucherify_client.QualificationsApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -22,15 +22,15 @@ Check Eligibility
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.qualifications_check_eligibility_request_body import QualificationsCheckEligibilityRequestBody
-from openapi_client.models.qualifications_check_eligibility_response_body import QualificationsCheckEligibilityResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.qualifications_check_eligibility_request_body import QualificationsCheckEligibilityRequestBody
+from voucherify_client.models.qualifications_check_eligibility_response_body import QualificationsCheckEligibilityResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -52,10 +52,10 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.QualificationsApi(api_client)
-    qualifications_check_eligibility_request_body = openapi_client.QualificationsCheckEligibilityRequestBody() # QualificationsCheckEligibilityRequestBody | Define order and customer context. (optional)
+    api_instance = voucherify_client.QualificationsApi(api_client)
+    qualifications_check_eligibility_request_body = voucherify_client.QualificationsCheckEligibilityRequestBody() # QualificationsCheckEligibilityRequestBody | Define order and customer context. (optional)
 
     try:
         # Check Eligibility
@@ -108,15 +108,15 @@ Generate a list of redeemables that are applicable in the context of the custome
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.client_qualifications_check_eligibility_request_body import ClientQualificationsCheckEligibilityRequestBody
-from openapi_client.models.client_qualifications_check_eligibility_response_body import ClientQualificationsCheckEligibilityResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.client_qualifications_check_eligibility_request_body import ClientQualificationsCheckEligibilityRequestBody
+from voucherify_client.models.client_qualifications_check_eligibility_response_body import ClientQualificationsCheckEligibilityResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -138,10 +138,10 @@ configuration.api_key['X-Client-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-Client-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.QualificationsApi(api_client)
-    client_qualifications_check_eligibility_request_body = openapi_client.ClientQualificationsCheckEligibilityRequestBody() # ClientQualificationsCheckEligibilityRequestBody | Define order and customer context. (optional)
+    api_instance = voucherify_client.QualificationsApi(api_client)
+    client_qualifications_check_eligibility_request_body = voucherify_client.ClientQualificationsCheckEligibilityRequestBody() # ClientQualificationsCheckEligibilityRequestBody | Define order and customer context. (optional)
 
     try:
         # Check Eligibility (client-side)

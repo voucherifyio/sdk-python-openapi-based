@@ -1,4 +1,4 @@
-# openapi_client.OrdersApi
+# voucherify_client.OrdersApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -26,15 +26,15 @@ Creates an order object and triggers an order creation event.  <!-- theme: info 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.orders_create_request_body import OrdersCreateRequestBody
-from openapi_client.models.orders_create_response_body import OrdersCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.orders_create_request_body import OrdersCreateRequestBody
+from voucherify_client.models.orders_create_response_body import OrdersCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -56,9 +56,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.OrdersApi(api_client)
+    api_instance = voucherify_client.OrdersApi(api_client)
     orders_create_request_body = {"amount":20000,"customer":{"source_id":"sample_customer"},"status":"PAID","items":[{"quantity":1,"price":20000,"source_id":"sample product1","related_object":"product","product":{"metadata":{"key":"value"}}}]} # OrdersCreateRequestBody | Specify the order parameters. (optional)
 
     try:
@@ -112,15 +112,15 @@ Creates a downloadable CSV file containing a list of orders.  The parameters lis
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.orders_export_create_request_body import OrdersExportCreateRequestBody
-from openapi_client.models.orders_export_create_response_body import OrdersExportCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.orders_export_create_request_body import OrdersExportCreateRequestBody
+from voucherify_client.models.orders_export_create_response_body import OrdersExportCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -142,9 +142,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.OrdersApi(api_client)
+    api_instance = voucherify_client.OrdersApi(api_client)
     orders_export_create_request_body = {"parameters":{"fields":["id","source_id","status","created_at","updated_at","amount","discount_amount","items_discount_amount","total_discount_amount","total_amount","customer_id","referrer_id","metadata.payment_mean"]}} # OrdersExportCreateRequestBody | Specify which order parameters you would like to export. (optional)
 
     try:
@@ -198,14 +198,14 @@ Retrieve an order.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.orders_get_response_body import OrdersGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.orders_get_response_body import OrdersGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -227,9 +227,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.OrdersApi(api_client)
+    api_instance = voucherify_client.OrdersApi(api_client)
     order_id = 'order_id_example' # str | Unique Voucherify order ID or order source ID.
 
     try:
@@ -283,15 +283,15 @@ Import Orders
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.orders_import_create_request_body_item import OrdersImportCreateRequestBodyItem
-from openapi_client.models.orders_import_create_response_body import OrdersImportCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.orders_import_create_request_body_item import OrdersImportCreateRequestBodyItem
+from voucherify_client.models.orders_import_create_response_body import OrdersImportCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -313,9 +313,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.OrdersApi(api_client)
+    api_instance = voucherify_client.OrdersApi(api_client)
     orders_import_create_request_body_item = [{"source_id":"orderImport14","status":"PAID","metadata":{"location_id":["L1","L2"],"payment_mean":["paypal","credit-card"]},"customer":{"source_id":"bob2.smith@email.com","name":"Bob Smith","description":"A nice customer","email":"bob.smith@email.com","phone":"+1 933 222 3333","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthdate":"2022-01-01"},"referrer":{"source_id":"jane.smith@email.com","name":"Jane Smith","description":"A really nice customer","email":"jane.smith@email.com","phone":"+1 933 222 3334","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":false},"birthday":"2022-03-03"},"items":[{"source_id":"prod_1","related_object":"product","quantity":2,"product":{"name":"Apple iPhone 12","price":70000,"metadata":{"color":["silver"],"vendor":"mall"},"override":true}},{"source_id":"ComicBook_1","related_object":"sku","quantity":1,"product":{"source_id":"Books","name":"Comic Books1","price":1600,"metadata":{"color":["silver"],"vendor":"Bookstore1"},"override":true},"sku":{"sku":"Comics1","source_id":"ComicBook_1","price":1600,"metadata":{"color":["golden"],"vendor":"islands"},"override":true}}]},{"source_id":"orderImport15","status":"PAID","metadata":{"location_id":["L3"],"payment_mean":["wire-transfer"]},"customer":{"source_id":"bob2.smith@email.com"},"referrer":{"source_id":"jane.smith@email.com"},"items":[{"source_id":"ComicBook_1","quantity":4,"related_object":"sku","sku":{"source_id":"ComicBook_1"}},{"source_id":"vase_1","quantity":1,"related_object":"product","product":{"source_id":"vase_1"}}]},{"source_id":"orderImport16","status":"FULFILLED","metadata":{"location_id":["L3"],"payment_mean":["wire-transfer"]},"customer":{"id":"cust_LMY4ZylSdUYB1J4tzqNcl5VV"},"referrer":{"id":"cust_Vzck5i8U3OhcEUFY6MKhN9Rv"},"items":[{"product_id":"prod_0b72b0bd64d198e3ae","quantity":2},{"sku_id":"sku_0b1621b319d248b79f","quantity":2}]},{"source_id":"orderImport17","status":"CANCELED","amount":7000,"metadata":{"location_id":["L3"],"payment_mean":["wire-transfer"]}},{"source_id":"orderImport18","status":"CREATED","metadata":{"location_id":["L3"],"payment_mean":["wire-transfer"]},"items":[{"source_id":"ComicBook_1","amount":900,"related_object":"sku"},{"source_id":"vase_1","amount":2000,"related_object":"product"}]},{"source_id":"orderImport19","status":"CREATED","metadata":{"location_id":["L3"],"payment_mean":["wire-transfer"]},"items":[{"amount":900},{"amount":2000}]},{"source_id":"orderImport20","status":"CREATED","metadata":{"location_id":["L3"],"payment_mean":["wire-transfer"]},"items":[{"price":900,"quantity":2},{"price":2000,"quantity":3}]}] # List[OrdersImportCreateRequestBodyItem] | The request body is sent in the form of an array of order objects. (optional)
 
     try:
@@ -369,15 +369,15 @@ Returns a list of orders.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.orders_list_response_body import OrdersListResponseBody
-from openapi_client.models.parameter_order_list_orders import ParameterOrderListOrders
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.orders_list_response_body import OrdersListResponseBody
+from voucherify_client.models.parameter_order_list_orders import ParameterOrderListOrders
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -399,12 +399,12 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.OrdersApi(api_client)
+    api_instance = voucherify_client.OrdersApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
-    order = openapi_client.ParameterOrderListOrders() # ParameterOrderListOrders | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrderListOrders() # ParameterOrderListOrders | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Orders
@@ -459,15 +459,15 @@ Updates the specified order by setting the values of the parameters passed in th
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.orders_update_request_body import OrdersUpdateRequestBody
-from openapi_client.models.orders_update_response_body import OrdersUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.orders_update_request_body import OrdersUpdateRequestBody
+from voucherify_client.models.orders_update_response_body import OrdersUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -489,9 +489,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.OrdersApi(api_client)
+    api_instance = voucherify_client.OrdersApi(api_client)
     order_id = 'order_id_example' # str | Unique Voucherify order ID or order source ID.
     orders_update_request_body = {"status":"CANCELED"} # OrdersUpdateRequestBody | Specify the parameters of the order that are to be updated. (optional)
 

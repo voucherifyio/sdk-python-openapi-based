@@ -1,4 +1,4 @@
-# openapi_client.VouchersApi
+# voucherify_client.VouchersApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -29,13 +29,13 @@ Deletes a voucher. This operation cannot be undone. Additionally, this operation
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -57,9 +57,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'code_example' # str | A unique **code** that identifies the voucher.
     force = True # bool | If this flag is set to `true`, the voucher will be removed permanently. Going forward, the user will be able to create another voucher with exactly the same code. (optional)
 
@@ -113,14 +113,14 @@ There are various times when you'll want to manage a voucher's accessibility. Th
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_disable_response_body import VouchersDisableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_disable_response_body import VouchersDisableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -142,9 +142,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'code_example' # str | A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.
 
     try:
@@ -198,14 +198,14 @@ There are various times when you'll want to manage a voucher's accessibility. Th
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_enable_response_body import VouchersEnableResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_enable_response_body import VouchersEnableResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -227,9 +227,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'code_example' # str | A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.
 
     try:
@@ -283,15 +283,15 @@ Export transactions that are associated with credit movements on a gift card or 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_transactions_export_create_request_body import VouchersTransactionsExportCreateRequestBody
-from openapi_client.models.vouchers_transactions_export_create_response_body import VouchersTransactionsExportCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_transactions_export_create_request_body import VouchersTransactionsExportCreateRequestBody
+from voucherify_client.models.vouchers_transactions_export_create_response_body import VouchersTransactionsExportCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -313,9 +313,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'GIFT-CARD-1' # str | A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.
     vouchers_transactions_export_create_request_body = {"parameters":{"order":"-created_at","fields":["id","type","source_id","reason","balance","amount","created_at","voucher_id","campaign_id","details","source"]}} # VouchersTransactionsExportCreateRequestBody | Specify the parameters for the transaction export. (optional)
 
@@ -371,14 +371,14 @@ Retrieves the voucher with the given `code` or unique Voucherify ID. You can eit
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_get_response_body import VouchersGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_get_response_body import VouchersGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -400,9 +400,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'code_example' # str | A unique **code** that identifies the voucher.
 
     try:
@@ -456,14 +456,14 @@ Import standalone vouchers into the repository using a CSV file.  The CSV file h
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_import_csv_create_response_body import VouchersImportCsvCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_import_csv_create_response_body import VouchersImportCsvCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -485,9 +485,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     file = None # bytearray | File path.
 
     try:
@@ -541,14 +541,14 @@ List transactions that are associated with credit movements on a gift card or lo
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_transactions_list_response_body import VouchersTransactionsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_transactions_list_response_body import VouchersTransactionsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -570,9 +570,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'code_example' # str | A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
@@ -630,13 +630,13 @@ Manually release a validation session that has been set up for the voucher. This
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -658,9 +658,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'code_example' # str | A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify.
     session_key = 'ssn_yQGMTeKBSw8OOuFPwlBEjzGy8d8VA9Ts' # str | A unique session identifier.
 
@@ -714,15 +714,15 @@ Add balance to an existing gift card or loyalty card.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.vouchers_balance_update_request_body import VouchersBalanceUpdateRequestBody
-from openapi_client.models.vouchers_balance_update_response_body import VouchersBalanceUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.vouchers_balance_update_request_body import VouchersBalanceUpdateRequestBody
+from voucherify_client.models.vouchers_balance_update_response_body import VouchersBalanceUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -744,9 +744,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.VouchersApi(api_client)
+    api_instance = voucherify_client.VouchersApi(api_client)
     code = 'code_example' # str | A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.
     vouchers_balance_update_request_body = {"amount":10000} # VouchersBalanceUpdateRequestBody | Provide the amount to be added to/subtracted from the voucher.
 

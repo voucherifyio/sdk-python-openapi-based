@@ -1,4 +1,4 @@
-# openapi_client.CustomersApi
+# voucherify_client.CustomersApi
 
 All URIs are relative to *https://api.voucherify.io*
 
@@ -33,15 +33,15 @@ Creates a customer object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_create_request_body import CustomersCreateRequestBody
-from openapi_client.models.customers_create_response_body import CustomersCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_create_request_body import CustomersCreateRequestBody
+from voucherify_client.models.customers_create_response_body import CustomersCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -63,9 +63,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customers_create_request_body = {"source_id":"source_123","name":"Bob Smith","description":"A frequent customer","email":"bob.smith@email.com","phone":"+1 933 222 3333","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthdate":"2022-01-01"} # CustomersCreateRequestBody | Create a customer with specified parameters. (optional)
 
     try:
@@ -119,14 +119,14 @@ The organization user can remove consumer data permanently from the Voucherify s
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_permanent_deletion_create_response_body import CustomersPermanentDeletionCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_permanent_deletion_create_response_body import CustomersPermanentDeletionCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -148,9 +148,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
 
     try:
@@ -204,13 +204,13 @@ This method deletes a customer.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -232,9 +232,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
 
     try:
@@ -286,14 +286,14 @@ Retrieve customer details.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_get_response_body import CustomersGetResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_get_response_body import CustomersGetResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -315,9 +315,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
 
     try:
@@ -371,14 +371,14 @@ This API method lets you import or update customer data. To get a proper and val
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_import_csv_create_response_body import CustomersImportCsvCreateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_import_csv_create_response_body import CustomersImportCsvCreateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -400,9 +400,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     file = None # bytearray | File path.
 
     try:
@@ -456,16 +456,16 @@ Retrieve customer activities.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_activities_list_response_body import CustomersActivitiesListResponseBody
-from openapi_client.models.parameter_campaign_type import ParameterCampaignType
-from openapi_client.models.parameter_order import ParameterOrder
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_activities_list_response_body import CustomersActivitiesListResponseBody
+from voucherify_client.models.parameter_campaign_type import ParameterCampaignType
+from voucherify_client.models.parameter_order import ParameterOrder
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -487,15 +487,15 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or source ID of the customer who performed the activities.
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    order = openapi_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
     starting_after = '2013-10-20T19:20:30+01:00' # datetime | A cursor for use in pagination. `starting_after` is a date-time value that defines your place in the list based on `created_at` property from the activity object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list. (optional)
     starting_after_id = 'starting_after_id_example' # str | By applying this filter value, you will get events starting after an event with the given ID. (optional)
-    campaign_type = openapi_client.ParameterCampaignType() # ParameterCampaignType | Through this parameter you can control a type of campaign by which Voucherify will filter related customer's activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM (optional)
+    campaign_type = voucherify_client.ParameterCampaignType() # ParameterCampaignType | Through this parameter you can control a type of campaign by which Voucherify will filter related customer's activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM (optional)
     campaign_id = 'campaign_id_example' # str | By applying this parameter you request only events related to specific campaign identified by its ID. (optional)
     product_id = 'product_id_example' # str | By applying this parameter you request only events related to specific product identified by its ID. (optional)
     start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
@@ -561,14 +561,14 @@ Returns the list of segments IDs to which the customer belongs to.    If you pas
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_segments_list_response_body import CustomersSegmentsListResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_segments_list_response_body import CustomersSegmentsListResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -590,9 +590,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | Unique identifier of a customer represented by an internal customer ID or customer source ID.
 
     try:
@@ -646,15 +646,15 @@ Returns a list of customers.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_list_response_body import CustomersListResponseBody
-from openapi_client.models.parameter_order_list_customers import ParameterOrderListCustomers
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_list_response_body import CustomersListResponseBody
+from voucherify_client.models.parameter_order_list_customers import ParameterOrderListCustomers
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -676,9 +676,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
     page = 56 # int | Which page of results to return. (optional)
     email = 'email_example' # str | Limit the customers to the ones that have this specific email address. (optional)
@@ -689,7 +689,7 @@ with openapi_client.ApiClient(configuration) as api_client:
     created_at_after = '2013-10-20T19:20:30+01:00' # datetime | Filter customers by date customer was created. (optional)
     updated_at_before = '2013-10-20T19:20:30+01:00' # datetime | Filter customers by date customer was updated last time. (optional)
     updated_at_after = '2013-10-20T19:20:30+01:00' # datetime | Filter customers by date customer was updated last time. (optional)
-    order = openapi_client.ParameterOrderListCustomers() # ParameterOrderListCustomers | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    order = voucherify_client.ParameterOrderListCustomers() # ParameterOrderListCustomers | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
     starting_after = '2013-10-20T19:20:30+01:00' # datetime | A cursor for use in pagination. This is a date-time value that defines your place in the list based on `created_at` property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.  <!-- title: Options --> | **Option** | **Format** | **Sorting** | |:---|:---|:---| | Return customers **before** a specific creation date  | - set `starting_after` parameter to the breakpoint date | Sorting order is **descending**; the most recent dates first and least recent dates last. | | Return customers **after** a specific create or update date | - include the `order` parameter set to `created_at` or `updated_at`<br>- set `starting_after` to the breakpoint date | Sorting order is **ascending**; the least recent dates first and the most recent dates last. |  (optional)
 
     try:
@@ -754,15 +754,15 @@ Updates the specified customer by setting the values of the parameters passed in
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_update_request_body import CustomersUpdateRequestBody
-from openapi_client.models.customers_update_response_body import CustomersUpdateResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_update_request_body import CustomersUpdateRequestBody
+from voucherify_client.models.customers_update_response_body import CustomersUpdateResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -784,9 +784,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
     customers_update_request_body = {"name":"Alice McDonald","email":"alice.mdconald@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthdate":"2022-01-01","birthday":"2022-01-02"} # CustomersUpdateRequestBody | Specify the parameters to be updated. (optional)
 
@@ -842,13 +842,13 @@ Update marketing permissions for the specified customer.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -870,9 +870,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify unique customer identifier or source ID.
     body = {"cnst_6jQ5XcUOLnj5L7ImQAdBsJ1I":true,"cnst_VCmucIvAsmDYw2PPAok6bcYy":false} # object | Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ``` (optional)
 
@@ -926,13 +926,13 @@ Update marketing permissions for the specified customer.
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -954,9 +954,9 @@ configuration.api_key['X-Client-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-Client-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify customer identifier or `source_id`
     body = {"cnst_6jQ5XcUOLnj5L7ImQAdBsJ1I":true,"cnst_VCmucIvAsmDYw2PPAok6bcYy":false} # object | Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ``` (optional)
 
@@ -1010,15 +1010,15 @@ Update several customers in one asynchronous operation.   In one request, it is 
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_update_in_bulk_request_body import CustomersUpdateInBulkRequestBody
-from openapi_client.models.customers_update_in_bulk_response_body import CustomersUpdateInBulkResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_update_in_bulk_request_body import CustomersUpdateInBulkRequestBody
+from voucherify_client.models.customers_update_in_bulk_response_body import CustomersUpdateInBulkResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1040,9 +1040,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customers_update_in_bulk_request_body = [{"source_id":"John.Smith@email.com","name":"John Smith","email":"john.smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthday":"2022-04-04"},{"source_id":"Jane.Smith@email.com","name":"Jane Smith","email":"Jane.Smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthday":"2022-03-03"},{"source_id":"Sally.Smith@email.com","name":"Sally Smith","email":"Sally.Smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthdate":"2022-02-02"}] # List[CustomersUpdateInBulkRequestBody] | Specify the customer fields that you would like to update in each customer object. (optional)
 
     try:
@@ -1096,15 +1096,15 @@ Update several customers metadata properties in one asynchronous operation.   In
 ```python
 import time
 import os
-import openapi_client
-from openapi_client.models.customers_metadata_update_in_bulk_request_body import CustomersMetadataUpdateInBulkRequestBody
-from openapi_client.models.customers_metadata_update_in_bulk_response_body import CustomersMetadataUpdateInBulkResponseBody
-from openapi_client.rest import ApiException
+import voucherify_client
+from voucherify_client.models.customers_metadata_update_in_bulk_request_body import CustomersMetadataUpdateInBulkRequestBody
+from voucherify_client.models.customers_metadata_update_in_bulk_response_body import CustomersMetadataUpdateInBulkResponseBody
+from voucherify_client.rest import ApiException
 from pprint import pprint
 
 # Defining the host is optional and defaults to https://api.voucherify.io
 # See configuration.py for a list of all supported configuration parameters.
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = "https://api.voucherify.io"
 )
 
@@ -1126,9 +1126,9 @@ configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
 # configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with openapi_client.ApiClient(configuration) as api_client:
+with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = openapi_client.CustomersApi(api_client)
+    api_instance = voucherify_client.CustomersApi(api_client)
     customers_metadata_update_in_bulk_request_body = {"source_ids":["source_123","source_456"],"metadata":{"lang":"en","test":false}} # CustomersMetadataUpdateInBulkRequestBody | List the `source_ids` of the customer's you would like to update along with the metadata key value pairs. (optional)
 
     try:
