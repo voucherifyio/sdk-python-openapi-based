@@ -9,4 +9,4 @@ VOLUME /app/data
 
 COPY . .
 
-CMD ["python", "./tests/python.py"]
+CMD ["python", "./__tests__/python.py"]
