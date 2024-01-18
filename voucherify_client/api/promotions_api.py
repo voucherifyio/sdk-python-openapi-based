@@ -184,7 +184,7 @@ class PromotionsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CampaignsCreateResponseBody",
@@ -339,7 +339,7 @@ class PromotionsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsStacksCreateResponseBody",
@@ -483,7 +483,7 @@ class PromotionsApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -617,7 +617,7 @@ class PromotionsApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -755,7 +755,7 @@ class PromotionsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsTiersDisableResponseBody",
@@ -895,7 +895,7 @@ class PromotionsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsTiersEnableResponseBody",
@@ -1043,7 +1043,7 @@ class PromotionsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsStacksGetResponseBody",
@@ -1183,7 +1183,7 @@ class PromotionsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsTiersGetResponseBody",
@@ -1355,7 +1355,7 @@ class PromotionsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsStacksListResponseBody",
@@ -1495,7 +1495,7 @@ class PromotionsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsStacksListResponseBody",
@@ -1635,7 +1635,7 @@ class PromotionsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsTiersListResponseBody",
@@ -1798,7 +1798,7 @@ class PromotionsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "PromotionsStacksUpdateResponseBody",

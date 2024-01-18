@@ -378,49 +378,40 @@ conf = voucherify_client.Configuration(
         :return: The Auth Settings information dict.
         """
         auth = {}
-        if 'X-App-Id-1' in self.api_key:
-            auth['X-App-Id-1'] = {
+        if 'X-App-Id' in self.api_key:
+            auth['X-App-Id'] = {
                 'type': 'api_key',
                 'in': 'header',
                 'key': 'X-App-Id',
                 'value': self.get_api_key_with_prefix(
-                    'X-App-Id-1',
+                    'X-App-Id',
                 ),
             }
-        if 'X-App-Token-1' in self.api_key:
-            auth['X-App-Token-1'] = {
+        if 'X-App-Token' in self.api_key:
+            auth['X-App-Token'] = {
                 'type': 'api_key',
                 'in': 'header',
                 'key': 'X-App-Token',
                 'value': self.get_api_key_with_prefix(
-                    'X-App-Token-1',
+                    'X-App-Token',
                 ),
             }
-        if 'X-Client-Token-1' in self.api_key:
-            auth['X-Client-Token-1'] = {
+        if 'X-Client-Token' in self.api_key:
+            auth['X-Client-Token'] = {
                 'type': 'api_key',
                 'in': 'header',
                 'key': 'X-Client-Token',
                 'value': self.get_api_key_with_prefix(
-                    'X-Client-Token-1',
+                    'X-Client-Token',
                 ),
             }
-        if 'X-Client-Application-Id-1' in self.api_key:
-            auth['X-Client-Application-Id-1'] = {
+        if 'X-Client-Application-Id' in self.api_key:
+            auth['X-Client-Application-Id'] = {
                 'type': 'api_key',
                 'in': 'header',
                 'key': 'X-Client-Application-Id',
                 'value': self.get_api_key_with_prefix(
-                    'X-Client-Application-Id-1',
-                ),
-            }
-        if 'Download-Token-1' in self.api_key:
-            auth['Download-Token-1'] = {
-                'type': 'api_key',
-                'in': 'query',
-                'key': 'token',
-                'value': self.get_api_key_with_prefix(
-                    'Download-Token-1',
+                    'X-Client-Application-Id',
                 ),
             }
         return auth

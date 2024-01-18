@@ -188,7 +188,7 @@ class CustomersApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CustomersCreateResponseBody",
@@ -328,7 +328,7 @@ class CustomersApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CustomersPermanentDeletionCreateResponseBody",
@@ -464,7 +464,7 @@ class CustomersApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -602,7 +602,7 @@ class CustomersApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CustomersGetResponseBody",
@@ -749,7 +749,7 @@ class CustomersApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '202': "CustomersImportCsvCreateResponseBody",
@@ -970,7 +970,7 @@ class CustomersApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CustomersActivitiesListResponseBody",
@@ -1110,7 +1110,7 @@ class CustomersApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CustomersSegmentsListResponseBody",
@@ -1353,7 +1353,7 @@ class CustomersApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CustomersListResponseBody",
@@ -1508,7 +1508,7 @@ class CustomersApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "CustomersUpdateResponseBody",
@@ -1659,7 +1659,7 @@ class CustomersApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -1808,7 +1808,7 @@ class CustomersApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-Client-Application-Id-1', 'X-Client-Token-1']  # noqa: E501
+        _auth_settings = ['X-Client-Application-Id', 'X-Client-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -1953,7 +1953,7 @@ class CustomersApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '202': "CustomersUpdateInBulkResponseBody",
@@ -2100,7 +2100,7 @@ class CustomersApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '202': "CustomersMetadataUpdateInBulkResponseBody",

@@ -203,7 +203,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "List[LoyaltyTier]",
@@ -347,7 +347,7 @@ class LoyaltiesApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -493,7 +493,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesDeleteResponseBody",
@@ -637,7 +637,7 @@ class LoyaltiesApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -783,7 +783,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesEarningRulesDisableResponseBody",
@@ -931,7 +931,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesEarningRulesEnableResponseBody",
@@ -1086,7 +1086,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersTransactionsExportCreateResponseBody",
@@ -1249,7 +1249,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersTransactionsExportCreateResponseBody",
@@ -1397,7 +1397,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesEarningRulesGetResponseBody",
@@ -1545,7 +1545,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesTiersGetResponseBody",
@@ -1693,7 +1693,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesRewardAssignmentsGetResponseBody",
@@ -1841,7 +1841,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesRewardsGetResponseBody",
@@ -1989,7 +1989,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesRewardAssignmentsRewardGetResponseBody",
@@ -2145,7 +2145,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersTransactionsListResponseBody",
@@ -2309,7 +2309,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersTransactionsListResponseBody",
@@ -2473,7 +2473,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesTiersEarningRulesListResponseBody",
@@ -2621,7 +2621,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesTiersRewardsListResponseBody",
@@ -2777,7 +2777,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesTiersListResponseBody",
@@ -2917,7 +2917,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersTiersListResponseBody",
@@ -3065,7 +3065,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersRewardsListResponseBody",
@@ -3229,7 +3229,7 @@ class LoyaltiesApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersPointsExpirationListResponseBody",
@@ -3384,7 +3384,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersRedemptionRedeemResponseBody",
@@ -3547,7 +3547,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersRedemptionRedeemResponseBody",
@@ -3710,7 +3710,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersTransfersCreateResponseBody",
@@ -3865,7 +3865,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersBalanceUpdateResponseBody",
@@ -4028,7 +4028,7 @@ class LoyaltiesApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "LoyaltiesMembersBalanceUpdateResponseBody",

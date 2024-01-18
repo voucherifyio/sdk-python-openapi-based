@@ -26,8 +26,8 @@ This method gives a possibility to add a new voucher to an existing campaign. Th
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -48,17 +48,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -116,8 +116,8 @@ This method gives the possibility to push new vouchers to an existing campaign. 
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -138,17 +138,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -183,7 +183,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -207,8 +207,8 @@ Method to create a batch of vouchers aggregated in one campaign. You can choose 
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -229,17 +229,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -270,7 +270,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -293,8 +293,8 @@ Permanently deletes a campaign and all related vouchers. This action cannot be u
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -314,17 +314,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -357,7 +357,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -380,8 +380,8 @@ There are various times when you'll want to manage a campaign's accessibility. T
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -401,17 +401,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -442,7 +442,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -465,8 +465,8 @@ There are various times when you'll want to manage a campaign's accessibility. T
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -486,17 +486,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -527,7 +527,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -550,8 +550,8 @@ Retrieves the campaign with the given campaign ID or campaign name.
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -571,17 +571,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -612,7 +612,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -635,8 +635,8 @@ Imports vouchers to an **existing** campaign.  This API request starts a process
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -657,17 +657,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -700,7 +700,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -723,8 +723,8 @@ Imports vouchers to an **existing** campaign.     The CSV file has to include he
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -744,17 +744,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -787,7 +787,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -810,8 +810,8 @@ Retrieve a list of campaigns in a project.   The campaigns are returned sorted b
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -834,17 +834,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -883,7 +883,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 
@@ -906,8 +906,8 @@ Updates the specified campaign by setting the values of the parameters passed in
 
 ### Example
 
-* Api Key Authentication (X-App-Id-1):
-* Api Key Authentication (X-App-Token-1):
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
 ```python
 import time
 import os
@@ -928,17 +928,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 # Enter a context with an instance of the API client
 with voucherify_client.ApiClient(configuration) as api_client:
@@ -971,7 +971,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[X-App-Id-1](../README.md#X-App-Id-1), [X-App-Token-1](../README.md#X-App-Token-1)
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
 
 ### HTTP request headers
 

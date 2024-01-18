@@ -20,8 +20,8 @@ configuration = voucherify_client.Configuration(
     host = HOST or 'https://api.voucherify.io'
 )
 
-configuration.api_key['X-App-Id-1'] = X_APP_ID
-configuration.api_key['X-App-Token-1'] = X_APP_TOKEN
+configuration.api_key['X-App-Id'] = X_APP_ID
+configuration.api_key['X-App-Token'] = X_APP_TOKEN
 
 class TestYourSDK(unittest.TestCase):
 

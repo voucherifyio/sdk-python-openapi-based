@@ -75,17 +75,17 @@ configuration = voucherify_client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure API key authorization: X-App-Id-1
-configuration.api_key['X-App-Id-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
 
-# Configure API key authorization: X-App-Token-1
-configuration.api_key['X-App-Token-1'] = os.environ["API_KEY"]
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token-1'] = 'Bearer'
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
 
 
 # Enter a context with an instance of the API client
@@ -913,40 +913,33 @@ Class | Method | HTTP request | Description
 
 
 Authentication schemes defined for the API:
-<a id="X-App-Id-1"></a>
-### X-App-Id-1
+<a id="X-App-Id"></a>
+### X-App-Id
 
 - **Type**: API key
 - **API key parameter name**: X-App-Id
 - **Location**: HTTP header
 
-<a id="X-App-Token-1"></a>
-### X-App-Token-1
+<a id="X-App-Token"></a>
+### X-App-Token
 
 - **Type**: API key
 - **API key parameter name**: X-App-Token
 - **Location**: HTTP header
 
-<a id="X-Client-Token-1"></a>
-### X-Client-Token-1
+<a id="X-Client-Token"></a>
+### X-Client-Token
 
 - **Type**: API key
 - **API key parameter name**: X-Client-Token
 - **Location**: HTTP header
 
-<a id="X-Client-Application-Id-1"></a>
-### X-Client-Application-Id-1
+<a id="X-Client-Application-Id"></a>
+### X-Client-Application-Id
 
 - **Type**: API key
 - **API key parameter name**: X-Client-Application-Id
 - **Location**: HTTP header
-
-<a id="Download-Token-1"></a>
-### Download-Token-1
-
-- **Type**: API key
-- **API key parameter name**: token
-- **Location**: URL query string
 
 
 ## Author

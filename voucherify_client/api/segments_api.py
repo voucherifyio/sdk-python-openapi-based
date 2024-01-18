@@ -156,7 +156,7 @@ class SegmentsApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 

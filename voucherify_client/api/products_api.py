@@ -190,7 +190,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsCreateResponseBody",
@@ -345,7 +345,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsSkusCreateResponseBody",
@@ -489,7 +489,7 @@ class ProductsApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -639,7 +639,7 @@ class ProductsApi:
         # process the body parameter
         _body_params = None
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {}
 
@@ -777,7 +777,7 @@ class ProductsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsGetResponseBody",
@@ -917,7 +917,7 @@ class ProductsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "SkusGetResponseBody",
@@ -1064,7 +1064,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsImportCsvCreateResponseBody",
@@ -1211,7 +1211,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "SkusImportCsvCreateResponseBody",
@@ -1389,7 +1389,7 @@ class ProductsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsListResponseBody",
@@ -1575,7 +1575,7 @@ class ProductsApi:
             ['application/json'])  # noqa: E501
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsSkusListResponseBody",
@@ -1730,7 +1730,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsUpdateResponseBody",
@@ -1877,7 +1877,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '202': "ProductsUpdateInBulkResponseBody",
@@ -2024,7 +2024,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '202': "ProductsMetadataUpdateInBulkResponseBody",
@@ -2187,7 +2187,7 @@ class ProductsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ProductsSkusUpdateResponseBody",

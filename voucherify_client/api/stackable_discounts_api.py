@@ -179,7 +179,7 @@ class StackableDiscountsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "RedemptionsRedeemResponseBody",
@@ -334,7 +334,7 @@ class StackableDiscountsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-Client-Application-Id-1', 'X-Client-Token-1']  # noqa: E501
+        _auth_settings = ['X-Client-Application-Id', 'X-Client-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ClientRedemptionsRedeemResponseBody",
@@ -505,7 +505,7 @@ class StackableDiscountsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "RedemptionsRollbacksCreateResponseBody",
@@ -652,7 +652,7 @@ class StackableDiscountsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-App-Id-1', 'X-App-Token-1']  # noqa: E501
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ValidationsValidateResponseBody",
@@ -807,7 +807,7 @@ class StackableDiscountsApi:
                 _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
-        _auth_settings = ['X-Client-Application-Id-1', 'X-Client-Token-1']  # noqa: E501
+        _auth_settings = ['X-Client-Application-Id', 'X-Client-Token']  # noqa: E501
 
         _response_types_map = {
             '200': "ClientValidationsValidateResponseBody",
