@@ -2,10 +2,10 @@ import sys
 sys.path.insert(0, './')
 
 import os
-import openapi_client
+import voucherify_client
 import unittest
 import responses
-from openapi_client.rest import ApiException
+from voucherify_client.rest import ApiException
 from pprint import pprint
 import random
 from dotenv import load_dotenv
@@ -16,7 +16,7 @@ HOST = os.getenv('VOUCHERIFY_HOST')
 X_APP_ID = os.getenv('X_APP_ID')
 X_APP_TOKEN = os.getenv('X_APP_TOKEN')
 
-configuration = openapi_client.Configuration(
+configuration = voucherify_client.Configuration(
     host = HOST or 'https://api.voucherify.io'
 )
 
@@ -30,21 +30,21 @@ class TestYourSDK(unittest.TestCase):
 
     @responses.activate
     def test_add_vouchers_to_campaign(self):
-        with openapi_client.ApiClient(configuration) as api_client:
-            api_instance = openapi_client.CampaignsApi(api_client)
+        with voucherify_client.ApiClient(configuration) as api_client:
+            api_instance = voucherify_client.CampaignsApi(api_client)
 
             randomCode = random.randint(0, 100000)
             campaign_name = "camp_test_" + str(randomCode)
             code = "test_code_" + str(randomCode)
 
             try:
-                campaignsCreateRequestBody = openapi_client.CampaignsCreateRequestBody(
-                    actual_instance=openapi_client.CampaignsCreateDiscountCouponsCampaign(
+                campaignsCreateRequestBody = voucherify_client.CampaignsCreateRequestBody(
+                    actual_instance=voucherify_client.CampaignsCreateDiscountCouponsCampaign(
                         name=campaign_name,
-                        voucher=openapi_client.DiscountCouponsCampaignVoucher(
+                        voucher=voucherify_client.DiscountCouponsCampaignVoucher(
                             type="DISCOUNT_VOUCHER",
-                            discount=openapi_client.Discount(
-                                actual_instance=openapi_client.DiscountAmount(
+                            discount=voucherify_client.Discount(
+                                actual_instance=voucherify_client.DiscountAmount(
                                     type="AMOUNT",
                                     amount_off=1000
                                 )
@@ -70,8 +70,8 @@ class TestYourSDK(unittest.TestCase):
 
     @responses.activate
     def test_list_redemptions(self):
-        with openapi_client.ApiClient(configuration) as api_client:
-            api_instance = openapi_client.RedemptionsApi(api_client)
+        with voucherify_client.ApiClient(configuration) as api_client:
+            api_instance = voucherify_client.RedemptionsApi(api_client)
 
             try:
                 result = api_instance.list_redemptions()
@@ -83,8 +83,8 @@ class TestYourSDK(unittest.TestCase):
 
     @responses.activate
     def test_list_publications(self):
-        with openapi_client.ApiClient(configuration) as api_client:
-            api_instance = openapi_client.PublicationsApi(api_client)
+        with voucherify_client.ApiClient(configuration) as api_client:
+            api_instance = voucherify_client.PublicationsApi(api_client)
 
             try:
                 result = api_instance.list_publications()
@@ -96,8 +96,8 @@ class TestYourSDK(unittest.TestCase):
 
     @responses.activate
     def test_list_products_in_collection(self):
-        with openapi_client.ApiClient(configuration) as api_client:
-            api_instance = openapi_client.ProductCollectionsApi(api_client)
+        with voucherify_client.ApiClient(configuration) as api_client:
+            api_instance = voucherify_client.ProductCollectionsApi(api_client)
 
             try:
                 result = api_instance.list_products_in_collection("pc_a11pr0dUc75")
@@ -109,8 +109,8 @@ class TestYourSDK(unittest.TestCase):
 
     @responses.activate
     def test_list_member_rewards(self):
-        with openapi_client.ApiClient(configuration) as api_client:
-            api_instance = openapi_client.LoyaltiesApi(api_client)
+        with voucherify_client.ApiClient(configuration) as api_client:
+            api_instance = voucherify_client.LoyaltiesApi(api_client)
 
             try:
                 result = api_instance.list_member_rewards("abcd")
