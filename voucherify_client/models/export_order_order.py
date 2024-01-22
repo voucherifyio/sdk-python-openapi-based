@@ -30,32 +30,12 @@ class ExportOrderOrder(str, Enum):
     """
     allowed enum values
     """
-    ID = 'id'
-    MINUS_ID = '-id'
-    SOURCE_ID = 'source_id'
-    MINUS_SOURCE_ID = '-source_id'
-    CREATED_AT = 'created_at'
     MINUS_CREATED_AT = '-created_at'
-    UPDATED_AT = 'updated_at'
+    CREATED_AT = 'created_at'
     MINUS_UPDATED_AT = '-updated_at'
-    STATUS = 'status'
+    UPDATED_AT = 'updated_at'
     MINUS_STATUS = '-status'
-    AMOUNT = 'amount'
-    MINUS_AMOUNT = '-amount'
-    DISCOUNT_AMOUNT = 'discount_amount'
-    MINUS_DISCOUNT_AMOUNT = '-discount_amount'
-    ITEMS_DISCOUNT_AMOUNT = 'items_discount_amount'
-    MINUS_ITEMS_DISCOUNT_AMOUNT = '-items_discount_amount'
-    TOTAL_DISCOUNT_AMOUNT = 'total_discount_amount'
-    MINUS_TOTAL_DISCOUNT_AMOUNT = '-total_discount_amount'
-    TOTAL_AMOUNT = 'total_amount'
-    MINUS_TOTAL_AMOUNT = '-total_amount'
-    CUSTOMER_ID = 'customer_id'
-    MINUS_CUSTOMER_ID = '-customer_id'
-    REFERRER_ID = 'referrer_id'
-    MINUS_REFERRER_ID = '-referrer_id'
-    METADATA = 'metadata'
-    MINUS_METADATA = '-metadata'
+    STATUS = 'status'
 
     @classmethod
     def from_json(cls, json_str: str) -> ExportOrderOrder:

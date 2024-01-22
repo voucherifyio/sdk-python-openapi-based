@@ -19,10 +19,9 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, conlist
 from voucherify_client.models.export_order_fields import ExportOrderFields
-from voucherify_client.models.export_order_filters import ExportOrderFilters
 from voucherify_client.models.export_order_order import ExportOrderOrder
 
 class OrdersExportCreateRequestBodyParameters(BaseModel):
@@ -31,7 +30,7 @@ class OrdersExportCreateRequestBodyParameters(BaseModel):
     """
     order: Optional[ExportOrderOrder] = None
     fields: Optional[conlist(ExportOrderFields)] = Field(None, description="Array of strings containing the data in the export. These fields define the headers in the CSV file.")
-    filters: Optional[ExportOrderFilters] = None
+    filters: Optional[Dict[str, Any]] = Field(None, description="Allowed additional properties must start with \"metadata.\"")
     __properties = ["order", "fields", "filters"]
 
     class Config:
@@ -58,9 +57,6 @@ class OrdersExportCreateRequestBodyParameters(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of filters
-        if self.filters:
-            _dict['filters'] = self.filters.to_dict()
         return _dict
 
     @classmethod
@@ -75,7 +71,7 @@ class OrdersExportCreateRequestBodyParameters(BaseModel):
         _obj = OrdersExportCreateRequestBodyParameters.parse_obj({
             "order": obj.get("order"),
             "fields": obj.get("fields"),
-            "filters": ExportOrderFilters.from_dict(obj.get("filters")) if obj.get("filters") is not None else None
+            "filters": obj.get("filters")
         })
         return _obj
 

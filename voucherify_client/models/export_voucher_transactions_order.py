@@ -30,30 +30,8 @@ class ExportVoucherTransactionsOrder(str, Enum):
     """
     allowed enum values
     """
-    ID = 'id'
-    MINUS_ID = '-id'
-    CAMPAIGN_ID = 'campaign_id'
-    MINUS_CAMPAIGN_ID = '-campaign_id'
-    VOUCHER_ID = 'voucher_id'
-    MINUS_VOUCHER_ID = '-voucher_id'
-    TYPE = 'type'
-    MINUS_TYPE = '-type'
-    SOURCE_ID = 'source_id'
-    MINUS_SOURCE_ID = '-source_id'
-    REASON = 'reason'
-    MINUS_REASON = '-reason'
-    SOURCE = 'source'
-    MINUS_SOURCE = '-source'
-    BALANCE = 'balance'
-    MINUS_BALANCE = '-balance'
-    AMOUNT = 'amount'
-    MINUS_AMOUNT = '-amount'
-    RELATED_TRANSACTION_ID = 'related_transaction_id'
-    MINUS_RELATED_TRANSACTION_ID = '-related_transaction_id'
-    CREATED_AT = 'created_at'
     MINUS_CREATED_AT = '-created_at'
-    DETAILS = 'details'
-    MINUS_DETAILS = '-details'
+    CREATED_AT = 'created_at'
 
     @classmethod
     def from_json(cls, json_str: str) -> ExportVoucherTransactionsOrder:

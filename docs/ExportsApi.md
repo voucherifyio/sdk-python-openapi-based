@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_export**](ExportsApi.md#create_export) | **POST** /v1/exports | Create Export
 [**delete_export**](ExportsApi.md#delete_export) | **DELETE** /v1/exports/{exportId} | Delete Export
+[**download_export**](ExportsApi.md#download_export) | **GET** /v1/exports/{export_Id} | Download Export
 [**get_export**](ExportsApi.md#get_export) | **GET** /v1/exports/{exportId} | Get Export
 [**list_exports**](ExportsApi.md#list_exports) | **GET** /v1/exports | List Exports
 
@@ -175,6 +176,74 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Returns no content if deletion is successful. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **download_export**
+> str download_export(export_id, token=token)
+
+Download Export
+
+Download the contents of the exported CSV file.   <!-- theme: info -->  > 📘 Important notes > > **Base URL:**  > - `https://download.voucherify.io` (Europe)  > - `https://us1.download.voucherify.io` (US)  > - `https://as1.download.voucherify.io` (Asia)  > > **Token:** Can be found within the `result` parameter of the <!-- [Get Export](OpenAPI.json/paths/~1exports~1{exportId}/get) -->[Get Export](ref:get-export) method response.
+
+### Example
+
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.ExportsApi(api_client)
+    export_id = 'exp_ex6zq0x0EEa9S0N68QcqhxcQ' # str | Unique export object ID.
+    token = 'token_example' # str | Token that was issued to the export, to get this token, get the export first (optional)
+
+    try:
+        # Download Export
+        api_response = api_instance.download_export(export_id, token=token)
+        print("The response of ExportsApi->download_export:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ExportsApi->download_export: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **export_id** | **str**| Unique export object ID. | 
+ **token** | **str**| Token that was issued to the export, to get this token, get the export first | [optional] 
+
+### Return type
+
+**str**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns contents of CSV file. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

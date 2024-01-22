@@ -29,19 +29,10 @@ class ExportVoucherTransactionsFilters(BaseModel):
     ExportVoucherTransactionsFilters
     """
     junction: Optional[Junction] = None
-    id: Optional[FieldConditions] = None
-    campaign_id: Optional[FieldConditions] = None
-    voucher_id: Optional[FieldConditions] = None
-    type: Optional[FieldConditions] = None
-    source_id: Optional[FieldConditions] = None
-    reason: Optional[FieldConditions] = None
-    source: Optional[FieldConditions] = None
-    balance: Optional[FieldConditions] = None
-    amount: Optional[FieldConditions] = None
-    related_transaction_id: Optional[FieldConditions] = None
     created_at: Optional[FieldConditions] = None
-    details: Optional[FieldConditions] = None
-    __properties = ["junction", "id", "campaign_id", "voucher_id", "type", "source_id", "reason", "source", "balance", "amount", "related_transaction_id", "created_at", "details"]
+    voucher_id: Optional[FieldConditions] = None
+    campaign_id: Optional[FieldConditions] = None
+    __properties = ["junction", "created_at", "voucher_id", "campaign_id"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,42 +58,15 @@ class ExportVoucherTransactionsFilters(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of id
-        if self.id:
-            _dict['id'] = self.id.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of campaign_id
-        if self.campaign_id:
-            _dict['campaign_id'] = self.campaign_id.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of voucher_id
-        if self.voucher_id:
-            _dict['voucher_id'] = self.voucher_id.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of type
-        if self.type:
-            _dict['type'] = self.type.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of source_id
-        if self.source_id:
-            _dict['source_id'] = self.source_id.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of reason
-        if self.reason:
-            _dict['reason'] = self.reason.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of source
-        if self.source:
-            _dict['source'] = self.source.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of balance
-        if self.balance:
-            _dict['balance'] = self.balance.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of amount
-        if self.amount:
-            _dict['amount'] = self.amount.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of related_transaction_id
-        if self.related_transaction_id:
-            _dict['related_transaction_id'] = self.related_transaction_id.to_dict()
         # override the default output from pydantic by calling `to_dict()` of created_at
         if self.created_at:
             _dict['created_at'] = self.created_at.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of details
-        if self.details:
-            _dict['details'] = self.details.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of voucher_id
+        if self.voucher_id:
+            _dict['voucher_id'] = self.voucher_id.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of campaign_id
+        if self.campaign_id:
+            _dict['campaign_id'] = self.campaign_id.to_dict()
         return _dict
 
     @classmethod
@@ -116,18 +80,9 @@ class ExportVoucherTransactionsFilters(BaseModel):
 
         _obj = ExportVoucherTransactionsFilters.parse_obj({
             "junction": obj.get("junction"),
-            "id": FieldConditions.from_dict(obj.get("id")) if obj.get("id") is not None else None,
-            "campaign_id": FieldConditions.from_dict(obj.get("campaign_id")) if obj.get("campaign_id") is not None else None,
-            "voucher_id": FieldConditions.from_dict(obj.get("voucher_id")) if obj.get("voucher_id") is not None else None,
-            "type": FieldConditions.from_dict(obj.get("type")) if obj.get("type") is not None else None,
-            "source_id": FieldConditions.from_dict(obj.get("source_id")) if obj.get("source_id") is not None else None,
-            "reason": FieldConditions.from_dict(obj.get("reason")) if obj.get("reason") is not None else None,
-            "source": FieldConditions.from_dict(obj.get("source")) if obj.get("source") is not None else None,
-            "balance": FieldConditions.from_dict(obj.get("balance")) if obj.get("balance") is not None else None,
-            "amount": FieldConditions.from_dict(obj.get("amount")) if obj.get("amount") is not None else None,
-            "related_transaction_id": FieldConditions.from_dict(obj.get("related_transaction_id")) if obj.get("related_transaction_id") is not None else None,
             "created_at": FieldConditions.from_dict(obj.get("created_at")) if obj.get("created_at") is not None else None,
-            "details": FieldConditions.from_dict(obj.get("details")) if obj.get("details") is not None else None
+            "voucher_id": FieldConditions.from_dict(obj.get("voucher_id")) if obj.get("voucher_id") is not None else None,
+            "campaign_id": FieldConditions.from_dict(obj.get("campaign_id")) if obj.get("campaign_id") is not None else None
         })
         return _obj
 

@@ -233,7 +233,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
     page = 56 # int | Which page of results to return. (optional)
     result = 'result_example' # str | A filter on the list based on the redemption result. Available options are: `SUCCESS`, `FAILURE`. You can provide multiple values by repeating the param. (optional)
     campaign = 'campaign_example' # str | A filter by the campaign **name** that the redemption resources originate from. (optional)
-    customer = 'customer_example' # str | Return redemptions performed by the customer with given `id`. (optional)
+    customer = 'customer_example' # str | Return redemptions performed by the customer with given `id` or `source_id`. (optional)
     order = voucherify_client.ParameterOrderListRedemptions() # ParameterOrderListRedemptions | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
     created_at = voucherify_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z` (optional)
     filters = voucherify_client.ParameterFiltersListRedemptions() # ParameterFiltersListRedemptions | Filters for listing responses. (optional)
@@ -257,7 +257,7 @@ Name | Type | Description  | Notes
  **page** | **int**| Which page of results to return. | [optional] 
  **result** | **str**| A filter on the list based on the redemption result. Available options are: &#x60;SUCCESS&#x60;, &#x60;FAILURE&#x60;. You can provide multiple values by repeating the param. | [optional] 
  **campaign** | **str**| A filter by the campaign **name** that the redemption resources originate from. | [optional] 
- **customer** | **str**| Return redemptions performed by the customer with given &#x60;id&#x60;. | [optional] 
+ **customer** | **str**| Return redemptions performed by the customer with given &#x60;id&#x60; or &#x60;source_id&#x60;. | [optional] 
  **order** | [**ParameterOrderListRedemptions**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
  **created_at** | [**ParameterCreatedBeforeAfter**](.md)| A filter on the list based on the object &#x60;created_at&#x60; field. The value is a dictionary with the following options: &#x60;before&#x60;, &#x60;after&#x60;. A date value must be presented in ISO 8601 format (&#x60;2016-11-16T14:14:31Z&#x60; or &#x60;2016-11-16&#x60;). An example: &#x60;[created_at][before]&#x3D;2017-09-08T13:52:18.227Z&#x60; | [optional] 
  **filters** | [**ParameterFiltersListRedemptions**](.md)| Filters for listing responses. | [optional] 
