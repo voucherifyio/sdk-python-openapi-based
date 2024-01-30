@@ -44,7 +44,7 @@ class CampaignsCreateLoyaltyCampaign(BaseModel):
     category_id: Optional[StrictStr] = Field(None, description="Unique category ID that this campaign belongs to. Either pass this parameter OR the `category`.")
     category: Optional[StrictStr] = Field(None, description="The category assigned to the campaign. Either pass this parameter OR the `category_id`.")
     metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the campaign. A set of key/value pairs that you can attach to a campaign object. It can be useful for storing additional information about the campaign in a structured format.")
-    campaign_type: Optional[StrictStr] = Field('LOYALTY_CARD', description="Type of campaign.")
+    campaign_type: Optional[StrictStr] = Field('LOYALTY_PROGRAM', description="Type of campaign.")
     voucher: Optional[CampaignLoyaltyVoucher] = None
     __properties = ["name", "description", "type", "join_once", "auto_join", "use_voucher_metadata_schema", "vouchers_count", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "activity_duration_after_publishing", "validation_rules", "category_id", "category", "metadata", "campaign_type", "voucher"]
 
@@ -64,8 +64,8 @@ class CampaignsCreateLoyaltyCampaign(BaseModel):
         if value is None:
             return value
 
-        if value not in ('LOYALTY_CARD',):
-            raise ValueError("must be one of enum values ('LOYALTY_CARD')")
+        if value not in ('LOYALTY_PROGRAM',):
+            raise ValueError("must be one of enum values ('LOYALTY_PROGRAM')")
         return value
 
     class Config:
@@ -126,7 +126,7 @@ class CampaignsCreateLoyaltyCampaign(BaseModel):
             "category_id": obj.get("category_id"),
             "category": obj.get("category"),
             "metadata": obj.get("metadata"),
-            "campaign_type": obj.get("campaign_type") if obj.get("campaign_type") is not None else 'LOYALTY_CARD',
+            "campaign_type": obj.get("campaign_type") if obj.get("campaign_type") is not None else 'LOYALTY_PROGRAM',
             "voucher": CampaignLoyaltyVoucher.from_dict(obj.get("voucher")) if obj.get("voucher") is not None else None
         })
         return _obj

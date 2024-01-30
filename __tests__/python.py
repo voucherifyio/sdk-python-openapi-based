@@ -61,12 +61,12 @@ class TestYourSDK(unittest.TestCase):
                 campaigns_vouchers_create_response_body = api_instance.add_vouchers_to_campaign(campaign.id)
                 campaigns_vouchers_specific_code_create_response_body = api_instance.add_voucher_with_specific_code_to_campaign(campaign.id, code)
 
-                pprint(async_action)
-                pprint(campaigns_vouchers_create_response_body)
-                pprint(campaigns_vouchers_specific_code_create_response_body)
+                self.assertIsNotNone(async_action)
+                self.assertIsNotNone(campaigns_vouchers_create_response_body)
+                self.assertIsNotNone(campaigns_vouchers_specific_code_create_response_body)
 
             except ApiException as e:
-                print("Exception when calling CAMPAIGNSAPIApi->create_qualification: %s\n" % e)
+                self.fail("Exception when calling CAMPAIGNSAPIApi->create_qualification: %s\n" % e)
 
     @responses.activate
     def test_list_redemptions(self):
@@ -75,11 +75,8 @@ class TestYourSDK(unittest.TestCase):
 
             try:
                 result = api_instance.list_redemptions()
-
-                pprint(result)
-
             except ApiException as e:
-                print("Exception when calling test_list_redemptions: %s\n" % e)
+                self.fail("Exception when calling test_list_redemptions: %s\n" % e)
 
     @responses.activate
     def test_list_publications(self):
@@ -88,11 +85,10 @@ class TestYourSDK(unittest.TestCase):
 
             try:
                 result = api_instance.list_publications()
-
-                pprint(result)
+                self.assertIsNotNone(result)
 
             except ApiException as e:
-                print("Exception when calling test_list_publications: %s\n" % e)
+                self.fail("Exception when calling test_list_publications: %s\n" % e)
 
     @responses.activate
     def test_list_products_in_collection(self):
@@ -101,11 +97,10 @@ class TestYourSDK(unittest.TestCase):
 
             try:
                 result = api_instance.list_products_in_collection("pc_a11pr0dUc75")
-
-                pprint(result)
+                self.assertIsNotNone(result)
 
             except ApiException as e:
-                print("Exception when calling test_list_products_in_collection: %s\n" % e)
+                self.fail("Exception when calling test_list_products_in_collection: %s\n" % e)
 
     @responses.activate
     def test_list_member_rewards(self):
@@ -114,8 +109,10 @@ class TestYourSDK(unittest.TestCase):
 
             try:
                 result = api_instance.list_member_rewards("abcd")
+                self.assertIsNotNone(result)
+
             except ApiException as e:
-                print("Member not found")
+                self.fail("Member not found")
 
 
 if __name__ == '__main__':
