@@ -4,7 +4,6 @@ All URIs are relative to *https://api.voucherify.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_campaign**](PromotionsApi.md#create_campaign) | **POST** /v1/campaigns | Create Campaign
 [**create_promotion_stack**](PromotionsApi.md#create_promotion_stack) | **POST** /v1/promotions/{campaignId}/stacks | Create Promotion Stack
 [**delete_promotion_stack**](PromotionsApi.md#delete_promotion_stack) | **DELETE** /v1/promotions/{campaignId}/stacks/{stackId} | Delete Promotion Stack
 [**delete_promotion_tier**](PromotionsApi.md#delete_promotion_tier) | **DELETE** /v1/promotions/tiers/{promotionTierId} | Delete Promotion Tier
@@ -17,92 +16,6 @@ Method | HTTP request | Description
 [**list_promotion_tiers_from_campaign**](PromotionsApi.md#list_promotion_tiers_from_campaign) | **GET** /v1/promotions/{campaignId}/tiers | List Promotion Tiers from Campaign
 [**update_promotion_stack**](PromotionsApi.md#update_promotion_stack) | **PUT** /v1/promotions/{campaignId}/stacks/{stackId} | Update Promotion Stack
 
-
-# **create_campaign**
-> CampaignsCreateResponseBody create_campaign(campaigns_create_request_body=campaigns_create_request_body)
-
-Create Campaign
-
-Method to create a batch of vouchers aggregated in one campaign. You can choose a variety of voucher types and define a unique pattern for generating codes.   <!-- theme: info -->  > 📘 Global uniqueness > > All campaign codes are unique across the whole project. Voucherify will not allow you to generate 2 campaigns with the same coupon code.   <!-- theme: warning --> > 🚧 Code generation status > > This is an asynchronous action; you can't read or modify a newly created campaign until the code generation is completed. See the `creation_status` field in the <!-- [campaign object](OpenAPI.json/components/schemas/Campaign) -->[campaign object](ref:get-campaign) description.
-
-### Example
-
-* Api Key Authentication (X-App-Id):
-* Api Key Authentication (X-App-Token):
-```python
-import time
-import os
-import voucherify_client
-from voucherify_client.models.campaigns_create_request_body import CampaignsCreateRequestBody
-from voucherify_client.models.campaigns_create_response_body import CampaignsCreateResponseBody
-from voucherify_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.voucherify.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = voucherify_client.Configuration(
-    host = "https://api.voucherify.io"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: X-App-Id
-configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
-
-# Configure API key authorization: X-App-Token
-configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with voucherify_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = voucherify_client.PromotionsApi(api_client)
-    campaigns_create_request_body = {"name":"Discount Campaign 4","campaign_type":"DISCOUNT_COUPONS","join_once":true,"type":"AUTO_UPDATE","category_id":"cat_0bb343dee3cdb5ec0c","start_date":"2020-08-16T00:00:00Z","expiration_date":"2023-12-26T00:00:00Z","vouchers_count":3,"voucher":{"type":"DISCOUNT_VOUCHER","discount":{"percent_off":10,"type":"PERCENT"},"redemption":{"quantity":10},"code_config":{"pattern":"10OFF-#######"}},"validity_timeframe":{"interval":"P2D","duration":"P1D"},"validity_day_of_week":[0,1,2],"activity_duration_after_publishing":"P24D","use_voucher_metadata_schema":false,"metadata":{"region":"AMER"}} # CampaignsCreateRequestBody | Specify the details of the campaign that you would like to create. (optional)
-
-    try:
-        # Create Campaign
-        api_response = api_instance.create_campaign(campaigns_create_request_body=campaigns_create_request_body)
-        print("The response of PromotionsApi->create_campaign:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling PromotionsApi->create_campaign: %s\n" % e)
-```
-
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **campaigns_create_request_body** | [**CampaignsCreateRequestBody**](CampaignsCreateRequestBody.md)| Specify the details of the campaign that you would like to create. | [optional] 
-
-### Return type
-
-[**CampaignsCreateResponseBody**](CampaignsCreateResponseBody.md)
-
-### Authorization
-
-[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Returns a campaign object if the call succeeded. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_promotion_stack**
 > PromotionsStacksCreateResponseBody create_promotion_stack(campaign_id, promotions_stacks_create_request_body=promotions_stacks_create_request_body)

@@ -19,10 +19,9 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, conlist
 from voucherify_client.models.export_redemption_fields import ExportRedemptionFields
-from voucherify_client.models.export_redemption_filters import ExportRedemptionFilters
 from voucherify_client.models.export_redemption_order import ExportRedemptionOrder
 
 class ExportRedemptionBaseParameters(BaseModel):
@@ -31,7 +30,7 @@ class ExportRedemptionBaseParameters(BaseModel):
     """
     order: Optional[ExportRedemptionOrder] = None
     fields: Optional[conlist(ExportRedemptionFields)] = Field(None, description="Array of strings containing the data in the export. These fields define the headers in the CSV file.")
-    filters: Optional[ExportRedemptionFilters] = None
+    filters: Optional[Dict[str, Any]] = Field(None, description="Allowed additional properties must start with \"metadata.\"")
     __properties = ["order", "fields", "filters"]
 
     class Config:
@@ -58,9 +57,6 @@ class ExportRedemptionBaseParameters(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of filters
-        if self.filters:
-            _dict['filters'] = self.filters.to_dict()
         return _dict
 
     @classmethod
@@ -75,7 +71,7 @@ class ExportRedemptionBaseParameters(BaseModel):
         _obj = ExportRedemptionBaseParameters.parse_obj({
             "order": obj.get("order"),
             "fields": obj.get("fields"),
-            "filters": ExportRedemptionFilters.from_dict(obj.get("filters")) if obj.get("filters") is not None else None
+            "filters": obj.get("filters")
         })
         return _obj
 

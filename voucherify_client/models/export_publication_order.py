@@ -30,22 +30,18 @@ class ExportPublicationOrder(str, Enum):
     """
     allowed enum values
     """
-    VOUCHER_CODE = 'voucher_code'
+    MINUS_ID = '-id'
+    ID = 'id'
     MINUS_VOUCHER_CODE = '-voucher_code'
-    CUSTOMER_ID = 'customer_id'
+    VOUCHER_CODE = 'voucher_code'
+    MINUS_TRACKING_ID = '-tracking_id'
+    TRACKING_ID = 'tracking_id'
     MINUS_CUSTOMER_ID = '-customer_id'
-    CUSTOMER_SOURCE_ID = 'customer_source_id'
-    MINUS_CUSTOMER_SOURCE_ID = '-customer_source_id'
-    DATE = 'date'
-    MINUS_DATE = '-date'
-    CHANNEL = 'channel'
+    CUSTOMER_ID = 'customer_id'
+    MINUS_CREATED_AT = '-created_at'
+    CREATED_AT = 'created_at'
     MINUS_CHANNEL = '-channel'
-    CAMPAIGN = 'campaign'
-    MINUS_CAMPAIGN = '-campaign'
-    IS_WINNER = 'is_winner'
-    MINUS_IS_WINNER = '-is_winner'
-    METADATA = 'metadata'
-    MINUS_METADATA = '-metadata'
+    CHANNEL = 'channel'
 
     @classmethod
     def from_json(cls, json_str: str) -> ExportPublicationOrder:

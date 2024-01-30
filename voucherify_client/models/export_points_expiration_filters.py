@@ -29,13 +29,9 @@ class ExportPointsExpirationFilters(BaseModel):
     ExportPointsExpirationFilters
     """
     junction: Optional[Junction] = None
-    id: Optional[FieldConditions] = None
     campaign_id: Optional[FieldConditions] = None
     voucher_id: Optional[FieldConditions] = None
-    points: Optional[FieldConditions] = None
-    status: Optional[FieldConditions] = None
-    expires_at: Optional[FieldConditions] = None
-    __properties = ["junction", "id", "campaign_id", "voucher_id", "points", "status", "expires_at"]
+    __properties = ["junction", "campaign_id", "voucher_id"]
 
     class Config:
         """Pydantic configuration"""
@@ -61,24 +57,12 @@ class ExportPointsExpirationFilters(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of id
-        if self.id:
-            _dict['id'] = self.id.to_dict()
         # override the default output from pydantic by calling `to_dict()` of campaign_id
         if self.campaign_id:
             _dict['campaign_id'] = self.campaign_id.to_dict()
         # override the default output from pydantic by calling `to_dict()` of voucher_id
         if self.voucher_id:
             _dict['voucher_id'] = self.voucher_id.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of points
-        if self.points:
-            _dict['points'] = self.points.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of status
-        if self.status:
-            _dict['status'] = self.status.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of expires_at
-        if self.expires_at:
-            _dict['expires_at'] = self.expires_at.to_dict()
         return _dict
 
     @classmethod
@@ -92,12 +76,8 @@ class ExportPointsExpirationFilters(BaseModel):
 
         _obj = ExportPointsExpirationFilters.parse_obj({
             "junction": obj.get("junction"),
-            "id": FieldConditions.from_dict(obj.get("id")) if obj.get("id") is not None else None,
             "campaign_id": FieldConditions.from_dict(obj.get("campaign_id")) if obj.get("campaign_id") is not None else None,
-            "voucher_id": FieldConditions.from_dict(obj.get("voucher_id")) if obj.get("voucher_id") is not None else None,
-            "points": FieldConditions.from_dict(obj.get("points")) if obj.get("points") is not None else None,
-            "status": FieldConditions.from_dict(obj.get("status")) if obj.get("status") is not None else None,
-            "expires_at": FieldConditions.from_dict(obj.get("expires_at")) if obj.get("expires_at") is not None else None
+            "voucher_id": FieldConditions.from_dict(obj.get("voucher_id")) if obj.get("voucher_id") is not None else None
         })
         return _obj
 

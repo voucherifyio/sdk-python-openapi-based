@@ -19,10 +19,9 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, conlist
 from voucherify_client.models.export_customer_fields import ExportCustomerFields
-from voucherify_client.models.export_customer_filters import ExportCustomerFilters
 from voucherify_client.models.export_customer_order import ExportCustomerOrder
 
 class ExportCustomerBaseParameters(BaseModel):
@@ -31,7 +30,7 @@ class ExportCustomerBaseParameters(BaseModel):
     """
     order: Optional[ExportCustomerOrder] = None
     fields: Optional[conlist(ExportCustomerFields)] = Field(None, description="Array of strings containing the data in the export. These fields define the headers in the CSV file.")
-    filters: Optional[ExportCustomerFilters] = None
+    filters: Optional[Dict[str, Any]] = Field(None, description="Allowed additional properties must start with \"metadata.\" or \"address.\" or \"summary.\" or \"loyalty.\" or \"loyalty_tier.\" or \"loyalty_points.\" or \"system_metadata.\"")
     __properties = ["order", "fields", "filters"]
 
     class Config:
@@ -58,9 +57,6 @@ class ExportCustomerBaseParameters(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of filters
-        if self.filters:
-            _dict['filters'] = self.filters.to_dict()
         return _dict
 
     @classmethod
@@ -75,7 +71,7 @@ class ExportCustomerBaseParameters(BaseModel):
         _obj = ExportCustomerBaseParameters.parse_obj({
             "order": obj.get("order"),
             "fields": obj.get("fields"),
-            "filters": ExportCustomerFilters.from_dict(obj.get("filters")) if obj.get("filters") is not None else None
+            "filters": obj.get("filters")
         })
         return _obj
 

@@ -30,18 +30,8 @@ class ExportPointsExpirationOrder(str, Enum):
     """
     allowed enum values
     """
-    ID = 'id'
-    MINUS_ID = '-id'
-    CAMPAIGN_ID = 'campaign_id'
-    MINUS_CAMPAIGN_ID = '-campaign_id'
-    VOUCHER_ID = 'voucher_id'
-    MINUS_VOUCHER_ID = '-voucher_id'
-    POINTS = 'points'
-    MINUS_POINTS = '-points'
-    STATUS = 'status'
-    MINUS_STATUS = '-status'
-    EXPIRES_AT = 'expires_at'
     MINUS_EXPIRES_AT = '-expires_at'
+    EXPIRES_AT = 'expires_at'
 
     @classmethod
     def from_json(cls, json_str: str) -> ExportPointsExpirationOrder:
