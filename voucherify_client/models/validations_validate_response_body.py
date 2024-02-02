@@ -23,7 +23,6 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
 from voucherify_client.models.order_calculated import OrderCalculated
 from voucherify_client.models.session import Session
-from voucherify_client.models.stacking_rules import StackingRules
 from voucherify_client.models.validations_redeemable_inapplicable import ValidationsRedeemableInapplicable
 from voucherify_client.models.validations_validate_all_response_body_redeemables_item import ValidationsValidateAllResponseBodyRedeemablesItem
 
@@ -38,8 +37,7 @@ class ValidationsValidateResponseBody(BaseModel):
     order: Optional[OrderCalculated] = None
     tracking_id: Optional[StrictStr] = Field(None, description="Hashed customer source ID.")
     session: Optional[Session] = None
-    stacking_rules: Optional[StackingRules] = None
-    __properties = ["valid", "redeemables", "skipped_redeemables", "inapplicable_redeemables", "order", "tracking_id", "session", "stacking_rules"]
+    __properties = ["valid", "redeemables", "skipped_redeemables", "inapplicable_redeemables", "order", "tracking_id", "session"]
 
     class Config:
         """Pydantic configuration"""
@@ -92,9 +90,6 @@ class ValidationsValidateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of session
         if self.session:
             _dict['session'] = self.session.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of stacking_rules
-        if self.stacking_rules:
-            _dict['stacking_rules'] = self.stacking_rules.to_dict()
         return _dict
 
     @classmethod
@@ -113,8 +108,7 @@ class ValidationsValidateResponseBody(BaseModel):
             "inapplicable_redeemables": [ValidationsRedeemableInapplicable.from_dict(_item) for _item in obj.get("inapplicable_redeemables")] if obj.get("inapplicable_redeemables") is not None else None,
             "order": OrderCalculated.from_dict(obj.get("order")) if obj.get("order") is not None else None,
             "tracking_id": obj.get("tracking_id"),
-            "session": Session.from_dict(obj.get("session")) if obj.get("session") is not None else None,
-            "stacking_rules": StackingRules.from_dict(obj.get("stacking_rules")) if obj.get("stacking_rules") is not None else None
+            "session": Session.from_dict(obj.get("session")) if obj.get("session") is not None else None
         })
         return _obj
 

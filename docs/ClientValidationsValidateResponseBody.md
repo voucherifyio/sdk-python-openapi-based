@@ -12,7 +12,6 @@ Name | Type | Description | Notes
 **order** | [**OrderCalculated**](OrderCalculated.md) |  | [optional] 
 **tracking_id** | **str** | Hashed customer source ID. | [optional] 
 **session** | [**Session**](Session.md) |  | [optional] 
-**stacking_rules** | [**StackingRules**](StackingRules.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
