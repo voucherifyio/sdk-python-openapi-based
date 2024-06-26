@@ -20,6 +20,7 @@ __version__ = "1.0.0"
 # import apis into sdk package
 from voucherify_client.api.campaigns_api import CampaignsApi
 from voucherify_client.api.categories_api import CategoriesApi
+from voucherify_client.api.client_side_api import ClientSideApi
 from voucherify_client.api.customers_api import CustomersApi
 from voucherify_client.api.events_api import EventsApi
 from voucherify_client.api.exports_api import ExportsApi
@@ -33,8 +34,8 @@ from voucherify_client.api.qualifications_api import QualificationsApi
 from voucherify_client.api.redemptions_api import RedemptionsApi
 from voucherify_client.api.rewards_api import RewardsApi
 from voucherify_client.api.segments_api import SegmentsApi
-from voucherify_client.api.stackable_discounts_api import StackableDiscountsApi
 from voucherify_client.api.validation_rules_api import ValidationRulesApi
+from voucherify_client.api.validations_api import ValidationsApi
 from voucherify_client.api.vouchers_api import VouchersApi
 
 # import ApiClient
@@ -519,6 +520,8 @@ from voucherify_client.models.qualifications_field_conditions import Qualificati
 from voucherify_client.models.qualifications_filters_condition import QualificationsFiltersCondition
 from voucherify_client.models.qualifications_option import QualificationsOption
 from voucherify_client.models.qualifications_option_filters import QualificationsOptionFilters
+from voucherify_client.models.qualifications_option_filters_resource_type import QualificationsOptionFiltersResourceType
+from voucherify_client.models.qualifications_option_filters_resource_type_conditions import QualificationsOptionFiltersResourceTypeConditions
 from voucherify_client.models.qualifications_redeemable import QualificationsRedeemable
 from voucherify_client.models.qualifications_redeemable_base import QualificationsRedeemableBase
 from voucherify_client.models.qualifications_redeemables import QualificationsRedeemables
@@ -580,6 +583,7 @@ from voucherify_client.models.referral_program_referee_reward_related_object_par
 from voucherify_client.models.referrer import Referrer
 from voucherify_client.models.referrer_id import ReferrerId
 from voucherify_client.models.referrer_with_summary_loyalty_referrals import ReferrerWithSummaryLoyaltyReferrals
+from voucherify_client.models.resource_types import ResourceTypes
 from voucherify_client.models.reward import Reward
 from voucherify_client.models.reward_assignment import RewardAssignment
 from voucherify_client.models.reward_assignment_base import RewardAssignmentBase

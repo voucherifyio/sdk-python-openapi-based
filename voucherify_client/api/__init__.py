@@ -3,6 +3,7 @@
 # import apis into api package
 from voucherify_client.api.campaigns_api import CampaignsApi
 from voucherify_client.api.categories_api import CategoriesApi
+from voucherify_client.api.client_side_api import ClientSideApi
 from voucherify_client.api.customers_api import CustomersApi
 from voucherify_client.api.events_api import EventsApi
 from voucherify_client.api.exports_api import ExportsApi
@@ -16,7 +17,7 @@ from voucherify_client.api.qualifications_api import QualificationsApi
 from voucherify_client.api.redemptions_api import RedemptionsApi
 from voucherify_client.api.rewards_api import RewardsApi
 from voucherify_client.api.segments_api import SegmentsApi
-from voucherify_client.api.stackable_discounts_api import StackableDiscountsApi
 from voucherify_client.api.validation_rules_api import ValidationRulesApi
+from voucherify_client.api.validations_api import ValidationsApi
 from voucherify_client.api.vouchers_api import VouchersApi
 

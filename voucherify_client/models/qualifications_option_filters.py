@@ -23,6 +23,7 @@ from typing import Optional
 from pydantic import BaseModel
 from voucherify_client.models.junction import Junction
 from voucherify_client.models.qualifications_field_conditions import QualificationsFieldConditions
+from voucherify_client.models.qualifications_option_filters_resource_type import QualificationsOptionFiltersResourceType
 
 class QualificationsOptionFilters(BaseModel):
     """
@@ -32,7 +33,7 @@ class QualificationsOptionFilters(BaseModel):
     category_id: Optional[QualificationsFieldConditions] = None
     campaign_id: Optional[QualificationsFieldConditions] = None
     resource_id: Optional[QualificationsFieldConditions] = None
-    resource_type: Optional[QualificationsFieldConditions] = None
+    resource_type: Optional[QualificationsOptionFiltersResourceType] = None
     voucher_type: Optional[QualificationsFieldConditions] = None
     code: Optional[QualificationsFieldConditions] = None
     __properties = ["junction", "category_id", "campaign_id", "resource_id", "resource_type", "voucher_type", "code"]
@@ -95,7 +96,7 @@ class QualificationsOptionFilters(BaseModel):
             "category_id": QualificationsFieldConditions.from_dict(obj.get("category_id")) if obj.get("category_id") is not None else None,
             "campaign_id": QualificationsFieldConditions.from_dict(obj.get("campaign_id")) if obj.get("campaign_id") is not None else None,
             "resource_id": QualificationsFieldConditions.from_dict(obj.get("resource_id")) if obj.get("resource_id") is not None else None,
-            "resource_type": QualificationsFieldConditions.from_dict(obj.get("resource_type")) if obj.get("resource_type") is not None else None,
+            "resource_type": QualificationsOptionFiltersResourceType.from_dict(obj.get("resource_type")) if obj.get("resource_type") is not None else None,
             "voucher_type": QualificationsFieldConditions.from_dict(obj.get("voucher_type")) if obj.get("voucher_type") is not None else None,
             "code": QualificationsFieldConditions.from_dict(obj.get("code")) if obj.get("code") is not None else None
         })

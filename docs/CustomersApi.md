@@ -14,7 +14,6 @@ Method | HTTP request | Description
 [**list_customers**](CustomersApi.md#list_customers) | **GET** /v1/customers | List Customers
 [**update_customer**](CustomersApi.md#update_customer) | **PUT** /v1/customers/{customerId} | Update Customer
 [**update_customers_consents**](CustomersApi.md#update_customers_consents) | **PUT** /v1/customers/{customerId}/consents | Update Customer&#39;s consents
-[**update_customers_consents_client_side**](CustomersApi.md#update_customers_consents_client_side) | **PUT** /client/v1/customers/{customerId}/consents | Update Customer&#39;s consents (client-side)
 [**update_customers_in_bulk**](CustomersApi.md#update_customers_in_bulk) | **POST** /v1/customers/bulk/async | Update Customers in bulk
 [**update_customers_metadata_in_bulk**](CustomersApi.md#update_customers_metadata_in_bulk) | **POST** /v1/customers/metadata/async | Update Customers&#39; Metadata in bulk
 
@@ -899,90 +898,6 @@ void (empty response body)
 ### Authorization
 
 [X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: Not defined
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Returns no content if the consents were updated successfully. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_customers_consents_client_side**
-> update_customers_consents_client_side(customer_id, body=body)
-
-Update Customer's consents (client-side)
-
-Update marketing permissions for the specified customer.
-
-### Example
-
-* Api Key Authentication (X-Client-Application-Id):
-* Api Key Authentication (X-Client-Token):
-```python
-import time
-import os
-import voucherify_client
-from voucherify_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.voucherify.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = voucherify_client.Configuration(
-    host = "https://api.voucherify.io"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: X-Client-Application-Id
-configuration.api_key['X-Client-Application-Id'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-Client-Application-Id'] = 'Bearer'
-
-# Configure API key authorization: X-Client-Token
-configuration.api_key['X-Client-Token'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-Client-Token'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with voucherify_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = voucherify_client.CustomersApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer identifier or `source_id`
-    body = {"cnst_6jQ5XcUOLnj5L7ImQAdBsJ1I":true,"cnst_VCmucIvAsmDYw2PPAok6bcYy":false} # object | Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ``` (optional)
-
-    try:
-        # Update Customer's consents (client-side)
-        api_instance.update_customers_consents_client_side(customer_id, body=body)
-    except Exception as e:
-        print("Exception when calling CustomersApi->update_customers_consents_client_side: %s\n" % e)
-```
-
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer identifier or &#x60;source_id&#x60; | 
- **body** | **object**| Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \&quot;unsubscribed\&quot; as a consent identifier and \&quot;true\&quot; as its value.    #### Examples  &lt;!-- title: \&quot;Request Body\&quot; lineNumbers: true --&gt; &#x60;&#x60;&#x60;json {     \&quot;cnst_aIdUulAh0SCsOCaS3005y7yS\&quot;: true,     \&quot;cnst_aIdUulAhwewqaS31213fdsfds\&quot;: false } &#x60;&#x60;&#x60;  Opt-out from all communication:  &lt;!-- title: \&quot;Request Body\&quot; lineNumbers: true --&gt; &#x60;&#x60;&#x60;json {     \&quot;unsubscribed\&quot;: true } &#x60;&#x60;&#x60; | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[X-Client-Application-Id](../README.md#X-Client-Application-Id), [X-Client-Token](../README.md#X-Client-Token)
 
 ### HTTP request headers
 

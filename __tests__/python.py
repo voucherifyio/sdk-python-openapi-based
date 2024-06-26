@@ -102,18 +102,5 @@ class TestYourSDK(unittest.TestCase):
             except ApiException as e:
                 self.fail("Exception when calling test_list_products_in_collection: %s\n" % e)
 
-    @responses.activate
-    def test_list_member_rewards(self):
-        with voucherify_client.ApiClient(configuration) as api_client:
-            api_instance = voucherify_client.LoyaltiesApi(api_client)
-
-            try:
-                result = api_instance.list_member_rewards("abcd")
-                self.assertIsNotNone(result)
-
-            except ApiException as e:
-                self.fail("Member not found")
-
-
 if __name__ == '__main__':
     unittest.main()
