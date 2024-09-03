@@ -132,7 +132,6 @@ Class | Method | HTTP request | Description
 *ClientSideApi* | [**list_promotion_tiers_client_side**](docs/ClientSideApi.md#list_promotion_tiers_client_side) | **GET** /client/v1/promotions/tiers | List Promotion Tiers (client-side)
 *ClientSideApi* | [**redeem_stacked_discounts_client_side**](docs/ClientSideApi.md#redeem_stacked_discounts_client_side) | **POST** /client/v1/redemptions | Redeem Stackable Discounts (client-side)
 *ClientSideApi* | [**track_custom_event_client_side**](docs/ClientSideApi.md#track_custom_event_client_side) | **POST** /client/v1/events | Track Custom Event (client-side)
-*ClientSideApi* | [**update_customers_consents_client_side**](docs/ClientSideApi.md#update_customers_consents_client_side) | **PUT** /client/v1/customers/{customerId}/consents | Update Customer&#39;s consents (client-side) [Deprecated]
 *ClientSideApi* | [**validate_stacked_discounts_client_side**](docs/ClientSideApi.md#validate_stacked_discounts_client_side) | **POST** /client/v1/validations | Validate Stackable Discounts (client-side)
 *CustomersApi* | [**create_customer**](docs/CustomersApi.md#create_customer) | **POST** /v1/customers | Create Customer
 *CustomersApi* | [**customer_permanently_deletion**](docs/CustomersApi.md#customer_permanently_deletion) | **POST** /v1/customers/{customerId}/permanent-deletion | Delete Customer Permanently

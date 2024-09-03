@@ -8,7 +8,6 @@ Method | HTTP request | Description
 [**list_promotion_tiers_client_side**](ClientSideApi.md#list_promotion_tiers_client_side) | **GET** /client/v1/promotions/tiers | List Promotion Tiers (client-side)
 [**redeem_stacked_discounts_client_side**](ClientSideApi.md#redeem_stacked_discounts_client_side) | **POST** /client/v1/redemptions | Redeem Stackable Discounts (client-side)
 [**track_custom_event_client_side**](ClientSideApi.md#track_custom_event_client_side) | **POST** /client/v1/events | Track Custom Event (client-side)
-[**update_customers_consents_client_side**](ClientSideApi.md#update_customers_consents_client_side) | **PUT** /client/v1/customers/{customerId}/consents | Update Customer&#39;s consents (client-side) [Deprecated]
 [**validate_stacked_discounts_client_side**](ClientSideApi.md#validate_stacked_discounts_client_side) | **POST** /client/v1/validations | Validate Stackable Discounts (client-side)
 
 
@@ -365,90 +364,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns the event type if the event was received by the application. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_customers_consents_client_side**
-> update_customers_consents_client_side(customer_id, body=body)
-
-Update Customer's consents (client-side) [Deprecated]
-
-Update marketing permissions for the specified customer. ❗️ Deprecated  This endpoint is deprecated. The feature of managing consents will be soon removed from Voucherify, including this endpoint.
-
-### Example
-
-* Api Key Authentication (X-Client-Application-Id):
-* Api Key Authentication (X-Client-Token):
-```python
-import time
-import os
-import voucherify_client
-from voucherify_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.voucherify.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = voucherify_client.Configuration(
-    host = "https://api.voucherify.io"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: X-Client-Application-Id
-configuration.api_key['X-Client-Application-Id'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-Client-Application-Id'] = 'Bearer'
-
-# Configure API key authorization: X-Client-Token
-configuration.api_key['X-Client-Token'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-Client-Token'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with voucherify_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = voucherify_client.ClientSideApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer identifier or source_id
-    body = {"cnst_6jQ5XcUOLnj5L7ImQAdBsJ1I":true,"cnst_VCmucIvAsmDYw2PPAok6bcYy":false} # object | Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication:  (optional)
-
-    try:
-        # Update Customer's consents (client-side) [Deprecated]
-        api_instance.update_customers_consents_client_side(customer_id, body=body)
-    except Exception as e:
-        print("Exception when calling ClientSideApi->update_customers_consents_client_side: %s\n" % e)
-```
-
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer identifier or source_id | 
- **body** | **object**| Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication:  | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[X-Client-Application-Id](../README.md#X-Client-Application-Id), [X-Client-Token](../README.md#X-Client-Token)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: Not defined
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Returns no content if the consents were updated successfully. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
