@@ -14,129 +14,176 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.publications_create_voucher_response_body import PublicationsCreateVoucherResponseBody
-from voucherify_client.models.publications_create_vouchers_response_body import PublicationsCreateVouchersResponseBody
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
-
-PUBLICATIONS_CREATE_RESPONSE_BODY_ONE_OF_SCHEMAS = ["PublicationsCreateVoucherResponseBody", "PublicationsCreateVouchersResponseBody"]
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist, validator
+from voucherify_client.models.customer_with_summary_loyalty_referrals import CustomerWithSummaryLoyaltyReferrals
+from voucherify_client.models.voucher import Voucher
 
 class PublicationsCreateResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/publication` and **GET** `/publications/create`.
+    PublicationsCreateResponseBody
     """
-    # data type: PublicationsCreateVoucherResponseBody
-    oneof_schema_1_validator: Optional[PublicationsCreateVoucherResponseBody] = None
-    # data type: PublicationsCreateVouchersResponseBody
-    oneof_schema_2_validator: Optional[PublicationsCreateVouchersResponseBody] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[PublicationsCreateVoucherResponseBody, PublicationsCreateVouchersResponseBody]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(PUBLICATIONS_CREATE_RESPONSE_BODY_ONE_OF_SCHEMAS, const=True)
+    id: Optional[StrictStr] = Field(None, description="Unique publication ID, assigned by Voucherify.")
+    object: Optional[StrictStr] = Field('publication', description="The type of the object represented by the JSON. This object stores information about the `publication`.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the publication was created. The value is shown in the ISO 8601 format.")
+    customer_id: Optional[StrictStr] = Field(None, description="Unique customer ID of the customer receiving the publication.")
+    tracking_id: Optional[StrictStr] = Field(None, description="Customer's `source_id`.")
+    metadata: Optional[Dict[str, Any]] = None
+    channel: Optional[StrictStr] = Field('API', description="How the publication was originated. It can be your own custom channel or an example value provided here.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's publication ID if it is different from the Voucherify publication ID. It's an optional tracking identifier of a publication. It is really useful in case of an integration between multiple systems. It can be a publication ID from a CRM system, database or 3rd-party service. ")
+    result: Optional[StrictStr] = Field('SUCCESS', description="Status of the publication attempt.")
+    customer: Optional[CustomerWithSummaryLoyaltyReferrals] = None
+    vouchers_id: Optional[conlist(StrictStr)] = Field(None, description="Contains the unique internal voucher ID that was assigned by Voucherify.")
+    voucher: Optional[Voucher] = None
+    vouchers: Optional[conlist(StrictStr)] = Field(None, description="Contains the unique voucher codes that was assigned by Voucherify.")
+    __properties = ["id", "object", "created_at", "customer_id", "tracking_id", "metadata", "channel", "source_id", "result", "customer", "vouchers_id", "voucher", "vouchers"]
+
+    @validator('object')
+    def object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('publication',):
+            raise ValueError("must be one of enum values ('publication')")
+        return value
+
+    @validator('channel')
+    def channel_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('API',):
+            raise ValueError("must be one of enum values ('API')")
+        return value
+
+    @validator('result')
+    def result_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('SUCCESS',):
+            raise ValueError("must be one of enum values ('SUCCESS')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = PublicationsCreateResponseBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: PublicationsCreateVoucherResponseBody
-        if not isinstance(v, PublicationsCreateVoucherResponseBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PublicationsCreateVoucherResponseBody`")
-        else:
-            match += 1
-        # validate data type: PublicationsCreateVouchersResponseBody
-        if not isinstance(v, PublicationsCreateVouchersResponseBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `PublicationsCreateVouchersResponseBody`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in PublicationsCreateResponseBody with oneOf schemas: PublicationsCreateVoucherResponseBody, PublicationsCreateVouchersResponseBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in PublicationsCreateResponseBody with oneOf schemas: PublicationsCreateVoucherResponseBody, PublicationsCreateVouchersResponseBody. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> PublicationsCreateResponseBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> PublicationsCreateResponseBody:
-        """Returns the object represented by the json string"""
-        instance = PublicationsCreateResponseBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of PublicationsCreateResponseBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into PublicationsCreateVoucherResponseBody
-        try:
-            instance.actual_instance = PublicationsCreateVoucherResponseBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into PublicationsCreateVouchersResponseBody
-        try:
-            instance.actual_instance = PublicationsCreateVouchersResponseBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of customer
+        if self.customer:
+            _dict['customer'] = self.customer.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of voucher
+        if self.voucher:
+            _dict['voucher'] = self.voucher.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into PublicationsCreateResponseBody with oneOf schemas: PublicationsCreateVoucherResponseBody, PublicationsCreateVouchersResponseBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into PublicationsCreateResponseBody with oneOf schemas: PublicationsCreateVoucherResponseBody, PublicationsCreateVouchersResponseBody. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        # set to None if customer_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.customer_id is None and "customer_id" in self.__fields_set__:
+            _dict['customer_id'] = None
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+        # set to None if tracking_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tracking_id is None and "tracking_id" in self.__fields_set__:
+            _dict['tracking_id'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if channel (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel is None and "channel" in self.__fields_set__:
+            _dict['channel'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if result (nullable) is None
+        # and __fields_set__ contains the field
+        if self.result is None and "result" in self.__fields_set__:
+            _dict['result'] = None
+
+        # set to None if vouchers_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.vouchers_id is None and "vouchers_id" in self.__fields_set__:
+            _dict['vouchers_id'] = None
+
+        # set to None if vouchers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.vouchers is None and "vouchers" in self.__fields_set__:
+            _dict['vouchers'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: dict) -> PublicationsCreateResponseBody:
+        """Create an instance of PublicationsCreateResponseBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return PublicationsCreateResponseBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = PublicationsCreateResponseBody.parse_obj({
+            "id": obj.get("id"),
+            "object": obj.get("object") if obj.get("object") is not None else 'publication',
+            "created_at": obj.get("created_at"),
+            "customer_id": obj.get("customer_id"),
+            "tracking_id": obj.get("tracking_id"),
+            "metadata": obj.get("metadata"),
+            "channel": obj.get("channel") if obj.get("channel") is not None else 'API',
+            "source_id": obj.get("source_id"),
+            "result": obj.get("result") if obj.get("result") is not None else 'SUCCESS',
+            "customer": CustomerWithSummaryLoyaltyReferrals.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
+            "vouchers_id": obj.get("vouchers_id"),
+            "voucher": Voucher.from_dict(obj.get("voucher")) if obj.get("voucher") is not None else None,
+            "vouchers": obj.get("vouchers")
+        })
+        return _obj
 
 

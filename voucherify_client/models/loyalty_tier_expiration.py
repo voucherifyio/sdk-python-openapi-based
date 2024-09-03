@@ -26,13 +26,13 @@ class LoyaltyTierExpiration(BaseModel):
     """
     Defines loyalty tier expiration date.  # noqa: E501
     """
-    customer_id: StrictStr = Field(..., description="Unique customer ID of the customer making the purchase.")
-    campaign_id: StrictStr = Field(..., description="Unique campaign ID, assigned by Voucherify.")
-    tier_id: StrictStr = Field(..., description="Unique tier ID, assigned by Voucherify.")
+    customer_id: Optional[StrictStr] = Field(None, description="Unique customer ID of the customer making the purchase.")
+    campaign_id: Optional[StrictStr] = Field(None, description="Unique campaign ID, assigned by Voucherify.")
+    tier_id: Optional[StrictStr] = Field(None, description="Unique tier ID, assigned by Voucherify.")
     start_date: Optional[StrictStr] = Field(None, description="Activation timestamp defines when the loyalty tier starts to be active in ISO 8601 format. Loyalty tier is inactive before this date.")
     expiration_date: Optional[StrictStr] = Field(None, description="Expiration timestamp defines when the loyalty tier expires in ISO 8601 format. Loyalty tier is inactive after this date.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the loyalty tier was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty tier was updated in ISO 8601 format.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty tier was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty tier was updated. The value is shown in the ISO 8601 format.")
     __properties = ["customer_id", "campaign_id", "tier_id", "start_date", "expiration_date", "created_at", "updated_at"]
 
     class Config:
@@ -59,6 +59,41 @@ class LoyaltyTierExpiration(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if customer_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.customer_id is None and "customer_id" in self.__fields_set__:
+            _dict['customer_id'] = None
+
+        # set to None if campaign_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_id is None and "campaign_id" in self.__fields_set__:
+            _dict['campaign_id'] = None
+
+        # set to None if tier_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tier_id is None and "tier_id" in self.__fields_set__:
+            _dict['tier_id'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
         return _dict
 
     @classmethod

@@ -27,7 +27,7 @@ from voucherify_client.models.stacking_rules import StackingRules
 
 class ClientQualificationsCheckEligibilityResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/qualifications`.  # noqa: E501
+    Response body schema for **POST** `v1/qualifications`.  # noqa: E501
     """
     redeemables: Optional[QualificationsRedeemables] = None
     tracking_id: Optional[StrictStr] = Field(None, description="This identifier is generated during voucher qualification based on your internal id (e.g., email, database ID). This is a hashed customer source ID.")
@@ -68,6 +68,11 @@ class ClientQualificationsCheckEligibilityResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of stacking_rules
         if self.stacking_rules:
             _dict['stacking_rules'] = self.stacking_rules.to_dict()
+        # set to None if tracking_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tracking_id is None and "tracking_id" in self.__fields_set__:
+            _dict['tracking_id'] = None
+
         return _dict
 
     @classmethod

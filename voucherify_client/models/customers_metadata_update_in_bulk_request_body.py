@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 
 class CustomersMetadataUpdateInBulkRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/customers/metadata/async`.  # noqa: E501
+    Request body schema for **POST** `v1/customers/metadata/async`.  # noqa: E501
     """
-    source_ids: conlist(StrictStr) = Field(..., description="An array of customer `source_id`'s.")
-    metadata: Dict[str, Any] = Field(..., description="Metadata key value pairs to be updated. A set of custom key/value pairs that you can attach to a customer. The metadata object stores all custom attributes assigned to the customer. It can be useful for storing additional information about the customer in a structured format. This metadata can be used for validating whether the customer qualifies for a discount or it can be used in building customer segments.")
+    source_ids: Optional[conlist(StrictStr)] = Field(None, description="An array of customer `source_id`'s.")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="Metadata key value pairs to be updated. A set of custom key/value pairs that you can attach to a customer. The metadata object stores all custom attributes assigned to the customer. It can be useful for storing additional information about the customer in a structured format. This metadata can be used for validating whether the customer qualifies for a discount or it can be used in building customer segments.")
     __properties = ["source_ids", "metadata"]
 
     class Config:
@@ -54,6 +54,16 @@ class CustomersMetadataUpdateInBulkRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if source_ids (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_ids is None and "source_ids" in self.__fields_set__:
+            _dict['source_ids'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod

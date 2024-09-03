@@ -14,185 +14,241 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.campaigns_create_discount_coupons_campaign import CampaignsCreateDiscountCouponsCampaign
-from voucherify_client.models.campaigns_create_gift_campaign import CampaignsCreateGiftCampaign
-from voucherify_client.models.campaigns_create_giveaway_campaign import CampaignsCreateGiveawayCampaign
-from voucherify_client.models.campaigns_create_loyalty_campaign import CampaignsCreateLoyaltyCampaign
-from voucherify_client.models.campaigns_create_promotion_campaign import CampaignsCreatePromotionCampaign
-from voucherify_client.models.campaigns_create_referral_campaign import CampaignsCreateReferralCampaign
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
-
-CAMPAIGNS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS = ["CampaignsCreateDiscountCouponsCampaign", "CampaignsCreateGiftCampaign", "CampaignsCreateGiveawayCampaign", "CampaignsCreateLoyaltyCampaign", "CampaignsCreatePromotionCampaign", "CampaignsCreateReferralCampaign"]
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist, validator
+from voucherify_client.models.campaigns_create_request_body_promotion import CampaignsCreateRequestBodyPromotion
+from voucherify_client.models.campaigns_create_request_body_voucher import CampaignsCreateRequestBodyVoucher
+from voucherify_client.models.lucky_draw import LuckyDraw
+from voucherify_client.models.referral_program import ReferralProgram
+from voucherify_client.models.validity_hours import ValidityHours
+from voucherify_client.models.validity_timeframe import ValidityTimeframe
 
 class CampaignsCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/campaigns`.
+    CampaignsCreateRequestBody
     """
-    # data type: CampaignsCreateDiscountCouponsCampaign
-    oneof_schema_1_validator: Optional[CampaignsCreateDiscountCouponsCampaign] = None
-    # data type: CampaignsCreateReferralCampaign
-    oneof_schema_2_validator: Optional[CampaignsCreateReferralCampaign] = None
-    # data type: CampaignsCreateGiftCampaign
-    oneof_schema_3_validator: Optional[CampaignsCreateGiftCampaign] = None
-    # data type: CampaignsCreateLoyaltyCampaign
-    oneof_schema_4_validator: Optional[CampaignsCreateLoyaltyCampaign] = None
-    # data type: CampaignsCreatePromotionCampaign
-    oneof_schema_5_validator: Optional[CampaignsCreatePromotionCampaign] = None
-    # data type: CampaignsCreateGiveawayCampaign
-    oneof_schema_6_validator: Optional[CampaignsCreateGiveawayCampaign] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[CampaignsCreateDiscountCouponsCampaign, CampaignsCreateGiftCampaign, CampaignsCreateGiveawayCampaign, CampaignsCreateLoyaltyCampaign, CampaignsCreatePromotionCampaign, CampaignsCreateReferralCampaign]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(CAMPAIGNS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS, const=True)
+    name: Optional[StrictStr] = Field(None, description="Campaign name.")
+    description: Optional[StrictStr] = Field(None, description="An optional field to keep any extra textual information about the campaign such as a campaign description and details.")
+    type: Optional[StrictStr] = Field(None, description="Defines whether the campaign can be updated with new vouchers after campaign creation.      - `AUTO_UPDATE`: By choosing the auto update option you will create a campaign that can be enhanced by new vouchers after the time of creation (e.g. by publish vouchers method).     -  `STATIC`: vouchers need to be manually published.")
+    join_once: Optional[StrictBool] = Field(None, description="If this value is set to `true`, customers will be able to join the campaign only once.")
+    auto_join: Optional[StrictBool] = Field(None, description="Indicates whether customers will be able to auto-join a loyalty campaign if any earning rule is fulfilled.")
+    use_voucher_metadata_schema: Optional[StrictBool] = Field(None, description="Flag indicating whether the campaign is to use the voucher's metadata schema instead of the campaign metadata schema.")
+    vouchers_count: Optional[StrictInt] = Field(None, description="Total number of unique vouchers in campaign (size of campaign).")
+    start_date: Optional[datetime] = Field(None, description="Activation timestamp defines when the campaign starts to be active in ISO 8601 format. Campaign is *inactive before* this date. ")
+    expiration_date: Optional[datetime] = Field(None, description="Expiration timestamp defines when the campaign expires in ISO 8601 format.  Campaign is *inactive after* this date.")
+    validity_timeframe: Optional[ValidityTimeframe] = None
+    validity_day_of_week: Optional[conlist(StrictInt)] = Field(None, description="Integer array corresponding to the particular days of the week in which the voucher is valid.  - `0` Sunday - `1` Monday - `2` Tuesday - `3` Wednesday - `4` Thursday - `5` Friday - `6` Saturday")
+    validity_hours: Optional[ValidityHours] = None
+    activity_duration_after_publishing: Optional[StrictStr] = Field(None, description="Defines the amount of time the vouchers will be active after publishing. The value is shown in the ISO 8601 format. For example, a voucher with the value of P24D will be valid for a duration of 24 days.")
+    validation_rules: Optional[conlist(StrictStr, max_items=1)] = Field(None, description="Array containing the ID of the validation rule associated with the promotion tier.")
+    category_id: Optional[StrictStr] = Field(None, description="Unique category ID that this campaign belongs to. Either pass this parameter OR the `category`.")
+    category: Optional[StrictStr] = Field(None, description="The category assigned to the campaign. Either pass this parameter OR the `category_id`.")
+    metadata: Optional[Dict[str, Any]] = None
+    campaign_type: Optional[StrictStr] = None
+    voucher: Optional[CampaignsCreateRequestBodyVoucher] = None
+    referral_program: Optional[ReferralProgram] = None
+    promotion: Optional[CampaignsCreateRequestBodyPromotion] = None
+    lucky_draw: Optional[LuckyDraw] = None
+    __properties = ["name", "description", "type", "join_once", "auto_join", "use_voucher_metadata_schema", "vouchers_count", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "validity_hours", "activity_duration_after_publishing", "validation_rules", "category_id", "category", "metadata", "campaign_type", "voucher", "referral_program", "promotion", "lucky_draw"]
+
+    @validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('AUTO_UPDATE', 'STATIC',):
+            raise ValueError("must be one of enum values ('AUTO_UPDATE', 'STATIC')")
+        return value
+
+    @validator('validity_day_of_week')
+    def validity_day_of_week_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in (0, 1, 2, 3, 4, 5, 6,):
+                raise ValueError("each list item must be one of (0, 1, 2, 3, 4, 5, 6)")
+        return value
+
+    @validator('campaign_type')
+    def campaign_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('DISCOUNT_COUPONS', 'REFERRAL_PROGRAM', 'GIFT_VOUCHERS', 'LOYALTY_PROGRAM', 'PROMOTION', 'LUCKY_DRAW',):
+            raise ValueError("must be one of enum values ('DISCOUNT_COUPONS', 'REFERRAL_PROGRAM', 'GIFT_VOUCHERS', 'LOYALTY_PROGRAM', 'PROMOTION', 'LUCKY_DRAW')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = CampaignsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: CampaignsCreateDiscountCouponsCampaign
-        if not isinstance(v, CampaignsCreateDiscountCouponsCampaign):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CampaignsCreateDiscountCouponsCampaign`")
-        else:
-            match += 1
-        # validate data type: CampaignsCreateReferralCampaign
-        if not isinstance(v, CampaignsCreateReferralCampaign):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CampaignsCreateReferralCampaign`")
-        else:
-            match += 1
-        # validate data type: CampaignsCreateGiftCampaign
-        if not isinstance(v, CampaignsCreateGiftCampaign):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CampaignsCreateGiftCampaign`")
-        else:
-            match += 1
-        # validate data type: CampaignsCreateLoyaltyCampaign
-        if not isinstance(v, CampaignsCreateLoyaltyCampaign):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CampaignsCreateLoyaltyCampaign`")
-        else:
-            match += 1
-        # validate data type: CampaignsCreatePromotionCampaign
-        if not isinstance(v, CampaignsCreatePromotionCampaign):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CampaignsCreatePromotionCampaign`")
-        else:
-            match += 1
-        # validate data type: CampaignsCreateGiveawayCampaign
-        if not isinstance(v, CampaignsCreateGiveawayCampaign):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `CampaignsCreateGiveawayCampaign`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in CampaignsCreateRequestBody with oneOf schemas: CampaignsCreateDiscountCouponsCampaign, CampaignsCreateGiftCampaign, CampaignsCreateGiveawayCampaign, CampaignsCreateLoyaltyCampaign, CampaignsCreatePromotionCampaign, CampaignsCreateReferralCampaign. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in CampaignsCreateRequestBody with oneOf schemas: CampaignsCreateDiscountCouponsCampaign, CampaignsCreateGiftCampaign, CampaignsCreateGiveawayCampaign, CampaignsCreateLoyaltyCampaign, CampaignsCreatePromotionCampaign, CampaignsCreateReferralCampaign. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> CampaignsCreateRequestBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> CampaignsCreateRequestBody:
-        """Returns the object represented by the json string"""
-        instance = CampaignsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of CampaignsCreateRequestBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into CampaignsCreateDiscountCouponsCampaign
-        try:
-            instance.actual_instance = CampaignsCreateDiscountCouponsCampaign.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into CampaignsCreateReferralCampaign
-        try:
-            instance.actual_instance = CampaignsCreateReferralCampaign.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into CampaignsCreateGiftCampaign
-        try:
-            instance.actual_instance = CampaignsCreateGiftCampaign.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into CampaignsCreateLoyaltyCampaign
-        try:
-            instance.actual_instance = CampaignsCreateLoyaltyCampaign.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into CampaignsCreatePromotionCampaign
-        try:
-            instance.actual_instance = CampaignsCreatePromotionCampaign.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into CampaignsCreateGiveawayCampaign
-        try:
-            instance.actual_instance = CampaignsCreateGiveawayCampaign.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of validity_timeframe
+        if self.validity_timeframe:
+            _dict['validity_timeframe'] = self.validity_timeframe.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of validity_hours
+        if self.validity_hours:
+            _dict['validity_hours'] = self.validity_hours.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of voucher
+        if self.voucher:
+            _dict['voucher'] = self.voucher.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of referral_program
+        if self.referral_program:
+            _dict['referral_program'] = self.referral_program.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of promotion
+        if self.promotion:
+            _dict['promotion'] = self.promotion.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of lucky_draw
+        if self.lucky_draw:
+            _dict['lucky_draw'] = self.lucky_draw.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into CampaignsCreateRequestBody with oneOf schemas: CampaignsCreateDiscountCouponsCampaign, CampaignsCreateGiftCampaign, CampaignsCreateGiveawayCampaign, CampaignsCreateLoyaltyCampaign, CampaignsCreatePromotionCampaign, CampaignsCreateReferralCampaign. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into CampaignsCreateRequestBody with oneOf schemas: CampaignsCreateDiscountCouponsCampaign, CampaignsCreateGiftCampaign, CampaignsCreateGiveawayCampaign, CampaignsCreateLoyaltyCampaign, CampaignsCreatePromotionCampaign, CampaignsCreateReferralCampaign. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if description (nullable) is None
+        # and __fields_set__ contains the field
+        if self.description is None and "description" in self.__fields_set__:
+            _dict['description'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        # set to None if join_once (nullable) is None
+        # and __fields_set__ contains the field
+        if self.join_once is None and "join_once" in self.__fields_set__:
+            _dict['join_once'] = None
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+        # set to None if auto_join (nullable) is None
+        # and __fields_set__ contains the field
+        if self.auto_join is None and "auto_join" in self.__fields_set__:
+            _dict['auto_join'] = None
+
+        # set to None if use_voucher_metadata_schema (nullable) is None
+        # and __fields_set__ contains the field
+        if self.use_voucher_metadata_schema is None and "use_voucher_metadata_schema" in self.__fields_set__:
+            _dict['use_voucher_metadata_schema'] = None
+
+        # set to None if vouchers_count (nullable) is None
+        # and __fields_set__ contains the field
+        if self.vouchers_count is None and "vouchers_count" in self.__fields_set__:
+            _dict['vouchers_count'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
+        # set to None if activity_duration_after_publishing (nullable) is None
+        # and __fields_set__ contains the field
+        if self.activity_duration_after_publishing is None and "activity_duration_after_publishing" in self.__fields_set__:
+            _dict['activity_duration_after_publishing'] = None
+
+        # set to None if validation_rules (nullable) is None
+        # and __fields_set__ contains the field
+        if self.validation_rules is None and "validation_rules" in self.__fields_set__:
+            _dict['validation_rules'] = None
+
+        # set to None if category_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.category_id is None and "category_id" in self.__fields_set__:
+            _dict['category_id'] = None
+
+        # set to None if category (nullable) is None
+        # and __fields_set__ contains the field
+        if self.category is None and "category" in self.__fields_set__:
+            _dict['category'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if campaign_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_type is None and "campaign_type" in self.__fields_set__:
+            _dict['campaign_type'] = None
+
+        # set to None if voucher (nullable) is None
+        # and __fields_set__ contains the field
+        if self.voucher is None and "voucher" in self.__fields_set__:
+            _dict['voucher'] = None
+
+        # set to None if promotion (nullable) is None
+        # and __fields_set__ contains the field
+        if self.promotion is None and "promotion" in self.__fields_set__:
+            _dict['promotion'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: dict) -> CampaignsCreateRequestBody:
+        """Create an instance of CampaignsCreateRequestBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return CampaignsCreateRequestBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = CampaignsCreateRequestBody.parse_obj({
+            "name": obj.get("name"),
+            "description": obj.get("description"),
+            "type": obj.get("type"),
+            "join_once": obj.get("join_once"),
+            "auto_join": obj.get("auto_join"),
+            "use_voucher_metadata_schema": obj.get("use_voucher_metadata_schema"),
+            "vouchers_count": obj.get("vouchers_count"),
+            "start_date": obj.get("start_date"),
+            "expiration_date": obj.get("expiration_date"),
+            "validity_timeframe": ValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
+            "validity_day_of_week": obj.get("validity_day_of_week"),
+            "validity_hours": ValidityHours.from_dict(obj.get("validity_hours")) if obj.get("validity_hours") is not None else None,
+            "activity_duration_after_publishing": obj.get("activity_duration_after_publishing"),
+            "validation_rules": obj.get("validation_rules"),
+            "category_id": obj.get("category_id"),
+            "category": obj.get("category"),
+            "metadata": obj.get("metadata"),
+            "campaign_type": obj.get("campaign_type"),
+            "voucher": CampaignsCreateRequestBodyVoucher.from_dict(obj.get("voucher")) if obj.get("voucher") is not None else None,
+            "referral_program": ReferralProgram.from_dict(obj.get("referral_program")) if obj.get("referral_program") is not None else None,
+            "promotion": CampaignsCreateRequestBodyPromotion.from_dict(obj.get("promotion")) if obj.get("promotion") is not None else None,
+            "lucky_draw": LuckyDraw.from_dict(obj.get("lucky_draw")) if obj.get("lucky_draw") is not None else None
+        })
+        return _obj
 
 

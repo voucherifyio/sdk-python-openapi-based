@@ -21,7 +21,7 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, conlist
-from voucherify_client.models.order_calculated_no_customer_data import OrderCalculatedNoCustomerData
+from voucherify_client.models.order_calculated import OrderCalculated
 from voucherify_client.models.redemption_rollback import RedemptionRollback
 
 class RedemptionsRollbacksCreateResponseBody(BaseModel):
@@ -30,7 +30,7 @@ class RedemptionsRollbacksCreateResponseBody(BaseModel):
     """
     rollbacks: Optional[conlist(RedemptionRollback)] = Field(None, description="Contains the rollback redemption objects of the particular incentives.")
     parent_rollback: Optional[RedemptionRollback] = None
-    order: Optional[OrderCalculatedNoCustomerData] = None
+    order: Optional[OrderCalculated] = None
     __properties = ["rollbacks", "parent_rollback", "order"]
 
     class Config:
@@ -70,6 +70,11 @@ class RedemptionsRollbacksCreateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of order
         if self.order:
             _dict['order'] = self.order.to_dict()
+        # set to None if rollbacks (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rollbacks is None and "rollbacks" in self.__fields_set__:
+            _dict['rollbacks'] = None
+
         return _dict
 
     @classmethod
@@ -84,7 +89,7 @@ class RedemptionsRollbacksCreateResponseBody(BaseModel):
         _obj = RedemptionsRollbacksCreateResponseBody.parse_obj({
             "rollbacks": [RedemptionRollback.from_dict(_item) for _item in obj.get("rollbacks")] if obj.get("rollbacks") is not None else None,
             "parent_rollback": RedemptionRollback.from_dict(obj.get("parent_rollback")) if obj.get("parent_rollback") is not None else None,
-            "order": OrderCalculatedNoCustomerData.from_dict(obj.get("order")) if obj.get("order") is not None else None
+            "order": OrderCalculated.from_dict(obj.get("order")) if obj.get("order") is not None else None
         })
         return _obj
 

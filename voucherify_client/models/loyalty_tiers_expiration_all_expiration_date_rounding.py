@@ -86,6 +86,26 @@ class LoyaltyTiersExpirationAllExpirationDateRounding(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if strategy (nullable) is None
+        # and __fields_set__ contains the field
+        if self.strategy is None and "strategy" in self.__fields_set__:
+            _dict['strategy'] = None
+
+        # set to None if unit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unit is None and "unit" in self.__fields_set__:
+            _dict['unit'] = None
+
+        # set to None if value (nullable) is None
+        # and __fields_set__ contains the field
+        if self.value is None and "value" in self.__fields_set__:
+            _dict['value'] = None
+
         return _dict
 
     @classmethod

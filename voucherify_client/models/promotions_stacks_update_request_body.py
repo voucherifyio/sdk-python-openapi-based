@@ -25,7 +25,7 @@ from voucherify_client.models.promotions_stacks_update_request_body_tiers import
 
 class PromotionsStacksUpdateRequestBody(BaseModel):
     """
-    Request Body schema for **put** `/promotions/{campaignId}/stacks/{stackId}`.  # noqa: E501
+    Request Body schema for **PUT** `v1/promotions/{campaignId}/stacks/{stackId}`.  # noqa: E501
     """
     name: Optional[StrictStr] = Field(None, description="Promotion stack name.")
     tiers: Optional[PromotionsStacksUpdateRequestBodyTiers] = None
@@ -59,6 +59,21 @@ class PromotionsStacksUpdateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of tiers
         if self.tiers:
             _dict['tiers'] = self.tiers.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if tiers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tiers is None and "tiers" in self.__fields_set__:
+            _dict['tiers'] = None
+
+        # set to None if category_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.category_id is None and "category_id" in self.__fields_set__:
+            _dict['category_id'] = None
+
         return _dict
 
     @classmethod

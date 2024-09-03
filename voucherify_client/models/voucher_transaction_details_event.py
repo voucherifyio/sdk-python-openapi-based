@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class VoucherTransactionDetailsEvent(BaseModel):
     """
     Contains information about the event that triggers the point accrual.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique event ID.")
-    type: StrictStr = Field(..., description="Type of event.")
+    id: Optional[StrictStr] = Field(None, description="Unique event ID.")
+    type: Optional[StrictStr] = Field(None, description="Type of event.")
     __properties = ["id", "type"]
 
     class Config:
@@ -54,6 +54,16 @@ class VoucherTransactionDetailsEvent(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
         return _dict
 
     @classmethod

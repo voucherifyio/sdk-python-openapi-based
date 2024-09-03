@@ -26,7 +26,7 @@ class VoucherLoyaltyCard(BaseModel):
     """
     Object representing loyalty card parameters. Child attributes are present only if `type` is `LOYALTY_CARD`. Defaults to `null`.  # noqa: E501
     """
-    points: Optional[StrictInt] = Field(None, description="Total points incurred over lifespan of loyalty card.")
+    points: Optional[StrictInt] = Field(None, description="Total points incurred over the lifespan of the loyalty card.")
     balance: Optional[StrictInt] = Field(None, description="Points available for reward redemption.")
     next_expiration_date: Optional[date] = Field(None, description="The next closest date when the next set of points are due to expire.")
     next_expiration_points: Optional[StrictInt] = Field(None, description="The amount of points that are set to expire next.")
@@ -56,6 +56,26 @@ class VoucherLoyaltyCard(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if next_expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.next_expiration_date is None and "next_expiration_date" in self.__fields_set__:
+            _dict['next_expiration_date'] = None
+
+        # set to None if next_expiration_points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.next_expiration_points is None and "next_expiration_points" in self.__fields_set__:
+            _dict['next_expiration_points'] = None
+
         return _dict
 
     @classmethod

@@ -1,6 +1,6 @@
 # VouchersTransactionsExportCreateRequestBody
 
-Request body schema for **POST** `/vouchers/transactions/export`.
+Request body schema for **POST** `v1/vouchers/transactions/export`.
 
 ## Properties
 Name | Type | Description | Notes

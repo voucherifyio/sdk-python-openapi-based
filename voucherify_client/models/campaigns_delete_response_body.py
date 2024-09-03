@@ -53,6 +53,11 @@ class CampaignsDeleteResponseBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if async_action_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.async_action_id is None and "async_action_id" in self.__fields_set__:
+            _dict['async_action_id'] = None
+
         return _dict
 
     @classmethod

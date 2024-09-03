@@ -14,129 +14,102 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.product_collections_create_dynamic_request_body import ProductCollectionsCreateDynamicRequestBody
-from voucherify_client.models.product_collections_create_static_request_body import ProductCollectionsCreateStaticRequestBody
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
 
-PRODUCT_COLLECTIONS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS = ["ProductCollectionsCreateDynamicRequestBody", "ProductCollectionsCreateStaticRequestBody"]
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist, validator
+from voucherify_client.models.product_collections_create_request_body_filter import ProductCollectionsCreateRequestBodyFilter
+from voucherify_client.models.product_collections_create_request_body_products_item import ProductCollectionsCreateRequestBodyProductsItem
 
 class ProductCollectionsCreateRequestBody(BaseModel):
     """
-    Response body schema for **POST** `/product-collections`.
+    ProductCollectionsCreateRequestBody
     """
-    # data type: ProductCollectionsCreateStaticRequestBody
-    oneof_schema_1_validator: Optional[ProductCollectionsCreateStaticRequestBody] = None
-    # data type: ProductCollectionsCreateDynamicRequestBody
-    oneof_schema_2_validator: Optional[ProductCollectionsCreateDynamicRequestBody] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[ProductCollectionsCreateDynamicRequestBody, ProductCollectionsCreateStaticRequestBody]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(PRODUCT_COLLECTIONS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS, const=True)
+    type: Optional[StrictStr] = Field('STATIC', description="Show that the product collection is static (manually selected products).")
+    name: Optional[StrictStr] = Field(None, description="Unique user-defined product collection name.")
+    products: Optional[conlist(ProductCollectionsCreateRequestBodyProductsItem)] = Field(None, description="Defines a set of products for a `STATIC` product collection type.")
+    filter: Optional[ProductCollectionsCreateRequestBodyFilter] = None
+    __properties = ["type", "name", "products", "filter"]
+
+    @validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('STATIC',):
+            raise ValueError("must be one of enum values ('STATIC')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = ProductCollectionsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: ProductCollectionsCreateStaticRequestBody
-        if not isinstance(v, ProductCollectionsCreateStaticRequestBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ProductCollectionsCreateStaticRequestBody`")
-        else:
-            match += 1
-        # validate data type: ProductCollectionsCreateDynamicRequestBody
-        if not isinstance(v, ProductCollectionsCreateDynamicRequestBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ProductCollectionsCreateDynamicRequestBody`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ProductCollectionsCreateRequestBody with oneOf schemas: ProductCollectionsCreateDynamicRequestBody, ProductCollectionsCreateStaticRequestBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in ProductCollectionsCreateRequestBody with oneOf schemas: ProductCollectionsCreateDynamicRequestBody, ProductCollectionsCreateStaticRequestBody. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> ProductCollectionsCreateRequestBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> ProductCollectionsCreateRequestBody:
-        """Returns the object represented by the json string"""
-        instance = ProductCollectionsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of ProductCollectionsCreateRequestBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into ProductCollectionsCreateStaticRequestBody
-        try:
-            instance.actual_instance = ProductCollectionsCreateStaticRequestBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ProductCollectionsCreateDynamicRequestBody
-        try:
-            instance.actual_instance = ProductCollectionsCreateDynamicRequestBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of each item in products (list)
+        _items = []
+        if self.products:
+            for _item in self.products:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['products'] = _items
+        # override the default output from pydantic by calling `to_dict()` of filter
+        if self.filter:
+            _dict['filter'] = self.filter.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ProductCollectionsCreateRequestBody with oneOf schemas: ProductCollectionsCreateDynamicRequestBody, ProductCollectionsCreateStaticRequestBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into ProductCollectionsCreateRequestBody with oneOf schemas: ProductCollectionsCreateDynamicRequestBody, ProductCollectionsCreateStaticRequestBody. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if products (nullable) is None
+        # and __fields_set__ contains the field
+        if self.products is None and "products" in self.__fields_set__:
+            _dict['products'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if filter (nullable) is None
+        # and __fields_set__ contains the field
+        if self.filter is None and "filter" in self.__fields_set__:
+            _dict['filter'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        return _dict
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+    @classmethod
+    def from_dict(cls, obj: dict) -> ProductCollectionsCreateRequestBody:
+        """Create an instance of ProductCollectionsCreateRequestBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return ProductCollectionsCreateRequestBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = ProductCollectionsCreateRequestBody.parse_obj({
+            "type": obj.get("type") if obj.get("type") is not None else 'STATIC',
+            "name": obj.get("name"),
+            "products": [ProductCollectionsCreateRequestBodyProductsItem.from_dict(_item) for _item in obj.get("products")] if obj.get("products") is not None else None,
+            "filter": ProductCollectionsCreateRequestBodyFilter.from_dict(obj.get("filter")) if obj.get("filter") is not None else None
+        })
+        return _obj
 
 

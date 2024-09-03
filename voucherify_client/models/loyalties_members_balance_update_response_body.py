@@ -25,20 +25,23 @@ from voucherify_client.models.loyalties_members_balance_update_response_body_rel
 
 class LoyaltiesMembersBalanceUpdateResponseBody(BaseModel):
     """
-    Response schema for **POST** `/loyalties/members/{memberId}/balance` and for **POST** `/loyalties/{campaignId}/members/{memberId}/balance`.  # noqa: E501
+    Response schema for **POST** `v1/loyalties/members/{memberId}/balance` and for **POST** `v1/loyalties/{campaignId}/members/{memberId}/balance`.  # noqa: E501
     """
-    points: StrictInt = Field(..., description="The incremental points removed or added to the current balance on the loyalty card.")
-    total: StrictInt = Field(..., description="The total of points accrued over the lifetime of the loyalty card.")
-    balance: conint(strict=True, ge=0) = Field(..., description="The balance after adding/removing points.")
-    type: StrictStr = Field(..., description="The type of voucher being modified.")
-    object: constr(strict=True) = Field(..., description="The type of object represented by JSON. Default is balance.")
-    related_object: LoyaltiesMembersBalanceUpdateResponseBodyRelatedObject = Field(...)
+    points: Optional[StrictInt] = Field(None, description="The incremental points removed or added to the current balance on the loyalty card.")
+    total: Optional[StrictInt] = Field(None, description="The total of points accrued over the lifetime of the loyalty card.")
+    balance: Optional[conint(strict=True, ge=0)] = Field(None, description="The balance after adding/removing points.")
+    type: Optional[StrictStr] = Field(None, description="The type of voucher being modified.")
+    object: Optional[constr(strict=True)] = Field('balance', description="The type of the object represented by JSON. Default is balance.")
+    related_object: Optional[LoyaltiesMembersBalanceUpdateResponseBodyRelatedObject] = None
     operation_type: Optional[StrictStr] = None
     __properties = ["points", "total", "balance", "type", "object", "related_object", "operation_type"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('loyalty_card', 'gift_voucher',):
             raise ValueError("must be one of enum values ('loyalty_card', 'gift_voucher')")
         return value
@@ -46,6 +49,9 @@ class LoyaltiesMembersBalanceUpdateResponseBody(BaseModel):
     @validator('object')
     def object_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"balance", value):
             raise ValueError(r"must validate the regular expression /balance/")
         return value
@@ -53,6 +59,9 @@ class LoyaltiesMembersBalanceUpdateResponseBody(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('balance',):
             raise ValueError("must be one of enum values ('balance')")
         return value
@@ -94,6 +103,41 @@ class LoyaltiesMembersBalanceUpdateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of related_object
         if self.related_object:
             _dict['related_object'] = self.related_object.to_dict()
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if related_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object is None and "related_object" in self.__fields_set__:
+            _dict['related_object'] = None
+
+        # set to None if operation_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.operation_type is None and "operation_type" in self.__fields_set__:
+            _dict['operation_type'] = None
+
         return _dict
 
     @classmethod

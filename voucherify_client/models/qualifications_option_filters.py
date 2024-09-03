@@ -23,6 +23,9 @@ from typing import Optional
 from pydantic import BaseModel
 from voucherify_client.models.junction import Junction
 from voucherify_client.models.qualifications_field_conditions import QualificationsFieldConditions
+from voucherify_client.models.qualifications_option_filters_campaign_type import QualificationsOptionFiltersCampaignType
+from voucherify_client.models.qualifications_option_filters_holder_role import QualificationsOptionFiltersHolderRole
+from voucherify_client.models.qualifications_option_filters_resource_type import QualificationsOptionFiltersResourceType
 
 class QualificationsOptionFilters(BaseModel):
     """
@@ -31,11 +34,13 @@ class QualificationsOptionFilters(BaseModel):
     junction: Optional[Junction] = None
     category_id: Optional[QualificationsFieldConditions] = None
     campaign_id: Optional[QualificationsFieldConditions] = None
+    campaign_type: Optional[QualificationsOptionFiltersCampaignType] = None
     resource_id: Optional[QualificationsFieldConditions] = None
-    resource_type: Optional[QualificationsFieldConditions] = None
+    resource_type: Optional[QualificationsOptionFiltersResourceType] = None
     voucher_type: Optional[QualificationsFieldConditions] = None
     code: Optional[QualificationsFieldConditions] = None
-    __properties = ["junction", "category_id", "campaign_id", "resource_id", "resource_type", "voucher_type", "code"]
+    holder_role: Optional[QualificationsOptionFiltersHolderRole] = None
+    __properties = ["junction", "category_id", "campaign_id", "campaign_type", "resource_id", "resource_type", "voucher_type", "code", "holder_role"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,6 +72,9 @@ class QualificationsOptionFilters(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of campaign_id
         if self.campaign_id:
             _dict['campaign_id'] = self.campaign_id.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of campaign_type
+        if self.campaign_type:
+            _dict['campaign_type'] = self.campaign_type.to_dict()
         # override the default output from pydantic by calling `to_dict()` of resource_id
         if self.resource_id:
             _dict['resource_id'] = self.resource_id.to_dict()
@@ -79,6 +87,24 @@ class QualificationsOptionFilters(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of code
         if self.code:
             _dict['code'] = self.code.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of holder_role
+        if self.holder_role:
+            _dict['holder_role'] = self.holder_role.to_dict()
+        # set to None if campaign_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_type is None and "campaign_type" in self.__fields_set__:
+            _dict['campaign_type'] = None
+
+        # set to None if resource_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.resource_type is None and "resource_type" in self.__fields_set__:
+            _dict['resource_type'] = None
+
+        # set to None if holder_role (nullable) is None
+        # and __fields_set__ contains the field
+        if self.holder_role is None and "holder_role" in self.__fields_set__:
+            _dict['holder_role'] = None
+
         return _dict
 
     @classmethod
@@ -94,10 +120,12 @@ class QualificationsOptionFilters(BaseModel):
             "junction": obj.get("junction"),
             "category_id": QualificationsFieldConditions.from_dict(obj.get("category_id")) if obj.get("category_id") is not None else None,
             "campaign_id": QualificationsFieldConditions.from_dict(obj.get("campaign_id")) if obj.get("campaign_id") is not None else None,
+            "campaign_type": QualificationsOptionFiltersCampaignType.from_dict(obj.get("campaign_type")) if obj.get("campaign_type") is not None else None,
             "resource_id": QualificationsFieldConditions.from_dict(obj.get("resource_id")) if obj.get("resource_id") is not None else None,
-            "resource_type": QualificationsFieldConditions.from_dict(obj.get("resource_type")) if obj.get("resource_type") is not None else None,
+            "resource_type": QualificationsOptionFiltersResourceType.from_dict(obj.get("resource_type")) if obj.get("resource_type") is not None else None,
             "voucher_type": QualificationsFieldConditions.from_dict(obj.get("voucher_type")) if obj.get("voucher_type") is not None else None,
-            "code": QualificationsFieldConditions.from_dict(obj.get("code")) if obj.get("code") is not None else None
+            "code": QualificationsFieldConditions.from_dict(obj.get("code")) if obj.get("code") is not None else None,
+            "holder_role": QualificationsOptionFiltersHolderRole.from_dict(obj.get("holder_role")) if obj.get("holder_role") is not None else None
         })
         return _obj
 

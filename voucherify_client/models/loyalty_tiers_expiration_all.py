@@ -28,15 +28,18 @@ class LoyaltyTiersExpirationAll(BaseModel):
     """
     Defines the Loyalty Tiers Expiration.  # noqa: E501
     """
-    qualification_type: StrictStr = Field(..., description="Tier qualification.     `BALANCE`: Points balance is based on the customer's current points balance. Customers qualify for the tier if their points balance is in the points range of the tier.   `POINTS_IN_PERIOD`: A customer qualifies for the tier only if the sum of the accumulated points in a **defined time interval** reaches the tier threshold.")
+    qualification_type: Optional[StrictStr] = Field(None, description="Tier qualification.     `BALANCE`: Points balance is based on the customer's current points balance. Customers qualify for the tier if their points balance is in the points range of the tier.   `POINTS_IN_PERIOD`: A customer qualifies for the tier only if the sum of the accumulated points in a **defined time interval** reaches the tier threshold.")
     qualification_period: Optional[StrictStr] = Field(None, description="Customers can qualify for the tier if they collected enough points in a given time period. So, in addition to the customer having to reach a points range, they also need to have collected the points within a set time period.      | **Period** | **Definition** | |:---|:---| | **Calendar Month** | Points collected in one calendar month<br>January, February, March, etc. | | **Calendar Quarter** | Points collected in the quarter<br>- January - March<br>- April - June<br>- July - September<br>- October - December | | **Calendar Half-year** | Points collected in the half-year<br>- January - June<br>- July - December | | **Calendar Year** | Points collected in one calendar year<br>January - December |")
-    start_date: LoyaltyTiersExpirationAllStartDate = Field(...)
-    expiration_date: LoyaltyTiersExpirationAllExpirationDate = Field(...)
+    start_date: Optional[LoyaltyTiersExpirationAllStartDate] = None
+    expiration_date: Optional[LoyaltyTiersExpirationAllExpirationDate] = None
     __properties = ["qualification_type", "qualification_period", "start_date", "expiration_date"]
 
     @validator('qualification_type')
     def qualification_type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('BALANCE', 'POINTS_IN_PERIOD',):
             raise ValueError("must be one of enum values ('BALANCE', 'POINTS_IN_PERIOD')")
         return value
@@ -81,6 +84,26 @@ class LoyaltyTiersExpirationAll(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of expiration_date
         if self.expiration_date:
             _dict['expiration_date'] = self.expiration_date.to_dict()
+        # set to None if qualification_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.qualification_type is None and "qualification_type" in self.__fields_set__:
+            _dict['qualification_type'] = None
+
+        # set to None if qualification_period (nullable) is None
+        # and __fields_set__ contains the field
+        if self.qualification_period is None and "qualification_period" in self.__fields_set__:
+            _dict['qualification_period'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
         return _dict
 
     @classmethod

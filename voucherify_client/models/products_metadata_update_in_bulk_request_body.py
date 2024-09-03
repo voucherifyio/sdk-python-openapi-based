@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
 
 class ProductsMetadataUpdateInBulkRequestBody(BaseModel):
     """
-    Request schema for **POST** `/products/metadata/async`.  # noqa: E501
+    Request schema for **POST** `v1/products/metadata/async`.  # noqa: E501
     """
-    source_ids: conlist(StrictStr) = Field(..., description="Array of unique product source IDs.")
-    metadata: Dict[str, Any] = Field(..., description="The metadata object stores all custom attributes assigned to the product. A set of key/value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.")
+    source_ids: Optional[conlist(StrictStr)] = Field(None, description="Array of unique product source IDs.")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the product. A set of key/value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.")
     __properties = ["source_ids", "metadata"]
 
     class Config:
@@ -54,6 +54,16 @@ class ProductsMetadataUpdateInBulkRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if source_ids (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_ids is None and "source_ids" in self.__fields_set__:
+            _dict['source_ids'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod

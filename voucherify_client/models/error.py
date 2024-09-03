@@ -26,11 +26,11 @@ class Error(BaseModel):
     """
     Error details  # noqa: E501
     """
-    code: StrictInt = Field(..., description="Error's HTTP status code.")
-    key: StrictStr = Field(..., description="Short string describing the kind of error which occurred.")
-    message: StrictStr = Field(..., description="A human-readable message providing a short description about the error.")
-    details: StrictStr = Field(..., description="A human-readable message providing more details about the error.")
-    request_id: StrictStr = Field(..., description="This ID is useful when troubleshooting and/or finding the root cause of an error response by our support team.")
+    code: Optional[StrictInt] = Field(None, description="Error's HTTP status code.")
+    key: Optional[StrictStr] = Field(None, description="Short string describing the kind of error which occurred.")
+    message: Optional[StrictStr] = Field(None, description="A human-readable message providing a short description about the error.")
+    details: Optional[StrictStr] = Field(None, description="A human-readable message providing more details about the error.")
+    request_id: Optional[StrictStr] = Field(None, description="This ID is useful when troubleshooting and/or finding the root cause of an error response by our support team.")
     resource_id: Optional[StrictStr] = Field(None, description="Unique resource ID that can be used in another endpoint to get more details.")
     resource_type: Optional[StrictStr] = Field(None, description="The resource type.")
     __properties = ["code", "key", "message", "details", "request_id", "resource_id", "resource_type"]
@@ -59,6 +59,41 @@ class Error(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
+        # set to None if key (nullable) is None
+        # and __fields_set__ contains the field
+        if self.key is None and "key" in self.__fields_set__:
+            _dict['key'] = None
+
+        # set to None if message (nullable) is None
+        # and __fields_set__ contains the field
+        if self.message is None and "message" in self.__fields_set__:
+            _dict['message'] = None
+
+        # set to None if details (nullable) is None
+        # and __fields_set__ contains the field
+        if self.details is None and "details" in self.__fields_set__:
+            _dict['details'] = None
+
+        # set to None if request_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.request_id is None and "request_id" in self.__fields_set__:
+            _dict['request_id'] = None
+
+        # set to None if resource_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.resource_id is None and "resource_id" in self.__fields_set__:
+            _dict['resource_id'] = None
+
+        # set to None if resource_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.resource_type is None and "resource_type" in self.__fields_set__:
+            _dict['resource_type'] = None
+
         return _dict
 
     @classmethod

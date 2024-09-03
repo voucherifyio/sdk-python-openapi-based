@@ -54,6 +54,16 @@ class RedemptionRewardResultParametersCoin(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if exchange_ratio (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exchange_ratio is None and "exchange_ratio" in self.__fields_set__:
+            _dict['exchange_ratio'] = None
+
+        # set to None if points_ratio (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points_ratio is None and "points_ratio" in self.__fields_set__:
+            _dict['points_ratio'] = None
+
         return _dict
 
     @classmethod

@@ -1,6 +1,6 @@
 # ProductsCreateRequestBody
 
-Request schema for **POST** `/products`.
+Request schema for **POST** `v1/products`.
 
 ## Properties
 Name | Type | Description | Notes

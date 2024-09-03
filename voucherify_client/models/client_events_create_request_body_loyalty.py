@@ -19,14 +19,14 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class ClientEventsCreateRequestBodyLoyalty(BaseModel):
     """
     If an earning rule in a loyalty program is based on a custom event. This objects let's you specify the loyalty card to which the custom event should be attributed to.  # noqa: E501
     """
-    code: StrictStr = Field(..., description="Code of the loyalty card to receive points based on the calculation method defined in the related earning rule. An earning rule is triggered for the loyalty card when the event passed in the `event` parameter of the request payload gets sent along with this loyalty card code.")
+    code: Optional[StrictStr] = Field(None, description="Code of the loyalty card to receive points based on the calculation method defined in the related earning rule. An earning rule is triggered for the loyalty card when the event passed in the `event` parameter of the request payload gets sent along with this loyalty card code.")
     __properties = ["code"]
 
     class Config:
@@ -53,6 +53,11 @@ class ClientEventsCreateRequestBodyLoyalty(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
         return _dict
 
     @classmethod

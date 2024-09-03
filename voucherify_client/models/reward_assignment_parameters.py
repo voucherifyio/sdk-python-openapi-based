@@ -21,14 +21,14 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from voucherify_client.models.reward_assignment_parameters_parameters import RewardAssignmentParametersParameters
+from voucherify_client.models.reward_assignment_parameters_loyalty import RewardAssignmentParametersLoyalty
 
 class RewardAssignmentParameters(BaseModel):
     """
-    RewardAssignmentParameters
+    Defines the cost of the reward.  # noqa: E501
     """
-    parameters: Optional[RewardAssignmentParametersParameters] = None
-    __properties = ["parameters"]
+    loyalty: Optional[RewardAssignmentParametersLoyalty] = None
+    __properties = ["loyalty"]
 
     class Config:
         """Pydantic configuration"""
@@ -54,9 +54,14 @@ class RewardAssignmentParameters(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of parameters
-        if self.parameters:
-            _dict['parameters'] = self.parameters.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of loyalty
+        if self.loyalty:
+            _dict['loyalty'] = self.loyalty.to_dict()
+        # set to None if loyalty (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty is None and "loyalty" in self.__fields_set__:
+            _dict['loyalty'] = None
+
         return _dict
 
     @classmethod
@@ -69,7 +74,7 @@ class RewardAssignmentParameters(BaseModel):
             return RewardAssignmentParameters.parse_obj(obj)
 
         _obj = RewardAssignmentParameters.parse_obj({
-            "parameters": RewardAssignmentParametersParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None
+            "loyalty": RewardAssignmentParametersLoyalty.from_dict(obj.get("loyalty")) if obj.get("loyalty") is not None else None
         })
         return _obj
 

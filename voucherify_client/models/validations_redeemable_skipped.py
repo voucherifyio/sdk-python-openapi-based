@@ -19,8 +19,10 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictStr, validator
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist, validator
+from voucherify_client.models.category import Category
+from voucherify_client.models.validations_redeemable_skipped_result import ValidationsRedeemableSkippedResult
 
 class ValidationsRedeemableSkipped(BaseModel):
     """
@@ -29,8 +31,10 @@ class ValidationsRedeemableSkipped(BaseModel):
     status: Optional[StrictStr] = Field('SKIPPED', description="Indicates whether the redeemable can be applied or not applied based on the validation rules.")
     id: Optional[StrictStr] = Field(None, description="Redeemable ID, i.e. the voucher code.")
     object: Optional[StrictStr] = Field(None, description="Redeemable's object type.")
-    result: Optional[Dict[str, Any]] = None
-    __properties = ["status", "id", "object", "result"]
+    result: Optional[ValidationsRedeemableSkippedResult] = None
+    metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes in the form of key/value pairs assigned to the redeemable.")
+    categories: Optional[conlist(Category)] = None
+    __properties = ["status", "id", "object", "result", "metadata", "categories"]
 
     @validator('status')
     def status_validate_enum(cls, value):
@@ -76,6 +80,46 @@ class ValidationsRedeemableSkipped(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of result
+        if self.result:
+            _dict['result'] = self.result.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
+        _items = []
+        if self.categories:
+            for _item in self.categories:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['categories'] = _items
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
+
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if result (nullable) is None
+        # and __fields_set__ contains the field
+        if self.result is None and "result" in self.__fields_set__:
+            _dict['result'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if categories (nullable) is None
+        # and __fields_set__ contains the field
+        if self.categories is None and "categories" in self.__fields_set__:
+            _dict['categories'] = None
+
         return _dict
 
     @classmethod
@@ -91,7 +135,9 @@ class ValidationsRedeemableSkipped(BaseModel):
             "status": obj.get("status") if obj.get("status") is not None else 'SKIPPED',
             "id": obj.get("id"),
             "object": obj.get("object"),
-            "result": obj.get("result")
+            "result": ValidationsRedeemableSkippedResult.from_dict(obj.get("result")) if obj.get("result") is not None else None,
+            "metadata": obj.get("metadata"),
+            "categories": [Category.from_dict(_item) for _item in obj.get("categories")] if obj.get("categories") is not None else None
         })
         return _obj
 

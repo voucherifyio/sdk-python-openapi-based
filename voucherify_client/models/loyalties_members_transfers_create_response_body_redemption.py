@@ -19,8 +19,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
+from typing import Optional
+from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
 
 class LoyaltiesMembersTransfersCreateResponseBodyRedemption(BaseModel):
     """
@@ -29,10 +29,9 @@ class LoyaltiesMembersTransfersCreateResponseBodyRedemption(BaseModel):
     quantity: Optional[StrictInt] = Field(None, description="How many times a voucher can be redeemed. A null value means unlimited.")
     redeemed_points: Optional[StrictInt] = Field(None, description="Total loyalty points redeemed.")
     redeemed_quantity: Optional[StrictInt] = Field(None, description="How many times a voucher has already been redeemed.")
-    redemption_entries: Optional[conlist(StrictStr)] = None
-    object: Optional[StrictStr] = Field('list', description="The type of object represented is by default list. To get this list, you need to make a call to the endpoint returned in the url attribute.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented is by default list. To get this list, you need to make a call to the endpoint returned in the url attribute.")
     url: Optional[StrictStr] = Field(None, description="The endpoint where this list of redemptions can be accessed using a GET method. /v1/vouchers/{voucher_code}/redemptions")
-    __properties = ["quantity", "redeemed_points", "redeemed_quantity", "redemption_entries", "object", "url"]
+    __properties = ["quantity", "redeemed_points", "redeemed_quantity", "object", "url"]
 
     @validator('object')
     def object_validate_enum(cls, value):
@@ -73,6 +72,26 @@ class LoyaltiesMembersTransfersCreateResponseBodyRedemption(BaseModel):
         if self.quantity is None and "quantity" in self.__fields_set__:
             _dict['quantity'] = None
 
+        # set to None if redeemed_points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemed_points is None and "redeemed_points" in self.__fields_set__:
+            _dict['redeemed_points'] = None
+
+        # set to None if redeemed_quantity (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemed_quantity is None and "redeemed_quantity" in self.__fields_set__:
+            _dict['redeemed_quantity'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.url is None and "url" in self.__fields_set__:
+            _dict['url'] = None
+
         return _dict
 
     @classmethod
@@ -88,7 +107,6 @@ class LoyaltiesMembersTransfersCreateResponseBodyRedemption(BaseModel):
             "quantity": obj.get("quantity"),
             "redeemed_points": obj.get("redeemed_points"),
             "redeemed_quantity": obj.get("redeemed_quantity"),
-            "redemption_entries": obj.get("redemption_entries"),
             "object": obj.get("object") if obj.get("object") is not None else 'list',
             "url": obj.get("url")
         })

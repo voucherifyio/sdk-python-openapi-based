@@ -24,9 +24,9 @@ from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
 
 class ProductsUpdateInBulkRequestBody(BaseModel):
     """
-    Request schema for **POST** `/products/bulk/async`.  # noqa: E501
+    Request schema for **POST** `v1/products/bulk/async`.  # noqa: E501
     """
-    source_id: StrictStr = Field(..., description="Unique product source ID from your inventory system.")
+    source_id: Optional[StrictStr] = Field(None, description="Unique product source ID from your inventory system.")
     name: Optional[StrictStr] = Field(None, description="Unique user-defined product name.")
     price: Optional[StrictInt] = Field(None, description="Unit price. It is represented by a value multiplied by 100 to accurately reflect 2 decimal places, such as `$100.00` being expressed as `10000`.")
     attributes: Optional[conlist(StrictStr)] = Field(None, description="A list of product attributes whose values you can customize for given SKUs: `[\"color\",\"size\",\"ranking\"]`. Each child SKU can have a unique value for a given attribute.")
@@ -58,6 +58,36 @@ class ProductsUpdateInBulkRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if price (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price is None and "price" in self.__fields_set__:
+            _dict['price'] = None
+
+        # set to None if attributes (nullable) is None
+        # and __fields_set__ contains the field
+        if self.attributes is None and "attributes" in self.__fields_set__:
+            _dict['attributes'] = None
+
+        # set to None if image_url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.image_url is None and "image_url" in self.__fields_set__:
+            _dict['image_url'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod

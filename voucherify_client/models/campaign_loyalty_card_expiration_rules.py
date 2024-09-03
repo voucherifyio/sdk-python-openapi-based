@@ -19,18 +19,38 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from typing import Optional
+from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
 
 class CampaignLoyaltyCardExpirationRules(BaseModel):
     """
     CampaignLoyaltyCardExpirationRules
     """
-    period_type: StrictStr = Field(..., description="Type of period")
-    period_value: StrictInt = Field(..., description="Value of the period")
-    rounding_type: StrictStr = Field(..., description="Type of rounding")
-    rounding_value: StrictInt = Field(..., description="Value of rounding")
+    period_type: Optional[StrictStr] = Field('MONTH', description="Type of period")
+    period_value: Optional[StrictInt] = Field(None, description="Value of the period")
+    rounding_type: Optional[StrictStr] = Field(None, description="Type of rounding")
+    rounding_value: Optional[StrictInt] = Field(None, description="Value of rounding")
     __properties = ["period_type", "period_value", "rounding_type", "rounding_value"]
+
+    @validator('period_type')
+    def period_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('MONTH',):
+            raise ValueError("must be one of enum values ('MONTH')")
+        return value
+
+    @validator('rounding_type')
+    def rounding_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('END_OF_MONTH', 'END_OF_QUARTER', 'END_OF_HALF_YEAR', 'END_OF_YEAR', 'PARTICULAR_MONTH',):
+            raise ValueError("must be one of enum values ('END_OF_MONTH', 'END_OF_QUARTER', 'END_OF_HALF_YEAR', 'END_OF_YEAR', 'PARTICULAR_MONTH')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -56,6 +76,26 @@ class CampaignLoyaltyCardExpirationRules(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if period_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.period_type is None and "period_type" in self.__fields_set__:
+            _dict['period_type'] = None
+
+        # set to None if period_value (nullable) is None
+        # and __fields_set__ contains the field
+        if self.period_value is None and "period_value" in self.__fields_set__:
+            _dict['period_value'] = None
+
+        # set to None if rounding_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rounding_type is None and "rounding_type" in self.__fields_set__:
+            _dict['rounding_type'] = None
+
+        # set to None if rounding_value (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rounding_value is None and "rounding_value" in self.__fields_set__:
+            _dict['rounding_value'] = None
+
         return _dict
 
     @classmethod
@@ -68,7 +108,7 @@ class CampaignLoyaltyCardExpirationRules(BaseModel):
             return CampaignLoyaltyCardExpirationRules.parse_obj(obj)
 
         _obj = CampaignLoyaltyCardExpirationRules.parse_obj({
-            "period_type": obj.get("period_type"),
+            "period_type": obj.get("period_type") if obj.get("period_type") is not None else 'MONTH',
             "period_value": obj.get("period_value"),
             "rounding_type": obj.get("rounding_type"),
             "rounding_value": obj.get("rounding_value")

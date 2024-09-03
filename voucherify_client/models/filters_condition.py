@@ -19,9 +19,8 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
+from typing import Any, Optional
 from pydantic import BaseModel, Field
-from voucherify_client.models.any import Any
 
 class FiltersCondition(BaseModel):
     """
@@ -78,81 +77,131 @@ class FiltersCondition(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of var_in
-        if self.var_in:
-            _dict['$in'] = self.var_in.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of not_in
-        if self.not_in:
-            _dict['$not_in'] = self.not_in.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of var_is
-        if self.var_is:
-            _dict['$is'] = self.var_is.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of is_days_ago
-        if self.is_days_ago:
-            _dict['$is_days_ago'] = self.is_days_ago.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of is_days_in_future
-        if self.is_days_in_future:
-            _dict['$is_days_in_future'] = self.is_days_in_future.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of is_not
-        if self.is_not:
-            _dict['$is_not'] = self.is_not.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of has_value
-        if self.has_value:
-            _dict['$has_value'] = self.has_value.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of is_unknown
-        if self.is_unknown:
-            _dict['$is_unknown'] = self.is_unknown.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of contains
-        if self.contains:
-            _dict['$contains'] = self.contains.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of not_contain
-        if self.not_contain:
-            _dict['$not_contain'] = self.not_contain.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of starts_with
-        if self.starts_with:
-            _dict['$starts_with'] = self.starts_with.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of ends_with
-        if self.ends_with:
-            _dict['$ends_with'] = self.ends_with.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of more_than
-        if self.more_than:
-            _dict['$more_than'] = self.more_than.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of less_than
-        if self.less_than:
-            _dict['$less_than'] = self.less_than.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of more_than_ago
-        if self.more_than_ago:
-            _dict['$more_than_ago'] = self.more_than_ago.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of less_than_ago
-        if self.less_than_ago:
-            _dict['$less_than_ago'] = self.less_than_ago.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of more_than_future
-        if self.more_than_future:
-            _dict['$more_than_future'] = self.more_than_future.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of less_than_future
-        if self.less_than_future:
-            _dict['$less_than_future'] = self.less_than_future.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of more_than_equal
-        if self.more_than_equal:
-            _dict['$more_than_equal'] = self.more_than_equal.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of less_than_equal
-        if self.less_than_equal:
-            _dict['$less_than_equal'] = self.less_than_equal.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of after
-        if self.after:
-            _dict['$after'] = self.after.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of before
-        if self.before:
-            _dict['$before'] = self.before.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of count
-        if self.count:
-            _dict['$count'] = self.count.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of count_less
-        if self.count_less:
-            _dict['$count_less'] = self.count_less.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of count_more
-        if self.count_more:
-            _dict['$count_more'] = self.count_more.to_dict()
+        # set to None if var_in (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_in is None and "var_in" in self.__fields_set__:
+            _dict['$in'] = None
+
+        # set to None if not_in (nullable) is None
+        # and __fields_set__ contains the field
+        if self.not_in is None and "not_in" in self.__fields_set__:
+            _dict['$not_in'] = None
+
+        # set to None if var_is (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_is is None and "var_is" in self.__fields_set__:
+            _dict['$is'] = None
+
+        # set to None if is_days_ago (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_days_ago is None and "is_days_ago" in self.__fields_set__:
+            _dict['$is_days_ago'] = None
+
+        # set to None if is_days_in_future (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_days_in_future is None and "is_days_in_future" in self.__fields_set__:
+            _dict['$is_days_in_future'] = None
+
+        # set to None if is_not (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_not is None and "is_not" in self.__fields_set__:
+            _dict['$is_not'] = None
+
+        # set to None if has_value (nullable) is None
+        # and __fields_set__ contains the field
+        if self.has_value is None and "has_value" in self.__fields_set__:
+            _dict['$has_value'] = None
+
+        # set to None if is_unknown (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_unknown is None and "is_unknown" in self.__fields_set__:
+            _dict['$is_unknown'] = None
+
+        # set to None if contains (nullable) is None
+        # and __fields_set__ contains the field
+        if self.contains is None and "contains" in self.__fields_set__:
+            _dict['$contains'] = None
+
+        # set to None if not_contain (nullable) is None
+        # and __fields_set__ contains the field
+        if self.not_contain is None and "not_contain" in self.__fields_set__:
+            _dict['$not_contain'] = None
+
+        # set to None if starts_with (nullable) is None
+        # and __fields_set__ contains the field
+        if self.starts_with is None and "starts_with" in self.__fields_set__:
+            _dict['$starts_with'] = None
+
+        # set to None if ends_with (nullable) is None
+        # and __fields_set__ contains the field
+        if self.ends_with is None and "ends_with" in self.__fields_set__:
+            _dict['$ends_with'] = None
+
+        # set to None if more_than (nullable) is None
+        # and __fields_set__ contains the field
+        if self.more_than is None and "more_than" in self.__fields_set__:
+            _dict['$more_than'] = None
+
+        # set to None if less_than (nullable) is None
+        # and __fields_set__ contains the field
+        if self.less_than is None and "less_than" in self.__fields_set__:
+            _dict['$less_than'] = None
+
+        # set to None if more_than_ago (nullable) is None
+        # and __fields_set__ contains the field
+        if self.more_than_ago is None and "more_than_ago" in self.__fields_set__:
+            _dict['$more_than_ago'] = None
+
+        # set to None if less_than_ago (nullable) is None
+        # and __fields_set__ contains the field
+        if self.less_than_ago is None and "less_than_ago" in self.__fields_set__:
+            _dict['$less_than_ago'] = None
+
+        # set to None if more_than_future (nullable) is None
+        # and __fields_set__ contains the field
+        if self.more_than_future is None and "more_than_future" in self.__fields_set__:
+            _dict['$more_than_future'] = None
+
+        # set to None if less_than_future (nullable) is None
+        # and __fields_set__ contains the field
+        if self.less_than_future is None and "less_than_future" in self.__fields_set__:
+            _dict['$less_than_future'] = None
+
+        # set to None if more_than_equal (nullable) is None
+        # and __fields_set__ contains the field
+        if self.more_than_equal is None and "more_than_equal" in self.__fields_set__:
+            _dict['$more_than_equal'] = None
+
+        # set to None if less_than_equal (nullable) is None
+        # and __fields_set__ contains the field
+        if self.less_than_equal is None and "less_than_equal" in self.__fields_set__:
+            _dict['$less_than_equal'] = None
+
+        # set to None if after (nullable) is None
+        # and __fields_set__ contains the field
+        if self.after is None and "after" in self.__fields_set__:
+            _dict['$after'] = None
+
+        # set to None if before (nullable) is None
+        # and __fields_set__ contains the field
+        if self.before is None and "before" in self.__fields_set__:
+            _dict['$before'] = None
+
+        # set to None if count (nullable) is None
+        # and __fields_set__ contains the field
+        if self.count is None and "count" in self.__fields_set__:
+            _dict['$count'] = None
+
+        # set to None if count_less (nullable) is None
+        # and __fields_set__ contains the field
+        if self.count_less is None and "count_less" in self.__fields_set__:
+            _dict['$count_less'] = None
+
+        # set to None if count_more (nullable) is None
+        # and __fields_set__ contains the field
+        if self.count_more is None and "count_more" in self.__fields_set__:
+            _dict['$count_more'] = None
+
         return _dict
 
     @classmethod
@@ -165,31 +214,31 @@ class FiltersCondition(BaseModel):
             return FiltersCondition.parse_obj(obj)
 
         _obj = FiltersCondition.parse_obj({
-            "var_in": Any.from_dict(obj.get("$in")) if obj.get("$in") is not None else None,
-            "not_in": Any.from_dict(obj.get("$not_in")) if obj.get("$not_in") is not None else None,
-            "var_is": Any.from_dict(obj.get("$is")) if obj.get("$is") is not None else None,
-            "is_days_ago": Any.from_dict(obj.get("$is_days_ago")) if obj.get("$is_days_ago") is not None else None,
-            "is_days_in_future": Any.from_dict(obj.get("$is_days_in_future")) if obj.get("$is_days_in_future") is not None else None,
-            "is_not": Any.from_dict(obj.get("$is_not")) if obj.get("$is_not") is not None else None,
-            "has_value": Any.from_dict(obj.get("$has_value")) if obj.get("$has_value") is not None else None,
-            "is_unknown": Any.from_dict(obj.get("$is_unknown")) if obj.get("$is_unknown") is not None else None,
-            "contains": Any.from_dict(obj.get("$contains")) if obj.get("$contains") is not None else None,
-            "not_contain": Any.from_dict(obj.get("$not_contain")) if obj.get("$not_contain") is not None else None,
-            "starts_with": Any.from_dict(obj.get("$starts_with")) if obj.get("$starts_with") is not None else None,
-            "ends_with": Any.from_dict(obj.get("$ends_with")) if obj.get("$ends_with") is not None else None,
-            "more_than": Any.from_dict(obj.get("$more_than")) if obj.get("$more_than") is not None else None,
-            "less_than": Any.from_dict(obj.get("$less_than")) if obj.get("$less_than") is not None else None,
-            "more_than_ago": Any.from_dict(obj.get("$more_than_ago")) if obj.get("$more_than_ago") is not None else None,
-            "less_than_ago": Any.from_dict(obj.get("$less_than_ago")) if obj.get("$less_than_ago") is not None else None,
-            "more_than_future": Any.from_dict(obj.get("$more_than_future")) if obj.get("$more_than_future") is not None else None,
-            "less_than_future": Any.from_dict(obj.get("$less_than_future")) if obj.get("$less_than_future") is not None else None,
-            "more_than_equal": Any.from_dict(obj.get("$more_than_equal")) if obj.get("$more_than_equal") is not None else None,
-            "less_than_equal": Any.from_dict(obj.get("$less_than_equal")) if obj.get("$less_than_equal") is not None else None,
-            "after": Any.from_dict(obj.get("$after")) if obj.get("$after") is not None else None,
-            "before": Any.from_dict(obj.get("$before")) if obj.get("$before") is not None else None,
-            "count": Any.from_dict(obj.get("$count")) if obj.get("$count") is not None else None,
-            "count_less": Any.from_dict(obj.get("$count_less")) if obj.get("$count_less") is not None else None,
-            "count_more": Any.from_dict(obj.get("$count_more")) if obj.get("$count_more") is not None else None
+            "var_in": obj.get("$in"),
+            "not_in": obj.get("$not_in"),
+            "var_is": obj.get("$is"),
+            "is_days_ago": obj.get("$is_days_ago"),
+            "is_days_in_future": obj.get("$is_days_in_future"),
+            "is_not": obj.get("$is_not"),
+            "has_value": obj.get("$has_value"),
+            "is_unknown": obj.get("$is_unknown"),
+            "contains": obj.get("$contains"),
+            "not_contain": obj.get("$not_contain"),
+            "starts_with": obj.get("$starts_with"),
+            "ends_with": obj.get("$ends_with"),
+            "more_than": obj.get("$more_than"),
+            "less_than": obj.get("$less_than"),
+            "more_than_ago": obj.get("$more_than_ago"),
+            "less_than_ago": obj.get("$less_than_ago"),
+            "more_than_future": obj.get("$more_than_future"),
+            "less_than_future": obj.get("$less_than_future"),
+            "more_than_equal": obj.get("$more_than_equal"),
+            "less_than_equal": obj.get("$less_than_equal"),
+            "after": obj.get("$after"),
+            "before": obj.get("$before"),
+            "count": obj.get("$count"),
+            "count_less": obj.get("$count_less"),
+            "count_more": obj.get("$count_more")
         })
         return _obj
 

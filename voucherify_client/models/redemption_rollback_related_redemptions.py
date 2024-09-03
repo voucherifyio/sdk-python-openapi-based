@@ -21,7 +21,7 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, conlist
-from voucherify_client.models.redemption_rollback_related_redemptions_item import RedemptionRollbackRelatedRedemptionsItem
+from voucherify_client.models.redemption_rollback_related_redemptions_redemptions_item import RedemptionRollbackRelatedRedemptionsRedemptionsItem
 from voucherify_client.models.redemption_rollback_related_redemptions_rollbacks_item import RedemptionRollbackRelatedRedemptionsRollbacksItem
 
 class RedemptionRollbackRelatedRedemptions(BaseModel):
@@ -29,7 +29,7 @@ class RedemptionRollbackRelatedRedemptions(BaseModel):
     RedemptionRollbackRelatedRedemptions
     """
     rollbacks: Optional[conlist(RedemptionRollbackRelatedRedemptionsRollbacksItem)] = None
-    redemptions: Optional[conlist(RedemptionRollbackRelatedRedemptionsItem)] = None
+    redemptions: Optional[conlist(RedemptionRollbackRelatedRedemptionsRedemptionsItem)] = None
     __properties = ["rollbacks", "redemptions"]
 
     class Config:
@@ -70,6 +70,16 @@ class RedemptionRollbackRelatedRedemptions(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['redemptions'] = _items
+        # set to None if rollbacks (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rollbacks is None and "rollbacks" in self.__fields_set__:
+            _dict['rollbacks'] = None
+
+        # set to None if redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemptions is None and "redemptions" in self.__fields_set__:
+            _dict['redemptions'] = None
+
         return _dict
 
     @classmethod
@@ -83,7 +93,7 @@ class RedemptionRollbackRelatedRedemptions(BaseModel):
 
         _obj = RedemptionRollbackRelatedRedemptions.parse_obj({
             "rollbacks": [RedemptionRollbackRelatedRedemptionsRollbacksItem.from_dict(_item) for _item in obj.get("rollbacks")] if obj.get("rollbacks") is not None else None,
-            "redemptions": [RedemptionRollbackRelatedRedemptionsItem.from_dict(_item) for _item in obj.get("redemptions")] if obj.get("redemptions") is not None else None
+            "redemptions": [RedemptionRollbackRelatedRedemptionsRedemptionsItem.from_dict(_item) for _item in obj.get("redemptions")] if obj.get("redemptions") is not None else None
         })
         return _obj
 

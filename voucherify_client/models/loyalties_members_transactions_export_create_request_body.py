@@ -25,7 +25,7 @@ from voucherify_client.models.loyalties_members_transactions_export_create_reque
 
 class LoyaltiesMembersTransactionsExportCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/loyalties/members/{memberId}/transactions/export` and for **POST** `/loyalties/{campaignId}/members/{memberId}/transactions/export`.  # noqa: E501
+    Request body schema for **POST** `v1/loyalties/members/{memberId}/transactions/export` and for **POST** `v1/loyalties/{campaignId}/members/{memberId}/transactions/export`.  # noqa: E501
     """
     parameters: Optional[LoyaltiesMembersTransactionsExportCreateRequestBodyParameters] = None
     __properties = ["parameters"]
@@ -57,6 +57,11 @@ class LoyaltiesMembersTransactionsExportCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of parameters
         if self.parameters:
             _dict['parameters'] = self.parameters.to_dict()
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
+
         return _dict
 
     @classmethod

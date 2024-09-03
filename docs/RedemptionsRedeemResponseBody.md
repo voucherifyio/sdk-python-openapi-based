@@ -1,6 +1,6 @@
 # RedemptionsRedeemResponseBody
 
-Response body schema for **POST** `/redemptions`.
+Response body schema for **POST** `v1/redemptions`.
 
 ## Properties
 Name | Type | Description | Notes

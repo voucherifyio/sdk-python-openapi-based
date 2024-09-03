@@ -19,18 +19,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
-from voucherify_client.models.product_collections_products_list_products_item import ProductCollectionsProductsListProductsItem
+from voucherify_client.models.product_collections_products_list_response_body_data_item import ProductCollectionsProductsListResponseBodyDataItem
 
 class ProductCollectionsProductsListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/product-collections/{productCollectionId}/products`.  # noqa: E501
+    Response body schema for **GET** `v1/product-collections/{productCollectionId}/products`.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about products and SKUs.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the JSON property that contains the array of products and SKUs.")
-    data: conlist(ProductCollectionsProductsListProductsItem) = Field(..., description="A dictionary that contains an array of products and SKUs.")
-    total: StrictInt = Field(..., description="Total number of products & SKUs in the product collection.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about products and SKUs.")
+    data_ref: Optional[StrictStr] = Field('data', description="Identifies the name of the JSON property that contains the array of products and SKUs.")
+    data: Optional[conlist(ProductCollectionsProductsListResponseBodyDataItem)] = None
+    total: Optional[StrictInt] = Field(None, description="Total number of products & SKUs in the product collection.")
     __properties = ["object", "data_ref", "data", "total"]
 
     class Config:
@@ -64,6 +64,26 @@ class ProductCollectionsProductsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['data'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if data (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data is None and "data" in self.__fields_set__:
+            _dict['data'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod
@@ -78,7 +98,7 @@ class ProductCollectionsProductsListResponseBody(BaseModel):
         _obj = ProductCollectionsProductsListResponseBody.parse_obj({
             "object": obj.get("object") if obj.get("object") is not None else 'list',
             "data_ref": obj.get("data_ref") if obj.get("data_ref") is not None else 'data',
-            "data": [ProductCollectionsProductsListProductsItem.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None,
+            "data": [ProductCollectionsProductsListResponseBodyDataItem.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None,
             "total": obj.get("total")
         })
         return _obj

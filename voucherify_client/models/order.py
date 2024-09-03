@@ -21,27 +21,21 @@ import json
 
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
-from voucherify_client.models.customer import Customer
 from voucherify_client.models.order_item import OrderItem
-from voucherify_client.models.referrer import Referrer
 
 class Order(BaseModel):
     """
-    Order
+    Order information.  # noqa: E501
     """
-    status: Optional[StrictStr] = Field(None, description="The order status.")
-    amount: Optional[StrictInt] = Field(None, description="A positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the total amount of the order. This is the sum of the order items' amounts.  ")
-    discount_amount: Optional[StrictInt] = Field(None, description="Sum of all order-level discounts applied to the order.")
-    initial_amount: Optional[StrictInt] = Field(None, description="A positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the total amount of the order. This is the sum of the order items' amounts.")
-    items: Optional[conlist(OrderItem)] = Field(None, description="Array of items applied to the order.")
-    customer: Optional[Customer] = None
-    customer_id: Optional[StrictStr] = Field(None, description="Unique customer ID of the customer making the purchase.")
-    referrer: Optional[Referrer] = None
-    referrer_id: Optional[StrictStr] = Field(None, description="Unique referrer ID.")
-    metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to an order. It can be useful for storing additional information about the order in a structured format.")
     id: Optional[StrictStr] = Field(None, description="Unique ID assigned by Voucherify of an existing order that will be linked to the redemption of this request.")
     source_id: Optional[StrictStr] = Field(None, description="Unique source ID of an existing order that will be linked to the redemption of this request.")
-    __properties = ["status", "amount", "discount_amount", "initial_amount", "items", "customer", "customer_id", "referrer", "referrer_id", "metadata", "id", "source_id"]
+    status: Optional[StrictStr] = Field(None, description="The order status.")
+    amount: Optional[StrictInt] = Field(None, description="A positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the total amount of the order. This is the sum of the order items' amounts.")
+    initial_amount: Optional[StrictInt] = Field(None, description="A positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the total amount of the order. This is the sum of the order items' amounts.")
+    discount_amount: Optional[StrictInt] = Field(None, description="Sum of all order-level discounts applied to the order.")
+    items: Optional[conlist(OrderItem)] = Field(None, description="Array of items applied to the order.")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to an order. It can be useful for storing additional information about the order in a structured format.")
+    __properties = ["id", "source_id", "status", "amount", "initial_amount", "discount_amount", "items", "metadata"]
 
     @validator('status')
     def status_validate_enum(cls, value):
@@ -84,12 +78,46 @@ class Order(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['items'] = _items
-        # override the default output from pydantic by calling `to_dict()` of customer
-        if self.customer:
-            _dict['customer'] = self.customer.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of referrer
-        if self.referrer:
-            _dict['referrer'] = self.referrer.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
+
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
+        # set to None if initial_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.initial_amount is None and "initial_amount" in self.__fields_set__:
+            _dict['initial_amount'] = None
+
+        # set to None if discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.discount_amount is None and "discount_amount" in self.__fields_set__:
+            _dict['discount_amount'] = None
+
+        # set to None if items (nullable) is None
+        # and __fields_set__ contains the field
+        if self.items is None and "items" in self.__fields_set__:
+            _dict['items'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod
@@ -102,18 +130,14 @@ class Order(BaseModel):
             return Order.parse_obj(obj)
 
         _obj = Order.parse_obj({
+            "id": obj.get("id"),
+            "source_id": obj.get("source_id"),
             "status": obj.get("status"),
             "amount": obj.get("amount"),
-            "discount_amount": obj.get("discount_amount"),
             "initial_amount": obj.get("initial_amount"),
+            "discount_amount": obj.get("discount_amount"),
             "items": [OrderItem.from_dict(_item) for _item in obj.get("items")] if obj.get("items") is not None else None,
-            "customer": Customer.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
-            "customer_id": obj.get("customer_id"),
-            "referrer": Referrer.from_dict(obj.get("referrer")) if obj.get("referrer") is not None else None,
-            "referrer_id": obj.get("referrer_id"),
-            "metadata": obj.get("metadata"),
-            "id": obj.get("id"),
-            "source_id": obj.get("source_id")
+            "metadata": obj.get("metadata")
         })
         return _obj
 

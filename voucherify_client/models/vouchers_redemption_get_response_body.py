@@ -21,19 +21,19 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
-from voucherify_client.models.vouchers_redemption_get_response_body_redemption_entries_item import VouchersRedemptionGetResponseBodyRedemptionEntriesItem
+from voucherify_client.models.redemption_entry import RedemptionEntry
 
 class VouchersRedemptionGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/vouchers/{code}/redemption`.  # noqa: E501
+    Response body schema for **GET** `v1/vouchers/{code}/redemption`.  # noqa: E501
     """
     quantity: Optional[StrictInt] = Field(None, description="The maximum number of times a voucher can be redeemed.")
-    redeemed_quantity: StrictInt = Field(..., description="The number of times the voucher was redeemed successfully.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about redemptions in a dictionary.")
-    url: StrictStr = Field(..., description="URL")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the attribute that contains the array of `redemption_entries`.")
-    total: StrictInt = Field(..., description="Total number of redemption objects.")
-    redemption_entries: conlist(VouchersRedemptionGetResponseBodyRedemptionEntriesItem) = Field(..., description="Contains the array of successful and failed redemption objects.")
+    redeemed_quantity: Optional[StrictInt] = Field(None, description="The number of times the voucher was redeemed successfully.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about redemptions in a dictionary.")
+    url: Optional[StrictStr] = Field(None, description="URL")
+    data_ref: Optional[StrictStr] = Field('redemption_entries', description="Identifies the name of the attribute that contains the array of `redemption_entries`.")
+    total: Optional[StrictInt] = Field(None, description="Total number of redemption objects.")
+    redemption_entries: conlist(RedemptionEntry) = Field(..., description="Contains the array of successful and failed redemption objects.")
     __properties = ["quantity", "redeemed_quantity", "object", "url", "data_ref", "total", "redemption_entries"]
 
     class Config:
@@ -72,6 +72,31 @@ class VouchersRedemptionGetResponseBody(BaseModel):
         if self.quantity is None and "quantity" in self.__fields_set__:
             _dict['quantity'] = None
 
+        # set to None if redeemed_quantity (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemed_quantity is None and "redeemed_quantity" in self.__fields_set__:
+            _dict['redeemed_quantity'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.url is None and "url" in self.__fields_set__:
+            _dict['url'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod
@@ -90,7 +115,7 @@ class VouchersRedemptionGetResponseBody(BaseModel):
             "url": obj.get("url"),
             "data_ref": obj.get("data_ref") if obj.get("data_ref") is not None else 'redemption_entries',
             "total": obj.get("total"),
-            "redemption_entries": [VouchersRedemptionGetResponseBodyRedemptionEntriesItem.from_dict(_item) for _item in obj.get("redemption_entries")] if obj.get("redemption_entries") is not None else None
+            "redemption_entries": [RedemptionEntry.from_dict(_item) for _item in obj.get("redemption_entries")] if obj.get("redemption_entries") is not None else None
         })
         return _obj
 

@@ -27,9 +27,9 @@ from voucherify_client.models.customer import Customer
 
 class ClientEventsCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/events`.  # noqa: E501
+    Request body schema for **POST** `v1/events`.  # noqa: E501
     """
-    event: constr(strict=True, max_length=300, min_length=1) = Field(..., description="Event name. This is the same name that you used to define a custom event in the **Dashboard** > **Project Settings** > **Event Schema**.")
+    event: Optional[constr(strict=True, max_length=300, min_length=1)] = Field(None, description="Event name. This is the same name that you used to define a custom event in the **Dashboard** > **Project Settings** > **Event Schema**.")
     customer: Customer = Field(...)
     referral: Optional[ClientEventsCreateRequestBodyReferral] = None
     loyalty: Optional[ClientEventsCreateRequestBodyLoyalty] = None
@@ -69,6 +69,26 @@ class ClientEventsCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of loyalty
         if self.loyalty:
             _dict['loyalty'] = self.loyalty.to_dict()
+        # set to None if event (nullable) is None
+        # and __fields_set__ contains the field
+        if self.event is None and "event" in self.__fields_set__:
+            _dict['event'] = None
+
+        # set to None if referral (nullable) is None
+        # and __fields_set__ contains the field
+        if self.referral is None and "referral" in self.__fields_set__:
+            _dict['referral'] = None
+
+        # set to None if loyalty (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty is None and "loyalty" in self.__fields_set__:
+            _dict['loyalty'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod

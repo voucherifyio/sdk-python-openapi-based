@@ -30,7 +30,7 @@ class LoyaltiesMembersRewardsListResponseBodyDataItem(BaseModel):
     """
     reward: Optional[Reward] = None
     assignment: Optional[RewardAssignment] = None
-    object: Optional[StrictStr] = Field('loyalty_reward', description="The type of object represented by JSON.")
+    object: Optional[StrictStr] = Field('loyalty_reward', description="The type of the object represented by JSON.")
     __properties = ["reward", "assignment", "object"]
 
     @validator('object')

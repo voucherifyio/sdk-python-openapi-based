@@ -26,13 +26,13 @@ class BusValRuleAssignment(BaseModel):
     """
     Assignments of business validation rule  # noqa: E501
     """
-    id: StrictStr = Field(..., description="The unique identifier for a assignment")
-    rule_id: StrictStr = Field(..., description="The unique identifier for a rule")
-    related_object_id: StrictStr = Field(..., description="The unique identifier for a related object")
-    related_object_type: StrictStr = Field(..., description="The type of related object")
-    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the object was created in ISO 8601 format.")
+    id: Optional[StrictStr] = Field(None, description="The unique identifier for a assignment")
+    rule_id: Optional[StrictStr] = Field(None, description="The unique identifier for a rule")
+    related_object_id: Optional[StrictStr] = Field(None, description="The unique identifier for a related object")
+    related_object_type: Optional[StrictStr] = Field(None, description="The type of related object")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the object was created. The value is shown in the ISO 8601 format.")
     updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the object was last updated in ISO 8601 format.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON.")
+    object: Optional[StrictStr] = Field('validation_rules_assignment', description="The type of the object represented by JSON.")
     validation_status: Optional[StrictStr] = Field(None, description="The validation status of the assignment")
     validation_omitted_rules: Optional[conlist(StrictStr)] = Field(None, description="The list of omitted rules")
     __properties = ["id", "rule_id", "related_object_id", "related_object_type", "created_at", "updated_at", "object", "validation_status", "validation_omitted_rules"]
@@ -40,6 +40,9 @@ class BusValRuleAssignment(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('validation_rules_assignment',):
             raise ValueError("must be one of enum values ('validation_rules_assignment')")
         return value
@@ -78,6 +81,51 @@ class BusValRuleAssignment(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if rule_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rule_id is None and "rule_id" in self.__fields_set__:
+            _dict['rule_id'] = None
+
+        # set to None if related_object_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_id is None and "related_object_id" in self.__fields_set__:
+            _dict['related_object_id'] = None
+
+        # set to None if related_object_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_type is None and "related_object_type" in self.__fields_set__:
+            _dict['related_object_type'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if validation_status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.validation_status is None and "validation_status" in self.__fields_set__:
+            _dict['validation_status'] = None
+
+        # set to None if validation_omitted_rules (nullable) is None
+        # and __fields_set__ contains the field
+        if self.validation_omitted_rules is None and "validation_omitted_rules" in self.__fields_set__:
+            _dict['validation_omitted_rules'] = None
+
         return _dict
 
     @classmethod

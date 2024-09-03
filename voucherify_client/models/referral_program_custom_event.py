@@ -54,6 +54,16 @@ class ReferralProgramCustomEvent(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
         return _dict
 
     @classmethod

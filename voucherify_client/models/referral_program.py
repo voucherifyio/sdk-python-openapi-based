@@ -73,6 +73,21 @@ class ReferralProgram(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of referee_reward
         if self.referee_reward:
             _dict['referee_reward'] = self.referee_reward.to_dict()
+        # set to None if conversion_event_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.conversion_event_type is None and "conversion_event_type" in self.__fields_set__:
+            _dict['conversion_event_type'] = None
+
+        # set to None if custom_event (nullable) is None
+        # and __fields_set__ contains the field
+        if self.custom_event is None and "custom_event" in self.__fields_set__:
+            _dict['custom_event'] = None
+
+        # set to None if referee_reward (nullable) is None
+        # and __fields_set__ contains the field
+        if self.referee_reward is None and "referee_reward" in self.__fields_set__:
+            _dict['referee_reward'] = None
+
         return _dict
 
     @classmethod

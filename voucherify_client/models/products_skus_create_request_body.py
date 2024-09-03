@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 class ProductsSkusCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/products/{productId}/skus  # noqa: E501
+    Request body schema for **POST** `v1/products/{productId}/skus  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="Unique SKU ID.")
     source_id: Optional[StrictStr] = Field(None, description="A unique SKU identifier from your inventory system.")
@@ -60,6 +60,46 @@ class ProductsSkusCreateRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if sku (nullable) is None
+        # and __fields_set__ contains the field
+        if self.sku is None and "sku" in self.__fields_set__:
+            _dict['sku'] = None
+
+        # set to None if price (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price is None and "price" in self.__fields_set__:
+            _dict['price'] = None
+
+        # set to None if currency (nullable) is None
+        # and __fields_set__ contains the field
+        if self.currency is None and "currency" in self.__fields_set__:
+            _dict['currency'] = None
+
+        # set to None if attributes (nullable) is None
+        # and __fields_set__ contains the field
+        if self.attributes is None and "attributes" in self.__fields_set__:
+            _dict['attributes'] = None
+
+        # set to None if image_url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.image_url is None and "image_url" in self.__fields_set__:
+            _dict['image_url'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod

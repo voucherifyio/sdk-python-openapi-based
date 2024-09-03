@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
 
 class ProductsCreateRequestBody(BaseModel):
     """
-    Request schema for **POST** `/products`.  # noqa: E501
+    Request schema for **POST** `v1/products`.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="A unique identifier that represents the product and is assigned by Voucherify.")
     source_id: Optional[StrictStr] = Field(None, description="Unique product source ID.")
@@ -59,6 +59,41 @@ class ProductsCreateRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if price (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price is None and "price" in self.__fields_set__:
+            _dict['price'] = None
+
+        # set to None if attributes (nullable) is None
+        # and __fields_set__ contains the field
+        if self.attributes is None and "attributes" in self.__fields_set__:
+            _dict['attributes'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if image_url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.image_url is None and "image_url" in self.__fields_set__:
+            _dict['image_url'] = None
+
         return _dict
 
     @classmethod

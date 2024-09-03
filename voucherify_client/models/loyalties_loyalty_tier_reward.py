@@ -30,7 +30,7 @@ class LoyaltiesLoyaltyTierReward(BaseModel):
     """
     reward: Reward = Field(...)
     assignment: RewardAssignment = Field(...)
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about the loyalty tier reward.")
+    object: StrictStr = Field(..., description="The type of the object represented by JSON. This object stores information about the loyalty tier reward.")
     __properties = ["reward", "assignment", "object"]
 
     @validator('object')

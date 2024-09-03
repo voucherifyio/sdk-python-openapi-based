@@ -70,7 +70,7 @@ class ProductsApi:
     def create_product(self, products_create_request_body : Annotated[Optional[ProductsCreateRequestBody], Field(description="Specify the product parameters.")] = None, **kwargs) -> ProductsCreateResponseBody:  # noqa: E501
         """Create Product  # noqa: E501
 
-        Creates a product object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the product database, Voucherify will return a related product object with updated fields.  # noqa: E501
+        Creates a product object.  📘 Upsert Mode  If you pass an id or a source_id that already exists in the product database, Voucherify will return a related product object with updated fields.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -100,7 +100,7 @@ class ProductsApi:
     def create_product_with_http_info(self, products_create_request_body : Annotated[Optional[ProductsCreateRequestBody], Field(description="Specify the product parameters.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Product  # noqa: E501
 
-        Creates a product object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the product database, Voucherify will return a related product object with updated fields.  # noqa: E501
+        Creates a product object.  📘 Upsert Mode  If you pass an id or a source_id that already exists in the product database, Voucherify will return a related product object with updated fields.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -214,17 +214,17 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def create_sku(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], products_skus_create_request_body : Annotated[Optional[ProductsSkusCreateRequestBody], Field(description="Specify the SKU parameters to be created.")] = None, **kwargs) -> ProductsSkusCreateResponseBody:  # noqa: E501
+    def create_sku(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or product source ID.")], products_skus_create_request_body : Annotated[Optional[ProductsSkusCreateRequestBody], Field(description="Specify the SKU parameters to be created.")] = None, **kwargs) -> ProductsSkusCreateResponseBody:  # noqa: E501
         """Create SKU  # noqa: E501
 
-        This method adds product variants to a <!-- [created product](OpenAPI.json/paths/~1products/post) -->[created product](ref:create-product).   <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the sku database, Voucherify will return a related sku object with updated fields.  # noqa: E501
+        This method adds product variants to a created product.   📘 Upsert Mode  If you pass an id or a source_id that already exists in the sku database, Voucherify will return a related sku object with updated fields.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.create_sku(product_id, products_skus_create_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A Voucherify product ID or product source ID. (required)
         :type product_id: str
         :param products_skus_create_request_body: Specify the SKU parameters to be created.
         :type products_skus_create_request_body: ProductsSkusCreateRequestBody
@@ -246,17 +246,17 @@ class ProductsApi:
         return self.create_sku_with_http_info(product_id, products_skus_create_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_sku_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], products_skus_create_request_body : Annotated[Optional[ProductsSkusCreateRequestBody], Field(description="Specify the SKU parameters to be created.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def create_sku_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or product source ID.")], products_skus_create_request_body : Annotated[Optional[ProductsSkusCreateRequestBody], Field(description="Specify the SKU parameters to be created.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Create SKU  # noqa: E501
 
-        This method adds product variants to a <!-- [created product](OpenAPI.json/paths/~1products/post) -->[created product](ref:create-product).   <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the sku database, Voucherify will return a related sku object with updated fields.  # noqa: E501
+        This method adds product variants to a created product.   📘 Upsert Mode  If you pass an id or a source_id that already exists in the sku database, Voucherify will return a related sku object with updated fields.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.create_sku_with_http_info(product_id, products_skus_create_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A Voucherify product ID or product source ID. (required)
         :type product_id: str
         :param products_skus_create_request_body: Specify the SKU parameters to be created.
         :type products_skus_create_request_body: ProductsSkusCreateRequestBody
@@ -369,10 +369,10 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_product(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the product will be removed permanently. Going forward, the user will be able to create another product with exactly the same `source_id`.")] = None, **kwargs) -> None:  # noqa: E501
+    def delete_product(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the product and all related SKUs will be removed permanently. If it is set to false or not set at all, the product and all related SKUs will be moved to the bin. Going forward, the user will be able to create another product with exactly the same source_id.")] = None, **kwargs) -> None:  # noqa: E501
         """Delete Product  # noqa: E501
 
-        This method deletes a product.  # noqa: E501
+        Deletes a product and all related SKUs. This operation cannot be undone.  If the force parameter is set to false or not set at all, the product and all related SKUs will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -381,7 +381,7 @@ class ProductsApi:
 
         :param product_id: A Voucherify product ID or source ID. (required)
         :type product_id: str
-        :param force: If this flag is set to `true`, the product will be removed permanently. Going forward, the user will be able to create another product with exactly the same `source_id`.
+        :param force: If this flag is set to true, the product and all related SKUs will be removed permanently. If it is set to false or not set at all, the product and all related SKUs will be moved to the bin. Going forward, the user will be able to create another product with exactly the same source_id.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -401,10 +401,10 @@ class ProductsApi:
         return self.delete_product_with_http_info(product_id, force, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_product_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the product will be removed permanently. Going forward, the user will be able to create another product with exactly the same `source_id`.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_product_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the product and all related SKUs will be removed permanently. If it is set to false or not set at all, the product and all related SKUs will be moved to the bin. Going forward, the user will be able to create another product with exactly the same source_id.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Product  # noqa: E501
 
-        This method deletes a product.  # noqa: E501
+        Deletes a product and all related SKUs. This operation cannot be undone.  If the force parameter is set to false or not set at all, the product and all related SKUs will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -413,7 +413,7 @@ class ProductsApi:
 
         :param product_id: A Voucherify product ID or source ID. (required)
         :type product_id: str
-        :param force: If this flag is set to `true`, the product will be removed permanently. Going forward, the user will be able to create another product with exactly the same `source_id`.
+        :param force: If this flag is set to true, the product and all related SKUs will be removed permanently. If it is set to false or not set at all, the product and all related SKUs will be moved to the bin. Going forward, the user will be able to create another product with exactly the same source_id.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -511,21 +511,21 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_sku(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the SKU will be removed permanently. Going forward, the user will be able to create another SKU with exactly the same `source_id`.")] = None, **kwargs) -> None:  # noqa: E501
+    def delete_sku(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify product ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify SKU ID or SKU source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the SKU will be removed permanently. If it is set to false or not set at all, the SKU will be moved to the bin. Going forward, the user will be able to create another SKU with exactly the same source_id.")] = None, **kwargs) -> None:  # noqa: E501
         """Delete SKU  # noqa: E501
 
-        This method deletes a product SKU.  # noqa: E501
+        Deletes a product SKU. This operation cannot be undone.  If the force parameter is set to false or not set at all, the SKU will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.delete_sku(product_id, sku_id, force, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A unique Voucherify product ID or product source ID. (required)
         :type product_id: str
-        :param sku_id: A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID. (required)
+        :param sku_id: A Voucherify SKU ID or SKU source ID. (required)
         :type sku_id: str
-        :param force: If this flag is set to `true`, the SKU will be removed permanently. Going forward, the user will be able to create another SKU with exactly the same `source_id`.
+        :param force: If this flag is set to true, the SKU will be removed permanently. If it is set to false or not set at all, the SKU will be moved to the bin. Going forward, the user will be able to create another SKU with exactly the same source_id.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -545,21 +545,21 @@ class ProductsApi:
         return self.delete_sku_with_http_info(product_id, sku_id, force, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_sku_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the SKU will be removed permanently. Going forward, the user will be able to create another SKU with exactly the same `source_id`.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_sku_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify product ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify SKU ID or SKU source ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the SKU will be removed permanently. If it is set to false or not set at all, the SKU will be moved to the bin. Going forward, the user will be able to create another SKU with exactly the same source_id.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete SKU  # noqa: E501
 
-        This method deletes a product SKU.  # noqa: E501
+        Deletes a product SKU. This operation cannot be undone.  If the force parameter is set to false or not set at all, the SKU will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.delete_sku_with_http_info(product_id, sku_id, force, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A unique Voucherify product ID or product source ID. (required)
         :type product_id: str
-        :param sku_id: A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID. (required)
+        :param sku_id: A Voucherify SKU ID or SKU source ID. (required)
         :type sku_id: str
-        :param force: If this flag is set to `true`, the SKU will be removed permanently. Going forward, the user will be able to create another SKU with exactly the same `source_id`.
+        :param force: If this flag is set to true, the SKU will be removed permanently. If it is set to false or not set at all, the SKU will be moved to the bin. Going forward, the user will be able to create another SKU with exactly the same source_id.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -941,17 +941,17 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def import_products_using_csv(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> ProductsImportCsvCreateResponseBody:  # noqa: E501
+    def import_products_using_csv(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> ProductsImportCsvCreateResponseBody:  # noqa: E501
         """Import Products using CSV  # noqa: E501
 
-        Import products into the repository using a CSV file.    Curl Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/products/importCSV \\   -F file=@/path/to/products.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ```  The CSV file has to include headers in the first line.  <!-- theme: info -->  > 📘 Standard product fields mapping > > - Create a **comma separated value (CSV) file** or download our CSV import template. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b82ed68d51e779443f550/Import_products_template.csv). > - Supported CSV file headers: `name,source_id,price,attributes,image_url,Metadata_property_name` > - **Name** is a **required** field. The remaining fields in the CSV template are optional. > - Override/Update products' **names** in Voucherify using this method. Data will be updated for each product included in the CSV file whose **source_id** matches a source ID in Voucherify. No other data can be updated other than the product name. > - Note that dates and date-time attributes need to be provided in compliance with the **ISO 8601 norms**. For example, 2022-03-11T09:00:00.000Z or 2022-03-11 >    - `YYYY-MM-DD` >    - `YYYY-MM-DDTHH` >    - `YYYY-MM-DDTHH:mm` >    - `YYYY-MM-DDTHH:mm:ss` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ss.SSSZ` > - Columns that can't be mapped to standard fields, will be mapped to **Custom attributes** and added as **products' metadata**. There is no limit on the number of custom attributes that you can import as metadata.  > - To provide the proper data type, you need to add all custom attributes to the metadata schema **before importing the file**. Read more [here](https://support.voucherify.io/article/99-schema-validation-metadata#add-metadata). > - **Product attributes** (not custom attributes) need to be separated by a comma and enclosed in double quotes, i.e \"attribute1,attribute2\". > - Headers with metadata names **can't contain white-space characters**. > - If you import metadata defined in the schema as **arrays (multiple)**, you need to separate each value using a comma, for example:   >    - array of strings: \"subscribed,premium\"   >    - array of numbers: \"123,234\".  >    - array of dates: \"2000-01-01,2000-01-02\"  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Import products into the repository using a CSV file.   This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_products_using_csv(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -971,17 +971,17 @@ class ProductsApi:
         return self.import_products_using_csv_with_http_info(file, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def import_products_using_csv_with_http_info(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def import_products_using_csv_with_http_info(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Import Products using CSV  # noqa: E501
 
-        Import products into the repository using a CSV file.    Curl Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/products/importCSV \\   -F file=@/path/to/products.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ```  The CSV file has to include headers in the first line.  <!-- theme: info -->  > 📘 Standard product fields mapping > > - Create a **comma separated value (CSV) file** or download our CSV import template. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b82ed68d51e779443f550/Import_products_template.csv). > - Supported CSV file headers: `name,source_id,price,attributes,image_url,Metadata_property_name` > - **Name** is a **required** field. The remaining fields in the CSV template are optional. > - Override/Update products' **names** in Voucherify using this method. Data will be updated for each product included in the CSV file whose **source_id** matches a source ID in Voucherify. No other data can be updated other than the product name. > - Note that dates and date-time attributes need to be provided in compliance with the **ISO 8601 norms**. For example, 2022-03-11T09:00:00.000Z or 2022-03-11 >    - `YYYY-MM-DD` >    - `YYYY-MM-DDTHH` >    - `YYYY-MM-DDTHH:mm` >    - `YYYY-MM-DDTHH:mm:ss` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ss.SSSZ` > - Columns that can't be mapped to standard fields, will be mapped to **Custom attributes** and added as **products' metadata**. There is no limit on the number of custom attributes that you can import as metadata.  > - To provide the proper data type, you need to add all custom attributes to the metadata schema **before importing the file**. Read more [here](https://support.voucherify.io/article/99-schema-validation-metadata#add-metadata). > - **Product attributes** (not custom attributes) need to be separated by a comma and enclosed in double quotes, i.e \"attribute1,attribute2\". > - Headers with metadata names **can't contain white-space characters**. > - If you import metadata defined in the schema as **arrays (multiple)**, you need to separate each value using a comma, for example:   >    - array of strings: \"subscribed,premium\"   >    - array of numbers: \"123,234\".  >    - array of dates: \"2000-01-01,2000-01-02\"  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Import products into the repository using a CSV file.   This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_products_using_csv_with_http_info(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1088,17 +1088,17 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def import_skus_using_csv(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> SkusImportCsvCreateResponseBody:  # noqa: E501
+    def import_skus_using_csv(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> SkusImportCsvCreateResponseBody:  # noqa: E501
         """Import SKUs using CSV  # noqa: E501
 
-        Import SKUs into the repository using a CSV file.  The CSV file has to include headers in the first line. All properties which cannot be mapped to standard SKU fields will be added to the metadata object. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b98d08c9b585083488a4c/Import_SKUS_template.csv).   Curl Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/skus/importCSV \\   -F file=@/path/to/skus.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ``` > 🚧 Import sequence > > First import products using the [dedicated endpoint](ref:import-products-using-csv), then import SKUs using this endpoint to properly match SKUs to products.  <!-- theme: info -->  > 📘 Standard SKU fields mapping > > - **Required** fields are source_id and product_id. > - Supported CSV file headers: `product_id,sku,source_id,price,image_url,attributes` > - SKU **source_id**'s must be unique in the entire product catalog, no duplicates allowed. > - SKU attributes need to be in the form of a stringy-fied json, i.e.`\"{'color':'blue'}\"`. These attributes must be defined in the **product** beforehand in order for you to be able to import them to the SKU. > - You can use this method to update the following parameters in bulk: **sku** and the sku **price**.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Import SKUs into the repository using a CSV file. The CSV file has to include headers in the first line. All properties which cannot be mapped to standard SKU fields will be added to the metadata object. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b98d08c9b585083488a4c/Import_SKUS_template.csv).  This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_skus_using_csv(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1118,17 +1118,17 @@ class ProductsApi:
         return self.import_skus_using_csv_with_http_info(file, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def import_skus_using_csv_with_http_info(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def import_skus_using_csv_with_http_info(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Import SKUs using CSV  # noqa: E501
 
-        Import SKUs into the repository using a CSV file.  The CSV file has to include headers in the first line. All properties which cannot be mapped to standard SKU fields will be added to the metadata object. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b98d08c9b585083488a4c/Import_SKUS_template.csv).   Curl Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/skus/importCSV \\   -F file=@/path/to/skus.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ``` > 🚧 Import sequence > > First import products using the [dedicated endpoint](ref:import-products-using-csv), then import SKUs using this endpoint to properly match SKUs to products.  <!-- theme: info -->  > 📘 Standard SKU fields mapping > > - **Required** fields are source_id and product_id. > - Supported CSV file headers: `product_id,sku,source_id,price,image_url,attributes` > - SKU **source_id**'s must be unique in the entire product catalog, no duplicates allowed. > - SKU attributes need to be in the form of a stringy-fied json, i.e.`\"{'color':'blue'}\"`. These attributes must be defined in the **product** beforehand in order for you to be able to import them to the SKU. > - You can use this method to update the following parameters in bulk: **sku** and the sku **price**.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Import SKUs into the repository using a CSV file. The CSV file has to include headers in the first line. All properties which cannot be mapped to standard SKU fields will be added to the metadata object. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b98d08c9b585083488a4c/Import_SKUS_template.csv).  This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_skus_using_csv_with_http_info(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1235,7 +1235,7 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_products(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ProductsListResponseBody:  # noqa: E501
+    def list_products(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ProductsListResponseBody:  # noqa: E501
         """List Products  # noqa: E501
 
         Retrieve a list of products.  # noqa: E501
@@ -1245,11 +1245,11 @@ class ProductsApi:
         >>> thread = api.list_products(limit, page, order, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param start_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
         :type start_date: datetime
@@ -1273,7 +1273,7 @@ class ProductsApi:
         return self.list_products_with_http_info(limit, page, order, start_date, end_date, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_products_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_products_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Products  # noqa: E501
 
         Retrieve a list of products.  # noqa: E501
@@ -1283,11 +1283,11 @@ class ProductsApi:
         >>> thread = api.list_products_with_http_info(limit, page, order, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param start_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
         :type start_date: datetime
@@ -1413,7 +1413,7 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_skus_in_product(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ProductsSkusListResponseBody:  # noqa: E501
+    def list_skus_in_product(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or product source ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ProductsSkusListResponseBody:  # noqa: E501
         """List SKUs in Product  # noqa: E501
 
         Retrieve all SKUs for a given product.  # noqa: E501
@@ -1423,13 +1423,13 @@ class ProductsApi:
         >>> thread = api.list_skus_in_product(product_id, limit, page, order, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A Voucherify product ID or product source ID. (required)
         :type product_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param start_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
         :type start_date: datetime
@@ -1453,7 +1453,7 @@ class ProductsApi:
         return self.list_skus_in_product_with_http_info(product_id, limit, page, order, start_date, end_date, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_skus_in_product_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_skus_in_product_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A Voucherify product ID or product source ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List SKUs in Product  # noqa: E501
 
         Retrieve all SKUs for a given product.  # noqa: E501
@@ -1463,13 +1463,13 @@ class ProductsApi:
         >>> thread = api.list_skus_in_product_with_http_info(product_id, limit, page, order, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A Voucherify product ID or product source ID. (required)
         :type product_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param start_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
         :type start_date: datetime
@@ -1754,17 +1754,17 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_products_in_bulk(self, products_update_in_bulk_request_body : Annotated[Optional[conlist(ProductsUpdateInBulkRequestBody)], Field(description="Create an array of product objects, each with the parameters which you want to update.")] = None, **kwargs) -> ProductsUpdateInBulkResponseBody:  # noqa: E501
-        """Update Products in bulk  # noqa: E501
+    def update_products_in_bulk(self, products_update_in_bulk_request_body : Annotated[Optional[conlist(ProductsUpdateInBulkRequestBody)], Field(description="List the product fields to be updated in each customer object.")] = None, **kwargs) -> ProductsUpdateInBulkResponseBody:  # noqa: E501
+        """Update Products in Bulk  # noqa: E501
 
-        Update several products in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier. If a requested product object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Update products in one asynchronous operation. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_products_in_bulk(products_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param products_update_in_bulk_request_body: Create an array of product objects, each with the parameters which you want to update.
+        :param products_update_in_bulk_request_body: List the product fields to be updated in each customer object.
         :type products_update_in_bulk_request_body: List[ProductsUpdateInBulkRequestBody]
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1784,17 +1784,17 @@ class ProductsApi:
         return self.update_products_in_bulk_with_http_info(products_update_in_bulk_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_products_in_bulk_with_http_info(self, products_update_in_bulk_request_body : Annotated[Optional[conlist(ProductsUpdateInBulkRequestBody)], Field(description="Create an array of product objects, each with the parameters which you want to update.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Products in bulk  # noqa: E501
+    def update_products_in_bulk_with_http_info(self, products_update_in_bulk_request_body : Annotated[Optional[conlist(ProductsUpdateInBulkRequestBody)], Field(description="List the product fields to be updated in each customer object.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Products in Bulk  # noqa: E501
 
-        Update several products in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier. If a requested product object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Update products in one asynchronous operation. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_products_in_bulk_with_http_info(products_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param products_update_in_bulk_request_body: Create an array of product objects, each with the parameters which you want to update.
+        :param products_update_in_bulk_request_body: List the product fields to be updated in each customer object.
         :type products_update_in_bulk_request_body: List[ProductsUpdateInBulkRequestBody]
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1901,17 +1901,17 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_products_metadata_in_bulk(self, products_metadata_update_in_bulk_request_body : Annotated[Optional[ProductsMetadataUpdateInBulkRequestBody], Field(description="Specify the list of product source IDs and the metadata key value pairs to be udpated for these products.")] = None, **kwargs) -> ProductsMetadataUpdateInBulkResponseBody:  # noqa: E501
-        """Update Products' Metadata in bulk  # noqa: E501
+    def update_products_metadata_in_bulk(self, products_metadata_update_in_bulk_request_body : Annotated[Optional[ProductsMetadataUpdateInBulkRequestBody], Field(description="List the source_ids of the products you would like to update with the metadata key/value pairs.")] = None, **kwargs) -> ProductsMetadataUpdateInBulkResponseBody:  # noqa: E501
+        """Update Products' Metadata in Bulk  # noqa: E501
 
-        Update several product metadata properties in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier. If a requested product object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Updates metadata parameters for a list of products. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_products_metadata_in_bulk(products_metadata_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param products_metadata_update_in_bulk_request_body: Specify the list of product source IDs and the metadata key value pairs to be udpated for these products.
+        :param products_metadata_update_in_bulk_request_body: List the source_ids of the products you would like to update with the metadata key/value pairs.
         :type products_metadata_update_in_bulk_request_body: ProductsMetadataUpdateInBulkRequestBody
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1931,17 +1931,17 @@ class ProductsApi:
         return self.update_products_metadata_in_bulk_with_http_info(products_metadata_update_in_bulk_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_products_metadata_in_bulk_with_http_info(self, products_metadata_update_in_bulk_request_body : Annotated[Optional[ProductsMetadataUpdateInBulkRequestBody], Field(description="Specify the list of product source IDs and the metadata key value pairs to be udpated for these products.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Products' Metadata in bulk  # noqa: E501
+    def update_products_metadata_in_bulk_with_http_info(self, products_metadata_update_in_bulk_request_body : Annotated[Optional[ProductsMetadataUpdateInBulkRequestBody], Field(description="List the source_ids of the products you would like to update with the metadata key/value pairs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Products' Metadata in Bulk  # noqa: E501
 
-        Update several product metadata properties in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier. If a requested product object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Updates metadata parameters for a list of products. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_products_metadata_in_bulk_with_http_info(products_metadata_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param products_metadata_update_in_bulk_request_body: Specify the list of product source IDs and the metadata key value pairs to be udpated for these products.
+        :param products_metadata_update_in_bulk_request_body: List the source_ids of the products you would like to update with the metadata key/value pairs.
         :type products_metadata_update_in_bulk_request_body: ProductsMetadataUpdateInBulkRequestBody
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2048,19 +2048,19 @@ class ProductsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_sku(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.")], products_skus_update_request_body : Annotated[Optional[ProductsSkusUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> ProductsSkusUpdateResponseBody:  # noqa: E501
+    def update_sku(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify product ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify SKU ID or SKU source ID.")], products_skus_update_request_body : Annotated[Optional[ProductsSkusUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> ProductsSkusUpdateResponseBody:  # noqa: E501
         """Update SKU  # noqa: E501
 
-        Updates the specified SKU by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged.  Fields other than the ones listed in the request body schema won't be modified. Even if provided, they will be silently skipped.  # noqa: E501
+        Updates the specified SKU by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged. Fields other than the ones listed in the request body schema wont be modified. Even if provided, they will be silently skipped.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_sku(product_id, sku_id, products_skus_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A unique Voucherify product ID or product source ID. (required)
         :type product_id: str
-        :param sku_id: A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID. (required)
+        :param sku_id: A Voucherify SKU ID or SKU source ID. (required)
         :type sku_id: str
         :param products_skus_update_request_body: Specify the parameters to be updated.
         :type products_skus_update_request_body: ProductsSkusUpdateRequestBody
@@ -2082,19 +2082,19 @@ class ProductsApi:
         return self.update_sku_with_http_info(product_id, sku_id, products_skus_update_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_sku_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.")], products_skus_update_request_body : Annotated[Optional[ProductsSkusUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def update_sku_with_http_info(self, product_id : Annotated[StrictStr, Field(..., description="A unique Voucherify product ID or product source ID.")], sku_id : Annotated[StrictStr, Field(..., description="A Voucherify SKU ID or SKU source ID.")], products_skus_update_request_body : Annotated[Optional[ProductsSkusUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Update SKU  # noqa: E501
 
-        Updates the specified SKU by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged.  Fields other than the ones listed in the request body schema won't be modified. Even if provided, they will be silently skipped.  # noqa: E501
+        Updates the specified SKU by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged. Fields other than the ones listed in the request body schema wont be modified. Even if provided, they will be silently skipped.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_sku_with_http_info(product_id, sku_id, products_skus_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param product_id: A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID. (required)
+        :param product_id: A unique Voucherify product ID or product source ID. (required)
         :type product_id: str
-        :param sku_id: A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID. (required)
+        :param sku_id: A Voucherify SKU ID or SKU source ID. (required)
         :type sku_id: str
         :param products_skus_update_request_body: Specify the parameters to be updated.
         :type products_skus_update_request_body: ProductsSkusUpdateRequestBody

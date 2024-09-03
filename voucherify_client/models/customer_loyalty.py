@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictInt
 
 class CustomerLoyalty(BaseModel):
     """
     CustomerLoyalty
     """
-    points: StrictInt = Field(..., description="Customer's loyalty points.")
-    referred_customers: StrictInt = Field(..., description="Total number of customers referred by the customer.")
-    campaigns: Dict[str, Any] = Field(..., description="Contains campaigns with details about point balances and how many customers were referred by the customer.")
+    points: Optional[StrictInt] = Field(None, description="Customer's loyalty points.")
+    referred_customers: Optional[StrictInt] = Field(None, description="Total number of customers referred by the customer.")
+    campaigns: Optional[Dict[str, Any]] = Field(None, description="Contains campaigns with details about point balances and how many customers were referred by the customer.")
     __properties = ["points", "referred_customers", "campaigns"]
 
     class Config:
@@ -55,6 +55,21 @@ class CustomerLoyalty(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if referred_customers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.referred_customers is None and "referred_customers" in self.__fields_set__:
+            _dict['referred_customers'] = None
+
+        # set to None if campaigns (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaigns is None and "campaigns" in self.__fields_set__:
+            _dict['campaigns'] = None
+
         return _dict
 
     @classmethod

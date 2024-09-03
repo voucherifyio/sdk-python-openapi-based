@@ -54,6 +54,16 @@ class LoyaltyTierBasePoints(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if var_from (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_from is None and "var_from" in self.__fields_set__:
+            _dict['from'] = None
+
+        # set to None if to (nullable) is None
+        # and __fields_set__ contains the field
+        if self.to is None and "to" in self.__fields_set__:
+            _dict['to'] = None
+
         return _dict
 
     @classmethod

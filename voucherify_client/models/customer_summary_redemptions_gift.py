@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictInt
 
 class CustomerSummaryRedemptionsGift(BaseModel):
     """
     Summary of gift card credits.  # noqa: E501
     """
-    redeemed_amount: StrictInt = Field(..., description="Total amount of gift card credits redeemed by customer. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
-    amount_to_go: StrictInt = Field(..., description="Remaining gift card balance across all gift cards. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
+    redeemed_amount: Optional[StrictInt] = Field(0, description="Total amount of gift card credits redeemed by customer. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
+    amount_to_go: Optional[StrictInt] = Field(0, description="Remaining gift card balance across all gift cards. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
     __properties = ["redeemed_amount", "amount_to_go"]
 
     class Config:
@@ -54,6 +54,16 @@ class CustomerSummaryRedemptionsGift(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if redeemed_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemed_amount is None and "redeemed_amount" in self.__fields_set__:
+            _dict['redeemed_amount'] = None
+
+        # set to None if amount_to_go (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount_to_go is None and "amount_to_go" in self.__fields_set__:
+            _dict['amount_to_go'] = None
+
         return _dict
 
     @classmethod

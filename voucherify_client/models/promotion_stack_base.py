@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from voucherify_client.models.promotion_stack_base_tiers import PromotionStackBaseTiers
 
@@ -27,8 +27,8 @@ class PromotionStackBase(BaseModel):
     """
     PromotionStackBase
     """
-    name: StrictStr = Field(..., description="Promotion stack name.")
-    tiers: PromotionStackBaseTiers = Field(...)
+    name: Optional[StrictStr] = Field(None, description="Promotion stack name.")
+    tiers: Optional[PromotionStackBaseTiers] = None
     __properties = ["name", "tiers"]
 
     class Config:
@@ -58,6 +58,16 @@ class PromotionStackBase(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of tiers
         if self.tiers:
             _dict['tiers'] = self.tiers.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if tiers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tiers is None and "tiers" in self.__fields_set__:
+            _dict['tiers'] = None
+
         return _dict
 
     @classmethod

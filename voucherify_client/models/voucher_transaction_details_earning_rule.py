@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from voucherify_client.models.voucher_transaction_details_earning_rule_source import VoucherTransactionDetailsEarningRuleSource
 
@@ -27,8 +27,8 @@ class VoucherTransactionDetailsEarningRule(BaseModel):
     """
     Contains information about the earning rule.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique earning rule ID.")
-    source: VoucherTransactionDetailsEarningRuleSource = Field(...)
+    id: Optional[StrictStr] = Field(None, description="Unique earning rule ID.")
+    source: Optional[VoucherTransactionDetailsEarningRuleSource] = None
     __properties = ["id", "source"]
 
     class Config:
@@ -58,6 +58,16 @@ class VoucherTransactionDetailsEarningRule(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of source
         if self.source:
             _dict['source'] = self.source.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source is None and "source" in self.__fields_set__:
+            _dict['source'] = None
+
         return _dict
 
     @classmethod

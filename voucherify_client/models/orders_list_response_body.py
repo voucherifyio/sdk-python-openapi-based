@@ -19,23 +19,26 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
-from voucherify_client.models.order_calculated_no_customer_data import OrderCalculatedNoCustomerData
+from voucherify_client.models.order_calculated import OrderCalculated
 
 class OrdersListResponseBody(BaseModel):
     """
-    Response body schema representing **GET** `/orders`.  # noqa: E501
+    Response body schema representing **GET** `v1/orders`.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about orders in a dictionary.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the attribute that contains the array of order objects.")
-    orders: conlist(OrderCalculatedNoCustomerData) = Field(..., description="Contains array of order objects.")
-    total: StrictInt = Field(..., description="Total number of orders.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about orders in a dictionary.")
+    data_ref: Optional[StrictStr] = Field('orders', description="Identifies the name of the attribute that contains the array of order objects.")
+    orders: Optional[conlist(OrderCalculated)] = Field(None, description="Contains array of order objects.")
+    total: Optional[StrictInt] = Field(None, description="Total number of orders.")
     __properties = ["object", "data_ref", "orders", "total"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('list',):
             raise ValueError("must be one of enum values ('list')")
         return value
@@ -43,6 +46,9 @@ class OrdersListResponseBody(BaseModel):
     @validator('data_ref')
     def data_ref_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('orders',):
             raise ValueError("must be one of enum values ('orders')")
         return value
@@ -78,6 +84,26 @@ class OrdersListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['orders'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if orders (nullable) is None
+        # and __fields_set__ contains the field
+        if self.orders is None and "orders" in self.__fields_set__:
+            _dict['orders'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod
@@ -92,7 +118,7 @@ class OrdersListResponseBody(BaseModel):
         _obj = OrdersListResponseBody.parse_obj({
             "object": obj.get("object") if obj.get("object") is not None else 'list',
             "data_ref": obj.get("data_ref") if obj.get("data_ref") is not None else 'orders',
-            "orders": [OrderCalculatedNoCustomerData.from_dict(_item) for _item in obj.get("orders")] if obj.get("orders") is not None else None,
+            "orders": [OrderCalculated.from_dict(_item) for _item in obj.get("orders")] if obj.get("orders") is not None else None,
             "total": obj.get("total")
         })
         return _obj

@@ -14,199 +14,158 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.export_customer import ExportCustomer
-from voucherify_client.models.export_order import ExportOrder
-from voucherify_client.models.export_points_expiration import ExportPointsExpiration
-from voucherify_client.models.export_publication import ExportPublication
-from voucherify_client.models.export_redemption import ExportRedemption
-from voucherify_client.models.export_voucher import ExportVoucher
-from voucherify_client.models.export_voucher_transactions import ExportVoucherTransactions
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
-
-EXPORT_ONE_OF_SCHEMAS = ["ExportCustomer", "ExportOrder", "ExportPointsExpiration", "ExportPublication", "ExportRedemption", "ExportVoucher", "ExportVoucherTransactions"]
+from datetime import datetime
+from typing import Optional
+from pydantic import BaseModel, Field, StrictStr, validator
+from voucherify_client.models.export_parameters import ExportParameters
+from voucherify_client.models.export_result import ExportResult
 
 class Export(BaseModel):
     """
     Export
     """
-    # data type: ExportVoucher
-    oneof_schema_1_validator: Optional[ExportVoucher] = None
-    # data type: ExportRedemption
-    oneof_schema_2_validator: Optional[ExportRedemption] = None
-    # data type: ExportCustomer
-    oneof_schema_3_validator: Optional[ExportCustomer] = None
-    # data type: ExportPublication
-    oneof_schema_4_validator: Optional[ExportPublication] = None
-    # data type: ExportOrder
-    oneof_schema_5_validator: Optional[ExportOrder] = None
-    # data type: ExportPointsExpiration
-    oneof_schema_6_validator: Optional[ExportPointsExpiration] = None
-    # data type: ExportVoucherTransactions
-    oneof_schema_7_validator: Optional[ExportVoucherTransactions] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[ExportCustomer, ExportOrder, ExportPointsExpiration, ExportPublication, ExportRedemption, ExportVoucher, ExportVoucherTransactions]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(EXPORT_ONE_OF_SCHEMAS, const=True)
+    id: Optional[StrictStr] = Field(None, description="Unique export ID.")
+    object: Optional[StrictStr] = Field('export', description="The type of object being represented. This object stores information about the export.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the export was scheduled in ISO 8601 format.")
+    status: Optional[StrictStr] = Field(None, description="Status of the export. Informs you whether the export has already been completed, i.e. indicates whether the file containing the exported data has been generated.")
+    channel: Optional[StrictStr] = Field(None, description="The channel through which the export was triggered.")
+    result: Optional[ExportResult] = None
+    user_id: Optional[StrictStr] = Field(None, description="Identifies the specific user who initiated the export through the Voucherify Dashboard; returned when the channel value is WEBSITE.")
+    exported_object: Optional[StrictStr] = None
+    parameters: Optional[ExportParameters] = None
+    __properties = ["id", "object", "created_at", "status", "channel", "result", "user_id", "exported_object", "parameters"]
+
+    @validator('object')
+    def object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('export',):
+            raise ValueError("must be one of enum values ('export')")
+        return value
+
+    @validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('SCHEDULED', 'IN_PROGRESS', 'DONE', 'ERROR',):
+            raise ValueError("must be one of enum values ('SCHEDULED', 'IN_PROGRESS', 'DONE', 'ERROR')")
+        return value
+
+    @validator('exported_object')
+    def exported_object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions',):
+            raise ValueError("must be one of enum values ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = Export.construct()
-        error_messages = []
-        match = 0
-        # validate data type: ExportVoucher
-        if not isinstance(v, ExportVoucher):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportVoucher`")
-        else:
-            match += 1
-        # validate data type: ExportRedemption
-        if not isinstance(v, ExportRedemption):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportRedemption`")
-        else:
-            match += 1
-        # validate data type: ExportCustomer
-        if not isinstance(v, ExportCustomer):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportCustomer`")
-        else:
-            match += 1
-        # validate data type: ExportPublication
-        if not isinstance(v, ExportPublication):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportPublication`")
-        else:
-            match += 1
-        # validate data type: ExportOrder
-        if not isinstance(v, ExportOrder):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportOrder`")
-        else:
-            match += 1
-        # validate data type: ExportPointsExpiration
-        if not isinstance(v, ExportPointsExpiration):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportPointsExpiration`")
-        else:
-            match += 1
-        # validate data type: ExportVoucherTransactions
-        if not isinstance(v, ExportVoucherTransactions):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportVoucherTransactions`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in Export with oneOf schemas: ExportCustomer, ExportOrder, ExportPointsExpiration, ExportPublication, ExportRedemption, ExportVoucher, ExportVoucherTransactions. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in Export with oneOf schemas: ExportCustomer, ExportOrder, ExportPointsExpiration, ExportPublication, ExportRedemption, ExportVoucher, ExportVoucherTransactions. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> Export:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> Export:
-        """Returns the object represented by the json string"""
-        instance = Export.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of Export from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into ExportVoucher
-        try:
-            instance.actual_instance = ExportVoucher.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportRedemption
-        try:
-            instance.actual_instance = ExportRedemption.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportCustomer
-        try:
-            instance.actual_instance = ExportCustomer.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportPublication
-        try:
-            instance.actual_instance = ExportPublication.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportOrder
-        try:
-            instance.actual_instance = ExportOrder.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportPointsExpiration
-        try:
-            instance.actual_instance = ExportPointsExpiration.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportVoucherTransactions
-        try:
-            instance.actual_instance = ExportVoucherTransactions.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of result
+        if self.result:
+            _dict['result'] = self.result.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of parameters
+        if self.parameters:
+            _dict['parameters'] = self.parameters.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into Export with oneOf schemas: ExportCustomer, ExportOrder, ExportPointsExpiration, ExportPublication, ExportRedemption, ExportVoucher, ExportVoucherTransactions. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into Export with oneOf schemas: ExportCustomer, ExportOrder, ExportPointsExpiration, ExportPublication, ExportRedemption, ExportVoucher, ExportVoucherTransactions. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+        # set to None if channel (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel is None and "channel" in self.__fields_set__:
+            _dict['channel'] = None
+
+        # set to None if result (nullable) is None
+        # and __fields_set__ contains the field
+        if self.result is None and "result" in self.__fields_set__:
+            _dict['result'] = None
+
+        # set to None if user_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.user_id is None and "user_id" in self.__fields_set__:
+            _dict['user_id'] = None
+
+        # set to None if exported_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exported_object is None and "exported_object" in self.__fields_set__:
+            _dict['exported_object'] = None
+
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: dict) -> Export:
+        """Create an instance of Export from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return Export.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = Export.parse_obj({
+            "id": obj.get("id"),
+            "object": obj.get("object") if obj.get("object") is not None else 'export',
+            "created_at": obj.get("created_at"),
+            "status": obj.get("status"),
+            "channel": obj.get("channel"),
+            "result": ExportResult.from_dict(obj.get("result")) if obj.get("result") is not None else None,
+            "user_id": obj.get("user_id"),
+            "exported_object": obj.get("exported_object"),
+            "parameters": ExportParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None
+        })
+        return _obj
 
 

@@ -21,24 +21,25 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist
+from voucherify_client.models.client_validations_validate_response_body_redeemables_item import ClientValidationsValidateResponseBodyRedeemablesItem
 from voucherify_client.models.order_calculated import OrderCalculated
 from voucherify_client.models.session import Session
 from voucherify_client.models.stacking_rules import StackingRules
 from voucherify_client.models.validations_redeemable_inapplicable import ValidationsRedeemableInapplicable
-from voucherify_client.models.validations_validate_all_response_body_redeemables_item import ValidationsValidateAllResponseBodyRedeemablesItem
+from voucherify_client.models.validations_redeemable_skipped import ValidationsRedeemableSkipped
 
 class ClientValidationsValidateResponseBody(BaseModel):
     """
     Response body schema for POST `/validations`.  # noqa: E501
     """
-    valid: StrictBool = Field(..., description="The result of the validation. It takes all of the redeemables into account and returns a `false` if at least one redeemable is inapplicable. Returns `true` if all redeemables are applicable.")
-    redeemables: conlist(ValidationsValidateAllResponseBodyRedeemablesItem) = Field(..., description="Lists validation results of each redeemable. If redeemables_application_mode=\"PARTIAL\" all redeemables here will be \"APPLICABLE\"")
-    skipped_redeemables: Optional[conlist(ValidationsRedeemableInapplicable)] = Field(None, description="Lists validation results of each skipped redeemable.")
+    valid: Optional[StrictBool] = Field(None, description="The result of the validation. It takes all of the redeemables into account and returns a `false` if at least one redeemable is inapplicable. Returns `true` if all redeemables are applicable.")
+    redeemables: Optional[conlist(ClientValidationsValidateResponseBodyRedeemablesItem)] = None
+    skipped_redeemables: Optional[conlist(ValidationsRedeemableSkipped)] = Field(None, description="Lists validation results of each skipped redeemable.")
     inapplicable_redeemables: Optional[conlist(ValidationsRedeemableInapplicable)] = Field(None, description="Lists validation results of each inapplicable redeemable.")
     order: Optional[OrderCalculated] = None
     tracking_id: Optional[StrictStr] = Field(None, description="Hashed customer source ID.")
     session: Optional[Session] = None
-    stacking_rules: Optional[StackingRules] = None
+    stacking_rules: StackingRules = Field(...)
     __properties = ["valid", "redeemables", "skipped_redeemables", "inapplicable_redeemables", "order", "tracking_id", "session", "stacking_rules"]
 
     class Config:
@@ -95,6 +96,31 @@ class ClientValidationsValidateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of stacking_rules
         if self.stacking_rules:
             _dict['stacking_rules'] = self.stacking_rules.to_dict()
+        # set to None if valid (nullable) is None
+        # and __fields_set__ contains the field
+        if self.valid is None and "valid" in self.__fields_set__:
+            _dict['valid'] = None
+
+        # set to None if redeemables (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemables is None and "redeemables" in self.__fields_set__:
+            _dict['redeemables'] = None
+
+        # set to None if skipped_redeemables (nullable) is None
+        # and __fields_set__ contains the field
+        if self.skipped_redeemables is None and "skipped_redeemables" in self.__fields_set__:
+            _dict['skipped_redeemables'] = None
+
+        # set to None if inapplicable_redeemables (nullable) is None
+        # and __fields_set__ contains the field
+        if self.inapplicable_redeemables is None and "inapplicable_redeemables" in self.__fields_set__:
+            _dict['inapplicable_redeemables'] = None
+
+        # set to None if tracking_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tracking_id is None and "tracking_id" in self.__fields_set__:
+            _dict['tracking_id'] = None
+
         return _dict
 
     @classmethod
@@ -108,8 +134,8 @@ class ClientValidationsValidateResponseBody(BaseModel):
 
         _obj = ClientValidationsValidateResponseBody.parse_obj({
             "valid": obj.get("valid"),
-            "redeemables": [ValidationsValidateAllResponseBodyRedeemablesItem.from_dict(_item) for _item in obj.get("redeemables")] if obj.get("redeemables") is not None else None,
-            "skipped_redeemables": [ValidationsRedeemableInapplicable.from_dict(_item) for _item in obj.get("skipped_redeemables")] if obj.get("skipped_redeemables") is not None else None,
+            "redeemables": [ClientValidationsValidateResponseBodyRedeemablesItem.from_dict(_item) for _item in obj.get("redeemables")] if obj.get("redeemables") is not None else None,
+            "skipped_redeemables": [ValidationsRedeemableSkipped.from_dict(_item) for _item in obj.get("skipped_redeemables")] if obj.get("skipped_redeemables") is not None else None,
             "inapplicable_redeemables": [ValidationsRedeemableInapplicable.from_dict(_item) for _item in obj.get("inapplicable_redeemables")] if obj.get("inapplicable_redeemables") is not None else None,
             "order": OrderCalculated.from_dict(obj.get("order")) if obj.get("order") is not None else None,
             "tracking_id": obj.get("tracking_id"),

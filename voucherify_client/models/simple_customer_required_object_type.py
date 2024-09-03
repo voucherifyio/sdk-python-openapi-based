@@ -27,11 +27,11 @@ class SimpleCustomerRequiredObjectType(BaseModel):
     This is an object representing a customer with limited properties used in Event Tracking endpoints.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="The unique ID of a customer that is assigned by Voucherify.")
-    source_id: Optional[StrictStr] = Field(None, description="The merchant’s customer ID if it is different from the Voucherify customer ID. It is really useful in case of an integration between multiple systems. It can be a customer ID from a CRM system, database or 3rd-party service.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's customer ID if it is different from the Voucherify customer ID. It is really useful in case of an integration between multiple systems. It can be a customer ID from a CRM system, database or 3rd-party service.")
     name: Optional[StrictStr] = Field(None, description="Customer's first and last name.")
     email: Optional[StrictStr] = Field(None, description="Customer's email address.")
     metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to a customer. The metadata object stores all custom attributes assigned to the customer. It can be useful for storing additional information about the customer in a structured format. This metadata can be used for validating whether the customer qualifies for a discount or it can be used in building customer segments. ")
-    object: StrictStr = Field(..., description="The type of object represented by the JSON. This object stores information about the customer.")
+    object: Optional[StrictStr] = Field('customer', description="The type of the object represented by the JSON. This object stores information about the customer.")
     __properties = ["id", "source_id", "name", "email", "metadata", "object"]
 
     class Config:
@@ -58,6 +58,36 @@ class SimpleCustomerRequiredObjectType(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if email (nullable) is None
+        # and __fields_set__ contains the field
+        if self.email is None and "email" in self.__fields_set__:
+            _dict['email'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         return _dict
 
     @classmethod

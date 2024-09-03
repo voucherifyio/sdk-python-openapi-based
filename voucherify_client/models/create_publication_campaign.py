@@ -26,7 +26,7 @@ class CreatePublicationCampaign(BaseModel):
     """
     Create publication with campaign.  # noqa: E501
     """
-    name: StrictStr = Field(..., description="Name of voucher's parent campaign or unique campaign ID that was assigned by Voucherify.")
+    name: Optional[StrictStr] = Field(None, description="Name of voucher's parent campaign or unique campaign ID that was assigned by Voucherify.")
     count: Optional[conint(strict=True, le=20, ge=1)] = Field(None, description="Number of vouchers to be published to customer.")
     __properties = ["name", "count"]
 
@@ -54,6 +54,16 @@ class CreatePublicationCampaign(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if count (nullable) is None
+        # and __fields_set__ contains the field
+        if self.count is None and "count" in self.__fields_set__:
+            _dict['count'] = None
+
         return _dict
 
     @classmethod

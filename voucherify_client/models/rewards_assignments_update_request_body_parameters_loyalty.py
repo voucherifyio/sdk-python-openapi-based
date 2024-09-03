@@ -53,6 +53,11 @@ class RewardsAssignmentsUpdateRequestBodyParametersLoyalty(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
         return _dict
 
     @classmethod

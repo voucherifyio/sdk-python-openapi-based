@@ -4,6 +4,7 @@ All URIs are relative to *https://api.voucherify.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**create_validation_rule_assignment**](ValidationRulesApi.md#create_validation_rule_assignment) | **POST** /v1/validation-rules/{validationRuleId}/assignments | Create Validation Rules Assignments
 [**create_validation_rules**](ValidationRulesApi.md#create_validation_rules) | **POST** /v1/validation-rules | Create Validation Rules
 [**delete_validation_rule_assignment**](ValidationRulesApi.md#delete_validation_rule_assignment) | **DELETE** /v1/validation-rules/{validationRuleId}/assignments/{assignmentId} | Delete Validation Rule Assignment
 [**delete_validation_rules**](ValidationRulesApi.md#delete_validation_rules) | **DELETE** /v1/validation-rules/{validationRuleId} | Delete Validation Rule
@@ -13,6 +14,96 @@ Method | HTTP request | Description
 [**list_validation_rules_assignments**](ValidationRulesApi.md#list_validation_rules_assignments) | **GET** /v1/validation-rules-assignments | List Validation Rules&#39; Assignment(s)
 [**update_validation_rule**](ValidationRulesApi.md#update_validation_rule) | **PUT** /v1/validation-rules/{validationRuleId} | Update Validation Rule
 
+
+# **create_validation_rule_assignment**
+> ValidationRulesAssignmentsCreateResponseBody create_validation_rule_assignment(validation_rule_id, force=force, validation_rules_assignments_create_request_body=validation_rules_assignments_create_request_body)
+
+Create Validation Rules Assignments
+
+Assign validation rule to either one of the following objects: voucher, campaign, promotion tier, earning rule, reward, distribution.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.validation_rules_assignments_create_request_body import ValidationRulesAssignmentsCreateRequestBody
+from voucherify_client.models.validation_rules_assignments_create_response_body import ValidationRulesAssignmentsCreateResponseBody
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.ValidationRulesApi(api_client)
+    validation_rule_id = 'validation_rule_id_example' # str | Unique validation rule ID.
+    force = True # bool | If this flag is set to true, the previous assignment with the same data will be deleted and a new one will be added. (optional)
+    validation_rules_assignments_create_request_body = {"voucher":"v_ssR6vhswwh5odSloN2Vc3O60w7aea018"} # ValidationRulesAssignmentsCreateRequestBody | Specify the resource that you would like to assign the validation rule to. (optional)
+
+    try:
+        # Create Validation Rules Assignments
+        api_response = api_instance.create_validation_rule_assignment(validation_rule_id, force=force, validation_rules_assignments_create_request_body=validation_rules_assignments_create_request_body)
+        print("The response of ValidationRulesApi->create_validation_rule_assignment:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ValidationRulesApi->create_validation_rule_assignment: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **validation_rule_id** | **str**| Unique validation rule ID. | 
+ **force** | **bool**| If this flag is set to true, the previous assignment with the same data will be deleted and a new one will be added. | [optional] 
+ **validation_rules_assignments_create_request_body** | [**ValidationRulesAssignmentsCreateRequestBody**](ValidationRulesAssignmentsCreateRequestBody.md)| Specify the resource that you would like to assign the validation rule to. | [optional] 
+
+### Return type
+
+[**ValidationRulesAssignmentsCreateResponseBody**](ValidationRulesAssignmentsCreateResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a validation rules assignment object. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_validation_rules**
 > ValidationRulesCreateResponseBody create_validation_rules(validation_rules_create_request_body=validation_rules_create_request_body)
@@ -399,9 +490,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ValidationRulesApi(api_client)
     validation_rule_id = 'validation_rule_id_example' # str | Unique validation rule ID.
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    order = voucherify_client.ParameterOrderListValidationRuleAssignments() # ParameterOrderListValidationRuleAssignments | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrderListValidationRuleAssignments() # ParameterOrderListValidationRuleAssignments | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Validation Rule Assignments
@@ -419,9 +510,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **validation_rule_id** | **str**| Unique validation rule ID. | 
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **order** | [**ParameterOrderListValidationRuleAssignments**](.md)| This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrderListValidationRuleAssignments**](.md)| This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
 
 ### Return type
 
@@ -490,9 +581,9 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ValidationRulesApi(api_client)
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    order = voucherify_client.ParameterOrderListValidationRules() # ParameterOrderListValidationRules | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrderListValidationRules() # ParameterOrderListValidationRules | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
     start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must start on. Represented in ISO 8601 format. (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
 
@@ -511,9 +602,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **order** | [**ParameterOrderListValidationRules**](.md)| This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrderListValidationRules**](.md)| This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
  **start_date** | **datetime**| Timestamp representing the date and time which results must start on. Represented in ISO 8601 format. | [optional] 
  **end_date** | **datetime**| Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. | [optional] 
 
@@ -542,7 +633,7 @@ Name | Type | Description  | Notes
 
 List Validation Rules' Assignment(s)
 
-List all validation rules' assignments or filter the results using the related object ID or the validation rule ID query parameters.   ## How to retrieve specific validation rule assignments(s)  ### Related object ID  To find an assignment for a particular resource, you can use the ID of the object to which the validation rule was assigned. This could be, for example, an ID of a: voucher, campaign, distribution, reward assignment, earning rule, promotion tier.     <!-- title: \"Request\" lineNumbers: true --> ```curl curl -X GET \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" \\   -H \"Content-Type: application/json\" \\   https://api.voucherify.io/v1/validation-rules-assignments?related_object_id=promo_kJliy076IuJYtuYWSHE9fSuT ``` <!-- title: \"Response\" lineNumbers: true --> ```json {     \"object\": \"list\",     \"data_ref\": \"data\",     \"data\": [         {             \"id\": \"asgm_tZaqxeO8gP4q91jG\",             \"rule_id\": \"val_WB6ETAiFztw5\",             \"related_object_id\": \"promo_kJliy076IuJYtuYWSHE9fSuT\",             \"related_object_type\": \"promotion_tier\",             \"created_at\": \"2022-08-10T10:30:39.986Z\",             \"object\": \"validation_rules_assignment\"         }     ],     \"total\": 1 } ```  ### Validation rule ID  You can use the validation rule ID to find assignment(s) for a specific validation rule.   <!-- title: \"Request\" lineNumbers: true --> ```curl curl -X GET \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" \\   -H \"Content-Type: application/json\" \\   https://api.voucherify.io/v1/validation-rules-assignments?rule=val_ZEZmA9oit8aU ``` <!-- title: \"Response\" lineNumbers: true --> ```json {     \"object\": \"list\",     \"data_ref\": \"data\",     \"data\": [         {             \"id\": \"asgm_vef0G6d9Al0rABxq\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"camp_rRsfatlwN7unSeUIJDCYedal\",             \"related_object_type\": \"campaign\",             \"created_at\": \"2022-06-29T11:43:52.953Z\",             \"object\": \"validation_rules_assignment\"         },         {             \"id\": \"asgm_sFV4wEFvldwIvgfb\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"distr_9QKI02wqgjWyvZXeQkFEPmkkYe\",             \"related_object_type\": \"distribution\",             \"created_at\": \"2022-06-29T11:41:07.680Z\",             \"object\": \"validation_rules_assignment\"         },         {             \"id\": \"asgm_69Qifyv6UZynFIIQ\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"promo_g83qUzYZpfX0OMAFOVoQuOYG\",             \"related_object_type\": \"promotion_tier\",             \"created_at\": \"2022-06-29T11:29:41.906Z\",             \"object\": \"validation_rules_assignment\"         }     ],     \"total\": 3 } ``` 
+List all validation rules assignments or filter the results using the related object ID or the validation rule ID query parameters.  # How to retrieve specific validation rule assignments(s) ## Related object ID To find an assignment for a particular resource, you can use the ID of the object to which the validation rule was assigned. This could be, for example, an ID of a: voucher, campaign, distribution, reward assignment, earning rule, promotion tier.    ## Validation rule ID You can use the validation rule ID to find assignment(s) for a specific validation rule.  
 
 ### Example
 
@@ -585,9 +676,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
     api_instance = voucherify_client.ValidationRulesApi(api_client)
     related_object_id = 'related_object_id_example' # str | The resource ID to which the validation rule was assigned; this could be, for example, a resource ID of a voucher, campaign, earning rule, reward assignment, promotion tier, or distribution. (optional)
     rule = 'rule_example' # str | Validation rule ID. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    order = 'order_example' # str | Sorts the results using one of the filtering options: `-created_at`, `created_at`, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    order = 'order_example' # str | Sorts the results using one of the filtering options: -created_at, created_at, where the dash - preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Validation Rules' Assignment(s)
@@ -606,9 +697,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **related_object_id** | **str**| The resource ID to which the validation rule was assigned; this could be, for example, a resource ID of a voucher, campaign, earning rule, reward assignment, promotion tier, or distribution. | [optional] 
  **rule** | **str**| Validation rule ID. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **order** | **str**| Sorts the results using one of the filtering options: &#x60;-created_at&#x60;, &#x60;created_at&#x60;, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **order** | **str**| Sorts the results using one of the filtering options: -created_at, created_at, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
 
 ### Return type
 

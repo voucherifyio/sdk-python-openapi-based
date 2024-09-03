@@ -26,7 +26,7 @@ class LoyaltiesMembersTransfersCreateResponseBodyPublish(BaseModel):
     """
     This object stores a summary of publish events: an events counter and an endpoint which can be called to return details of each event. A publication is required for loyalty cards and referral codes. This object gets updated whenever a voucher has been published. Publication means assigning a code to a particular customer. Typically, a publication is made by distributing your codes to your customers, e.g. through Export to MailChimp or publish voucher API method.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented is by default list. To get this list, you need to make a call to the endpoint returned in the url attribute.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented is by default list. To get this list, you need to make a call to the endpoint returned in the url attribute.")
     count: Optional[StrictInt] = Field(None, description="Publication events counter.")
     entries: Optional[conlist(StrictStr)] = None
     url: Optional[StrictStr] = Field(None, description="The endpoint where this list of publications can be accessed using a GET method. /v1/vouchers/{voucher_code}/publications")
@@ -35,6 +35,9 @@ class LoyaltiesMembersTransfersCreateResponseBodyPublish(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('list',):
             raise ValueError("must be one of enum values ('list')")
         return value
@@ -63,6 +66,26 @@ class LoyaltiesMembersTransfersCreateResponseBodyPublish(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if count (nullable) is None
+        # and __fields_set__ contains the field
+        if self.count is None and "count" in self.__fields_set__:
+            _dict['count'] = None
+
+        # set to None if entries (nullable) is None
+        # and __fields_set__ contains the field
+        if self.entries is None and "entries" in self.__fields_set__:
+            _dict['entries'] = None
+
+        # set to None if url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.url is None and "url" in self.__fields_set__:
+            _dict['url'] = None
+
         return _dict
 
     @classmethod

@@ -5,7 +5,7 @@ If a **conversion event** for a referral program is set to a custom event, then 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | **str** | A code through which a new visitor has been referred to a service. | 
+**code** | **str** | A code through which a new visitor has been referred to a service. | [optional] 
 **referrer_id** | **str** | Unique ID of the referring person - it is optional and not required if the referral **code** is provided. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

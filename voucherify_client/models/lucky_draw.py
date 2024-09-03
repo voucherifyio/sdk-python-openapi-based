@@ -55,6 +55,21 @@ class LuckyDraw(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if winners_count (nullable) is None
+        # and __fields_set__ contains the field
+        if self.winners_count is None and "winners_count" in self.__fields_set__:
+            _dict['winners_count'] = None
+
+        # set to None if unique_winners_per_draw (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unique_winners_per_draw is None and "unique_winners_per_draw" in self.__fields_set__:
+            _dict['unique_winners_per_draw'] = None
+
+        # set to None if unique_winners (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unique_winners is None and "unique_winners" in self.__fields_set__:
+            _dict['unique_winners'] = None
+
         return _dict
 
     @classmethod

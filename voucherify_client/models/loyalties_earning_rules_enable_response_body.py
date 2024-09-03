@@ -20,41 +20,58 @@ import json
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conint, conlist, validator
-from voucherify_client.models.earning_rule_base_custom_event import EarningRuleBaseCustomEvent
-from voucherify_client.models.earning_rule_base_loyalty import EarningRuleBaseLoyalty
-from voucherify_client.models.earning_rule_base_segment import EarningRuleBaseSegment
-from voucherify_client.models.earning_rule_base_source import EarningRuleBaseSource
-from voucherify_client.models.earning_rule_base_validity_timeframe import EarningRuleBaseValidityTimeframe
-from voucherify_client.models.earning_rule_event import EarningRuleEvent
+from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist, validator
+from voucherify_client.models.loyalties_earning_rules_enable_response_body_custom_event import LoyaltiesEarningRulesEnableResponseBodyCustomEvent
+from voucherify_client.models.loyalties_earning_rules_enable_response_body_loyalty import LoyaltiesEarningRulesEnableResponseBodyLoyalty
+from voucherify_client.models.loyalties_earning_rules_enable_response_body_loyalty_tier import LoyaltiesEarningRulesEnableResponseBodyLoyaltyTier
+from voucherify_client.models.loyalties_earning_rules_enable_response_body_segment import LoyaltiesEarningRulesEnableResponseBodySegment
+from voucherify_client.models.loyalties_earning_rules_enable_response_body_source import LoyaltiesEarningRulesEnableResponseBodySource
+from voucherify_client.models.validity_hours import ValidityHours
+from voucherify_client.models.validity_timeframe import ValidityTimeframe
 
 class LoyaltiesEarningRulesEnableResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/loyalties/{campaignId}/earning-rules/{earningRuleId}/enable`  # noqa: E501
+    Response body schema for **POST** `v1/loyalties/{campaignId}/earning-rules/{earningRuleId}/enable`  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Assigned by the Voucherify API, identifies the earning rule object.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the earning rule was created in ISO 8601 format.")
-    loyalty: EarningRuleBaseLoyalty = Field(...)
-    event: Optional[EarningRuleEvent] = None
-    custom_event: Optional[EarningRuleBaseCustomEvent] = None
-    segment: Optional[EarningRuleBaseSegment] = None
-    source: EarningRuleBaseSource = Field(...)
-    object: StrictStr = Field(..., description="The type of object represented by JSON. Default is earning_rule.")
-    automation_id: StrictStr = Field(..., description="For internal use by Voucherify.")
-    start_date: Optional[StrictStr] = Field(None, description="Start date defines when the earning rule starts to be active. Activation timestamp in ISO 8601 format. Earning rule is inactive before this date. If you don't define the start date for an earning rule, it'll inherit the campaign start date by default.")
-    expiration_date: Optional[StrictStr] = Field(None, description="Expiration date defines when the earning rule expires. Expiration timestamp in ISO 8601 format. Earning rule is inactive after this date.If you don't define the expiration date for an earning rule, it'll inherit the campaign expiration date by default.")
-    validity_timeframe: Optional[EarningRuleBaseValidityTimeframe] = None
-    validity_day_of_week: Optional[conlist(conint(strict=True, le=6, ge=0))] = Field(None, description="Integer array corresponding to the particular days of the week in which the earning rule is valid.  - `0` Sunday - `1` Monday - `2` Tuesday - `3` Wednesday - `4` Thursday - `5` Friday - `6` Saturday")
-    metadata: Dict[str, Any] = Field(..., description="The metadata object stores all custom attributes assigned to the earning rule. A set of key/value pairs that you can attach to an earning rule object. It can be useful for storing additional information about the earning rule in a structured format.")
+    id: Optional[StrictStr] = Field(None, description="Assigned by the Voucherify API, identifies the earning rule object.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the earning rule was created. The value is shown in the ISO 8601 format.")
+    loyalty: Optional[LoyaltiesEarningRulesEnableResponseBodyLoyalty] = None
+    event: Optional[StrictStr] = None
+    custom_event: Optional[LoyaltiesEarningRulesEnableResponseBodyCustomEvent] = None
+    segment: Optional[LoyaltiesEarningRulesEnableResponseBodySegment] = None
+    loyalty_tier: Optional[LoyaltiesEarningRulesEnableResponseBodyLoyaltyTier] = None
+    source: Optional[LoyaltiesEarningRulesEnableResponseBodySource] = None
+    object: Optional[StrictStr] = Field('earning_rule', description="The type of the object represented by JSON. Default is earning_rule.")
+    automation_id: Optional[StrictStr] = Field(None, description="For internal use by Voucherify.")
+    start_date: Optional[StrictStr] = Field(None, description="Start date defines when the earning rule starts to be active. Activation timestamp is presented in the ISO 8601 format. The earning rule is inactive before this date. If you do not define the start date for an earning rule, it will inherit the campaign start date by default.")
+    expiration_date: Optional[StrictStr] = Field(None, description="Expiration date defines when the earning rule expires. Expiration timestamp is presented in the ISO 8601 format. The earning rule is inactive after this date. If you do not define the expiration date for an earning rule, it will inherit the campaign expiration date by default.")
+    validity_timeframe: Optional[ValidityTimeframe] = None
+    validity_day_of_week: Optional[conlist(StrictInt)] = Field(None, description="Integer array corresponding to the particular days of the week in which the voucher is valid.  - `0` Sunday - `1` Monday - `2` Tuesday - `3` Wednesday - `4` Thursday - `5` Friday - `6` Saturday")
+    validity_hours: Optional[ValidityHours] = None
+    metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the earning rule. A set of key/value pairs that you can attach to an earning rule object. It can be useful for storing additional information about the earning rule in a structured format.")
     updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the earning rule was last updated in ISO 8601 format.")
-    active: StrictBool = Field(..., description="A flag to toggle the earning rule on or off. You can disable an earning rule even though it's within the active period defined by the start_date and expiration_date of the campaign or the earning rule's own start_date and expiration_date.")
-    __properties = ["id", "created_at", "loyalty", "event", "custom_event", "segment", "source", "object", "automation_id", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "metadata", "updated_at", "active"]
+    active: Optional[StrictBool] = Field(True, description="A flag to toggle the earning rule on or off. You can disable an earning rule even though it's within the active period defined by the start_date and expiration_date of the campaign or the earning rule's own start_date and expiration_date.")
+    __properties = ["id", "created_at", "loyalty", "event", "custom_event", "segment", "loyalty_tier", "source", "object", "automation_id", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "validity_hours", "metadata", "updated_at", "active"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('earning_rule',):
             raise ValueError("must be one of enum values ('earning_rule')")
+        return value
+
+    @validator('validity_day_of_week')
+    def validity_day_of_week_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in (0, 1, 2, 3, 4, 5, 6,):
+                raise ValueError("each list item must be one of (0, 1, 2, 3, 4, 5, 6)")
         return value
 
     class Config:
@@ -90,16 +107,87 @@ class LoyaltiesEarningRulesEnableResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of segment
         if self.segment:
             _dict['segment'] = self.segment.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of loyalty_tier
+        if self.loyalty_tier:
+            _dict['loyalty_tier'] = self.loyalty_tier.to_dict()
         # override the default output from pydantic by calling `to_dict()` of source
         if self.source:
             _dict['source'] = self.source.to_dict()
         # override the default output from pydantic by calling `to_dict()` of validity_timeframe
         if self.validity_timeframe:
             _dict['validity_timeframe'] = self.validity_timeframe.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of validity_hours
+        if self.validity_hours:
+            _dict['validity_hours'] = self.validity_hours.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if loyalty (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty is None and "loyalty" in self.__fields_set__:
+            _dict['loyalty'] = None
+
+        # set to None if custom_event (nullable) is None
+        # and __fields_set__ contains the field
+        if self.custom_event is None and "custom_event" in self.__fields_set__:
+            _dict['custom_event'] = None
+
+        # set to None if segment (nullable) is None
+        # and __fields_set__ contains the field
+        if self.segment is None and "segment" in self.__fields_set__:
+            _dict['segment'] = None
+
+        # set to None if loyalty_tier (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty_tier is None and "loyalty_tier" in self.__fields_set__:
+            _dict['loyalty_tier'] = None
+
+        # set to None if source (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source is None and "source" in self.__fields_set__:
+            _dict['source'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if automation_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.automation_id is None and "automation_id" in self.__fields_set__:
+            _dict['automation_id'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         # set to None if updated_at (nullable) is None
         # and __fields_set__ contains the field
         if self.updated_at is None and "updated_at" in self.__fields_set__:
             _dict['updated_at'] = None
+
+        # set to None if active (nullable) is None
+        # and __fields_set__ contains the field
+        if self.active is None and "active" in self.__fields_set__:
+            _dict['active'] = None
 
         return _dict
 
@@ -115,17 +203,19 @@ class LoyaltiesEarningRulesEnableResponseBody(BaseModel):
         _obj = LoyaltiesEarningRulesEnableResponseBody.parse_obj({
             "id": obj.get("id"),
             "created_at": obj.get("created_at"),
-            "loyalty": EarningRuleBaseLoyalty.from_dict(obj.get("loyalty")) if obj.get("loyalty") is not None else None,
+            "loyalty": LoyaltiesEarningRulesEnableResponseBodyLoyalty.from_dict(obj.get("loyalty")) if obj.get("loyalty") is not None else None,
             "event": obj.get("event"),
-            "custom_event": EarningRuleBaseCustomEvent.from_dict(obj.get("custom_event")) if obj.get("custom_event") is not None else None,
-            "segment": EarningRuleBaseSegment.from_dict(obj.get("segment")) if obj.get("segment") is not None else None,
-            "source": EarningRuleBaseSource.from_dict(obj.get("source")) if obj.get("source") is not None else None,
+            "custom_event": LoyaltiesEarningRulesEnableResponseBodyCustomEvent.from_dict(obj.get("custom_event")) if obj.get("custom_event") is not None else None,
+            "segment": LoyaltiesEarningRulesEnableResponseBodySegment.from_dict(obj.get("segment")) if obj.get("segment") is not None else None,
+            "loyalty_tier": LoyaltiesEarningRulesEnableResponseBodyLoyaltyTier.from_dict(obj.get("loyalty_tier")) if obj.get("loyalty_tier") is not None else None,
+            "source": LoyaltiesEarningRulesEnableResponseBodySource.from_dict(obj.get("source")) if obj.get("source") is not None else None,
             "object": obj.get("object") if obj.get("object") is not None else 'earning_rule',
             "automation_id": obj.get("automation_id"),
             "start_date": obj.get("start_date"),
             "expiration_date": obj.get("expiration_date"),
-            "validity_timeframe": EarningRuleBaseValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
+            "validity_timeframe": ValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
             "validity_day_of_week": obj.get("validity_day_of_week"),
+            "validity_hours": ValidityHours.from_dict(obj.get("validity_hours")) if obj.get("validity_hours") is not None else None,
             "metadata": obj.get("metadata"),
             "updated_at": obj.get("updated_at"),
             "active": obj.get("active") if obj.get("active") is not None else True

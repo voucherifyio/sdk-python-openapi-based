@@ -26,10 +26,10 @@ class LoyaltiesTransferPoints(BaseModel):
     """
     LoyaltiesTransferPoints
     """
-    code: StrictStr = Field(..., description="Unique loyalty card code from which the user wants to transfer loyalty points (source).")
-    points: StrictInt = Field(..., description="The number of loyalty points that the user wants to transfer to another loyalty card. The number of points cannot be higher than the current balance on the loyalty card (source).")
+    code: Optional[StrictStr] = Field(None, description="Unique loyalty card code from which the user wants to transfer loyalty points (source).")
+    points: Optional[StrictInt] = Field(None, description="The number of loyalty points that the user wants to transfer to another loyalty card. The number of points cannot be higher than the current balance on the loyalty card (source).")
     reason: Optional[StrictStr] = Field(None, description="Reason for the transfer.")
-    source_id: StrictStr = Field(..., description="The merchant’s transaction ID if it is different from the Voucherify transaction ID. It is really useful in case of an integration between multiple systems. It can be a transaction ID from a CRM system, database or 3rd-party service.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's transaction ID if it is different from the Voucherify transaction ID. It is really useful in case of an integration between multiple systems. It can be a transaction ID from a CRM system, database or 3rd-party service.")
     __properties = ["code", "points", "reason", "source_id"]
 
     class Config:
@@ -56,6 +56,26 @@ class LoyaltiesTransferPoints(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if reason (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reason is None and "reason" in self.__fields_set__:
+            _dict['reason'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
         return _dict
 
     @classmethod

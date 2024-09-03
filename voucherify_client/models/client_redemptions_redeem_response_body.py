@@ -28,7 +28,7 @@ from voucherify_client.models.validations_redeemable_skipped import ValidationsR
 
 class ClientRedemptionsRedeemResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/redemptions`.  # noqa: E501
+    Response body schema for **POST** `v1/redemptions`.  # noqa: E501
     """
     redemptions: Optional[conlist(Redemption)] = None
     parent_redemption: Optional[Redemption] = None
@@ -88,6 +88,21 @@ class ClientRedemptionsRedeemResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['skipped_redeemables'] = _items
+        # set to None if redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemptions is None and "redemptions" in self.__fields_set__:
+            _dict['redemptions'] = None
+
+        # set to None if inapplicable_redeemables (nullable) is None
+        # and __fields_set__ contains the field
+        if self.inapplicable_redeemables is None and "inapplicable_redeemables" in self.__fields_set__:
+            _dict['inapplicable_redeemables'] = None
+
+        # set to None if skipped_redeemables (nullable) is None
+        # and __fields_set__ contains the field
+        if self.skipped_redeemables is None and "skipped_redeemables" in self.__fields_set__:
+            _dict['skipped_redeemables'] = None
+
         return _dict
 
     @classmethod

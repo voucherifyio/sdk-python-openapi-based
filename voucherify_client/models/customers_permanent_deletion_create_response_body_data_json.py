@@ -19,20 +19,20 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictInt
 
 class CustomersPermanentDeletionCreateResponseBodyDataJson(BaseModel):
     """
     Statistics summarizing the number of related information that was deleted.  # noqa: E501
     """
-    events: StrictInt = Field(..., description="Number of events deleted.")
-    customer_events: StrictInt = Field(..., description="Number of customer events deleted.")
-    daily_events: StrictInt = Field(..., description="Number of daily events deleted.")
-    segments: StrictInt = Field(..., description="Number of segments deleted.")
-    orders: StrictInt = Field(..., description="Number of orders deleted.")
-    order_events: StrictInt = Field(..., description="Number of order events deleted.")
-    customer: StrictInt = Field(..., description="Number of customers deleted.")
+    events: Optional[StrictInt] = Field(None, description="Number of events deleted.")
+    customer_events: Optional[StrictInt] = Field(None, description="Number of customer events deleted.")
+    daily_events: Optional[StrictInt] = Field(None, description="Number of daily events deleted.")
+    segments: Optional[StrictInt] = Field(None, description="Number of segments deleted.")
+    orders: Optional[StrictInt] = Field(None, description="Number of orders deleted.")
+    order_events: Optional[StrictInt] = Field(None, description="Number of order events deleted.")
+    customer: Optional[StrictInt] = Field(1, description="Number of customers deleted.")
     __properties = ["events", "customer_events", "daily_events", "segments", "orders", "order_events", "customer"]
 
     class Config:
@@ -59,6 +59,41 @@ class CustomersPermanentDeletionCreateResponseBodyDataJson(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if events (nullable) is None
+        # and __fields_set__ contains the field
+        if self.events is None and "events" in self.__fields_set__:
+            _dict['events'] = None
+
+        # set to None if customer_events (nullable) is None
+        # and __fields_set__ contains the field
+        if self.customer_events is None and "customer_events" in self.__fields_set__:
+            _dict['customer_events'] = None
+
+        # set to None if daily_events (nullable) is None
+        # and __fields_set__ contains the field
+        if self.daily_events is None and "daily_events" in self.__fields_set__:
+            _dict['daily_events'] = None
+
+        # set to None if segments (nullable) is None
+        # and __fields_set__ contains the field
+        if self.segments is None and "segments" in self.__fields_set__:
+            _dict['segments'] = None
+
+        # set to None if orders (nullable) is None
+        # and __fields_set__ contains the field
+        if self.orders is None and "orders" in self.__fields_set__:
+            _dict['orders'] = None
+
+        # set to None if order_events (nullable) is None
+        # and __fields_set__ contains the field
+        if self.order_events is None and "order_events" in self.__fields_set__:
+            _dict['order_events'] = None
+
+        # set to None if customer (nullable) is None
+        # and __fields_set__ contains the field
+        if self.customer is None and "customer" in self.__fields_set__:
+            _dict['customer'] = None
+
         return _dict
 
     @classmethod

@@ -24,20 +24,23 @@ from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
 
 class CategoriesGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/categories/{categoryId}`.  # noqa: E501
+    Response body schema for **GET** `v1/categories/{categoryId}`.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique category ID assigned by Voucherify.")
-    name: StrictStr = Field(..., description="Category name.")
-    hierarchy: StrictInt = Field(..., description="Category hierarchy.")
-    object: StrictStr = Field(..., description="The type of object represented by the JSON. This object stores information about the category.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the category was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the category was updated in ISO 8601 format.")
+    id: Optional[StrictStr] = Field(None, description="Unique category ID assigned by Voucherify.")
+    name: Optional[StrictStr] = Field(None, description="Category name.")
+    hierarchy: Optional[StrictInt] = Field(None, description="Category hierarchy.")
+    object: Optional[StrictStr] = Field('category', description="The type of the object represented by the JSON. This object stores information about the category.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the category was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the category was updated. The value is shown in the ISO 8601 format.")
     stacking_rules_type: Optional[StrictStr] = Field(None, description="The type of the stacking rule eligibility.")
     __properties = ["id", "name", "hierarchy", "object", "created_at", "updated_at", "stacking_rules_type"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('category',):
             raise ValueError("must be one of enum values ('category')")
         return value
@@ -76,6 +79,41 @@ class CategoriesGetResponseBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if hierarchy (nullable) is None
+        # and __fields_set__ contains the field
+        if self.hierarchy is None and "hierarchy" in self.__fields_set__:
+            _dict['hierarchy'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
+        # set to None if stacking_rules_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.stacking_rules_type is None and "stacking_rules_type" in self.__fields_set__:
+            _dict['stacking_rules_type'] = None
+
         return _dict
 
     @classmethod

@@ -19,20 +19,19 @@ import re  # noqa: F401
 import json
 
 
-from typing import Optional
-from pydantic import BaseModel, Field
-from voucherify_client.models.any import Any
+from typing import Any, List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist
 
 class QualificationsFiltersCondition(BaseModel):
     """
     QualificationsFiltersCondition
     """
-    var_is: Optional[Any] = Field(None, alias="$is")
-    is_not: Optional[Any] = Field(None, alias="$is_not")
+    var_is: Optional[conlist(StrictStr)] = Field(None, alias="$is")
+    is_not: Optional[conlist(StrictStr)] = Field(None, alias="$is_not")
     has_value: Optional[Any] = Field(None, alias="$has_value")
     is_unknown: Optional[Any] = Field(None, alias="$is_unknown")
-    var_in: Optional[Any] = Field(None, alias="$in")
-    not_in: Optional[Any] = Field(None, alias="$not_in")
+    var_in: Optional[conlist(StrictStr)] = Field(None, alias="$in")
+    not_in: Optional[conlist(StrictStr)] = Field(None, alias="$not_in")
     __properties = ["$is", "$is_not", "$has_value", "$is_unknown", "$in", "$not_in"]
 
     class Config:
@@ -59,24 +58,36 @@ class QualificationsFiltersCondition(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of var_is
-        if self.var_is:
-            _dict['$is'] = self.var_is.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of is_not
-        if self.is_not:
-            _dict['$is_not'] = self.is_not.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of has_value
-        if self.has_value:
-            _dict['$has_value'] = self.has_value.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of is_unknown
-        if self.is_unknown:
-            _dict['$is_unknown'] = self.is_unknown.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of var_in
-        if self.var_in:
-            _dict['$in'] = self.var_in.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of not_in
-        if self.not_in:
-            _dict['$not_in'] = self.not_in.to_dict()
+        # set to None if var_is (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_is is None and "var_is" in self.__fields_set__:
+            _dict['$is'] = None
+
+        # set to None if is_not (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_not is None and "is_not" in self.__fields_set__:
+            _dict['$is_not'] = None
+
+        # set to None if has_value (nullable) is None
+        # and __fields_set__ contains the field
+        if self.has_value is None and "has_value" in self.__fields_set__:
+            _dict['$has_value'] = None
+
+        # set to None if is_unknown (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_unknown is None and "is_unknown" in self.__fields_set__:
+            _dict['$is_unknown'] = None
+
+        # set to None if var_in (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_in is None and "var_in" in self.__fields_set__:
+            _dict['$in'] = None
+
+        # set to None if not_in (nullable) is None
+        # and __fields_set__ contains the field
+        if self.not_in is None and "not_in" in self.__fields_set__:
+            _dict['$not_in'] = None
+
         return _dict
 
     @classmethod
@@ -89,12 +100,12 @@ class QualificationsFiltersCondition(BaseModel):
             return QualificationsFiltersCondition.parse_obj(obj)
 
         _obj = QualificationsFiltersCondition.parse_obj({
-            "var_is": Any.from_dict(obj.get("$is")) if obj.get("$is") is not None else None,
-            "is_not": Any.from_dict(obj.get("$is_not")) if obj.get("$is_not") is not None else None,
-            "has_value": Any.from_dict(obj.get("$has_value")) if obj.get("$has_value") is not None else None,
-            "is_unknown": Any.from_dict(obj.get("$is_unknown")) if obj.get("$is_unknown") is not None else None,
-            "var_in": Any.from_dict(obj.get("$in")) if obj.get("$in") is not None else None,
-            "not_in": Any.from_dict(obj.get("$not_in")) if obj.get("$not_in") is not None else None
+            "var_is": obj.get("$is"),
+            "is_not": obj.get("$is_not"),
+            "has_value": obj.get("$has_value"),
+            "is_unknown": obj.get("$is_unknown"),
+            "var_in": obj.get("$in"),
+            "not_in": obj.get("$not_in")
         })
         return _obj
 

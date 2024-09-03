@@ -19,14 +19,14 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class LoyaltiesDeleteResponseBody(BaseModel):
     """
     Response body schema for **DELETE** `/loyalties/{campaignId}`.  # noqa: E501
     """
-    async_action_id: StrictStr = Field(..., description="The ID of the scheduled asynchronous action.")
+    async_action_id: Optional[StrictStr] = Field(None, description="The ID of the scheduled asynchronous action.")
     __properties = ["async_action_id"]
 
     class Config:
@@ -53,6 +53,11 @@ class LoyaltiesDeleteResponseBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if async_action_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.async_action_id is None and "async_action_id" in self.__fields_set__:
+            _dict['async_action_id'] = None
+
         return _dict
 
     @classmethod

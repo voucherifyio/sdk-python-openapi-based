@@ -24,9 +24,9 @@ from pydantic import BaseModel, Field, StrictInt
 
 class RedemptionLoyaltyCard(BaseModel):
     """
-    Stores the number of points being added back to the loyalty card for the reward redemption rollback.  # noqa: E501
+    Contains the number of points subtracted from the loyalty card for the redemption.  # noqa: E501
     """
-    points: Optional[StrictInt] = Field(None, description="Number of points being added back to the loyalty card for the reward redemption rollback.")
+    points: Optional[StrictInt] = Field(None, description="Number of points subtracted from the loyalty card as a result of the redemption.")
     __properties = ["points"]
 
     class Config:
@@ -53,6 +53,11 @@ class RedemptionLoyaltyCard(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
         return _dict
 
     @classmethod

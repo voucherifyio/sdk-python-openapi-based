@@ -26,7 +26,7 @@ from voucherify_client.models.order import Order
 
 class RedemptionsRollbackCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/redemptions/{redemptionId}/rollback`.  # noqa: E501
+    Request body schema for **POST** `v1/redemptions/{redemptionId}/rollback`.  # noqa: E501
     """
     reason: Optional[StrictStr] = Field(None, description="Reason for the rollback.")
     tracking_id: Optional[StrictStr] = Field(None, description="Customer's `source_id`.")
@@ -65,6 +65,21 @@ class RedemptionsRollbackCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of order
         if self.order:
             _dict['order'] = self.order.to_dict()
+        # set to None if reason (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reason is None and "reason" in self.__fields_set__:
+            _dict['reason'] = None
+
+        # set to None if tracking_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tracking_id is None and "tracking_id" in self.__fields_set__:
+            _dict['tracking_id'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod

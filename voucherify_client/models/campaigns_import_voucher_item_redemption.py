@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictInt
 
 class CampaignsImportVoucherItemRedemption(BaseModel):
     """
-    Stores the quantity of redemptions that can be applied to the voucher.  # noqa: E501
+    CampaignsImportVoucherItemRedemption
     """
     quantity: Optional[StrictInt] = Field(None, description="How many times a voucher can be redeemed. A `null` value means unlimited.")
     __properties = ["quantity"]
@@ -53,6 +53,11 @@ class CampaignsImportVoucherItemRedemption(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if quantity (nullable) is None
+        # and __fields_set__ contains the field
+        if self.quantity is None and "quantity" in self.__fields_set__:
+            _dict['quantity'] = None
+
         return _dict
 
     @classmethod

@@ -26,21 +26,24 @@ class ProductWithoutSkus(BaseModel):
     """
     ProductWithoutSkus
     """
-    id: StrictStr = Field(..., description="Unique product ID assigned by Voucherify.")
+    id: Optional[StrictStr] = Field(None, description="Unique product ID assigned by Voucherify.")
     source_id: Optional[StrictStr] = Field(None, description="Unique product source ID.")
     name: Optional[StrictStr] = Field(None, description="Unique user-defined product name.")
     price: Optional[StrictInt] = Field(None, description="Unit price. It is represented by a value multiplied by 100 to accurately reflect 2 decimal places, such as `$100.00` being expressed as `10000`.")
-    attributes: conlist(StrictStr) = Field(..., description="A list of product attributes whose values you can customize for given SKUs: `[\"color\",\"size\",\"ranking\"]`. Each child SKU can have a unique value for a given attribute.")
-    metadata: Dict[str, Any] = Field(..., description="The metadata object stores all custom attributes assigned to the product. A set of key/value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.")
+    attributes: Optional[conlist(StrictStr)] = Field(None, description="A list of product attributes whose values you can customize for given SKUs: `[\"color\",\"size\",\"ranking\"]`. Each child SKU can have a unique value for a given attribute.")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the product. A set of key/value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.")
     image_url: Optional[StrictStr] = Field(None, description="The HTTPS URL pointing to the .png or .jpg file that will be used to render the product image.")
-    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the product was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the product was updated in ISO 8601 format.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about the product.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the product was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the product was updated. The value is shown in the ISO 8601 format.")
+    object: Optional[StrictStr] = Field('product', description="The type of the object represented by JSON. This object stores information about the product.")
     __properties = ["id", "source_id", "name", "price", "attributes", "metadata", "image_url", "created_at", "updated_at", "object"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('product',):
             raise ValueError("must be one of enum values ('product')")
         return value
@@ -69,6 +72,11 @@ class ProductWithoutSkus(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
         # set to None if source_id (nullable) is None
         # and __fields_set__ contains the field
         if self.source_id is None and "source_id" in self.__fields_set__:
@@ -84,15 +92,35 @@ class ProductWithoutSkus(BaseModel):
         if self.price is None and "price" in self.__fields_set__:
             _dict['price'] = None
 
+        # set to None if attributes (nullable) is None
+        # and __fields_set__ contains the field
+        if self.attributes is None and "attributes" in self.__fields_set__:
+            _dict['attributes'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         # set to None if image_url (nullable) is None
         # and __fields_set__ contains the field
         if self.image_url is None and "image_url" in self.__fields_set__:
             _dict['image_url'] = None
 
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
         # set to None if updated_at (nullable) is None
         # and __fields_set__ contains the field
         if self.updated_at is None and "updated_at" in self.__fields_set__:
             _dict['updated_at'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
 
         return _dict
 

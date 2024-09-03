@@ -1,6 +1,6 @@
 # PromotionsStacksUpdateRequestBody
 
-Request Body schema for **put** `/promotions/{campaignId}/stacks/{stackId}`.
+Request Body schema for **PUT** `v1/promotions/{campaignId}/stacks/{stackId}`.
 
 ## Properties
 Name | Type | Description | Notes

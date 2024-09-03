@@ -19,21 +19,24 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
 
 class SimpleSegment(BaseModel):
     """
     SimpleSegment
     """
-    id: StrictStr = Field(..., description="Unique segment ID.")
-    name: StrictStr = Field(..., description="Segment name.")
-    object: StrictStr = Field(..., description="The type of object represented by the ID.")
+    id: Optional[StrictStr] = Field(None, description="Unique segment ID.")
+    name: Optional[StrictStr] = Field(None, description="Segment name.")
+    object: Optional[StrictStr] = Field('segment', description="The type of the object represented by the ID.")
     __properties = ["id", "name", "object"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('segment',):
             raise ValueError("must be one of enum values ('segment')")
         return value
@@ -62,6 +65,21 @@ class SimpleSegment(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         return _dict
 
     @classmethod

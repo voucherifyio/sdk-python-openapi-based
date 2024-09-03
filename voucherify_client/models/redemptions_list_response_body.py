@@ -19,18 +19,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
 from voucherify_client.models.redemptions_list_response_body_redemptions_item import RedemptionsListResponseBodyRedemptionsItem
 
 class RedemptionsListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/redemptions`.  # noqa: E501
+    Response body schema for **GET** `v1/redemptions`.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about redemptions in a dictionary.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the attribute that contains the array of redemption objects.")
-    redemptions: conlist(RedemptionsListResponseBodyRedemptionsItem) = Field(...)
-    total: StrictInt = Field(..., description="Total number of redemptions.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about redemptions in a dictionary.")
+    data_ref: Optional[StrictStr] = Field('redemptions', description="Identifies the name of the attribute that contains the array of redemption objects.")
+    redemptions: Optional[conlist(RedemptionsListResponseBodyRedemptionsItem)] = None
+    total: Optional[StrictInt] = Field(None, description="Total number of redemptions.")
     __properties = ["object", "data_ref", "redemptions", "total"]
 
     class Config:
@@ -64,6 +64,26 @@ class RedemptionsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['redemptions'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemptions is None and "redemptions" in self.__fields_set__:
+            _dict['redemptions'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod

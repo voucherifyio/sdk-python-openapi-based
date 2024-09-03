@@ -55,6 +55,21 @@ class RedemptionRewardResultParametersCampaign(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
         return _dict
 
     @classmethod

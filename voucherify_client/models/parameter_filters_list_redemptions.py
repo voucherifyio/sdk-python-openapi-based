@@ -102,6 +102,56 @@ class ParameterFiltersListRedemptions(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of user_login
         if self.user_login:
             _dict['user_login'] = self.user_login.to_dict()
+        # set to None if voucher_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.voucher_code is None and "voucher_code" in self.__fields_set__:
+            _dict['voucher_code'] = None
+
+        # set to None if related_object_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_id is None and "related_object_id" in self.__fields_set__:
+            _dict['related_object_id'] = None
+
+        # set to None if related_object_parent_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_parent_id is None and "related_object_parent_id" in self.__fields_set__:
+            _dict['related_object_parent_id'] = None
+
+        # set to None if parent_redemption_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parent_redemption_id is None and "parent_redemption_id" in self.__fields_set__:
+            _dict['parent_redemption_id'] = None
+
+        # set to None if failure_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.failure_code is None and "failure_code" in self.__fields_set__:
+            _dict['failure_code'] = None
+
+        # set to None if result (nullable) is None
+        # and __fields_set__ contains the field
+        if self.result is None and "result" in self.__fields_set__:
+            _dict['result'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if customer_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.customer_id is None and "customer_id" in self.__fields_set__:
+            _dict['customer_id'] = None
+
+        # set to None if campaign_name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_name is None and "campaign_name" in self.__fields_set__:
+            _dict['campaign_name'] = None
+
+        # set to None if user_login (nullable) is None
+        # and __fields_set__ contains the field
+        if self.user_login is None and "user_login" in self.__fields_set__:
+            _dict['user_login'] = None
+
         return _dict
 
     @classmethod

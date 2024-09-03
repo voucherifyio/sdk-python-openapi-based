@@ -26,7 +26,7 @@ from pydantic import Field, StrictBytes, StrictStr, conint, conlist
 
 from typing import Any, Dict, Optional, Union
 
-from voucherify_client.models.customers_activities_list_response_body import CustomersActivitiesListResponseBody
+from voucherify_client.models.customers_activity_list_response_body import CustomersActivityListResponseBody
 from voucherify_client.models.customers_create_request_body import CustomersCreateRequestBody
 from voucherify_client.models.customers_create_response_body import CustomersCreateResponseBody
 from voucherify_client.models.customers_get_response_body import CustomersGetResponseBody
@@ -35,14 +35,18 @@ from voucherify_client.models.customers_list_response_body import CustomersListR
 from voucherify_client.models.customers_metadata_update_in_bulk_request_body import CustomersMetadataUpdateInBulkRequestBody
 from voucherify_client.models.customers_metadata_update_in_bulk_response_body import CustomersMetadataUpdateInBulkResponseBody
 from voucherify_client.models.customers_permanent_deletion_create_response_body import CustomersPermanentDeletionCreateResponseBody
+from voucherify_client.models.customers_redeemables_list_response_body import CustomersRedeemablesListResponseBody
 from voucherify_client.models.customers_segments_list_response_body import CustomersSegmentsListResponseBody
 from voucherify_client.models.customers_update_in_bulk_request_body import CustomersUpdateInBulkRequestBody
 from voucherify_client.models.customers_update_in_bulk_response_body import CustomersUpdateInBulkResponseBody
 from voucherify_client.models.customers_update_request_body import CustomersUpdateRequestBody
 from voucherify_client.models.customers_update_response_body import CustomersUpdateResponseBody
+from voucherify_client.models.parameter_activity_category import ParameterActivityCategory
 from voucherify_client.models.parameter_campaign_type import ParameterCampaignType
-from voucherify_client.models.parameter_order import ParameterOrder
+from voucherify_client.models.parameter_filters_list_customer_redeemables import ParameterFiltersListCustomerRedeemables
+from voucherify_client.models.parameter_order_created_at import ParameterOrderCreatedAt
 from voucherify_client.models.parameter_order_list_customers import ParameterOrderListCustomers
+from voucherify_client.models.parameter_order_list_redeemables import ParameterOrderListRedeemables
 
 from voucherify_client.api_client import ApiClient
 from voucherify_client.api_response import ApiResponse
@@ -68,7 +72,7 @@ class CustomersApi:
     def create_customer(self, customers_create_request_body : Annotated[Optional[CustomersCreateRequestBody], Field(description="Create a customer with specified parameters.")] = None, **kwargs) -> CustomersCreateResponseBody:  # noqa: E501
         """Create Customer  # noqa: E501
 
-        Creates a customer object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the customer database, Voucherify will return a related customer object with updated fields.  # noqa: E501
+        Creates a customer object.  📘 Upsert Mode  If you pass an id or a source_id that already exists in the customer database, Voucherify will return a related customer object with updated fields.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -98,7 +102,7 @@ class CustomersApi:
     def create_customer_with_http_info(self, customers_create_request_body : Annotated[Optional[CustomersCreateRequestBody], Field(description="Create a customer with specified parameters.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Create Customer  # noqa: E501
 
-        Creates a customer object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the customer database, Voucherify will return a related customer object with updated fields.  # noqa: E501
+        Creates a customer object.  📘 Upsert Mode  If you pass an id or a source_id that already exists in the customer database, Voucherify will return a related customer object with updated fields.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -212,17 +216,17 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def customer_permanently_deletion(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], **kwargs) -> CustomersPermanentDeletionCreateResponseBody:  # noqa: E501
+    def customer_permanently_deletion(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], **kwargs) -> CustomersPermanentDeletionCreateResponseBody:  # noqa: E501
         """Delete Customer Permanently  # noqa: E501
 
-        The organization user can remove consumer data permanently from the Voucherify system by using this API method. It d​eletes all customer data and connected resources. It makes the customer profile forgotten by Voucherify.  # noqa: E501
+        The organization user can remove consumer data permanently from the Voucherify system by using this API method. It deletes all customer data and connected resources. It makes the customer profile forgotten by Voucherify.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.customer_permanently_deletion(customer_id, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -242,17 +246,17 @@ class CustomersApi:
         return self.customer_permanently_deletion_with_http_info(customer_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def customer_permanently_deletion_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def customer_permanently_deletion_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Customer Permanently  # noqa: E501
 
-        The organization user can remove consumer data permanently from the Voucherify system by using this API method. It d​eletes all customer data and connected resources. It makes the customer profile forgotten by Voucherify.  # noqa: E501
+        The organization user can remove consumer data permanently from the Voucherify system by using this API method. It deletes all customer data and connected resources. It makes the customer profile forgotten by Voucherify.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.customer_permanently_deletion_with_http_info(customer_id, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -352,7 +356,7 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_customer(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], **kwargs) -> None:  # noqa: E501
+    def delete_customer(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], **kwargs) -> None:  # noqa: E501
         """Delete Customer  # noqa: E501
 
         This method deletes a customer.  # noqa: E501
@@ -362,7 +366,7 @@ class CustomersApi:
         >>> thread = api.delete_customer(customer_id, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -382,7 +386,7 @@ class CustomersApi:
         return self.delete_customer_with_http_info(customer_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_customer_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_customer_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Customer  # noqa: E501
 
         This method deletes a customer.  # noqa: E501
@@ -392,7 +396,7 @@ class CustomersApi:
         >>> thread = api.delete_customer_with_http_info(customer_id, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -486,7 +490,7 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_customer(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], **kwargs) -> CustomersGetResponseBody:  # noqa: E501
+    def get_customer(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], **kwargs) -> CustomersGetResponseBody:  # noqa: E501
         """Get Customer  # noqa: E501
 
         Retrieve customer details.  # noqa: E501
@@ -496,7 +500,7 @@ class CustomersApi:
         >>> thread = api.get_customer(customer_id, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -516,7 +520,7 @@ class CustomersApi:
         return self.get_customer_with_http_info(customer_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_customer_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_customer_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Customer  # noqa: E501
 
         Retrieve customer details.  # noqa: E501
@@ -526,7 +530,7 @@ class CustomersApi:
         >>> thread = api.get_customer_with_http_info(customer_id, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -626,17 +630,17 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def import_customers_using_csv(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> CustomersImportCsvCreateResponseBody:  # noqa: E501
+    def import_customers_using_csv(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> CustomersImportCsvCreateResponseBody:  # noqa: E501
         """Import and Update Customers using CSV  # noqa: E501
 
-        This API method lets you import or update customer data. To get a proper and valid response, please send a CSV file with data separated by commas.    ## Request Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/customers/importCSV \\   -F file=@/path/to/customers.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ``` ## CSV File Format  The CSV file has to include headers in the first line. All properties which cannot be mapped to standard customer fields will be added to the metadata object.  <!-- theme: info --> > 📘 Standard customer fields mapping > > **No spaces allowed in field names**   > Id, Name, Email, Phone, Birthdate, Source_id, Address_line_1, Address_line_2, Address_Postal_Code, Address_City, Address_State, Address_Country, Description, Metadata_name_1, Metadata_name_2  ## Update Customers using CSV  If you would like to update customer's data, you can do it using the CSV file with new data. However, remember to include a `source_id` in your CSV file to manage the update successfully.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        This API method lets you import or update customer data. To get a proper and valid response, please send a CSV file with data separated by commas.   # Request Example # CSV File Format The CSV file has to include headers in the first line. All properties which cannot be mapped to standard customer fields will be added to the metadata object.  📘 Standard customer fields mapping  **No spaces allowed in field names**    Id, Name, Email, Phone, Birthdate, Source_id, Address_line_1, Address_line_2, Address_Postal_Code, Address_City, Address_State, Address_Country, Description, Metadata_name_1, Metadata_name_2 # Update Customers using CSV If you would like to update customers data, you can do it using the CSV file with new data. However, remember to include a source_id in your CSV file to manage the update successfully. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_customers_using_csv(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -656,17 +660,17 @@ class CustomersApi:
         return self.import_customers_using_csv_with_http_info(file, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def import_customers_using_csv_with_http_info(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def import_customers_using_csv_with_http_info(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Import and Update Customers using CSV  # noqa: E501
 
-        This API method lets you import or update customer data. To get a proper and valid response, please send a CSV file with data separated by commas.    ## Request Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/customers/importCSV \\   -F file=@/path/to/customers.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ``` ## CSV File Format  The CSV file has to include headers in the first line. All properties which cannot be mapped to standard customer fields will be added to the metadata object.  <!-- theme: info --> > 📘 Standard customer fields mapping > > **No spaces allowed in field names**   > Id, Name, Email, Phone, Birthdate, Source_id, Address_line_1, Address_line_2, Address_Postal_Code, Address_City, Address_State, Address_Country, Description, Metadata_name_1, Metadata_name_2  ## Update Customers using CSV  If you would like to update customer's data, you can do it using the CSV file with new data. However, remember to include a `source_id` in your CSV file to manage the update successfully.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        This API method lets you import or update customer data. To get a proper and valid response, please send a CSV file with data separated by commas.   # Request Example # CSV File Format The CSV file has to include headers in the first line. All properties which cannot be mapped to standard customer fields will be added to the metadata object.  📘 Standard customer fields mapping  **No spaces allowed in field names**    Id, Name, Email, Phone, Birthdate, Source_id, Address_line_1, Address_line_2, Address_Postal_Code, Address_City, Address_State, Address_Country, Description, Metadata_name_1, Metadata_name_2 # Update Customers using CSV If you would like to update customers data, you can do it using the CSV file with new data. However, remember to include a source_id in your CSV file to manage the update successfully. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_customers_using_csv_with_http_info(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -773,36 +777,36 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_customer_activities(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or source ID of the customer who performed the activities.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="A cursor for use in pagination. `starting_after` is a date-time value that defines your place in the list based on `created_at` property from the activity object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="By applying this filter value, you will get events starting after an event with the given ID.")] = None, campaign_type : Annotated[Optional[ParameterCampaignType], Field(description="Through this parameter you can control a type of campaign by which Voucherify will filter related customer's activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM")] = None, campaign_id : Annotated[Optional[StrictStr], Field(description="By applying this parameter you request only events related to specific campaign identified by its ID.")] = None, product_id : Annotated[Optional[StrictStr], Field(description="By applying this parameter you request only events related to specific product identified by its ID.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> CustomersActivitiesListResponseBody:  # noqa: E501
-        """List Customer Activities  # noqa: E501
+    def list_customer_activity(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source ID of the customer who performed the activities.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderCreatedAt], Field(description="Apply this filter to order the events according the date and time when it was created. ")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must begin on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, campaign_id : Annotated[Optional[StrictStr], Field(description="Requests only events related to specific campaign identified by its ID.")] = None, campaign_type : Annotated[Optional[ParameterCampaignType], Field(description="Filters related customers activity for the selected campaign types. Allowed values:  DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM.")] = None, category : Annotated[Optional[ParameterActivityCategory], Field(description="Filters activities for actions or effects. Allowed values:  ACTION, EFFECT.")] = None, type : Annotated[Optional[StrictStr], Field(description="Event name of the customer event.")] = None, **kwargs) -> CustomersActivityListResponseBody:  # noqa: E501
+        """List Customer Activity  # noqa: E501
 
         Retrieve customer activities.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_customer_activities(customer_id, limit, order, starting_after, starting_after_id, campaign_type, campaign_id, product_id, start_date, end_date, async_req=True)
+        >>> thread = api.list_customer_activity(customer_id, limit, order, starting_after_id, start_date, end_date, campaign_id, campaign_type, category, type, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or source ID of the customer who performed the activities. (required)
+        :param customer_id: A Voucherify customers id or source ID of the customer who performed the activities. (required)
         :type customer_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
-        :type order: ParameterOrder
-        :param starting_after: A cursor for use in pagination. `starting_after` is a date-time value that defines your place in the list based on `created_at` property from the activity object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.
-        :type starting_after: datetime
-        :param starting_after_id: By applying this filter value, you will get events starting after an event with the given ID.
+        :param order: Apply this filter to order the events according the date and time when it was created. 
+        :type order: ParameterOrderCreatedAt
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
         :type starting_after_id: str
-        :param campaign_type: Through this parameter you can control a type of campaign by which Voucherify will filter related customer's activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM
-        :type campaign_type: ParameterCampaignType
-        :param campaign_id: By applying this parameter you request only events related to specific campaign identified by its ID.
-        :type campaign_id: str
-        :param product_id: By applying this parameter you request only events related to specific product identified by its ID.
-        :type product_id: str
-        :param start_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
+        :param start_date: Timestamp representing the date and time which results must begin on. Represented in ISO 8601 format.
         :type start_date: datetime
         :param end_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
         :type end_date: datetime
+        :param campaign_id: Requests only events related to specific campaign identified by its ID.
+        :type campaign_id: str
+        :param campaign_type: Filters related customers activity for the selected campaign types. Allowed values:  DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM.
+        :type campaign_type: ParameterCampaignType
+        :param category: Filters activities for actions or effects. Allowed values:  ACTION, EFFECT.
+        :type category: ParameterActivityCategory
+        :param type: Event name of the customer event.
+        :type type: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -812,45 +816,45 @@ class CustomersApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: CustomersActivitiesListResponseBody
+        :rtype: CustomersActivityListResponseBody
         """
         kwargs['_return_http_data_only'] = True
         if '_preload_content' in kwargs:
-            message = "Error! Please call the list_customer_activities_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            message = "Error! Please call the list_customer_activity_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_customer_activities_with_http_info(customer_id, limit, order, starting_after, starting_after_id, campaign_type, campaign_id, product_id, start_date, end_date, **kwargs)  # noqa: E501
+        return self.list_customer_activity_with_http_info(customer_id, limit, order, starting_after_id, start_date, end_date, campaign_id, campaign_type, category, type, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_customer_activities_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or source ID of the customer who performed the activities.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="A cursor for use in pagination. `starting_after` is a date-time value that defines your place in the list based on `created_at` property from the activity object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="By applying this filter value, you will get events starting after an event with the given ID.")] = None, campaign_type : Annotated[Optional[ParameterCampaignType], Field(description="Through this parameter you can control a type of campaign by which Voucherify will filter related customer's activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM")] = None, campaign_id : Annotated[Optional[StrictStr], Field(description="By applying this parameter you request only events related to specific campaign identified by its ID.")] = None, product_id : Annotated[Optional[StrictStr], Field(description="By applying this parameter you request only events related to specific product identified by its ID.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """List Customer Activities  # noqa: E501
+    def list_customer_activity_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source ID of the customer who performed the activities.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderCreatedAt], Field(description="Apply this filter to order the events according the date and time when it was created. ")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must begin on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, campaign_id : Annotated[Optional[StrictStr], Field(description="Requests only events related to specific campaign identified by its ID.")] = None, campaign_type : Annotated[Optional[ParameterCampaignType], Field(description="Filters related customers activity for the selected campaign types. Allowed values:  DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM.")] = None, category : Annotated[Optional[ParameterActivityCategory], Field(description="Filters activities for actions or effects. Allowed values:  ACTION, EFFECT.")] = None, type : Annotated[Optional[StrictStr], Field(description="Event name of the customer event.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Customer Activity  # noqa: E501
 
         Retrieve customer activities.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_customer_activities_with_http_info(customer_id, limit, order, starting_after, starting_after_id, campaign_type, campaign_id, product_id, start_date, end_date, async_req=True)
+        >>> thread = api.list_customer_activity_with_http_info(customer_id, limit, order, starting_after_id, start_date, end_date, campaign_id, campaign_type, category, type, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or source ID of the customer who performed the activities. (required)
+        :param customer_id: A Voucherify customers id or source ID of the customer who performed the activities. (required)
         :type customer_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
-        :type order: ParameterOrder
-        :param starting_after: A cursor for use in pagination. `starting_after` is a date-time value that defines your place in the list based on `created_at` property from the activity object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.
-        :type starting_after: datetime
-        :param starting_after_id: By applying this filter value, you will get events starting after an event with the given ID.
+        :param order: Apply this filter to order the events according the date and time when it was created. 
+        :type order: ParameterOrderCreatedAt
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
         :type starting_after_id: str
-        :param campaign_type: Through this parameter you can control a type of campaign by which Voucherify will filter related customer's activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM
-        :type campaign_type: ParameterCampaignType
-        :param campaign_id: By applying this parameter you request only events related to specific campaign identified by its ID.
-        :type campaign_id: str
-        :param product_id: By applying this parameter you request only events related to specific product identified by its ID.
-        :type product_id: str
-        :param start_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
+        :param start_date: Timestamp representing the date and time which results must begin on. Represented in ISO 8601 format.
         :type start_date: datetime
         :param end_date: Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.
         :type end_date: datetime
+        :param campaign_id: Requests only events related to specific campaign identified by its ID.
+        :type campaign_id: str
+        :param campaign_type: Filters related customers activity for the selected campaign types. Allowed values:  DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM.
+        :type campaign_type: ParameterCampaignType
+        :param category: Filters activities for actions or effects. Allowed values:  ACTION, EFFECT.
+        :type category: ParameterActivityCategory
+        :param type: Event name of the customer event.
+        :type type: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -873,7 +877,7 @@ class CustomersApi:
         :return: Returns the result object.
                  If the method is called asynchronously,
                  returns the request thread.
-        :rtype: tuple(CustomersActivitiesListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        :rtype: tuple(CustomersActivityListResponseBody, status_code(int), headers(HTTPHeaderDict))
         """
 
         _params = locals()
@@ -882,13 +886,13 @@ class CustomersApi:
             'customer_id',
             'limit',
             'order',
-            'starting_after',
             'starting_after_id',
-            'campaign_type',
-            'campaign_id',
-            'product_id',
             'start_date',
-            'end_date'
+            'end_date',
+            'campaign_id',
+            'campaign_type',
+            'category',
+            'type'
         ]
         _all_params.extend(
             [
@@ -907,7 +911,7 @@ class CustomersApi:
             if _key not in _all_params:
                 raise ApiTypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method list_customer_activities" % _key
+                    " to method list_customer_activity" % _key
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -928,23 +932,8 @@ class CustomersApi:
         if _params.get('order') is not None:  # noqa: E501
             _query_params.append(('order', _params['order'].value))
 
-        if _params.get('starting_after') is not None:  # noqa: E501
-            if isinstance(_params['starting_after'], datetime):
-                _query_params.append(('starting_after', _params['starting_after'].strftime(self.api_client.configuration.datetime_format)))
-            else:
-                _query_params.append(('starting_after', _params['starting_after']))
-
         if _params.get('starting_after_id') is not None:  # noqa: E501
             _query_params.append(('starting_after_id', _params['starting_after_id']))
-
-        if _params.get('campaign_type') is not None:  # noqa: E501
-            _query_params.append(('campaign_type', _params['campaign_type'].value))
-
-        if _params.get('campaign_id') is not None:  # noqa: E501
-            _query_params.append(('campaign_id', _params['campaign_id']))
-
-        if _params.get('product_id') is not None:  # noqa: E501
-            _query_params.append(('product_id', _params['product_id']))
 
         if _params.get('start_date') is not None:  # noqa: E501
             if isinstance(_params['start_date'], datetime):
@@ -957,6 +946,18 @@ class CustomersApi:
                 _query_params.append(('end_date', _params['end_date'].strftime(self.api_client.configuration.datetime_format)))
             else:
                 _query_params.append(('end_date', _params['end_date']))
+
+        if _params.get('campaign_id') is not None:  # noqa: E501
+            _query_params.append(('campaign_id', _params['campaign_id']))
+
+        if _params.get('campaign_type') is not None:  # noqa: E501
+            _query_params.append(('campaign_type', _params['campaign_type'].value))
+
+        if _params.get('category') is not None:  # noqa: E501
+            _query_params.append(('category', _params['category'].value))
+
+        if _params.get('type') is not None:  # noqa: E501
+            _query_params.append(('type', _params['type']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -973,11 +974,183 @@ class CustomersApi:
         _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
 
         _response_types_map = {
-            '200': "CustomersActivitiesListResponseBody",
+            '200': "CustomersActivityListResponseBody",
         }
 
         return self.api_client.call_api(
-            '/v1/customers/{customerId}/activities', 'GET',
+            '/v1/customers/{customerId}/activity', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_customer_redeemables(self, customer_id : Annotated[StrictStr, Field(..., description="Unique identifier of a customer represented by an internal customer ID or customer source ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderListRedeemables], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, filters : Annotated[Optional[ParameterFiltersListCustomerRedeemables], Field(description="Filters for listing customer redeemables.")] = None, **kwargs) -> CustomersRedeemablesListResponseBody:  # noqa: E501
+        """List Customer's Redeemables  # noqa: E501
+
+        Retrieves all the redeemables that have been assigned to the customer. To use this endpoint, you must have the following permissions: - Read Customers (customers.details.read)  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_customer_redeemables(customer_id, limit, order, starting_after_id, filters, async_req=True)
+        >>> result = thread.get()
+
+        :param customer_id: Unique identifier of a customer represented by an internal customer ID or customer source ID. (required)
+        :type customer_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListRedeemables
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
+        :type starting_after_id: str
+        :param filters: Filters for listing customer redeemables.
+        :type filters: ParameterFiltersListCustomerRedeemables
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: CustomersRedeemablesListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_customer_redeemables_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_customer_redeemables_with_http_info(customer_id, limit, order, starting_after_id, filters, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_customer_redeemables_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="Unique identifier of a customer represented by an internal customer ID or customer source ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderListRedeemables], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, filters : Annotated[Optional[ParameterFiltersListCustomerRedeemables], Field(description="Filters for listing customer redeemables.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Customer's Redeemables  # noqa: E501
+
+        Retrieves all the redeemables that have been assigned to the customer. To use this endpoint, you must have the following permissions: - Read Customers (customers.details.read)  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_customer_redeemables_with_http_info(customer_id, limit, order, starting_after_id, filters, async_req=True)
+        >>> result = thread.get()
+
+        :param customer_id: Unique identifier of a customer represented by an internal customer ID or customer source ID. (required)
+        :type customer_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListRedeemables
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
+        :type starting_after_id: str
+        :param filters: Filters for listing customer redeemables.
+        :type filters: ParameterFiltersListCustomerRedeemables
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(CustomersRedeemablesListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'customer_id',
+            'limit',
+            'order',
+            'starting_after_id',
+            'filters'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_customer_redeemables" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['customer_id']:
+            _path_params['customerId'] = _params['customer_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        if _params.get('starting_after_id') is not None:  # noqa: E501
+            _query_params.append(('starting_after_id', _params['starting_after_id']))
+
+        if _params.get('filters') is not None:  # noqa: E501
+            _query_params.append(('filters', _params['filters']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "CustomersRedeemablesListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/customers/{customerId}/redeemables', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -997,7 +1170,7 @@ class CustomersApi:
     def list_customer_segments(self, customer_id : Annotated[StrictStr, Field(..., description="Unique identifier of a customer represented by an internal customer ID or customer source ID.")], **kwargs) -> CustomersSegmentsListResponseBody:  # noqa: E501
         """List Customer's Segments  # noqa: E501
 
-        Returns the list of segments IDs to which the customer belongs to.    If you pass a `customerId` which is not stored and recognized by Voucherify as an existing customer in the system, the response will generate a list of segments that the customer would potentialy qualify for if they were to become a customer tracked in the system.  # noqa: E501
+        Returns the list of segments IDs to which the customer belongs to.   If you pass a customerId which is not stored and recognized by Voucherify as an existing customer in the system, the response will generate a list of segments that the customer would potentialy qualify for if they were to become a customer tracked in the system.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1027,7 +1200,7 @@ class CustomersApi:
     def list_customer_segments_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="Unique identifier of a customer represented by an internal customer ID or customer source ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """List Customer's Segments  # noqa: E501
 
-        Returns the list of segments IDs to which the customer belongs to.    If you pass a `customerId` which is not stored and recognized by Voucherify as an existing customer in the system, the response will generate a list of segments that the customer would potentialy qualify for if they were to become a customer tracked in the system.  # noqa: E501
+        Returns the list of segments IDs to which the customer belongs to.   If you pass a customerId which is not stored and recognized by Voucherify as an existing customer in the system, the response will generate a list of segments that the customer would potentialy qualify for if they were to become a customer tracked in the system.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1134,7 +1307,7 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_customers(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, email : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that have this specific email address.")] = None, city : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that are located in the specified city.")] = None, name : Annotated[Optional[StrictStr], Field(description="Filter customers by the name property.")] = None, segment_id : Annotated[Optional[StrictStr], Field(description="Filter customers by the segment id.")] = None, created_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, created_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, updated_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, updated_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, order : Annotated[Optional[ParameterOrderListCustomers], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="A cursor for use in pagination. This is a date-time value that defines your place in the list based on `created_at` property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.  <!-- title: Options --> | **Option** | **Format** | **Sorting** | |:---|:---|:---| | Return customers **before** a specific creation date  | - set `starting_after` parameter to the breakpoint date | Sorting order is **descending**; the most recent dates first and least recent dates last. | | Return customers **after** a specific create or update date | - include the `order` parameter set to `created_at` or `updated_at`<br>- set `starting_after` to the breakpoint date | Sorting order is **ascending**; the least recent dates first and the most recent dates last. | ")] = None, **kwargs) -> CustomersListResponseBody:  # noqa: E501
+    def list_customers(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, email : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that have this specific email address.")] = None, city : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that are located in the specified city.")] = None, name : Annotated[Optional[StrictStr], Field(description="Filter customers by the name property.")] = None, segment_id : Annotated[Optional[StrictStr], Field(description="Filter customers by the segment id.")] = None, created_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, created_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, updated_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, updated_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, order : Annotated[Optional[ParameterOrderListCustomers], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="A cursor for pagination. This is a date-time value that defines your place in the list based on created_at property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at 2020-05-24T13:43:09.024Z, your subsequent call can include starting_after 2020-05-24T13:43:09.024Z in order to fetch the next page of the list.  ")] = None, **kwargs) -> CustomersListResponseBody:  # noqa: E501
         """List Customers  # noqa: E501
 
         Returns a list of customers.  # noqa: E501
@@ -1144,9 +1317,9 @@ class CustomersApi:
         >>> thread = api.list_customers(limit, page, email, city, name, segment_id, created_at_before, created_at_after, updated_at_before, updated_at_after, order, starting_after, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param email: Limit the customers to the ones that have this specific email address.
         :type email: str
@@ -1164,9 +1337,9 @@ class CustomersApi:
         :type updated_at_before: datetime
         :param updated_at_after: Filter customers by date customer was updated last time.
         :type updated_at_after: datetime
-        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListCustomers
-        :param starting_after: A cursor for use in pagination. This is a date-time value that defines your place in the list based on `created_at` property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.  <!-- title: Options --> | **Option** | **Format** | **Sorting** | |:---|:---|:---| | Return customers **before** a specific creation date  | - set `starting_after` parameter to the breakpoint date | Sorting order is **descending**; the most recent dates first and least recent dates last. | | Return customers **after** a specific create or update date | - include the `order` parameter set to `created_at` or `updated_at`<br>- set `starting_after` to the breakpoint date | Sorting order is **ascending**; the least recent dates first and the most recent dates last. | 
+        :param starting_after: A cursor for pagination. This is a date-time value that defines your place in the list based on created_at property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at 2020-05-24T13:43:09.024Z, your subsequent call can include starting_after 2020-05-24T13:43:09.024Z in order to fetch the next page of the list.  
         :type starting_after: datetime
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1186,7 +1359,7 @@ class CustomersApi:
         return self.list_customers_with_http_info(limit, page, email, city, name, segment_id, created_at_before, created_at_after, updated_at_before, updated_at_after, order, starting_after, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_customers_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, email : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that have this specific email address.")] = None, city : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that are located in the specified city.")] = None, name : Annotated[Optional[StrictStr], Field(description="Filter customers by the name property.")] = None, segment_id : Annotated[Optional[StrictStr], Field(description="Filter customers by the segment id.")] = None, created_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, created_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, updated_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, updated_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, order : Annotated[Optional[ParameterOrderListCustomers], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="A cursor for use in pagination. This is a date-time value that defines your place in the list based on `created_at` property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.  <!-- title: Options --> | **Option** | **Format** | **Sorting** | |:---|:---|:---| | Return customers **before** a specific creation date  | - set `starting_after` parameter to the breakpoint date | Sorting order is **descending**; the most recent dates first and least recent dates last. | | Return customers **after** a specific create or update date | - include the `order` parameter set to `created_at` or `updated_at`<br>- set `starting_after` to the breakpoint date | Sorting order is **ascending**; the least recent dates first and the most recent dates last. | ")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_customers_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, email : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that have this specific email address.")] = None, city : Annotated[Optional[StrictStr], Field(description="Limit the customers to the ones that are located in the specified city.")] = None, name : Annotated[Optional[StrictStr], Field(description="Filter customers by the name property.")] = None, segment_id : Annotated[Optional[StrictStr], Field(description="Filter customers by the segment id.")] = None, created_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, created_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was created.")] = None, updated_at_before : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, updated_at_after : Annotated[Optional[datetime], Field(description="Filter customers by date customer was updated last time.")] = None, order : Annotated[Optional[ParameterOrderListCustomers], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="A cursor for pagination. This is a date-time value that defines your place in the list based on created_at property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at 2020-05-24T13:43:09.024Z, your subsequent call can include starting_after 2020-05-24T13:43:09.024Z in order to fetch the next page of the list.  ")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Customers  # noqa: E501
 
         Returns a list of customers.  # noqa: E501
@@ -1196,9 +1369,9 @@ class CustomersApi:
         >>> thread = api.list_customers_with_http_info(limit, page, email, city, name, segment_id, created_at_before, created_at_after, updated_at_before, updated_at_after, order, starting_after, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param email: Limit the customers to the ones that have this specific email address.
         :type email: str
@@ -1216,9 +1389,9 @@ class CustomersApi:
         :type updated_at_before: datetime
         :param updated_at_after: Filter customers by date customer was updated last time.
         :type updated_at_after: datetime
-        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListCustomers
-        :param starting_after: A cursor for use in pagination. This is a date-time value that defines your place in the list based on `created_at` property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.  <!-- title: Options --> | **Option** | **Format** | **Sorting** | |:---|:---|:---| | Return customers **before** a specific creation date  | - set `starting_after` parameter to the breakpoint date | Sorting order is **descending**; the most recent dates first and least recent dates last. | | Return customers **after** a specific create or update date | - include the `order` parameter set to `created_at` or `updated_at`<br>- set `starting_after` to the breakpoint date | Sorting order is **ascending**; the least recent dates first and the most recent dates last. | 
+        :param starting_after: A cursor for pagination. This is a date-time value that defines your place in the list based on created_at property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at 2020-05-24T13:43:09.024Z, your subsequent call can include starting_after 2020-05-24T13:43:09.024Z in order to fetch the next page of the list.  
         :type starting_after: datetime
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1377,7 +1550,7 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_customer(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], customers_update_request_body : Annotated[Optional[CustomersUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> CustomersUpdateResponseBody:  # noqa: E501
+    def update_customer(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], customers_update_request_body : Annotated[Optional[CustomersUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> CustomersUpdateResponseBody:  # noqa: E501
         """Update Customer  # noqa: E501
 
         Updates the specified customer by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged.  # noqa: E501
@@ -1387,7 +1560,7 @@ class CustomersApi:
         >>> thread = api.update_customer(customer_id, customers_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param customers_update_request_body: Specify the parameters to be updated.
         :type customers_update_request_body: CustomersUpdateRequestBody
@@ -1409,7 +1582,7 @@ class CustomersApi:
         return self.update_customer_with_http_info(customer_id, customers_update_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_customer_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer's `id` or `source_id`.")], customers_update_request_body : Annotated[Optional[CustomersUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def update_customer_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customers id or source_id.")], customers_update_request_body : Annotated[Optional[CustomersUpdateRequestBody], Field(description="Specify the parameters to be updated.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Update Customer  # noqa: E501
 
         Updates the specified customer by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged.  # noqa: E501
@@ -1419,7 +1592,7 @@ class CustomersApi:
         >>> thread = api.update_customer_with_http_info(customer_id, customers_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param customer_id: A Voucherify customer's `id` or `source_id`. (required)
+        :param customer_id: A Voucherify customers id or source_id. (required)
         :type customer_id: str
         :param customers_update_request_body: Specify the parameters to be updated.
         :type customers_update_request_body: CustomersUpdateRequestBody
@@ -1532,10 +1705,10 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_customers_consents(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify unique customer identifier or source ID.")], body : Annotated[Optional[Dict[str, Any]], Field(description="Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```")] = None, **kwargs) -> None:  # noqa: E501
-        """Update Customer's consents  # noqa: E501
+    def update_customers_consents(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify unique customer identifier or source ID.")], body : Annotated[Optional[Dict[str, Any]], Field(description="Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication: ")] = None, **kwargs) -> None:  # noqa: E501
+        """(Deprecated) Update Customer's consents [Deprecated]  # noqa: E501
 
-        Update marketing permissions for the specified customer.  # noqa: E501
+        Update marketing permissions for the specified customer. ❗️ Deprecated  This endpoint is deprecated. The feature of managing consents will be soon removed from Voucherify, including this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1544,7 +1717,7 @@ class CustomersApi:
 
         :param customer_id: A Voucherify unique customer identifier or source ID. (required)
         :type customer_id: str
-        :param body: Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```
+        :param body: Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication: 
         :type body: object
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1564,10 +1737,10 @@ class CustomersApi:
         return self.update_customers_consents_with_http_info(customer_id, body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_customers_consents_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify unique customer identifier or source ID.")], body : Annotated[Optional[Dict[str, Any]], Field(description="Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Customer's consents  # noqa: E501
+    def update_customers_consents_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify unique customer identifier or source ID.")], body : Annotated[Optional[Dict[str, Any]], Field(description="Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication: ")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """(Deprecated) Update Customer's consents [Deprecated]  # noqa: E501
 
-        Update marketing permissions for the specified customer.  # noqa: E501
+        Update marketing permissions for the specified customer. ❗️ Deprecated  This endpoint is deprecated. The feature of managing consents will be soon removed from Voucherify, including this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1576,7 +1749,7 @@ class CustomersApi:
 
         :param customer_id: A Voucherify unique customer identifier or source ID. (required)
         :type customer_id: str
-        :param body: Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```
+        :param body: Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication: 
         :type body: object
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1602,6 +1775,8 @@ class CustomersApi:
                  returns the request thread.
         :rtype: None
         """
+
+        warnings.warn("PUT /v1/customers/{customerId}/consents is deprecated.", DeprecationWarning)
 
         _params = locals()
 
@@ -1681,166 +1856,17 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_customers_consents_client_side(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer identifier or `source_id`")], body : Annotated[Optional[Dict[str, Any]], Field(description="Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```")] = None, **kwargs) -> None:  # noqa: E501
-        """Update Customer's consents (client-side)  # noqa: E501
+    def update_customers_in_bulk(self, customers_update_in_bulk_request_body : Annotated[Optional[conlist(CustomersUpdateInBulkRequestBody)], Field(description="List the customer fields to be updated in each customer object.")] = None, **kwargs) -> CustomersUpdateInBulkResponseBody:  # noqa: E501
+        """Update Customers in Bulk  # noqa: E501
 
-        Update marketing permissions for the specified customer.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.update_customers_consents_client_side(customer_id, body, async_req=True)
-        >>> result = thread.get()
-
-        :param customer_id: A Voucherify customer identifier or `source_id` (required)
-        :type customer_id: str
-        :param body: Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```
-        :type body: object
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _request_timeout: timeout setting for this request.
-               If one number provided, it will be total request
-               timeout. It can also be a pair (tuple) of
-               (connection, read) timeouts.
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: None
-        """
-        kwargs['_return_http_data_only'] = True
-        if '_preload_content' in kwargs:
-            message = "Error! Please call the update_customers_consents_client_side_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
-            raise ValueError(message)
-        return self.update_customers_consents_client_side_with_http_info(customer_id, body, **kwargs)  # noqa: E501
-
-    @validate_arguments
-    def update_customers_consents_client_side_with_http_info(self, customer_id : Annotated[StrictStr, Field(..., description="A Voucherify customer identifier or `source_id`")], body : Annotated[Optional[Dict[str, Any]], Field(description="Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Customer's consents (client-side)  # noqa: E501
-
-        Update marketing permissions for the specified customer.  # noqa: E501
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-
-        >>> thread = api.update_customers_consents_client_side_with_http_info(customer_id, body, async_req=True)
-        >>> result = thread.get()
-
-        :param customer_id: A Voucherify customer identifier or `source_id` (required)
-        :type customer_id: str
-        :param body: Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ```
-        :type body: object
-        :param async_req: Whether to execute the request asynchronously.
-        :type async_req: bool, optional
-        :param _preload_content: if False, the ApiResponse.data will
-                                 be set to none and raw_data will store the
-                                 HTTP response body without reading/decoding.
-                                 Default is True.
-        :type _preload_content: bool, optional
-        :param _return_http_data_only: response data instead of ApiResponse
-                                       object with status code, headers, etc
-        :type _return_http_data_only: bool, optional
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the authentication
-                              in the spec for a single request.
-        :type _request_auth: dict, optional
-        :type _content_type: string, optional: force content-type for the request
-        :return: Returns the result object.
-                 If the method is called asynchronously,
-                 returns the request thread.
-        :rtype: None
-        """
-
-        _params = locals()
-
-        _all_params = [
-            'customer_id',
-            'body'
-        ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
-        # validate the arguments
-        for _key, _val in _params['kwargs'].items():
-            if _key not in _all_params:
-                raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method update_customers_consents_client_side" % _key
-                )
-            _params[_key] = _val
-        del _params['kwargs']
-
-        _collection_formats = {}
-
-        # process the path parameters
-        _path_params = {}
-        if _params['customer_id']:
-            _path_params['customerId'] = _params['customer_id']
-
-
-        # process the query parameters
-        _query_params = []
-        # process the header parameters
-        _header_params = dict(_params.get('_headers', {}))
-        # process the form parameters
-        _form_params = []
-        _files = {}
-        # process the body parameter
-        _body_params = None
-        if _params['body'] is not None:
-            _body_params = _params['body']
-
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
-
-        # authentication setting
-        _auth_settings = ['X-Client-Application-Id', 'X-Client-Token']  # noqa: E501
-
-        _response_types_map = {}
-
-        return self.api_client.call_api(
-            '/client/v1/customers/{customerId}/consents', 'PUT',
-            _path_params,
-            _query_params,
-            _header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            response_types_map=_response_types_map,
-            auth_settings=_auth_settings,
-            async_req=_params.get('async_req'),
-            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
-            _preload_content=_params.get('_preload_content', True),
-            _request_timeout=_params.get('_request_timeout'),
-            collection_formats=_collection_formats,
-            _request_auth=_params.get('_request_auth'))
-
-    @validate_arguments
-    def update_customers_in_bulk(self, customers_update_in_bulk_request_body : Annotated[Optional[conlist(CustomersUpdateInBulkRequestBody)], Field(description="Specify the customer fields that you would like to update in each customer object.")] = None, **kwargs) -> CustomersUpdateInBulkResponseBody:  # noqa: E501
-        """Update Customers in bulk  # noqa: E501
-
-        Update several customers in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier.    If a requested customer object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Updates customers in one asynchronous operation. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a customer object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_customers_in_bulk(customers_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param customers_update_in_bulk_request_body: Specify the customer fields that you would like to update in each customer object.
+        :param customers_update_in_bulk_request_body: List the customer fields to be updated in each customer object.
         :type customers_update_in_bulk_request_body: List[CustomersUpdateInBulkRequestBody]
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1860,17 +1886,17 @@ class CustomersApi:
         return self.update_customers_in_bulk_with_http_info(customers_update_in_bulk_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_customers_in_bulk_with_http_info(self, customers_update_in_bulk_request_body : Annotated[Optional[conlist(CustomersUpdateInBulkRequestBody)], Field(description="Specify the customer fields that you would like to update in each customer object.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Customers in bulk  # noqa: E501
+    def update_customers_in_bulk_with_http_info(self, customers_update_in_bulk_request_body : Annotated[Optional[conlist(CustomersUpdateInBulkRequestBody)], Field(description="List the customer fields to be updated in each customer object.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Customers in Bulk  # noqa: E501
 
-        Update several customers in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier.    If a requested customer object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Updates customers in one asynchronous operation. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a customer object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_customers_in_bulk_with_http_info(customers_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param customers_update_in_bulk_request_body: Specify the customer fields that you would like to update in each customer object.
+        :param customers_update_in_bulk_request_body: List the customer fields to be updated in each customer object.
         :type customers_update_in_bulk_request_body: List[CustomersUpdateInBulkRequestBody]
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1977,17 +2003,17 @@ class CustomersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_customers_metadata_in_bulk(self, customers_metadata_update_in_bulk_request_body : Annotated[Optional[CustomersMetadataUpdateInBulkRequestBody], Field(description="List the `source_ids` of the customer's you would like to update along with the metadata key value pairs.")] = None, **kwargs) -> CustomersMetadataUpdateInBulkResponseBody:  # noqa: E501
-        """Update Customers' Metadata in bulk  # noqa: E501
+    def update_customers_metadata_in_bulk(self, customers_metadata_update_in_bulk_request_body : Annotated[Optional[CustomersMetadataUpdateInBulkRequestBody], Field(description="List the source_ids of the customers you would like to update with the metadata key/value pairs.")] = None, **kwargs) -> CustomersMetadataUpdateInBulkResponseBody:  # noqa: E501
+        """Update Customers' Metadata in Bulk  # noqa: E501
 
-        Update several customers metadata properties in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier.    If a requested customer object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Updates metadata parameters for a list of customers. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_customers_metadata_in_bulk(customers_metadata_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param customers_metadata_update_in_bulk_request_body: List the `source_ids` of the customer's you would like to update along with the metadata key value pairs.
+        :param customers_metadata_update_in_bulk_request_body: List the source_ids of the customers you would like to update with the metadata key/value pairs.
         :type customers_metadata_update_in_bulk_request_body: CustomersMetadataUpdateInBulkRequestBody
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2007,17 +2033,17 @@ class CustomersApi:
         return self.update_customers_metadata_in_bulk_with_http_info(customers_metadata_update_in_bulk_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_customers_metadata_in_bulk_with_http_info(self, customers_metadata_update_in_bulk_request_body : Annotated[Optional[CustomersMetadataUpdateInBulkRequestBody], Field(description="List the `source_ids` of the customer's you would like to update along with the metadata key value pairs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
-        """Update Customers' Metadata in bulk  # noqa: E501
+    def update_customers_metadata_in_bulk_with_http_info(self, customers_metadata_update_in_bulk_request_body : Annotated[Optional[CustomersMetadataUpdateInBulkRequestBody], Field(description="List the source_ids of the customers you would like to update with the metadata key/value pairs.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Customers' Metadata in Bulk  # noqa: E501
 
-        Update several customers metadata properties in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier.    If a requested customer object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Updates metadata parameters for a list of customers. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.update_customers_metadata_in_bulk_with_http_info(customers_metadata_update_in_bulk_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param customers_metadata_update_in_bulk_request_body: List the `source_ids` of the customer's you would like to update along with the metadata key value pairs.
+        :param customers_metadata_update_in_bulk_request_body: List the source_ids of the customers you would like to update with the metadata key/value pairs.
         :type customers_metadata_update_in_bulk_request_body: CustomersMetadataUpdateInBulkRequestBody
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

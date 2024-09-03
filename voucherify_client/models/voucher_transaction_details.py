@@ -116,6 +116,61 @@ class VoucherTransactionDetails(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of destination_voucher
         if self.destination_voucher:
             _dict['destination_voucher'] = self.destination_voucher.to_dict()
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if order (nullable) is None
+        # and __fields_set__ contains the field
+        if self.order is None and "order" in self.__fields_set__:
+            _dict['order'] = None
+
+        # set to None if event (nullable) is None
+        # and __fields_set__ contains the field
+        if self.event is None and "event" in self.__fields_set__:
+            _dict['event'] = None
+
+        # set to None if earning_rule (nullable) is None
+        # and __fields_set__ contains the field
+        if self.earning_rule is None and "earning_rule" in self.__fields_set__:
+            _dict['earning_rule'] = None
+
+        # set to None if segment (nullable) is None
+        # and __fields_set__ contains the field
+        if self.segment is None and "segment" in self.__fields_set__:
+            _dict['segment'] = None
+
+        # set to None if loyalty_tier (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty_tier is None and "loyalty_tier" in self.__fields_set__:
+            _dict['loyalty_tier'] = None
+
+        # set to None if redemption (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
+        # set to None if rollback (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rollback is None and "rollback" in self.__fields_set__:
+            _dict['rollback'] = None
+
+        # set to None if custom_event (nullable) is None
+        # and __fields_set__ contains the field
+        if self.custom_event is None and "custom_event" in self.__fields_set__:
+            _dict['custom_event'] = None
+
+        # set to None if event_schema (nullable) is None
+        # and __fields_set__ contains the field
+        if self.event_schema is None and "event_schema" in self.__fields_set__:
+            _dict['event_schema'] = None
+
+        # set to None if reward (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reward is None and "reward" in self.__fields_set__:
+            _dict['reward'] = None
+
         return _dict
 
     @classmethod

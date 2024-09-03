@@ -108,11 +108,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **add_vouchers_to_campaign**
-> CampaignsVouchersCreateResponseBody add_vouchers_to_campaign(campaign_id, vouchers_count=vouchers_count, campaigns_vouchers_create_in_bulk_request_body=campaigns_vouchers_create_in_bulk_request_body)
+> CampaignsVouchersCreateCombinedResponseBody add_vouchers_to_campaign(campaign_id, vouchers_count=vouchers_count, campaigns_vouchers_create_in_bulk_request_body=campaigns_vouchers_create_in_bulk_request_body)
 
 Add Vouchers to Campaign
 
-This method gives the possibility to push new vouchers to an existing campaign. New vouchers will inherit properties from the campaign profile. However, it is possible to overwrite some of them in the request body. If you provide an optional `code_config` parameter with a voucher code configuration, then it will be used to generate new voucher codes. Otherwise, the voucher code configuration from the campaign will be used.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+This method gives the possibility to push new vouchers to an existing campaign. New vouchers will inherit properties from the campaign profile. However, it is possible to overwrite some of them in the request body. If you provide an optional code_config parameter with a voucher code configuration, then it will be used to generate new voucher codes. Otherwise, the voucher code configuration from the campaign will be used. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.
 
 ### Example
 
@@ -122,8 +122,8 @@ This method gives the possibility to push new vouchers to an existing campaign. 
 import time
 import os
 import voucherify_client
+from voucherify_client.models.campaigns_vouchers_create_combined_response_body import CampaignsVouchersCreateCombinedResponseBody
 from voucherify_client.models.campaigns_vouchers_create_in_bulk_request_body import CampaignsVouchersCreateInBulkRequestBody
-from voucherify_client.models.campaigns_vouchers_create_response_body import CampaignsVouchersCreateResponseBody
 from voucherify_client.rest import ApiException
 from pprint import pprint
 
@@ -156,7 +156,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
     api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the campaign to which voucher(s) will be added. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
     vouchers_count = 56 # int | Number of vouchers that should be added. (optional)
-    campaigns_vouchers_create_in_bulk_request_body = {"start_date":"2022-09-24T00:00:00Z","expiration_date":"2022-09-25T23:59:59Z","active":false,"redemption":{"quantity":null},"code_config":{"charset":"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ","length":8,"prefix":"Add-","pattern":null,"postfix":"-API"},"additional_info":"Voucher added using API","metadata":{"Season":"Fall"}} # CampaignsVouchersCreateInBulkRequestBody | Specify the voucher parameters that you would like to overwrite. (optional)
+    campaigns_vouchers_create_in_bulk_request_body = voucherify_client.CampaignsVouchersCreateInBulkRequestBody() # CampaignsVouchersCreateInBulkRequestBody | Specify the voucher parameters that you would like to overwrite. (optional)
 
     try:
         # Add Vouchers to Campaign
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CampaignsVouchersCreateResponseBody**](CampaignsVouchersCreateResponseBody.md)
+[**CampaignsVouchersCreateCombinedResponseBody**](CampaignsVouchersCreateCombinedResponseBody.md)
 
 ### Authorization
 
@@ -193,8 +193,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Returns a voucher object if the call succeeded for a voucher count of 1. |  -  |
-**202** | Returns an &#x60;async_action_id&#x60; if the request was made to create more than 1 voucher. |  -  |
+**200** | Returns a voucher object if the call succeeded for a voucher count of 1. and Returns an &#x60;async_action_id&#x60; if the request was made to create more than 1 voucher. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -203,7 +202,7 @@ Name | Type | Description  | Notes
 
 Create Campaign
 
-Method to create a batch of vouchers aggregated in one campaign. You can choose a variety of voucher types and define a unique pattern for generating codes.   <!-- theme: info -->  > 📘 Global uniqueness > > All campaign codes are unique across the whole project. Voucherify will not allow you to generate 2 campaigns with the same coupon code.   <!-- theme: warning --> > 🚧 Code generation status > > This is an asynchronous action; you can't read or modify a newly created campaign until the code generation is completed. See the `creation_status` field in the <!-- [campaign object](OpenAPI.json/components/schemas/Campaign) -->[campaign object](ref:get-campaign) description.
+Method to create a batch of vouchers aggregated in one campaign. You can choose a variety of voucher types and define a unique pattern for generating codes.    📘 Global uniqueness  All campaign codes are unique across the whole project. Voucherify will not allow you to generate 2 campaigns with the same coupon code.    🚧 Code generation status  This is an asynchronous action; you cant read or modify a newly created campaign until the code generation is completed. See the creation_status field in the campaign object description.
 
 ### Example
 
@@ -289,7 +288,7 @@ Name | Type | Description  | Notes
 
 Delete Campaign
 
-Permanently deletes a campaign and all related vouchers. This action cannot be undone. Also, this method immediately removes any redemptions on the voucher.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Deletes a campaign and all related vouchers. This action cannot be undone. Also, this method immediately removes any redemptions on the voucher. If the force parameter is set to false or not set at all, the campaign and all related vouchers will be moved to the bin. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.
 
 ### Example
 
@@ -331,7 +330,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
-    force = True # bool | If this flag is set to `true`, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with exactly the same name. (optional)
+    force = True # bool | If this flag is set to true, the campaign and related vouchers will be removed permanently. If it is set to false or not set at all, the campaign and related vouchers will be moved to the bin. Going forward, the user will be able to create the next campaign with exactly the same name. (optional)
 
     try:
         # Delete Campaign
@@ -349,7 +348,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **campaign_id** | **str**| You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value. | 
- **force** | **bool**| If this flag is set to &#x60;true&#x60;, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with exactly the same name. | [optional] 
+ **force** | **bool**| If this flag is set to true, the campaign and related vouchers will be removed permanently. If it is set to false or not set at all, the campaign and related vouchers will be moved to the bin. Going forward, the user will be able to create the next campaign with exactly the same name. | [optional] 
 
 ### Return type
 
@@ -372,11 +371,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **disable_campaign**
-> CampaignsDisableResponseBody disable_campaign(campaign_id)
+> object disable_campaign(campaign_id)
 
 Disable Campaign
 
-There are various times when you'll want to manage a campaign's accessibility. This can be done by two API methods for managing the campaign state - *enable* and *disable*.    Sets campaign state to **inactive**. The vouchers in this campaign can no longer be redeemed.
+There are various times when youll want to manage a campaigns accessibility. This can be done by two API methods for managing the campaign state - *enable* and *disable*.   Sets campaign state to **inactive**. The vouchers in this campaign can no longer be redeemed.
 
 ### Example
 
@@ -386,7 +385,6 @@ There are various times when you'll want to manage a campaign's accessibility. T
 import time
 import os
 import voucherify_client
-from voucherify_client.models.campaigns_disable_response_body import CampaignsDisableResponseBody
 from voucherify_client.rest import ApiException
 from pprint import pprint
 
@@ -438,7 +436,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CampaignsDisableResponseBody**](CampaignsDisableResponseBody.md)
+**object**
 
 ### Authorization
 
@@ -457,11 +455,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **enable_campaign**
-> CampaignsEnableResponseBody enable_campaign(campaign_id)
+> object enable_campaign(campaign_id)
 
 Enable Campaign
 
-There are various times when you'll want to manage a campaign's accessibility. This can be done by two API methods for managing the campaign state - *enable* and *disable*.    Sets campaign state to **active**. The vouchers in this campaign can be redeemed - only if the redemption occurs after the start date of the campaign and voucher and the voucher and campaign are not expired.
+There are various times when youll want to manage a campaigns accessibility. This can be done by two API methods for managing the campaign state - *enable* and *disable*.   Sets campaign state to **active**. The vouchers in this campaign can be redeemed - only if the redemption occurs after the start date of the campaign and voucher and the voucher and campaign are not expired.
 
 ### Example
 
@@ -471,7 +469,6 @@ There are various times when you'll want to manage a campaign's accessibility. T
 import time
 import os
 import voucherify_client
-from voucherify_client.models.campaigns_enable_response_body import CampaignsEnableResponseBody
 from voucherify_client.rest import ApiException
 from pprint import pprint
 
@@ -523,7 +520,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CampaignsEnableResponseBody**](CampaignsEnableResponseBody.md)
+**object**
 
 ### Authorization
 
@@ -631,7 +628,7 @@ Name | Type | Description  | Notes
 
 Import Vouchers to Campaign
 
-Imports vouchers to an **existing** campaign.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Imports vouchers to an **existing** campaign. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.
 
 ### Example
 
@@ -673,8 +670,8 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CampaignsApi(api_client)
-    campaign_id = 'campaign_id_example' # str | The ID of an existing campaign to which you're importing the codes. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
-    campaigns_import_voucher_item = [{"code":"CODE7","category":"First","redemption":{"quantity":1},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true},{"code":"CODE8","category":"Second","redemption":{"quantity":18},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true},{"code":"CODE9","category_id":"cat_0bb343dee3cdb5ec0c","redemption":{"quantity":4},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true}] # List[CampaignsImportVoucherItem] | Discount type, expiration date and the remaining attributes will be taken from the <!-- [Campaign](OpenAPI.json/components/schemas/Campaign) -->[Campaign](ref:get-campaign) settings. (optional)
+    campaign_id = 'campaign_id_example' # str | The ID of an existing campaign to which youre importing the codes. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value.
+    campaigns_import_voucher_item = [{"code":"CODE7","category":"First","redemption":{"quantity":1},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true},{"code":"CODE8","category":"Second","redemption":{"quantity":18},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true},{"code":"CODE9","category_id":"cat_0bb343dee3cdb5ec0c","redemption":{"quantity":4},"metadata":{"season":"Fall"},"additional_info":"secret-code1","active":true}] # List[CampaignsImportVoucherItem] | Discount type, expiration date and the remaining attributes will be taken from the Campaign settings. (optional)
 
     try:
         # Import Vouchers to Campaign
@@ -691,8 +688,8 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **campaign_id** | **str**| The ID of an existing campaign to which you&#39;re importing the codes. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value. | 
- **campaigns_import_voucher_item** | [**List[CampaignsImportVoucherItem]**](CampaignsImportVoucherItem.md)| Discount type, expiration date and the remaining attributes will be taken from the &lt;!-- [Campaign](OpenAPI.json/components/schemas/Campaign) --&gt;[Campaign](ref:get-campaign) settings. | [optional] 
+ **campaign_id** | **str**| The ID of an existing campaign to which youre importing the codes. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value. | 
+ **campaigns_import_voucher_item** | [**List[CampaignsImportVoucherItem]**](CampaignsImportVoucherItem.md)| Discount type, expiration date and the remaining attributes will be taken from the Campaign settings. | [optional] 
 
 ### Return type
 
@@ -715,11 +712,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_vouchers_to_campaign_using_csv**
-> CampaignsImportCsvCreateResponseBody import_vouchers_to_campaign_using_csv(campaign_id, file)
+> CampaignsImportCsvCreateResponseBody import_vouchers_to_campaign_using_csv(campaign_id, file=file)
 
 Import Vouchers to Campaign by CSV
 
-Imports vouchers to an **existing** campaign.     The CSV file has to include headers in the first line.   Curl Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/campaigns/TEST-CAMPAIGN/importCSV \\   -F file=@/path/to/campaigns.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ```  You can import values for the following fields: `Code` (**required**), `Category`, `Active`. In a gift cards import, you can also include the current card balance using the `Gift Amount` header and the amount that was redeemed using the `Redeemed Amount` header. In a loyalty cards import, you can also include the current loyalty card score in points using the `Loyalty Points` header. Remaining CSV columns will be mapped to metadata properties.   Discount type, time limits, and validation rules will be taken from the <!-- [campaign object](OpenAPI.json/components/schemas/Campaign) -->[campaign object](ref:get-campaign) settings.    | **Active** | **Code** | **Loyalty Points** | **Gift Amount** | **Redeemed Amount** | **Redeemed Quantity** | **Category** | **Custom_metadata_property** | |---|---|---|---|---|---|---|---| | Use `true` or `false` to enable or disable the voucher; this flag can be used to turn off the ability to redeem a voucher even though it is within the campaign's start/end validity timeframe. | The unique voucher code. | The number of points to be added to the loyalty card. If you leave this undefined, then the initial number of points will be set according to the campaign settings.<br>Context: `LOYALTY_PROGRAM` | The initial gift card balance.<br>Context: `GIFT_VOUCHERS` | The amount that was redeemed from the available balance on a gift card. | The number of times the voucher has been redeemed. | A custom tag for the voucher to help you filter codes; you can either import the category name or a unique Voucherify-assigned category ID. | Any additional data that you would like to store for the given loyalty card as a Custom attribute. Remember to define the metadata schema in the Dashboard prior to importing codes. | |<!-- theme: info -->  > 📘 Active > > The CSV file is allowed in two versions; either with or without a column titled `Active`. It indicates whether the voucher is enabled after the import event.    This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Imports vouchers to an **existing** campaign.   The CSV file has to include headers in the first line.  This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.
 
 ### Example
 
@@ -761,11 +758,11 @@ with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CampaignsApi(api_client)
     campaign_id = 'campaign_id_example' # str | The campaign ID or name of the campaign being enabled. You can either pass the campaign ID, which was assigned by Voucherify or the name of the campaign as the path parameter value.
-    file = None # bytearray | File path.
+    file = None # bytearray | File path. (optional)
 
     try:
         # Import Vouchers to Campaign by CSV
-        api_response = api_instance.import_vouchers_to_campaign_using_csv(campaign_id, file)
+        api_response = api_instance.import_vouchers_to_campaign_using_csv(campaign_id, file=file)
         print("The response of CampaignsApi->import_vouchers_to_campaign_using_csv:\n")
         pprint(api_response)
     except Exception as e:
@@ -779,7 +776,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **campaign_id** | **str**| The campaign ID or name of the campaign being enabled. You can either pass the campaign ID, which was assigned by Voucherify or the name of the campaign as the path parameter value. | 
- **file** | **bytearray**| File path. | 
+ **file** | **bytearray**| File path. | [optional] 
 
 ### Return type
 
@@ -806,7 +803,7 @@ Name | Type | Description  | Notes
 
 List Campaigns
 
-Retrieve a list of campaigns in a project.   The campaigns are returned sorted by creation date, with the most recent campaigns appearing first.    When you get a list of campaigns, you can optionally specify query parameters to customize the amount of campaigns returned per call using `limit`, which page of campaigns to return using `page`, sort the campaigns using the `order` query parameter and filter the results by the `campaign_type`.  This method will return an error when trying to return a limit of more than 100 campaigns.
+Retrieve a list of campaigns in a project.  The campaigns are returned sorted by creation date, with the most recent campaigns appearing first.   When you get a list of campaigns, you can optionally specify query parameters to customize the amount of campaigns returned per call using limit, which page of campaigns to return using page, sort the campaigns using the order query parameter and filter the results by the campaign_type. This method will return an error when trying to return a limit of more than 100 campaigns.
 
 ### Example
 
@@ -850,11 +847,11 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CampaignsApi(api_client)
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
     campaign_type = voucherify_client.ParameterCampaignType() # ParameterCampaignType | This attribute allows filtering by campaign type. (optional)
-    expand = voucherify_client.ParameterExpandListCampaigns() # ParameterExpandListCampaigns | Include an expanded `categories` object in the response. (optional)
-    order = voucherify_client.ParameterOrderListCampaigns() # ParameterOrderListCampaigns | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    expand = voucherify_client.ParameterExpandListCampaigns() # ParameterExpandListCampaigns | Include an expanded categories object in the response. (optional)
+    order = voucherify_client.ParameterOrderListCampaigns() # ParameterOrderListCampaigns | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Campaigns
@@ -871,11 +868,11 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
  **campaign_type** | [**ParameterCampaignType**](.md)| This attribute allows filtering by campaign type. | [optional] 
- **expand** | [**ParameterExpandListCampaigns**](.md)| Include an expanded &#x60;categories&#x60; object in the response. | [optional] 
- **order** | [**ParameterOrderListCampaigns**](.md)| Sorts the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **expand** | [**ParameterExpandListCampaigns**](.md)| Include an expanded categories object in the response. | [optional] 
+ **order** | [**ParameterOrderListCampaigns**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
 
 ### Return type
 
@@ -902,7 +899,7 @@ Name | Type | Description  | Notes
 
 Update Campaign
 
-Updates the specified campaign by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged.   Fields other than the ones listed in the request body won't be modified. Even if provided, they will be silently skipped.    <!-- theme: warning --> > #### Vouchers will be affected > > This method will update vouchers aggregated in the campaign. It will affect all vouchers that are not published or redeemed yet.
+Updates the specified campaign by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged.  Fields other than the ones listed in the request body wont be modified. Even if provided, they will be silently skipped.     ## Vouchers will be affected  This method will update vouchers aggregated in the campaign. It will affect all vouchers that are not published or redeemed yet.
 
 ### Example
 

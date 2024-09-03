@@ -26,8 +26,8 @@ class Gift(BaseModel):
     """
     Contains current gift card balance information.  # noqa: E501
     """
-    amount: Union[StrictFloat, StrictInt] = Field(..., description="Total gift card income over the lifetime of the card. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
-    balance: Union[StrictFloat, StrictInt] = Field(..., description="Available funds. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
+    amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Total gift card income over the lifetime of the card. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
+    balance: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Available funds. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
     effect: Optional[StrictStr] = Field(None, description="Defines how the credits are applied to the customer's order.")
     __properties = ["amount", "balance", "effect"]
 
@@ -65,6 +65,21 @@ class Gift(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if effect (nullable) is None
+        # and __fields_set__ contains the field
+        if self.effect is None and "effect" in self.__fields_set__:
+            _dict['effect'] = None
+
         return _dict
 
     @classmethod

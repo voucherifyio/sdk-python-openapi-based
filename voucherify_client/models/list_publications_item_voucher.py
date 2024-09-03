@@ -28,9 +28,9 @@ class ListPublicationsItemVoucher(BaseModel):
     """
     ListPublicationsItemVoucher
     """
-    code: StrictStr = Field(..., description="Voucher code.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON.")
-    campaign: StrictStr = Field(..., description="Campaign name")
+    code: Optional[StrictStr] = Field(None, description="Voucher code.")
+    object: Optional[StrictStr] = Field('voucher', description="The type of the object represented by JSON.")
+    campaign: Optional[StrictStr] = Field(None, description="Campaign name")
     gift: Optional[Gift] = None
     loyalty_card: Optional[Dict[str, Any]] = Field(None, description="Defines the loyalty card details.")
     discount: Optional[Discount] = None
@@ -40,6 +40,9 @@ class ListPublicationsItemVoucher(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('voucher',):
             raise ValueError("must be one of enum values ('voucher')")
         return value
@@ -74,6 +77,31 @@ class ListPublicationsItemVoucher(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of discount
         if self.discount:
             _dict['discount'] = self.discount.to_dict()
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if campaign (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign is None and "campaign" in self.__fields_set__:
+            _dict['campaign'] = None
+
+        # set to None if loyalty_card (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty_card is None and "loyalty_card" in self.__fields_set__:
+            _dict['loyalty_card'] = None
+
+        # set to None if is_referral_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_referral_code is None and "is_referral_code" in self.__fields_set__:
+            _dict['is_referral_code'] = None
+
         return _dict
 
     @classmethod

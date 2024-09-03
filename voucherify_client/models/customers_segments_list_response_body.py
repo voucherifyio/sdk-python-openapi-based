@@ -19,18 +19,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
 from voucherify_client.models.simple_segment import SimpleSegment
 
 class CustomersSegmentsListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/customers/{customerId}/segments`.  # noqa: E501
+    Response body schema for **GET** `v1/customers/{customerId}/segments`.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about customer segments.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the JSON property that contains the array of segment IDs.")
-    data: conlist(SimpleSegment) = Field(..., description="A dictionary that contains an array of segment IDs and names.")
-    total: StrictInt = Field(..., description="Total number of segments the customer belongs to.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about customer segments.")
+    data_ref: Optional[StrictStr] = Field('data', description="Identifies the name of the JSON property that contains the array of segment IDs.")
+    data: Optional[conlist(SimpleSegment)] = Field(None, description="A dictionary that contains an array of segment IDs and names.")
+    total: Optional[StrictInt] = Field(None, description="Total number of segments the customer belongs to.")
     __properties = ["object", "data_ref", "data", "total"]
 
     class Config:
@@ -64,6 +64,26 @@ class CustomersSegmentsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['data'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if data (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data is None and "data" in self.__fields_set__:
+            _dict['data'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod

@@ -24,12 +24,12 @@ from pydantic import BaseModel, Field, StrictStr, conlist
 
 class FilterConditionsString(BaseModel):
     """
-    Data filters used to narrow the data records to be returned in the result.  # noqa: E501
+    Data filters used to narrow down the data records to be returned in the result.  # noqa: E501
     """
-    var_in: Optional[conlist(StrictStr)] = Field(None, alias="$in", description="Array of resource values that should be included in the results. (multiple values)")
-    not_in: Optional[conlist(StrictStr)] = Field(None, alias="$not_in", description="Array of resource values that should be included in the results. (multiple values)")
-    var_is: Optional[StrictStr] = Field(None, alias="$is", description="Value is exactly this value. (single value)")
-    is_not: Optional[StrictStr] = Field(None, alias="$is_not", description="Results omit this value. (single value)")
+    var_in: Optional[conlist(StrictStr)] = Field(None, alias="$in", description="Array of resource values that should be included in the results (multiple values).")
+    not_in: Optional[conlist(StrictStr)] = Field(None, alias="$not_in", description="Array of resource values that should be included in the results (multiple values).")
+    var_is: Optional[StrictStr] = Field(None, alias="$is", description="Value is exactly this value (single value).")
+    is_not: Optional[StrictStr] = Field(None, alias="$is_not", description="Results omit this value (single value).")
     has_value: Optional[StrictStr] = Field(None, alias="$has_value", description="Value is NOT null. The value for this parameter is an empty string.")
     is_unknown: Optional[StrictStr] = Field(None, alias="$is_unknown", description="Value is null. The value for this parameter is an empty string.")
     starts_with: Optional[StrictStr] = Field(None, alias="$starts_with", description="Value starts with the specified string.")
@@ -60,6 +60,46 @@ class FilterConditionsString(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if var_in (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_in is None and "var_in" in self.__fields_set__:
+            _dict['$in'] = None
+
+        # set to None if not_in (nullable) is None
+        # and __fields_set__ contains the field
+        if self.not_in is None and "not_in" in self.__fields_set__:
+            _dict['$not_in'] = None
+
+        # set to None if var_is (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_is is None and "var_is" in self.__fields_set__:
+            _dict['$is'] = None
+
+        # set to None if is_not (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_not is None and "is_not" in self.__fields_set__:
+            _dict['$is_not'] = None
+
+        # set to None if has_value (nullable) is None
+        # and __fields_set__ contains the field
+        if self.has_value is None and "has_value" in self.__fields_set__:
+            _dict['$has_value'] = None
+
+        # set to None if is_unknown (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_unknown is None and "is_unknown" in self.__fields_set__:
+            _dict['$is_unknown'] = None
+
+        # set to None if starts_with (nullable) is None
+        # and __fields_set__ contains the field
+        if self.starts_with is None and "starts_with" in self.__fields_set__:
+            _dict['$starts_with'] = None
+
+        # set to None if ends_with (nullable) is None
+        # and __fields_set__ contains the field
+        if self.ends_with is None and "ends_with" in self.__fields_set__:
+            _dict['$ends_with'] = None
+
         return _dict
 
     @classmethod

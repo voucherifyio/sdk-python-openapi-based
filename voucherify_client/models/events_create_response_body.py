@@ -25,18 +25,22 @@ from voucherify_client.models.simple_customer_required_object_type import Simple
 
 class EventsCreateResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/events`.  # noqa: E501
+    Response body schema for **POST** `v1/events`.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The object represented is an `event`.")
-    type: StrictStr = Field(..., description="The event name.")
+    object: Optional[StrictStr] = Field('event', description="The object represented is an `event`.")
+    type: Optional[StrictStr] = Field(None, description="The event name.")
     customer: SimpleCustomerRequiredObjectType = Field(...)
-    referral: Optional[Dict[str, Any]] = Field(..., description="A `null` referral object.")
-    loyalty: Optional[Dict[str, Any]] = Field(..., description="A `null` loyalty object.")
-    __properties = ["object", "type", "customer", "referral", "loyalty"]
+    referral: Optional[Dict[str, Any]] = Field(None, description="A `null` referral object.")
+    loyalty: Optional[Dict[str, Any]] = Field(None, description="A `null` loyalty object.")
+    metadata: Optional[Dict[str, Any]] = None
+    __properties = ["object", "type", "customer", "referral", "loyalty", "metadata"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('event',):
             raise ValueError("must be one of enum values ('event')")
         return value
@@ -68,6 +72,16 @@ class EventsCreateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of customer
         if self.customer:
             _dict['customer'] = self.customer.to_dict()
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
         # set to None if referral (nullable) is None
         # and __fields_set__ contains the field
         if self.referral is None and "referral" in self.__fields_set__:
@@ -77,6 +91,11 @@ class EventsCreateResponseBody(BaseModel):
         # and __fields_set__ contains the field
         if self.loyalty is None and "loyalty" in self.__fields_set__:
             _dict['loyalty'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
 
         return _dict
 
@@ -94,7 +113,8 @@ class EventsCreateResponseBody(BaseModel):
             "type": obj.get("type"),
             "customer": SimpleCustomerRequiredObjectType.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
             "referral": obj.get("referral"),
-            "loyalty": obj.get("loyalty")
+            "loyalty": obj.get("loyalty"),
+            "metadata": obj.get("metadata")
         })
         return _obj
 

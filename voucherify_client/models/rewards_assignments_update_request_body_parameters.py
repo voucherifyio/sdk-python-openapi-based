@@ -57,6 +57,11 @@ class RewardsAssignmentsUpdateRequestBodyParameters(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of loyalty
         if self.loyalty:
             _dict['loyalty'] = self.loyalty.to_dict()
+        # set to None if loyalty (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty is None and "loyalty" in self.__fields_set__:
+            _dict['loyalty'] = None
+
         return _dict
 
     @classmethod

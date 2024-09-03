@@ -27,7 +27,7 @@ class CampaignLoyaltyCard(BaseModel):
     """
     Schema model for a campaign loyalty card.  # noqa: E501
     """
-    points: StrictInt = Field(..., description="The initial number of points to assign to the loyalty card. This is the current loyalty card score i.e. the number of loyalty points on the card.")
+    points: Optional[StrictInt] = Field(None, description="The initial number of points to assign to the loyalty card. This is the current loyalty card score i.e. the number of loyalty points on the card.")
     expiration_rules: Optional[CampaignLoyaltyCardExpirationRules] = None
     __properties = ["points", "expiration_rules"]
 
@@ -58,6 +58,16 @@ class CampaignLoyaltyCard(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of expiration_rules
         if self.expiration_rules:
             _dict['expiration_rules'] = self.expiration_rules.to_dict()
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if expiration_rules (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_rules is None and "expiration_rules" in self.__fields_set__:
+            _dict['expiration_rules'] = None
+
         return _dict
 
     @classmethod

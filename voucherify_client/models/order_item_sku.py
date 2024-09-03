@@ -27,7 +27,7 @@ class OrderItemSku(BaseModel):
     An object containing details of the related SKU.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="A unique identifier that represents the SKU and is assigned by Voucherify.")
-    source_id: Optional[StrictStr] = Field(None, description="The merchant’s SKU ID (if it is different than Voucherify's SKU ID). It is really useful in case of integration between multiple systems. It can be an ID from an eCommerce site, a database or a 3rd party service.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's SKU ID (if it is different than Voucherify's SKU ID). It is really useful in case of integration between multiple systems. It can be an ID from an eCommerce site, a database or a 3rd party service.")
     override: Optional[StrictBool] = Field(None, description="The override set to `true` is used to store the product information in the system. If the product does not exist, it will be created with a source_id; if it does exist, the provided values for the name, price, and metadata will replace those already stored in the system.")
     sku: Optional[StrictStr] = Field(None, description="The SKU name.")
     price: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="SKU price. A positive integer in the smallest currency unit (e.g. 100 cents for $1.00).")
@@ -57,6 +57,31 @@ class OrderItemSku(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if override (nullable) is None
+        # and __fields_set__ contains the field
+        if self.override is None and "override" in self.__fields_set__:
+            _dict['override'] = None
+
+        # set to None if sku (nullable) is None
+        # and __fields_set__ contains the field
+        if self.sku is None and "sku" in self.__fields_set__:
+            _dict['sku'] = None
+
+        # set to None if price (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price is None and "price" in self.__fields_set__:
+            _dict['price'] = None
+
         return _dict
 
     @classmethod

@@ -14,129 +14,296 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.redemption import Redemption
-from voucherify_client.models.redemption_rollback import RedemptionRollback
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
-
-REDEMPTIONS_GET_RESPONSE_BODY_ONE_OF_SCHEMAS = ["Redemption", "RedemptionRollback"]
+from datetime import datetime
+from typing import Any, Dict, Optional
+from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
+from voucherify_client.models.redemption_reward_result import RedemptionRewardResult
+from voucherify_client.models.redemptions_get_response_body_channel import RedemptionsGetResponseBodyChannel
+from voucherify_client.models.redemptions_get_response_body_customer import RedemptionsGetResponseBodyCustomer
+from voucherify_client.models.redemptions_get_response_body_gift import RedemptionsGetResponseBodyGift
+from voucherify_client.models.redemptions_get_response_body_loyalty_card import RedemptionsGetResponseBodyLoyaltyCard
+from voucherify_client.models.redemptions_get_response_body_order import RedemptionsGetResponseBodyOrder
+from voucherify_client.models.redemptions_get_response_body_promotion_tier import RedemptionsGetResponseBodyPromotionTier
+from voucherify_client.models.redemptions_get_response_body_related_redemptions import RedemptionsGetResponseBodyRelatedRedemptions
+from voucherify_client.models.redemptions_get_response_body_voucher import RedemptionsGetResponseBodyVoucher
 
 class RedemptionsGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/redemptions/{redemptionId}
+    RedemptionsGetResponseBody
     """
-    # data type: Redemption
-    oneof_schema_1_validator: Optional[Redemption] = None
-    # data type: RedemptionRollback
-    oneof_schema_2_validator: Optional[RedemptionRollback] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[Redemption, RedemptionRollback]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(REDEMPTIONS_GET_RESPONSE_BODY_ONE_OF_SCHEMAS, const=True)
+    id: Optional[StrictStr] = None
+    object: Optional[StrictStr] = None
+    var_date: Optional[datetime] = Field(None, alias="date", description="Timestamp representing the date and time when the object was created. The value is shown in the ISO 8601 format.")
+    customer_id: Optional[StrictStr] = Field(None, description="Unique customer ID of the redeeming customer.")
+    tracking_id: Optional[StrictStr] = Field(None, description="Hashed customer source ID.")
+    metadata: Optional[Dict[str, Any]] = None
+    amount: Optional[StrictInt] = Field(None, description="For gift cards, this is a positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the number of redeemed credits. For loyalty cards, this is the number of loyalty points used in the transaction. and For gift cards, this represents the number of the credits restored to the card in the rolledback redemption. The number is a negative integer in the smallest currency unit, e.g. -100 cents for $1.00 added back to the card. For loyalty cards, this represents the number of loyalty points restored to the card in the rolledback redemption. The number is a negative integer.")
+    redemption: Optional[StrictStr] = Field(None, description="Unique redemption ID of the parent redemption.")
+    result: Optional[StrictStr] = Field(None, description="Redemption result.")
+    status: Optional[StrictStr] = None
+    related_redemptions: Optional[RedemptionsGetResponseBodyRelatedRedemptions] = None
+    failure_code: Optional[StrictStr] = Field(None, description="If the result is `FAILURE`, this parameter will provide a generic reason as to why the redemption failed.")
+    failure_message: Optional[StrictStr] = Field(None, description="If the result is `FAILURE`, this parameter will provide a more expanded reason as to why the redemption failed.")
+    order: Optional[RedemptionsGetResponseBodyOrder] = None
+    channel: Optional[RedemptionsGetResponseBodyChannel] = None
+    customer: Optional[RedemptionsGetResponseBodyCustomer] = None
+    related_object_type: Optional[StrictStr] = Field(None, description="Defines the related object.")
+    related_object_id: Optional[StrictStr] = None
+    voucher: Optional[RedemptionsGetResponseBodyVoucher] = None
+    promotion_tier: Optional[RedemptionsGetResponseBodyPromotionTier] = None
+    reward: Optional[RedemptionRewardResult] = None
+    gift: Optional[RedemptionsGetResponseBodyGift] = None
+    loyalty_card: Optional[RedemptionsGetResponseBodyLoyaltyCard] = None
+    reason: Optional[StrictStr] = Field(None, description="System generated cause for the redemption being invalid in the context of the provided parameters.")
+    __properties = ["id", "object", "date", "customer_id", "tracking_id", "metadata", "amount", "redemption", "result", "status", "related_redemptions", "failure_code", "failure_message", "order", "channel", "customer", "related_object_type", "related_object_id", "voucher", "promotion_tier", "reward", "gift", "loyalty_card", "reason"]
+
+    @validator('object')
+    def object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('redemption', 'redemption_rollback',):
+            raise ValueError("must be one of enum values ('redemption', 'redemption_rollback')")
+        return value
+
+    @validator('result')
+    def result_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('SUCCESS', 'FAILURE',):
+            raise ValueError("must be one of enum values ('SUCCESS', 'FAILURE')")
+        return value
+
+    @validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('SUCCEEDED', 'FAILED', 'ROLLED_BACK',):
+            raise ValueError("must be one of enum values ('SUCCEEDED', 'FAILED', 'ROLLED_BACK')")
+        return value
+
+    @validator('related_object_type')
+    def related_object_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('voucher', 'promotion_tier', 'redemption',):
+            raise ValueError("must be one of enum values ('voucher', 'promotion_tier', 'redemption')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = RedemptionsGetResponseBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: Redemption
-        if not isinstance(v, Redemption):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `Redemption`")
-        else:
-            match += 1
-        # validate data type: RedemptionRollback
-        if not isinstance(v, RedemptionRollback):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RedemptionRollback`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in RedemptionsGetResponseBody with oneOf schemas: Redemption, RedemptionRollback. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in RedemptionsGetResponseBody with oneOf schemas: Redemption, RedemptionRollback. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> RedemptionsGetResponseBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> RedemptionsGetResponseBody:
-        """Returns the object represented by the json string"""
-        instance = RedemptionsGetResponseBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of RedemptionsGetResponseBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into Redemption
-        try:
-            instance.actual_instance = Redemption.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into RedemptionRollback
-        try:
-            instance.actual_instance = RedemptionRollback.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of related_redemptions
+        if self.related_redemptions:
+            _dict['related_redemptions'] = self.related_redemptions.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of order
+        if self.order:
+            _dict['order'] = self.order.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of channel
+        if self.channel:
+            _dict['channel'] = self.channel.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of customer
+        if self.customer:
+            _dict['customer'] = self.customer.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of voucher
+        if self.voucher:
+            _dict['voucher'] = self.voucher.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of promotion_tier
+        if self.promotion_tier:
+            _dict['promotion_tier'] = self.promotion_tier.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of reward
+        if self.reward:
+            _dict['reward'] = self.reward.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of gift
+        if self.gift:
+            _dict['gift'] = self.gift.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of loyalty_card
+        if self.loyalty_card:
+            _dict['loyalty_card'] = self.loyalty_card.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into RedemptionsGetResponseBody with oneOf schemas: Redemption, RedemptionRollback. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into RedemptionsGetResponseBody with oneOf schemas: Redemption, RedemptionRollback. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if var_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_date is None and "var_date" in self.__fields_set__:
+            _dict['date'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        # set to None if customer_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.customer_id is None and "customer_id" in self.__fields_set__:
+            _dict['customer_id'] = None
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+        # set to None if tracking_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tracking_id is None and "tracking_id" in self.__fields_set__:
+            _dict['tracking_id'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
+        # set to None if redemption (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
+        # set to None if result (nullable) is None
+        # and __fields_set__ contains the field
+        if self.result is None and "result" in self.__fields_set__:
+            _dict['result'] = None
+
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
+
+        # set to None if related_redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_redemptions is None and "related_redemptions" in self.__fields_set__:
+            _dict['related_redemptions'] = None
+
+        # set to None if failure_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.failure_code is None and "failure_code" in self.__fields_set__:
+            _dict['failure_code'] = None
+
+        # set to None if failure_message (nullable) is None
+        # and __fields_set__ contains the field
+        if self.failure_message is None and "failure_message" in self.__fields_set__:
+            _dict['failure_message'] = None
+
+        # set to None if order (nullable) is None
+        # and __fields_set__ contains the field
+        if self.order is None and "order" in self.__fields_set__:
+            _dict['order'] = None
+
+        # set to None if channel (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel is None and "channel" in self.__fields_set__:
+            _dict['channel'] = None
+
+        # set to None if customer (nullable) is None
+        # and __fields_set__ contains the field
+        if self.customer is None and "customer" in self.__fields_set__:
+            _dict['customer'] = None
+
+        # set to None if related_object_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_type is None and "related_object_type" in self.__fields_set__:
+            _dict['related_object_type'] = None
+
+        # set to None if related_object_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_id is None and "related_object_id" in self.__fields_set__:
+            _dict['related_object_id'] = None
+
+        # set to None if voucher (nullable) is None
+        # and __fields_set__ contains the field
+        if self.voucher is None and "voucher" in self.__fields_set__:
+            _dict['voucher'] = None
+
+        # set to None if promotion_tier (nullable) is None
+        # and __fields_set__ contains the field
+        if self.promotion_tier is None and "promotion_tier" in self.__fields_set__:
+            _dict['promotion_tier'] = None
+
+        # set to None if gift (nullable) is None
+        # and __fields_set__ contains the field
+        if self.gift is None and "gift" in self.__fields_set__:
+            _dict['gift'] = None
+
+        # set to None if loyalty_card (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty_card is None and "loyalty_card" in self.__fields_set__:
+            _dict['loyalty_card'] = None
+
+        # set to None if reason (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reason is None and "reason" in self.__fields_set__:
+            _dict['reason'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: dict) -> RedemptionsGetResponseBody:
+        """Create an instance of RedemptionsGetResponseBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return RedemptionsGetResponseBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = RedemptionsGetResponseBody.parse_obj({
+            "id": obj.get("id"),
+            "object": obj.get("object"),
+            "var_date": obj.get("date"),
+            "customer_id": obj.get("customer_id"),
+            "tracking_id": obj.get("tracking_id"),
+            "metadata": obj.get("metadata"),
+            "amount": obj.get("amount"),
+            "redemption": obj.get("redemption"),
+            "result": obj.get("result"),
+            "status": obj.get("status"),
+            "related_redemptions": RedemptionsGetResponseBodyRelatedRedemptions.from_dict(obj.get("related_redemptions")) if obj.get("related_redemptions") is not None else None,
+            "failure_code": obj.get("failure_code"),
+            "failure_message": obj.get("failure_message"),
+            "order": RedemptionsGetResponseBodyOrder.from_dict(obj.get("order")) if obj.get("order") is not None else None,
+            "channel": RedemptionsGetResponseBodyChannel.from_dict(obj.get("channel")) if obj.get("channel") is not None else None,
+            "customer": RedemptionsGetResponseBodyCustomer.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
+            "related_object_type": obj.get("related_object_type"),
+            "related_object_id": obj.get("related_object_id"),
+            "voucher": RedemptionsGetResponseBodyVoucher.from_dict(obj.get("voucher")) if obj.get("voucher") is not None else None,
+            "promotion_tier": RedemptionsGetResponseBodyPromotionTier.from_dict(obj.get("promotion_tier")) if obj.get("promotion_tier") is not None else None,
+            "reward": RedemptionRewardResult.from_dict(obj.get("reward")) if obj.get("reward") is not None else None,
+            "gift": RedemptionsGetResponseBodyGift.from_dict(obj.get("gift")) if obj.get("gift") is not None else None,
+            "loyalty_card": RedemptionsGetResponseBodyLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None,
+            "reason": obj.get("reason")
+        })
+        return _obj
 
 

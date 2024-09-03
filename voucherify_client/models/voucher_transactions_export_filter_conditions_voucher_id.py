@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field
+from typing import Optional
+from pydantic import BaseModel
 from voucherify_client.models.voucher_transactions_export_filter_conditions_voucher_id_conditions import VoucherTransactionsExportFilterConditionsVoucherIdConditions
 
 class VoucherTransactionsExportFilterConditionsVoucherId(BaseModel):
     """
-    Data filters used to narrow the data records to be returned in the result.  # noqa: E501
+    Data filters used to narrow down the data records to be returned in the result.  # noqa: E501
     """
-    conditions: VoucherTransactionsExportFilterConditionsVoucherIdConditions = Field(...)
+    conditions: Optional[VoucherTransactionsExportFilterConditionsVoucherIdConditions] = None
     __properties = ["conditions"]
 
     class Config:
@@ -57,6 +57,11 @@ class VoucherTransactionsExportFilterConditionsVoucherId(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of conditions
         if self.conditions:
             _dict['conditions'] = self.conditions.to_dict()
+        # set to None if conditions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.conditions is None and "conditions" in self.__fields_set__:
+            _dict['conditions'] = None
+
         return _dict
 
     @classmethod

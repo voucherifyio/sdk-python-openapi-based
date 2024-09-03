@@ -54,6 +54,16 @@ class LoyaltiesMembersTransfersCreateResponseBodyAssetsQr(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.url is None and "url" in self.__fields_set__:
+            _dict['url'] = None
+
         return _dict
 
     @classmethod

@@ -24,12 +24,18 @@ from pydantic import Field, StrictStr, conint
 
 from typing import Optional
 
+from voucherify_client.models.reward import Reward
 from voucherify_client.models.rewards_assignments_create_request_body import RewardsAssignmentsCreateRequestBody
 from voucherify_client.models.rewards_assignments_create_response_body import RewardsAssignmentsCreateResponseBody
 from voucherify_client.models.rewards_assignments_get_response_body import RewardsAssignmentsGetResponseBody
 from voucherify_client.models.rewards_assignments_list_response_body import RewardsAssignmentsListResponseBody
 from voucherify_client.models.rewards_assignments_update_request_body import RewardsAssignmentsUpdateRequestBody
 from voucherify_client.models.rewards_assignments_update_response_body import RewardsAssignmentsUpdateResponseBody
+from voucherify_client.models.rewards_create_request_body import RewardsCreateRequestBody
+from voucherify_client.models.rewards_create_response_body import RewardsCreateResponseBody
+from voucherify_client.models.rewards_list_response_body import RewardsListResponseBody
+from voucherify_client.models.rewards_update_request_body import RewardsUpdateRequestBody
+from voucherify_client.models.rewards_update_response_body import RewardsUpdateResponseBody
 
 from voucherify_client.api_client import ApiClient
 from voucherify_client.api_response import ApiResponse
@@ -50,6 +56,153 @@ class RewardsApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+    @validate_arguments
+    def create_reward(self, rewards_create_request_body : Annotated[Optional[RewardsCreateRequestBody], Field(description="Define parameters of the new reward.")] = None, **kwargs) -> RewardsCreateResponseBody:  # noqa: E501
+        """Create Reward  # noqa: E501
+
+        Create a new reward.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_reward(rewards_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param rewards_create_request_body: Define parameters of the new reward.
+        :type rewards_create_request_body: RewardsCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: RewardsCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the create_reward_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.create_reward_with_http_info(rewards_create_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def create_reward_with_http_info(self, rewards_create_request_body : Annotated[Optional[RewardsCreateRequestBody], Field(description="Define parameters of the new reward.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Reward  # noqa: E501
+
+        Create a new reward.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_reward_with_http_info(rewards_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param rewards_create_request_body: Define parameters of the new reward.
+        :type rewards_create_request_body: RewardsCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(RewardsCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'rewards_create_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_reward" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['rewards_create_request_body'] is not None:
+            _body_params = _params['rewards_create_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "RewardsCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/rewards', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def create_reward_assignment(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], rewards_assignments_create_request_body : Annotated[Optional[RewardsAssignmentsCreateRequestBody], Field(description="Provide the campaign ID of the campaign to which the reward is to be assigned and define the cost of the reward in terms of loyalty points.")] = None, **kwargs) -> RewardsAssignmentsCreateResponseBody:  # noqa: E501
@@ -483,6 +636,146 @@ class RewardsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
+    def get_reward(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], **kwargs) -> Reward:  # noqa: E501
+        """Get Reward  # noqa: E501
+
+        Retrieve a reward by the reward ID.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_reward(reward_id, async_req=True)
+        >>> result = thread.get()
+
+        :param reward_id: A unique reward ID. (required)
+        :type reward_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: Reward
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the get_reward_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.get_reward_with_http_info(reward_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def get_reward_with_http_info(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Get Reward  # noqa: E501
+
+        Retrieve a reward by the reward ID.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_reward_with_http_info(reward_id, async_req=True)
+        >>> result = thread.get()
+
+        :param reward_id: A unique reward ID. (required)
+        :type reward_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(Reward, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'reward_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_reward" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['reward_id']:
+            _path_params['rewardId'] = _params['reward_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "Reward",
+        }
+
+        return self.api_client.call_api(
+            '/v1/rewards/{rewardId}', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
     def get_reward_assignment(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> RewardsAssignmentsGetResponseBody:  # noqa: E501
         """Get Reward Assignment  # noqa: E501
 
@@ -631,7 +924,7 @@ class RewardsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_reward_assignments(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> RewardsAssignmentsListResponseBody:  # noqa: E501
+    def list_reward_assignments(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> RewardsAssignmentsListResponseBody:  # noqa: E501
         """List Reward Assignments  # noqa: E501
 
         Retrieve reward assignments by the reward ID.  # noqa: E501
@@ -643,9 +936,9 @@ class RewardsApi:
 
         :param reward_id: A unique reward ID. (required)
         :type reward_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -665,7 +958,7 @@ class RewardsApi:
         return self.list_reward_assignments_with_http_info(reward_id, limit, page, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_reward_assignments_with_http_info(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_reward_assignments_with_http_info(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Reward Assignments  # noqa: E501
 
         Retrieve reward assignments by the reward ID.  # noqa: E501
@@ -677,9 +970,9 @@ class RewardsApi:
 
         :param reward_id: A unique reward ID. (required)
         :type reward_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -771,6 +1064,317 @@ class RewardsApi:
 
         return self.api_client.call_api(
             '/v1/rewards/{rewardId}/assignments', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_rewards(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, assignment_id : Annotated[Optional[StrictStr], Field(description="A unique reward assignment ID. Use this parameter to get the reward details in the context of an assignment ID.")] = None, **kwargs) -> RewardsListResponseBody:  # noqa: E501
+        """List Rewards  # noqa: E501
+
+        Retrieve rewards.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_rewards(limit, page, assignment_id, async_req=True)
+        >>> result = thread.get()
+
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param assignment_id: A unique reward assignment ID. Use this parameter to get the reward details in the context of an assignment ID.
+        :type assignment_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: RewardsListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_rewards_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_rewards_with_http_info(limit, page, assignment_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_rewards_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, assignment_id : Annotated[Optional[StrictStr], Field(description="A unique reward assignment ID. Use this parameter to get the reward details in the context of an assignment ID.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Rewards  # noqa: E501
+
+        Retrieve rewards.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_rewards_with_http_info(limit, page, assignment_id, async_req=True)
+        >>> result = thread.get()
+
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param assignment_id: A unique reward assignment ID. Use this parameter to get the reward details in the context of an assignment ID.
+        :type assignment_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(RewardsListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'limit',
+            'page',
+            'assignment_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_rewards" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('assignment_id') is not None:  # noqa: E501
+            _query_params.append(('assignment_id', _params['assignment_id']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "RewardsListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/rewards', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def update_reward(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], rewards_update_request_body : Annotated[Optional[RewardsUpdateRequestBody], Field(description="Define the parameters to be updated for the reward.")] = None, **kwargs) -> RewardsUpdateResponseBody:  # noqa: E501
+        """Update Reward  # noqa: E501
+
+        Update the details of a reward.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_reward(reward_id, rewards_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param reward_id: A unique reward ID. (required)
+        :type reward_id: str
+        :param rewards_update_request_body: Define the parameters to be updated for the reward.
+        :type rewards_update_request_body: RewardsUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: RewardsUpdateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_reward_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_reward_with_http_info(reward_id, rewards_update_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_reward_with_http_info(self, reward_id : Annotated[StrictStr, Field(..., description="A unique reward ID.")], rewards_update_request_body : Annotated[Optional[RewardsUpdateRequestBody], Field(description="Define the parameters to be updated for the reward.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Reward  # noqa: E501
+
+        Update the details of a reward.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_reward_with_http_info(reward_id, rewards_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param reward_id: A unique reward ID. (required)
+        :type reward_id: str
+        :param rewards_update_request_body: Define the parameters to be updated for the reward.
+        :type rewards_update_request_body: RewardsUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(RewardsUpdateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'reward_id',
+            'rewards_update_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_reward" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['reward_id']:
+            _path_params['rewardId'] = _params['reward_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['rewards_update_request_body'] is not None:
+            _body_params = _params['rewards_update_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "RewardsUpdateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/rewards/{rewardId}', 'PUT',
             _path_params,
             _query_params,
             _header_params,

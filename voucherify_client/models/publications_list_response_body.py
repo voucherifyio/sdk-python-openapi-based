@@ -19,18 +19,18 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
 from voucherify_client.models.publications_list_response_body_publications_item import PublicationsListResponseBodyPublicationsItem
 
 class PublicationsListResponseBody(BaseModel):
     """
-    Response body schema for listing publications using **GET** `/publications`.  # noqa: E501
+    Response body schema for listing publications using **GET** `v1/publications`.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about publications in a dictionary.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the attribute that contains the array of publications.")
-    publications: conlist(PublicationsListResponseBodyPublicationsItem) = Field(..., description="Contains array of publication objects, voucher object will be simplified.")
-    total: StrictInt = Field(..., description="Total number of publications.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about publications in a dictionary.")
+    data_ref: Optional[StrictStr] = Field('publications', description="Identifies the name of the attribute that contains the array of publications.")
+    publications: Optional[conlist(PublicationsListResponseBodyPublicationsItem)] = Field(None, description="Response schema model for publishing vouchers to a specific customer.")
+    total: Optional[StrictInt] = Field(None, description="Total number of publications.")
     __properties = ["object", "data_ref", "publications", "total"]
 
     class Config:
@@ -64,6 +64,26 @@ class PublicationsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['publications'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if publications (nullable) is None
+        # and __fields_set__ contains the field
+        if self.publications is None and "publications" in self.__fields_set__:
+            _dict['publications'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod

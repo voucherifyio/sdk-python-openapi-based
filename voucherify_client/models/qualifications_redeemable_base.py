@@ -34,7 +34,7 @@ class QualificationsRedeemableBase(BaseModel):
     """
     id: Optional[StrictStr] = Field(None, description="Id of the redeemable.")
     object: Optional[StrictStr] = Field(None, description="Object type of the redeemable.")
-    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the object was created in ISO 8601 format.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the object was created. The value is shown in the ISO 8601 format.")
     result: Optional[RedeemableResult] = None
     order: Optional[OrderCalculated] = None
     validation_rule_id: Optional[StrictStr] = Field(None, description="A unique validation rule identifier assigned by the Voucherify API. The validation rule is verified before points are added to the balance.")
@@ -105,6 +105,56 @@ class QualificationsRedeemableBase(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of validation_rules_assignments
         if self.validation_rules_assignments:
             _dict['validation_rules_assignments'] = self.validation_rules_assignments.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if validation_rule_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.validation_rule_id is None and "validation_rule_id" in self.__fields_set__:
+            _dict['validation_rule_id'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if categories (nullable) is None
+        # and __fields_set__ contains the field
+        if self.categories is None and "categories" in self.__fields_set__:
+            _dict['categories'] = None
+
+        # set to None if banner (nullable) is None
+        # and __fields_set__ contains the field
+        if self.banner is None and "banner" in self.__fields_set__:
+            _dict['banner'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if campaign_name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_name is None and "campaign_name" in self.__fields_set__:
+            _dict['campaign_name'] = None
+
+        # set to None if campaign_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_id is None and "campaign_id" in self.__fields_set__:
+            _dict['campaign_id'] = None
+
         return _dict
 
     @classmethod

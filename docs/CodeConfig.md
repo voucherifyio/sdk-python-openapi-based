@@ -1,6 +1,6 @@
 # CodeConfig
 
-Schema containing information about config used for voucher. Defines code's pattern (prefix, suffix, length, charset, etc).
+Contains information about the config used for the voucher code. Defines the code's pattern (prefix, postfix, length, charset, etc).
 
 ## Properties
 Name | Type | Description | Notes
@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **prefix** | **str** | A text appended before the code. | [optional] 
 **postfix** | **str** | A text appended after the code. | [optional] 
 **pattern** | **str** | A pattern for codes where hashes (#) will be replaced with random characters. Overrides &#x60;length&#x60;. | [optional] 
-**initial_count** | **int** | The initial count | [optional] 
+**initial_count** | **int** | Internal value, does not change anything if provided. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

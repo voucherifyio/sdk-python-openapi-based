@@ -24,12 +24,26 @@ from pydantic import Field, StrictBool, StrictStr, conint, conlist
 
 from typing import List, Optional
 
+from voucherify_client.models.loyalties_create_campaign_request_body import LoyaltiesCreateCampaignRequestBody
+from voucherify_client.models.loyalties_create_campaign_response_body import LoyaltiesCreateCampaignResponseBody
 from voucherify_client.models.loyalties_delete_response_body import LoyaltiesDeleteResponseBody
+from voucherify_client.models.loyalties_earning_rules_create_request_body_item import LoyaltiesEarningRulesCreateRequestBodyItem
+from voucherify_client.models.loyalties_earning_rules_create_response_body import LoyaltiesEarningRulesCreateResponseBody
 from voucherify_client.models.loyalties_earning_rules_disable_response_body import LoyaltiesEarningRulesDisableResponseBody
 from voucherify_client.models.loyalties_earning_rules_enable_response_body import LoyaltiesEarningRulesEnableResponseBody
 from voucherify_client.models.loyalties_earning_rules_get_response_body import LoyaltiesEarningRulesGetResponseBody
+from voucherify_client.models.loyalties_earning_rules_list_response_body import LoyaltiesEarningRulesListResponseBody
+from voucherify_client.models.loyalties_earning_rules_update_request_body import LoyaltiesEarningRulesUpdateRequestBody
+from voucherify_client.models.loyalties_earning_rules_update_response_body import LoyaltiesEarningRulesUpdateResponseBody
+from voucherify_client.models.loyalties_get_campaign_response_body import LoyaltiesGetCampaignResponseBody
+from voucherify_client.models.loyalties_list_campaigns_response_body import LoyaltiesListCampaignsResponseBody
+from voucherify_client.models.loyalties_list_members_response_body import LoyaltiesListMembersResponseBody
+from voucherify_client.models.loyalties_member_activity_list_response_body import LoyaltiesMemberActivityListResponseBody
 from voucherify_client.models.loyalties_members_balance_update_request_body import LoyaltiesMembersBalanceUpdateRequestBody
 from voucherify_client.models.loyalties_members_balance_update_response_body import LoyaltiesMembersBalanceUpdateResponseBody
+from voucherify_client.models.loyalties_members_create_request_body import LoyaltiesMembersCreateRequestBody
+from voucherify_client.models.loyalties_members_create_response_body import LoyaltiesMembersCreateResponseBody
+from voucherify_client.models.loyalties_members_get_response_body import LoyaltiesMembersGetResponseBody
 from voucherify_client.models.loyalties_members_points_expiration_list_response_body import LoyaltiesMembersPointsExpirationListResponseBody
 from voucherify_client.models.loyalties_members_redemption_redeem_request_body import LoyaltiesMembersRedemptionRedeemRequestBody
 from voucherify_client.models.loyalties_members_redemption_redeem_response_body import LoyaltiesMembersRedemptionRedeemResponseBody
@@ -39,17 +53,33 @@ from voucherify_client.models.loyalties_members_transactions_export_create_reque
 from voucherify_client.models.loyalties_members_transactions_export_create_response_body import LoyaltiesMembersTransactionsExportCreateResponseBody
 from voucherify_client.models.loyalties_members_transactions_list_response_body import LoyaltiesMembersTransactionsListResponseBody
 from voucherify_client.models.loyalties_members_transfers_create_response_body import LoyaltiesMembersTransfersCreateResponseBody
+from voucherify_client.models.loyalties_points_expiration_export_create_request_body import LoyaltiesPointsExpirationExportCreateRequestBody
+from voucherify_client.models.loyalties_points_expiration_export_create_response_body import LoyaltiesPointsExpirationExportCreateResponseBody
 from voucherify_client.models.loyalties_reward_assignments_get_response_body import LoyaltiesRewardAssignmentsGetResponseBody
+from voucherify_client.models.loyalties_reward_assignments_list_response_body import LoyaltiesRewardAssignmentsListResponseBody
 from voucherify_client.models.loyalties_reward_assignments_reward_get_response_body import LoyaltiesRewardAssignmentsRewardGetResponseBody
+from voucherify_client.models.loyalties_rewards_create_assignment_item_request_body import LoyaltiesRewardsCreateAssignmentItemRequestBody
+from voucherify_client.models.loyalties_rewards_create_assignment_response_body import LoyaltiesRewardsCreateAssignmentResponseBody
 from voucherify_client.models.loyalties_rewards_get_response_body import LoyaltiesRewardsGetResponseBody
+from voucherify_client.models.loyalties_rewards_list_assignments_response_body import LoyaltiesRewardsListAssignmentsResponseBody
+from voucherify_client.models.loyalties_rewards_update_assignment_request_body import LoyaltiesRewardsUpdateAssignmentRequestBody
+from voucherify_client.models.loyalties_rewards_update_assignment_response_body import LoyaltiesRewardsUpdateAssignmentResponseBody
 from voucherify_client.models.loyalties_tiers_create_in_bulk_request_body_item import LoyaltiesTiersCreateInBulkRequestBodyItem
 from voucherify_client.models.loyalties_tiers_earning_rules_list_response_body import LoyaltiesTiersEarningRulesListResponseBody
 from voucherify_client.models.loyalties_tiers_get_response_body import LoyaltiesTiersGetResponseBody
 from voucherify_client.models.loyalties_tiers_list_response_body import LoyaltiesTiersListResponseBody
 from voucherify_client.models.loyalties_tiers_rewards_list_response_body import LoyaltiesTiersRewardsListResponseBody
 from voucherify_client.models.loyalties_transfer_points import LoyaltiesTransferPoints
+from voucherify_client.models.loyalties_update_campaign_request_body import LoyaltiesUpdateCampaignRequestBody
+from voucherify_client.models.loyalties_update_campaign_response_body import LoyaltiesUpdateCampaignResponseBody
 from voucherify_client.models.loyalty_tier import LoyaltyTier
+from voucherify_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
+from voucherify_client.models.parameter_order_created_at import ParameterOrderCreatedAt
+from voucherify_client.models.parameter_order_list_campaigns import ParameterOrderListCampaigns
+from voucherify_client.models.parameter_order_list_earning_rules import ParameterOrderListEarningRules
 from voucherify_client.models.parameter_order_list_loyalty_tiers import ParameterOrderListLoyaltyTiers
+from voucherify_client.models.parameter_order_vouchers import ParameterOrderVouchers
+from voucherify_client.models.parameter_updated_before_after import ParameterUpdatedBeforeAfter
 
 from voucherify_client.api_client import ApiClient
 from voucherify_client.api_response import ApiResponse
@@ -70,6 +100,316 @@ class LoyaltiesApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+    @validate_arguments
+    def add_member(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID of the loyalty program.")], loyalties_members_create_request_body : Annotated[Optional[LoyaltiesMembersCreateRequestBody], Field(description="Provide details to whom the loyalty card should be assigned.     You can choose to either specify the exact loyalty card code that you want to publish from existin (non-assigned) codes, or choose not to specify a voucher code. If you choose not to specify a code in the request paylaod, then the system will choose the next available voucher code available to be assigned to a customer.   You can also include metadata in the request payload. This metadata will be assigned to the publication object, but will not be returned in the response to this endpoint. To see of publications (assignments of particular codes to customers) and publication metadata, use the List Publications endpoint.")] = None, **kwargs) -> LoyaltiesMembersCreateResponseBody:  # noqa: E501
+        """Add Member  # noqa: E501
+
+        This method assigns a loyalty card to a customer. It selects a loyalty card suitable for publication, adds a publish entry, and returns the published voucher.   A voucher is suitable for publication when its active and hasnt been published yet.    📘 Auto-update campaign  In case you want to ensure the number of publishable codes increases automatically with the number of customers, you should use **auto-update** campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.add_member(campaign_id, loyalties_members_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID of the loyalty program. (required)
+        :type campaign_id: str
+        :param loyalties_members_create_request_body: Provide details to whom the loyalty card should be assigned.     You can choose to either specify the exact loyalty card code that you want to publish from existin (non-assigned) codes, or choose not to specify a voucher code. If you choose not to specify a code in the request paylaod, then the system will choose the next available voucher code available to be assigned to a customer.   You can also include metadata in the request payload. This metadata will be assigned to the publication object, but will not be returned in the response to this endpoint. To see of publications (assignments of particular codes to customers) and publication metadata, use the List Publications endpoint.
+        :type loyalties_members_create_request_body: LoyaltiesMembersCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesMembersCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the add_member_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.add_member_with_http_info(campaign_id, loyalties_members_create_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def add_member_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID of the loyalty program.")], loyalties_members_create_request_body : Annotated[Optional[LoyaltiesMembersCreateRequestBody], Field(description="Provide details to whom the loyalty card should be assigned.     You can choose to either specify the exact loyalty card code that you want to publish from existin (non-assigned) codes, or choose not to specify a voucher code. If you choose not to specify a code in the request paylaod, then the system will choose the next available voucher code available to be assigned to a customer.   You can also include metadata in the request payload. This metadata will be assigned to the publication object, but will not be returned in the response to this endpoint. To see of publications (assignments of particular codes to customers) and publication metadata, use the List Publications endpoint.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Add Member  # noqa: E501
+
+        This method assigns a loyalty card to a customer. It selects a loyalty card suitable for publication, adds a publish entry, and returns the published voucher.   A voucher is suitable for publication when its active and hasnt been published yet.    📘 Auto-update campaign  In case you want to ensure the number of publishable codes increases automatically with the number of customers, you should use **auto-update** campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.add_member_with_http_info(campaign_id, loyalties_members_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID of the loyalty program. (required)
+        :type campaign_id: str
+        :param loyalties_members_create_request_body: Provide details to whom the loyalty card should be assigned.     You can choose to either specify the exact loyalty card code that you want to publish from existin (non-assigned) codes, or choose not to specify a voucher code. If you choose not to specify a code in the request paylaod, then the system will choose the next available voucher code available to be assigned to a customer.   You can also include metadata in the request payload. This metadata will be assigned to the publication object, but will not be returned in the response to this endpoint. To see of publications (assignments of particular codes to customers) and publication metadata, use the List Publications endpoint.
+        :type loyalties_members_create_request_body: LoyaltiesMembersCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesMembersCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'loyalties_members_create_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method add_member" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_members_create_request_body'] is not None:
+            _body_params = _params['loyalties_members_create_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesMembersCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/members', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def create_earning_rule(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], loyalties_earning_rules_create_request_body_item : Annotated[Optional[conlist(LoyaltiesEarningRulesCreateRequestBodyItem)], Field(description="Customize the request body based on the type of earning rules you would like to create. The request body is an array of objects. The required minimum properties to include in the payload for each object are event and loyalty. Additionally, if you choose to add a validity_timeframe, you must include a start_date. Furthermore, an earning rule event type:   - customer.segment.entered requires a segment object - a custom event requires a custom_event object - a customer.loyalty.tier.joined, customer.loyalty.tier.left, customer.loyalty.tier.upgraded, customer.loyalty.tier.downgraded, customer.loyalty.tier.prolonged requires a loyalty_tier object")] = None, **kwargs) -> List[LoyaltiesEarningRulesCreateResponseBody]:  # noqa: E501
+        """Create Earning Rule  # noqa: E501
+
+        Create earning rules for a loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_earning_rule(campaign_id, loyalties_earning_rules_create_request_body_item, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param loyalties_earning_rules_create_request_body_item: Customize the request body based on the type of earning rules you would like to create. The request body is an array of objects. The required minimum properties to include in the payload for each object are event and loyalty. Additionally, if you choose to add a validity_timeframe, you must include a start_date. Furthermore, an earning rule event type:   - customer.segment.entered requires a segment object - a custom event requires a custom_event object - a customer.loyalty.tier.joined, customer.loyalty.tier.left, customer.loyalty.tier.upgraded, customer.loyalty.tier.downgraded, customer.loyalty.tier.prolonged requires a loyalty_tier object
+        :type loyalties_earning_rules_create_request_body_item: List[LoyaltiesEarningRulesCreateRequestBodyItem]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: List[LoyaltiesEarningRulesCreateResponseBody]
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the create_earning_rule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.create_earning_rule_with_http_info(campaign_id, loyalties_earning_rules_create_request_body_item, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def create_earning_rule_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], loyalties_earning_rules_create_request_body_item : Annotated[Optional[conlist(LoyaltiesEarningRulesCreateRequestBodyItem)], Field(description="Customize the request body based on the type of earning rules you would like to create. The request body is an array of objects. The required minimum properties to include in the payload for each object are event and loyalty. Additionally, if you choose to add a validity_timeframe, you must include a start_date. Furthermore, an earning rule event type:   - customer.segment.entered requires a segment object - a custom event requires a custom_event object - a customer.loyalty.tier.joined, customer.loyalty.tier.left, customer.loyalty.tier.upgraded, customer.loyalty.tier.downgraded, customer.loyalty.tier.prolonged requires a loyalty_tier object")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Earning Rule  # noqa: E501
+
+        Create earning rules for a loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_earning_rule_with_http_info(campaign_id, loyalties_earning_rules_create_request_body_item, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param loyalties_earning_rules_create_request_body_item: Customize the request body based on the type of earning rules you would like to create. The request body is an array of objects. The required minimum properties to include in the payload for each object are event and loyalty. Additionally, if you choose to add a validity_timeframe, you must include a start_date. Furthermore, an earning rule event type:   - customer.segment.entered requires a segment object - a custom event requires a custom_event object - a customer.loyalty.tier.joined, customer.loyalty.tier.left, customer.loyalty.tier.upgraded, customer.loyalty.tier.downgraded, customer.loyalty.tier.prolonged requires a loyalty_tier object
+        :type loyalties_earning_rules_create_request_body_item: List[LoyaltiesEarningRulesCreateRequestBodyItem]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(List[LoyaltiesEarningRulesCreateResponseBody], status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'loyalties_earning_rules_create_request_body_item'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_earning_rule" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_earning_rules_create_request_body_item'] is not None:
+            _body_params = _params['loyalties_earning_rules_create_request_body_item']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "List[LoyaltiesEarningRulesCreateResponseBody]",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/earning-rules', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def create_in_bulk_loyalty_tiers(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique loyalty campaign ID or name.")], loyalties_tiers_create_in_bulk_request_body_item : Annotated[Optional[conlist(LoyaltiesTiersCreateInBulkRequestBodyItem)], Field(description="Provide tier definitions you want to add to existing loyalty campaign.")] = None, **kwargs) -> List[LoyaltyTier]:  # noqa: E501
@@ -227,7 +567,464 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_earning_rule(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> None:  # noqa: E501
+    def create_loyalty_program(self, loyalties_create_campaign_request_body : Annotated[Optional[LoyaltiesCreateCampaignRequestBody], Field(description="Specify the loyalty campaign details.")] = None, **kwargs) -> LoyaltiesCreateCampaignResponseBody:  # noqa: E501
+        """Create Loyalty Campaign  # noqa: E501
+
+        Creates a batch of loyalty cards aggregated in a single loyalty campaign. It also allows you to define a custom codes pattern.    📘 Global uniqueness  All codes are unique across the whole project. Voucherify wont allow to generate the same codes in any of your campaigns.  🚧 Asyncronous action!  This is an asynchronous action, you cant read or modify a newly created campaign until the code generation is completed. See creation_status field in the loyalty campaign object description.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_loyalty_program(loyalties_create_campaign_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param loyalties_create_campaign_request_body: Specify the loyalty campaign details.
+        :type loyalties_create_campaign_request_body: LoyaltiesCreateCampaignRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesCreateCampaignResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the create_loyalty_program_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.create_loyalty_program_with_http_info(loyalties_create_campaign_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def create_loyalty_program_with_http_info(self, loyalties_create_campaign_request_body : Annotated[Optional[LoyaltiesCreateCampaignRequestBody], Field(description="Specify the loyalty campaign details.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Loyalty Campaign  # noqa: E501
+
+        Creates a batch of loyalty cards aggregated in a single loyalty campaign. It also allows you to define a custom codes pattern.    📘 Global uniqueness  All codes are unique across the whole project. Voucherify wont allow to generate the same codes in any of your campaigns.  🚧 Asyncronous action!  This is an asynchronous action, you cant read or modify a newly created campaign until the code generation is completed. See creation_status field in the loyalty campaign object description.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_loyalty_program_with_http_info(loyalties_create_campaign_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param loyalties_create_campaign_request_body: Specify the loyalty campaign details.
+        :type loyalties_create_campaign_request_body: LoyaltiesCreateCampaignRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesCreateCampaignResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'loyalties_create_campaign_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_loyalty_program" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_create_campaign_request_body'] is not None:
+            _body_params = _params['loyalties_create_campaign_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesCreateCampaignResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def create_points_expiration_export(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name.")], loyalties_points_expiration_export_create_request_body : Annotated[Optional[LoyaltiesPointsExpirationExportCreateRequestBody], Field(description="Specify the data filters, types of data to return and order in which the results should be returned.")] = None, **kwargs) -> LoyaltiesPointsExpirationExportCreateResponseBody:  # noqa: E501
+        """Create Points Expiration Export  # noqa: E501
+
+        Schedule the generation of a points expiration CSV file for a particular campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_points_expiration_export(campaign_id, loyalties_points_expiration_export_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID or name. (required)
+        :type campaign_id: str
+        :param loyalties_points_expiration_export_create_request_body: Specify the data filters, types of data to return and order in which the results should be returned.
+        :type loyalties_points_expiration_export_create_request_body: LoyaltiesPointsExpirationExportCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesPointsExpirationExportCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the create_points_expiration_export_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.create_points_expiration_export_with_http_info(campaign_id, loyalties_points_expiration_export_create_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def create_points_expiration_export_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name.")], loyalties_points_expiration_export_create_request_body : Annotated[Optional[LoyaltiesPointsExpirationExportCreateRequestBody], Field(description="Specify the data filters, types of data to return and order in which the results should be returned.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Points Expiration Export  # noqa: E501
+
+        Schedule the generation of a points expiration CSV file for a particular campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_points_expiration_export_with_http_info(campaign_id, loyalties_points_expiration_export_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID or name. (required)
+        :type campaign_id: str
+        :param loyalties_points_expiration_export_create_request_body: Specify the data filters, types of data to return and order in which the results should be returned.
+        :type loyalties_points_expiration_export_create_request_body: LoyaltiesPointsExpirationExportCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesPointsExpirationExportCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'loyalties_points_expiration_export_create_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_points_expiration_export" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_points_expiration_export_create_request_body'] is not None:
+            _body_params = _params['loyalties_points_expiration_export_create_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesPointsExpirationExportCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/points-expiration/export', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def create_reward_assignment1(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], loyalties_rewards_create_assignment_item_request_body : Annotated[Optional[conlist(LoyaltiesRewardsCreateAssignmentItemRequestBody)], Field(description="Define the cost of the rewards in loyalty points.")] = None, **kwargs) -> LoyaltiesRewardsCreateAssignmentResponseBody:  # noqa: E501
+        """Create Reward Assignment  # noqa: E501
+
+        Add rewards to a loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_reward_assignment1(campaign_id, loyalties_rewards_create_assignment_item_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param loyalties_rewards_create_assignment_item_request_body: Define the cost of the rewards in loyalty points.
+        :type loyalties_rewards_create_assignment_item_request_body: List[LoyaltiesRewardsCreateAssignmentItemRequestBody]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesRewardsCreateAssignmentResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the create_reward_assignment1_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.create_reward_assignment1_with_http_info(campaign_id, loyalties_rewards_create_assignment_item_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def create_reward_assignment1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], loyalties_rewards_create_assignment_item_request_body : Annotated[Optional[conlist(LoyaltiesRewardsCreateAssignmentItemRequestBody)], Field(description="Define the cost of the rewards in loyalty points.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Reward Assignment  # noqa: E501
+
+        Add rewards to a loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_reward_assignment1_with_http_info(campaign_id, loyalties_rewards_create_assignment_item_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param loyalties_rewards_create_assignment_item_request_body: Define the cost of the rewards in loyalty points.
+        :type loyalties_rewards_create_assignment_item_request_body: List[LoyaltiesRewardsCreateAssignmentItemRequestBody]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesRewardsCreateAssignmentResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'loyalties_rewards_create_assignment_item_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_reward_assignment1" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_rewards_create_assignment_item_request_body'] is not None:
+            _body_params = _params['loyalties_rewards_create_assignment_item_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesRewardsCreateAssignmentResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/rewards', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def delete_earning_rule(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> None:  # noqa: E501
         """Delete Earning Rule  # noqa: E501
 
         This method deletes an earning rule for a specific loyalty campaign.  # noqa: E501
@@ -237,7 +1034,7 @@ class LoyaltiesApi:
         >>> thread = api.delete_earning_rule(campaign_id, earning_rule_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param earning_rule_id: A unique earning rule ID. (required)
         :type earning_rule_id: str
@@ -259,7 +1056,7 @@ class LoyaltiesApi:
         return self.delete_earning_rule_with_http_info(campaign_id, earning_rule_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_earning_rule_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_earning_rule_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Earning Rule  # noqa: E501
 
         This method deletes an earning rule for a specific loyalty campaign.  # noqa: E501
@@ -269,7 +1066,7 @@ class LoyaltiesApi:
         >>> thread = api.delete_earning_rule_with_http_info(campaign_id, earning_rule_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param earning_rule_id: A unique earning rule ID. (required)
         :type earning_rule_id: str
@@ -369,19 +1166,19 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_loyalty_program(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with the same name.")] = None, **kwargs) -> LoyaltiesDeleteResponseBody:  # noqa: E501
+    def delete_loyalty_program(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the campaign and related vouchers will be removed permanently. If it is set to false or not set at all, the loyalty campaign and all related loyalty cards will be moved to the bin. Going forward, the user will be able to create the next campaign with the same name.")] = None, **kwargs) -> LoyaltiesDeleteResponseBody:  # noqa: E501
         """Delete Loyalty Campaign  # noqa: E501
 
-        This method permanently deletes a loyalty campaign and all related loyalty cards. This action cannot be undone. Also, it immediately removes any redemptions on loyalty cards.  # noqa: E501
+        Deletes a loyalty campaign and all related loyalty cards. This action cannot be undone. Also, it immediately removes any redemptions on loyalty cards. If the force parameter is set to false or not set at all, the loyalty campaign and all related loyalty cards will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.delete_loyalty_program(campaign_id, force, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
-        :param force: If this flag is set to `true`, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with the same name.
+        :param force: If this flag is set to true, the campaign and related vouchers will be removed permanently. If it is set to false or not set at all, the loyalty campaign and all related loyalty cards will be moved to the bin. Going forward, the user will be able to create the next campaign with the same name.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -401,19 +1198,19 @@ class LoyaltiesApi:
         return self.delete_loyalty_program_with_http_info(campaign_id, force, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_loyalty_program_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with the same name.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_loyalty_program_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the campaign and related vouchers will be removed permanently. If it is set to false or not set at all, the loyalty campaign and all related loyalty cards will be moved to the bin. Going forward, the user will be able to create the next campaign with the same name.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Loyalty Campaign  # noqa: E501
 
-        This method permanently deletes a loyalty campaign and all related loyalty cards. This action cannot be undone. Also, it immediately removes any redemptions on loyalty cards.  # noqa: E501
+        Deletes a loyalty campaign and all related loyalty cards. This action cannot be undone. Also, it immediately removes any redemptions on loyalty cards. If the force parameter is set to false or not set at all, the loyalty campaign and all related loyalty cards will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.delete_loyalty_program_with_http_info(campaign_id, force, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
-        :param force: If this flag is set to `true`, the campaign and related vouchers will be removed permanently. Going forward, the user will be able to create the next campaign with the same name.
+        :param force: If this flag is set to true, the campaign and related vouchers will be removed permanently. If it is set to false or not set at all, the loyalty campaign and all related loyalty cards will be moved to the bin. Going forward, the user will be able to create the next campaign with the same name.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -517,7 +1314,7 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_reward_assignment1(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> None:  # noqa: E501
+    def delete_reward_assignment1(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> None:  # noqa: E501
         """Delete Reward Assignment  # noqa: E501
 
         This method deletes a reward assignment for a particular loyalty campaign.  # noqa: E501
@@ -527,7 +1324,7 @@ class LoyaltiesApi:
         >>> thread = api.delete_reward_assignment1(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: A unique reward assignment ID. (required)
         :type assignment_id: str
@@ -549,7 +1346,7 @@ class LoyaltiesApi:
         return self.delete_reward_assignment1_with_http_info(campaign_id, assignment_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_reward_assignment1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_reward_assignment1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Reward Assignment  # noqa: E501
 
         This method deletes a reward assignment for a particular loyalty campaign.  # noqa: E501
@@ -559,7 +1356,7 @@ class LoyaltiesApi:
         >>> thread = api.delete_reward_assignment1_with_http_info(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: A unique reward assignment ID. (required)
         :type assignment_id: str
@@ -958,7 +1755,7 @@ class LoyaltiesApi:
     def export_loyalty_card_transactions(self, member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to export transaction data for.")], loyalties_members_transactions_export_create_request_body : Annotated[Optional[LoyaltiesMembersTransactionsExportCreateRequestBody], Field(description="Specify the parameters and filters for the transaction export.")] = None, **kwargs) -> LoyaltiesMembersTransactionsExportCreateResponseBody:  # noqa: E501
         """Export Loyalty Card Transactions  # noqa: E501
 
-        Export transactions that are associated with point movements on a loyalty card.  | **Field** | **Definition** | **Example Export** | |:---|:---|:---| | id | Unique transaction ID assigned by Voucherify. | vtx_0cb7811f1c07765800 | | type | Transaction type. | - `POINTS_EXPIRATION` <br> - `POINTS_ADDITION` <br> - `POINTS_REMOVAL` <br> - `POINTS_TRANSFER_OUT` <br> - `POINTS_ACCRUAL` <br> - `POINTS_REFUND` <br> - `POINTS_REDEMPTION` | | source_id | Custom source ID of the transaction if one was included originally. | source_id_custom | | reason | Contains the reason for the transaction if one was included originally. |  | | balance | The loyalty card balance after the transaction. |  | | amount | The amount of loyalty points being allocated during the transaction. This value can either be negative or positive depending on the nature of the transaction. |  | | created_at | Timestamp in ISO 8601 format representing the date and time when the transaction was created. | 2022-03-09T09:16:32.521Z  | | voucher_id | Unique Voucher ID. | v_dky7ksKfPX50Wb2Bxvcoeb1xT20b6tcp | | campaign_id | Parent campaign ID. | camp_FNYR4jhqZBM9xTptxDGgeNBV | | source|  Channel through which the transaction was initiated. | - `API` <br> - `voucherify-web-ui` <br> - `Automation` | | details | More detailed information stored in the form of a JSON. | Provides more details related to the transaction in the form of an object. | | related_transaction_id | Unique transaction ID related to a receiver/donor card in the case of a points transfer from/to another card. | vtx_0c9afe802593b34b80 |  # noqa: E501
+        Export transactions that are associated with point movements on a loyalty card.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -990,7 +1787,7 @@ class LoyaltiesApi:
     def export_loyalty_card_transactions_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to export transaction data for.")], loyalties_members_transactions_export_create_request_body : Annotated[Optional[LoyaltiesMembersTransactionsExportCreateRequestBody], Field(description="Specify the parameters and filters for the transaction export.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Export Loyalty Card Transactions  # noqa: E501
 
-        Export transactions that are associated with point movements on a loyalty card.  | **Field** | **Definition** | **Example Export** | |:---|:---|:---| | id | Unique transaction ID assigned by Voucherify. | vtx_0cb7811f1c07765800 | | type | Transaction type. | - `POINTS_EXPIRATION` <br> - `POINTS_ADDITION` <br> - `POINTS_REMOVAL` <br> - `POINTS_TRANSFER_OUT` <br> - `POINTS_ACCRUAL` <br> - `POINTS_REFUND` <br> - `POINTS_REDEMPTION` | | source_id | Custom source ID of the transaction if one was included originally. | source_id_custom | | reason | Contains the reason for the transaction if one was included originally. |  | | balance | The loyalty card balance after the transaction. |  | | amount | The amount of loyalty points being allocated during the transaction. This value can either be negative or positive depending on the nature of the transaction. |  | | created_at | Timestamp in ISO 8601 format representing the date and time when the transaction was created. | 2022-03-09T09:16:32.521Z  | | voucher_id | Unique Voucher ID. | v_dky7ksKfPX50Wb2Bxvcoeb1xT20b6tcp | | campaign_id | Parent campaign ID. | camp_FNYR4jhqZBM9xTptxDGgeNBV | | source|  Channel through which the transaction was initiated. | - `API` <br> - `voucherify-web-ui` <br> - `Automation` | | details | More detailed information stored in the form of a JSON. | Provides more details related to the transaction in the form of an object. | | related_transaction_id | Unique transaction ID related to a receiver/donor card in the case of a points transfer from/to another card. | vtx_0c9afe802593b34b80 |  # noqa: E501
+        Export transactions that are associated with point movements on a loyalty card.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1113,7 +1910,7 @@ class LoyaltiesApi:
     def export_loyalty_card_transactions1(self, campaign_id : Annotated[StrictStr, Field(..., description="A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to export.")], member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to export transaction data for.")], loyalties_members_transactions_export_create_request_body : Annotated[Optional[LoyaltiesMembersTransactionsExportCreateRequestBody], Field(description="Specify the parameters and filters for the transaction export.")] = None, **kwargs) -> LoyaltiesMembersTransactionsExportCreateResponseBody:  # noqa: E501
         """Export Loyalty Card Transactions  # noqa: E501
 
-        Export transactions that are associated with point movements on a loyalty card.  | **Field** | **Definition** | **Example Export** | |:---|:---|:---| | id | Unique transaction ID assigned by Voucherify. | vtx_0cb7811f1c07765800 | | type | Transaction type. | - `POINTS_EXPIRATION` <br> - `POINTS_ADDITION` <br> - `POINTS_REMOVAL` <br> - `POINTS_TRANSFER_OUT` <br> - `POINTS_ACCRUAL` <br> - `POINTS_REFUND` <br> - `POINTS_REDEMPTION` | | source_id | Custom source ID of the transaction if one was included originally. | source_id_custom | | reason | Contains the reason for the transaction if one was included originally. |  | | balance | The loyalty card balance after the transaction. |  | | amount | The amount of loyalty points being allocated during the transaction. This value can either be negative or positive depending on the nature of the transaction. |  | | created_at | Timestamp in ISO 8601 format representing the date and time when the transaction was created. | 2022-03-09T09:16:32.521Z  | | voucher_id | Unique Voucher ID. | v_dky7ksKfPX50Wb2Bxvcoeb1xT20b6tcp | | campaign_id | Parent campaign ID. | camp_FNYR4jhqZBM9xTptxDGgeNBV | | source|  Channel through which the transaction was initiated. | - `API` <br> - `voucherify-web-ui` <br> - `Automation` | | details | More detailed information stored in the form of a JSON. | Provides more details related to the transaction in the form of an object. | | related_transaction_id | Unique transaction ID related to a receiver/donor card in the case of a points transfer from/to another card. | vtx_0c9afe802593b34b80 |  # noqa: E501
+        Export transactions that are associated with point movements on a loyalty card.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1147,7 +1944,7 @@ class LoyaltiesApi:
     def export_loyalty_card_transactions1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to export.")], member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to export transaction data for.")], loyalties_members_transactions_export_create_request_body : Annotated[Optional[LoyaltiesMembersTransactionsExportCreateRequestBody], Field(description="Specify the parameters and filters for the transaction export.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Export Loyalty Card Transactions  # noqa: E501
 
-        Export transactions that are associated with point movements on a loyalty card.  | **Field** | **Definition** | **Example Export** | |:---|:---|:---| | id | Unique transaction ID assigned by Voucherify. | vtx_0cb7811f1c07765800 | | type | Transaction type. | - `POINTS_EXPIRATION` <br> - `POINTS_ADDITION` <br> - `POINTS_REMOVAL` <br> - `POINTS_TRANSFER_OUT` <br> - `POINTS_ACCRUAL` <br> - `POINTS_REFUND` <br> - `POINTS_REDEMPTION` | | source_id | Custom source ID of the transaction if one was included originally. | source_id_custom | | reason | Contains the reason for the transaction if one was included originally. |  | | balance | The loyalty card balance after the transaction. |  | | amount | The amount of loyalty points being allocated during the transaction. This value can either be negative or positive depending on the nature of the transaction. |  | | created_at | Timestamp in ISO 8601 format representing the date and time when the transaction was created. | 2022-03-09T09:16:32.521Z  | | voucher_id | Unique Voucher ID. | v_dky7ksKfPX50Wb2Bxvcoeb1xT20b6tcp | | campaign_id | Parent campaign ID. | camp_FNYR4jhqZBM9xTptxDGgeNBV | | source|  Channel through which the transaction was initiated. | - `API` <br> - `voucherify-web-ui` <br> - `Automation` | | details | More detailed information stored in the form of a JSON. | Provides more details related to the transaction in the form of an object. | | related_transaction_id | Unique transaction ID related to a receiver/donor card in the case of a points transfer from/to another card. | vtx_0c9afe802593b34b80 |  # noqa: E501
+        Export transactions that are associated with point movements on a loyalty card.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1273,7 +2070,7 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_earning_rule(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> LoyaltiesEarningRulesGetResponseBody:  # noqa: E501
+    def get_earning_rule(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> LoyaltiesEarningRulesGetResponseBody:  # noqa: E501
         """Get Earning Rule  # noqa: E501
 
         Retrieves an earning rule assigned to a campaign.  # noqa: E501
@@ -1283,7 +2080,7 @@ class LoyaltiesApi:
         >>> thread = api.get_earning_rule(campaign_id, earning_rule_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param earning_rule_id: A unique earning rule ID. (required)
         :type earning_rule_id: str
@@ -1305,7 +2102,7 @@ class LoyaltiesApi:
         return self.get_earning_rule_with_http_info(campaign_id, earning_rule_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_earning_rule_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_earning_rule_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Earning Rule  # noqa: E501
 
         Retrieves an earning rule assigned to a campaign.  # noqa: E501
@@ -1315,7 +2112,7 @@ class LoyaltiesApi:
         >>> thread = api.get_earning_rule_with_http_info(campaign_id, earning_rule_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param earning_rule_id: A unique earning rule ID. (required)
         :type earning_rule_id: str
@@ -1405,6 +2202,146 @@ class LoyaltiesApi:
 
         return self.api_client.call_api(
             '/v1/loyalties/{campaignId}/earning-rules/{earningRuleId}', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def get_loyalty_program(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], **kwargs) -> LoyaltiesGetCampaignResponseBody:  # noqa: E501
+        """Get Loyalty Campaign  # noqa: E501
+
+        Retrieve a specific loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_loyalty_program(campaign_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesGetCampaignResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the get_loyalty_program_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.get_loyalty_program_with_http_info(campaign_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def get_loyalty_program_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Get Loyalty Campaign  # noqa: E501
+
+        Retrieve a specific loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_loyalty_program_with_http_info(campaign_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesGetCampaignResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_loyalty_program" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesGetCampaignResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -1569,7 +2506,295 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_reward_assignment1(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> LoyaltiesRewardAssignmentsGetResponseBody:  # noqa: E501
+    def get_member(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card code assigned to a particular customer.")], **kwargs) -> LoyaltiesMembersGetResponseBody:  # noqa: E501
+        """Get Member  # noqa: E501
+
+        Retrieve loyalty card with the given member ID (i.e. voucher code).      📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to retrieve loyalty card details without having to provide the campaignId as a path parameter.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_member(member_id, async_req=True)
+        >>> result = thread.get()
+
+        :param member_id: Unique loyalty card code assigned to a particular customer. (required)
+        :type member_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesMembersGetResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the get_member_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.get_member_with_http_info(member_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def get_member_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card code assigned to a particular customer.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Get Member  # noqa: E501
+
+        Retrieve loyalty card with the given member ID (i.e. voucher code).      📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to retrieve loyalty card details without having to provide the campaignId as a path parameter.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_member_with_http_info(member_id, async_req=True)
+        >>> result = thread.get()
+
+        :param member_id: Unique loyalty card code assigned to a particular customer. (required)
+        :type member_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesMembersGetResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'member_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_member" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['member_id']:
+            _path_params['memberId'] = _params['member_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesMembersGetResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/members/{memberId}', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def get_member1(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID.")], member_id : Annotated[StrictStr, Field(..., description="Unique code that identifies the loyalty card.")], **kwargs) -> LoyaltiesMembersGetResponseBody:  # noqa: E501
+        """Get Member  # noqa: E501
+
+        Retrieves the loyalty card with the given member ID (i.e. voucher code).  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_member1(campaign_id, member_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID. (required)
+        :type campaign_id: str
+        :param member_id: Unique code that identifies the loyalty card. (required)
+        :type member_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesMembersGetResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the get_member1_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.get_member1_with_http_info(campaign_id, member_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def get_member1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID.")], member_id : Annotated[StrictStr, Field(..., description="Unique code that identifies the loyalty card.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Get Member  # noqa: E501
+
+        Retrieves the loyalty card with the given member ID (i.e. voucher code).  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.get_member1_with_http_info(campaign_id, member_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID. (required)
+        :type campaign_id: str
+        :param member_id: Unique code that identifies the loyalty card. (required)
+        :type member_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesMembersGetResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'member_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method get_member1" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+        if _params['member_id']:
+            _path_params['memberId'] = _params['member_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesMembersGetResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/members/{memberId}', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def get_reward_assignment1(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> LoyaltiesRewardAssignmentsGetResponseBody:  # noqa: E501
         """Get Reward Assignment  # noqa: E501
 
         Retrieve specific reward assignment.  # noqa: E501
@@ -1579,7 +2804,7 @@ class LoyaltiesApi:
         >>> thread = api.get_reward_assignment1(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: Unique reward assignment ID. (required)
         :type assignment_id: str
@@ -1601,7 +2826,7 @@ class LoyaltiesApi:
         return self.get_reward_assignment1_with_http_info(campaign_id, assignment_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_reward_assignment1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_reward_assignment1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Reward Assignment  # noqa: E501
 
         Retrieve specific reward assignment.  # noqa: E501
@@ -1611,7 +2836,7 @@ class LoyaltiesApi:
         >>> thread = api.get_reward_assignment1_with_http_info(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: Unique reward assignment ID. (required)
         :type assignment_id: str
@@ -1717,17 +2942,17 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_reward_assignment2(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> LoyaltiesRewardsGetResponseBody:  # noqa: E501
+    def get_reward_assignment2(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> LoyaltiesRewardsGetResponseBody:  # noqa: E501
         """Get Reward Assignment  # noqa: E501
 
-        Retrieve specific reward assignment.  > 📘 Alternative endpoint > > This endpoint is an alternative to this [endpoint](ref:get-reward-assignment-2).   # noqa: E501
+        Retrieve specific reward assignment.  📘 Alternative endpoint  This endpoint is an alternative to this endpoint.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.get_reward_assignment2(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: A unique reward assignment ID. (required)
         :type assignment_id: str
@@ -1749,17 +2974,17 @@ class LoyaltiesApi:
         return self.get_reward_assignment2_with_http_info(campaign_id, assignment_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_reward_assignment2_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_reward_assignment2_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Reward Assignment  # noqa: E501
 
-        Retrieve specific reward assignment.  > 📘 Alternative endpoint > > This endpoint is an alternative to this [endpoint](ref:get-reward-assignment-2).   # noqa: E501
+        Retrieve specific reward assignment.  📘 Alternative endpoint  This endpoint is an alternative to this endpoint.   # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.get_reward_assignment2_with_http_info(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: A unique reward assignment ID. (required)
         :type assignment_id: str
@@ -1865,7 +3090,7 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_reward_details(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> LoyaltiesRewardAssignmentsRewardGetResponseBody:  # noqa: E501
+    def get_reward_details(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> LoyaltiesRewardAssignmentsRewardGetResponseBody:  # noqa: E501
         """Get Reward Details  # noqa: E501
 
         Get reward details in the context of a loyalty campaign and reward assignment ID.  # noqa: E501
@@ -1875,7 +3100,7 @@ class LoyaltiesApi:
         >>> thread = api.get_reward_details(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: Unique reward assignment ID. (required)
         :type assignment_id: str
@@ -1897,7 +3122,7 @@ class LoyaltiesApi:
         return self.get_reward_details_with_http_info(campaign_id, assignment_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_reward_details_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_reward_details_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="Unique reward assignment ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Reward Details  # noqa: E501
 
         Get reward details in the context of a loyalty campaign and reward assignment ID.  # noqa: E501
@@ -1907,7 +3132,7 @@ class LoyaltiesApi:
         >>> thread = api.get_reward_details_with_http_info(campaign_id, assignment_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param assignment_id: Unique reward assignment ID. (required)
         :type assignment_id: str
@@ -2013,22 +3238,184 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_loyalty_card_transactions(self, member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> LoyaltiesMembersTransactionsListResponseBody:  # noqa: E501
+    def list_earning_rules(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListEarningRules], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> LoyaltiesEarningRulesListResponseBody:  # noqa: E501
+        """List Earning Rules  # noqa: E501
+
+        Returns a list of all earning rules within a given campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_earning_rules(campaign_id, limit, page, order, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListEarningRules
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesEarningRulesListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_earning_rules_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_earning_rules_with_http_info(campaign_id, limit, page, order, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_earning_rules_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListEarningRules], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Earning Rules  # noqa: E501
+
+        Returns a list of all earning rules within a given campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_earning_rules_with_http_info(campaign_id, limit, page, order, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListEarningRules
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesEarningRulesListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'limit',
+            'page',
+            'order'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_earning_rules" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesEarningRulesListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/earning-rules', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_loyalty_card_transactions(self, member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, **kwargs) -> LoyaltiesMembersTransactionsListResponseBody:  # noqa: E501
         """List Loyalty Card Transactions  # noqa: E501
 
         Retrieve transaction data related to point movements for a specific loyalty card.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_loyalty_card_transactions(member_id, limit, page, async_req=True)
+        >>> thread = api.list_loyalty_card_transactions(member_id, limit, async_req=True)
         >>> result = thread.get()
 
         :param member_id: A unique code identifying the loyalty card that you are looking to retrieve transaction data for. (required)
         :type member_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
-        :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _request_timeout: timeout setting for this request.
@@ -2044,25 +3431,23 @@ class LoyaltiesApi:
         if '_preload_content' in kwargs:
             message = "Error! Please call the list_loyalty_card_transactions_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
             raise ValueError(message)
-        return self.list_loyalty_card_transactions_with_http_info(member_id, limit, page, **kwargs)  # noqa: E501
+        return self.list_loyalty_card_transactions_with_http_info(member_id, limit, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_loyalty_card_transactions_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_loyalty_card_transactions_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Loyalty Card Transactions  # noqa: E501
 
         Retrieve transaction data related to point movements for a specific loyalty card.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
-        >>> thread = api.list_loyalty_card_transactions_with_http_info(member_id, limit, page, async_req=True)
+        >>> thread = api.list_loyalty_card_transactions_with_http_info(member_id, limit, async_req=True)
         >>> result = thread.get()
 
         :param member_id: A unique code identifying the loyalty card that you are looking to retrieve transaction data for. (required)
         :type member_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
-        :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
         :param _preload_content: if False, the ApiResponse.data will
@@ -2092,8 +3477,7 @@ class LoyaltiesApi:
 
         _all_params = [
             'member_id',
-            'limit',
-            'page'
+            'limit'
         ]
         _all_params.extend(
             [
@@ -2129,9 +3513,6 @@ class LoyaltiesApi:
         _query_params = []
         if _params.get('limit') is not None:  # noqa: E501
             _query_params.append(('limit', _params['limit']))
-
-        if _params.get('page') is not None:  # noqa: E501
-            _query_params.append(('page', _params['page']))
 
         # process the header parameters
         _header_params = dict(_params.get('_headers', {}))
@@ -2169,7 +3550,7 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_loyalty_card_transactions1(self, campaign_id : Annotated[StrictStr, Field(..., description="A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to return.")], member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> LoyaltiesMembersTransactionsListResponseBody:  # noqa: E501
+    def list_loyalty_card_transactions1(self, campaign_id : Annotated[StrictStr, Field(..., description="A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to return.")], member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> LoyaltiesMembersTransactionsListResponseBody:  # noqa: E501
         """List Loyalty Card Transactions  # noqa: E501
 
         Retrieve transaction data related to point movements for a specific loyalty card.  # noqa: E501
@@ -2183,9 +3564,9 @@ class LoyaltiesApi:
         :type campaign_id: str
         :param member_id: A unique code identifying the loyalty card that you are looking to retrieve transaction data for. (required)
         :type member_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2205,7 +3586,7 @@ class LoyaltiesApi:
         return self.list_loyalty_card_transactions1_with_http_info(campaign_id, member_id, limit, page, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_loyalty_card_transactions1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to return.")], member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_loyalty_card_transactions1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="A unique identifier of the loyalty campaign containing the voucher whose transactions you would like to return.")], member_id : Annotated[StrictStr, Field(..., description="A unique code identifying the loyalty card that you are looking to retrieve transaction data for.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Loyalty Card Transactions  # noqa: E501
 
         Retrieve transaction data related to point movements for a specific loyalty card.  # noqa: E501
@@ -2219,9 +3600,9 @@ class LoyaltiesApi:
         :type campaign_id: str
         :param member_id: A unique code identifying the loyalty card that you are looking to retrieve transaction data for. (required)
         :type member_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2333,7 +3714,163 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_loyalty_tier_earning_rules(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name.")], loyalty_tier_id : Annotated[StrictStr, Field(..., description="Unique loyalty tier ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> LoyaltiesTiersEarningRulesListResponseBody:  # noqa: E501
+    def list_loyalty_programs(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListCampaigns], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> LoyaltiesListCampaignsResponseBody:  # noqa: E501
+        """List Loyalty Campaigns  # noqa: E501
+
+        Returns a list of your loyalty campaigns.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_loyalty_programs(limit, page, order, async_req=True)
+        >>> result = thread.get()
+
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListCampaigns
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesListCampaignsResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_loyalty_programs_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_loyalty_programs_with_http_info(limit, page, order, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_loyalty_programs_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListCampaigns], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Loyalty Campaigns  # noqa: E501
+
+        Returns a list of your loyalty campaigns.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_loyalty_programs_with_http_info(limit, page, order, async_req=True)
+        >>> result = thread.get()
+
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListCampaigns
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesListCampaignsResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'limit',
+            'page',
+            'order'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_loyalty_programs" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesListCampaignsResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_loyalty_tier_earning_rules(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name.")], loyalty_tier_id : Annotated[StrictStr, Field(..., description="Unique loyalty tier ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> LoyaltiesTiersEarningRulesListResponseBody:  # noqa: E501
         """List Loyalty Tier Earning Rules  # noqa: E501
 
         Retrieve available earning rules for a given tier and the calculation method for earning points.  # noqa: E501
@@ -2347,9 +3884,9 @@ class LoyaltiesApi:
         :type campaign_id: str
         :param loyalty_tier_id: Unique loyalty tier ID. (required)
         :type loyalty_tier_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2369,7 +3906,7 @@ class LoyaltiesApi:
         return self.list_loyalty_tier_earning_rules_with_http_info(campaign_id, loyalty_tier_id, limit, page, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_loyalty_tier_earning_rules_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name.")], loyalty_tier_id : Annotated[StrictStr, Field(..., description="Unique loyalty tier ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_loyalty_tier_earning_rules_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name.")], loyalty_tier_id : Annotated[StrictStr, Field(..., description="Unique loyalty tier ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Loyalty Tier Earning Rules  # noqa: E501
 
         Retrieve available earning rules for a given tier and the calculation method for earning points.  # noqa: E501
@@ -2383,9 +3920,9 @@ class LoyaltiesApi:
         :type campaign_id: str
         :param loyalty_tier_id: Unique loyalty tier ID. (required)
         :type loyalty_tier_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2645,7 +4182,7 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_loyalty_tiers(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique loyalty campaign ID or name.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, order : Annotated[Optional[ParameterOrderListLoyaltyTiers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> LoyaltiesTiersListResponseBody:  # noqa: E501
+    def list_loyalty_tiers(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique loyalty campaign ID or name.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderListLoyaltyTiers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> LoyaltiesTiersListResponseBody:  # noqa: E501
         """List Loyalty Tiers  # noqa: E501
 
         Retrieve a list of loyalty tiers which were added to the loyalty program.  # noqa: E501
@@ -2657,7 +4194,7 @@ class LoyaltiesApi:
 
         :param campaign_id: Unique loyalty campaign ID or name. (required)
         :type campaign_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
         :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListLoyaltyTiers
@@ -2679,7 +4216,7 @@ class LoyaltiesApi:
         return self.list_loyalty_tiers_with_http_info(campaign_id, limit, order, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_loyalty_tiers_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique loyalty campaign ID or name.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, order : Annotated[Optional[ParameterOrderListLoyaltyTiers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_loyalty_tiers_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique loyalty campaign ID or name.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderListLoyaltyTiers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Loyalty Tiers  # noqa: E501
 
         Retrieve a list of loyalty tiers which were added to the loyalty program.  # noqa: E501
@@ -2691,7 +4228,7 @@ class LoyaltiesApi:
 
         :param campaign_id: Unique loyalty campaign ID or name. (required)
         :type campaign_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
         :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListLoyaltyTiers
@@ -2785,6 +4322,342 @@ class LoyaltiesApi:
 
         return self.api_client.call_api(
             '/v1/loyalties/{campaignId}/tiers', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_member_activity(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderCreatedAt], Field(description="Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, **kwargs) -> LoyaltiesMemberActivityListResponseBody:  # noqa: E501
+        """List Member Activity  # noqa: E501
+
+          📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to get member activities without having to provide the campaignId as a path parameter. Retrieves the list of activities for the given member ID related to a voucher and customer who is the holder of the voucher.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_member_activity(member_id, limit, order, starting_after_id, async_req=True)
+        >>> result = thread.get()
+
+        :param member_id: Unique loyalty card assigned to a particular customer. (required)
+        :type member_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param order: Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderCreatedAt
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
+        :type starting_after_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesMemberActivityListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_member_activity_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_member_activity_with_http_info(member_id, limit, order, starting_after_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_member_activity_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderCreatedAt], Field(description="Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Member Activity  # noqa: E501
+
+          📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to get member activities without having to provide the campaignId as a path parameter. Retrieves the list of activities for the given member ID related to a voucher and customer who is the holder of the voucher.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_member_activity_with_http_info(member_id, limit, order, starting_after_id, async_req=True)
+        >>> result = thread.get()
+
+        :param member_id: Unique loyalty card assigned to a particular customer. (required)
+        :type member_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param order: Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderCreatedAt
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
+        :type starting_after_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesMemberActivityListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'member_id',
+            'limit',
+            'order',
+            'starting_after_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_member_activity" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['member_id']:
+            _path_params['memberId'] = _params['member_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        if _params.get('starting_after_id') is not None:  # noqa: E501
+            _query_params.append(('starting_after_id', _params['starting_after_id']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesMemberActivityListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/members/{memberId}/activity', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_member_activity1(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID.")], member_id : Annotated[StrictStr, Field(..., description="A code that identifies the loyalty card.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderCreatedAt], Field(description="Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, **kwargs) -> LoyaltiesMemberActivityListResponseBody:  # noqa: E501
+        """List Member Activity  # noqa: E501
+
+        Retrieves the list of activities for the given member ID related to a voucher and customer who is the holder of the voucher.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_member_activity1(campaign_id, member_id, limit, order, starting_after_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID. (required)
+        :type campaign_id: str
+        :param member_id: A code that identifies the loyalty card. (required)
+        :type member_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param order: Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderCreatedAt
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
+        :type starting_after_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesMemberActivityListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_member_activity1_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_member_activity1_with_http_info(campaign_id, member_id, limit, order, starting_after_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_member_activity1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID.")], member_id : Annotated[StrictStr, Field(..., description="A code that identifies the loyalty card.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[ParameterOrderCreatedAt], Field(description="Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after_id : Annotated[Optional[StrictStr], Field(description="A cursor for pagination. It retrieves the events starting after an event with the given ID.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Member Activity  # noqa: E501
+
+        Retrieves the list of activities for the given member ID related to a voucher and customer who is the holder of the voucher.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_member_activity1_with_http_info(campaign_id, member_id, limit, order, starting_after_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID. (required)
+        :type campaign_id: str
+        :param member_id: A code that identifies the loyalty card. (required)
+        :type member_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param order: Apply this filter to order the events according the date and time when it was created. The dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderCreatedAt
+        :param starting_after_id: A cursor for pagination. It retrieves the events starting after an event with the given ID.
+        :type starting_after_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesMemberActivityListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'member_id',
+            'limit',
+            'order',
+            'starting_after_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_member_activity1" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+        if _params['member_id']:
+            _path_params['memberId'] = _params['member_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        if _params.get('starting_after_id') is not None:  # noqa: E501
+            _query_params.append(('starting_after_id', _params['starting_after_id']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesMemberActivityListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/members/{memberId}/activity', 'GET',
             _path_params,
             _query_params,
             _header_params,
@@ -2941,10 +4814,10 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_member_rewards(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], affordable_only : Annotated[Optional[StrictBool], Field(description="Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to `true` to return rewards which the customer can actually afford.")] = None, **kwargs) -> LoyaltiesMembersRewardsListResponseBody:  # noqa: E501
+    def list_member_rewards(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], affordable_only : Annotated[Optional[StrictBool], Field(description="Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to true to return rewards which the customer can actually afford.")] = None, **kwargs) -> LoyaltiesMembersRewardsListResponseBody:  # noqa: E501
         """List Member Rewards  # noqa: E501
 
-        Retrieves the list of rewards that the given customer (identified by `member_id`, which is a loyalty card assigned to a particular customer) **can get in exchange for loyalty points**.    You can use the `affordable_only` parameter to limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card).    Please note that rewards that are disabled (i.e. set to `Not Available` in the Dashboard) for a given loyalty tier reward mapping will not be returned in this endpoint.  # noqa: E501
+        Retrieves the list of rewards that the given customer (identified by member_id, which is a loyalty card assigned to a particular customer) **can get in exchange for loyalty points**.   You can use the affordable_only parameter to limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card).   Please note that rewards that are disabled (i.e. set to Not Available in the Dashboard) for a given loyalty tier reward mapping will not be returned in this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2953,7 +4826,7 @@ class LoyaltiesApi:
 
         :param member_id: Unique loyalty card assigned to a particular customer. (required)
         :type member_id: str
-        :param affordable_only: Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to `true` to return rewards which the customer can actually afford.
+        :param affordable_only: Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to true to return rewards which the customer can actually afford.
         :type affordable_only: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -2973,10 +4846,10 @@ class LoyaltiesApi:
         return self.list_member_rewards_with_http_info(member_id, affordable_only, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_member_rewards_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], affordable_only : Annotated[Optional[StrictBool], Field(description="Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to `true` to return rewards which the customer can actually afford.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_member_rewards_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], affordable_only : Annotated[Optional[StrictBool], Field(description="Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to true to return rewards which the customer can actually afford.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Member Rewards  # noqa: E501
 
-        Retrieves the list of rewards that the given customer (identified by `member_id`, which is a loyalty card assigned to a particular customer) **can get in exchange for loyalty points**.    You can use the `affordable_only` parameter to limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card).    Please note that rewards that are disabled (i.e. set to `Not Available` in the Dashboard) for a given loyalty tier reward mapping will not be returned in this endpoint.  # noqa: E501
+        Retrieves the list of rewards that the given customer (identified by member_id, which is a loyalty card assigned to a particular customer) **can get in exchange for loyalty points**.   You can use the affordable_only parameter to limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card).   Please note that rewards that are disabled (i.e. set to Not Available in the Dashboard) for a given loyalty tier reward mapping will not be returned in this endpoint.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -2985,7 +4858,7 @@ class LoyaltiesApi:
 
         :param member_id: Unique loyalty card assigned to a particular customer. (required)
         :type member_id: str
-        :param affordable_only: Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to `true` to return rewards which the customer can actually afford.
+        :param affordable_only: Limit the results to rewards that the customer can actually afford (only rewards whose price in points is not higher than the loyalty points balance on a loyalty card). Set this flag to true to return rewards which the customer can actually afford.
         :type affordable_only: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -3089,23 +4962,228 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_points_expiration(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], member_id : Annotated[StrictStr, Field(..., description="Loyalty card code.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> LoyaltiesMembersPointsExpirationListResponseBody:  # noqa: E501
+    def list_members(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID of the loyalty program.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, customer : Annotated[Optional[StrictStr], Field(description="A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z")] = None, order : Annotated[Optional[ParameterOrderVouchers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, code : Optional[StrictStr] = None, ids : Optional[conlist(StrictStr)] = None, **kwargs) -> LoyaltiesListMembersResponseBody:  # noqa: E501
+        """List Members  # noqa: E501
+
+        Returns a list of your loyalty cards. The loyalty cards are sorted by creation date, with the most recent loyalty cards appearing first.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_members(campaign_id, limit, page, customer, created_at, updated_at, order, code, ids, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID of the loyalty program. (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param customer: A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.
+        :type customer: str
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
+        :type created_at: ParameterCreatedBeforeAfter
+        :param updated_at: A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z
+        :type updated_at: ParameterUpdatedBeforeAfter
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderVouchers
+        :param code:
+        :type code: str
+        :param ids:
+        :type ids: List[str]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesListMembersResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_members_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_members_with_http_info(campaign_id, limit, page, customer, created_at, updated_at, order, code, ids, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_members_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID of the loyalty program.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, customer : Annotated[Optional[StrictStr], Field(description="A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z")] = None, order : Annotated[Optional[ParameterOrderVouchers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, code : Optional[StrictStr] = None, ids : Optional[conlist(StrictStr)] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Members  # noqa: E501
+
+        Returns a list of your loyalty cards. The loyalty cards are sorted by creation date, with the most recent loyalty cards appearing first.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_members_with_http_info(campaign_id, limit, page, customer, created_at, updated_at, order, code, ids, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID of the loyalty program. (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param customer: A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.
+        :type customer: str
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
+        :type created_at: ParameterCreatedBeforeAfter
+        :param updated_at: A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z
+        :type updated_at: ParameterUpdatedBeforeAfter
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderVouchers
+        :param code:
+        :type code: str
+        :param ids:
+        :type ids: List[str]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesListMembersResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'limit',
+            'page',
+            'customer',
+            'created_at',
+            'updated_at',
+            'order',
+            'code',
+            'ids'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_members" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('customer') is not None:  # noqa: E501
+            _query_params.append(('customer', _params['customer']))
+
+        if _params.get('created_at') is not None:  # noqa: E501
+            _query_params.append(('created_at', _params['created_at']))
+
+        if _params.get('updated_at') is not None:  # noqa: E501
+            _query_params.append(('updated_at', _params['updated_at']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        if _params.get('code') is not None:  # noqa: E501
+            _query_params.append(('code', _params['code']))
+
+        if _params.get('ids') is not None:  # noqa: E501
+            _query_params.append(('ids', _params['ids']))
+            _collection_formats['ids'] = 'multi'
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesListMembersResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/members', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_points_expiration(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], member_id : Annotated[StrictStr, Field(..., description="Loyalty card code.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> LoyaltiesMembersPointsExpirationListResponseBody:  # noqa: E501
         """Get Points Expiration  # noqa: E501
 
-        Retrieve loyalty point expiration buckets for a given loyalty card. Expired point buckets are not returned in this endpoint. You can use the [Exports API](ref:create-export) to retrieve a list of both `ACTIVE` and `EXPIRED` point buckets.  # noqa: E501
+        Retrieve loyalty point expiration buckets for a given loyalty card. Expired point buckets are not returned in this endpoint. You can use the Exports API to retrieve a list of both ACTIVE and EXPIRED point buckets.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.list_points_expiration(campaign_id, member_id, limit, page, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param member_id: Loyalty card code. (required)
         :type member_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -3125,23 +5203,23 @@ class LoyaltiesApi:
         return self.list_points_expiration_with_http_info(campaign_id, member_id, limit, page, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_points_expiration_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`. ")], member_id : Annotated[StrictStr, Field(..., description="Loyalty card code.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_points_expiration_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], member_id : Annotated[StrictStr, Field(..., description="Loyalty card code.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Get Points Expiration  # noqa: E501
 
-        Retrieve loyalty point expiration buckets for a given loyalty card. Expired point buckets are not returned in this endpoint. You can use the [Exports API](ref:create-export) to retrieve a list of both `ACTIVE` and `EXPIRED` point buckets.  # noqa: E501
+        Retrieve loyalty point expiration buckets for a given loyalty card. Expired point buckets are not returned in this endpoint. You can use the Exports API to retrieve a list of both ACTIVE and EXPIRED point buckets.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.list_points_expiration_with_http_info(campaign_id, member_id, limit, page, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty%20Campaign`.  (required)
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
         :type campaign_id: str
         :param member_id: Loyalty card code. (required)
         :type member_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -3253,10 +5331,338 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
+    def list_reward_assignments1(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, assignment_id : Annotated[Optional[StrictStr], Field(description="A unique reward assignment ID.")] = None, **kwargs) -> LoyaltiesRewardAssignmentsListResponseBody:  # noqa: E501
+        """List Reward Assignments  # noqa: E501
+
+        Returns reward assignments from a given loyalty campaign.  📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to be more contextual to the type of data returned in the response.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_reward_assignments1(campaign_id, limit, page, assignment_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param assignment_id: A unique reward assignment ID.
+        :type assignment_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesRewardAssignmentsListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_reward_assignments1_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_reward_assignments1_with_http_info(campaign_id, limit, page, assignment_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_reward_assignments1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, assignment_id : Annotated[Optional[StrictStr], Field(description="A unique reward assignment ID.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Reward Assignments  # noqa: E501
+
+        Returns reward assignments from a given loyalty campaign.  📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to be more contextual to the type of data returned in the response.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_reward_assignments1_with_http_info(campaign_id, limit, page, assignment_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param assignment_id: A unique reward assignment ID.
+        :type assignment_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesRewardAssignmentsListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'limit',
+            'page',
+            'assignment_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_reward_assignments1" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('assignment_id') is not None:  # noqa: E501
+            _query_params.append(('assignmentId', _params['assignment_id']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesRewardAssignmentsListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/reward-assignments', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def list_reward_assignments2(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, assignment_id : Annotated[Optional[StrictStr], Field(description="A unique reward assignment ID.")] = None, **kwargs) -> LoyaltiesRewardsListAssignmentsResponseBody:  # noqa: E501
+        """List Reward Assignments  # noqa: E501
+
+        Returns active rewards from a given loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_reward_assignments2(campaign_id, limit, page, assignment_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param assignment_id: A unique reward assignment ID.
+        :type assignment_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesRewardsListAssignmentsResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_reward_assignments2_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_reward_assignments2_with_http_info(campaign_id, limit, page, assignment_id, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_reward_assignments2_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, assignment_id : Annotated[Optional[StrictStr], Field(description="A unique reward assignment ID.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Reward Assignments  # noqa: E501
+
+        Returns active rewards from a given loyalty campaign.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_reward_assignments2_with_http_info(campaign_id, limit, page, assignment_id, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param assignment_id: A unique reward assignment ID.
+        :type assignment_id: str
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesRewardsListAssignmentsResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'limit',
+            'page',
+            'assignment_id'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_reward_assignments2" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('assignment_id') is not None:  # noqa: E501
+            _query_params.append(('assignment_id', _params['assignment_id']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesRewardsListAssignmentsResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/rewards', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
     def redeem_reward(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], loyalties_members_redemption_redeem_request_body : Annotated[Optional[LoyaltiesMembersRedemptionRedeemRequestBody], Field(description="Specify the reward to be redeemed. In case of a pay with points reward, specify the order and the number of points to be applied to the order. Please note that if you do not specify the amount of points, the application will default to applying the number of points to pay for the remainder of the order. If the limit of available points on the card is reached, then only the available points on the card will be applied to the order.")] = None, **kwargs) -> LoyaltiesMembersRedemptionRedeemResponseBody:  # noqa: E501
         """Redeem Reward  # noqa: E501
 
-        <!-- theme: info --> > 📘 Alternative endpoint > > This endpoint is an alternative to this <!-- [endpoint](OpenAPI.json/paths/~1loyalties~1{campaignId}~1members~1{memberId}~1redemption) -->[endpoint](ref:redeem-reward-1). The URL was re-designed to allow you to redeem a reward without having to provide the `campaignId` as a path parameter.  # noqa: E501
+          📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to redeem a reward without having to provide the campaignId as a path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3288,7 +5694,7 @@ class LoyaltiesApi:
     def redeem_reward_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], loyalties_members_redemption_redeem_request_body : Annotated[Optional[LoyaltiesMembersRedemptionRedeemRequestBody], Field(description="Specify the reward to be redeemed. In case of a pay with points reward, specify the order and the number of points to be applied to the order. Please note that if you do not specify the amount of points, the application will default to applying the number of points to pay for the remainder of the order. If the limit of available points on the card is reached, then only the available points on the card will be applied to the order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Redeem Reward  # noqa: E501
 
-        <!-- theme: info --> > 📘 Alternative endpoint > > This endpoint is an alternative to this <!-- [endpoint](OpenAPI.json/paths/~1loyalties~1{campaignId}~1members~1{memberId}~1redemption) -->[endpoint](ref:redeem-reward-1). The URL was re-designed to allow you to redeem a reward without having to provide the `campaignId` as a path parameter.  # noqa: E501
+          📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to redeem a reward without having to provide the campaignId as a path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3734,10 +6140,173 @@ class LoyaltiesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
+    def update_earning_rule(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], loyalties_earning_rules_update_request_body : Annotated[Optional[LoyaltiesEarningRulesUpdateRequestBody], Field(description="Specify the parameters that you would like to update for the given earning rule.")] = None, **kwargs) -> LoyaltiesEarningRulesUpdateResponseBody:  # noqa: E501
+        """Update Earning Rule  # noqa: E501
+
+        Update an earning rule definition.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_earning_rule(campaign_id, earning_rule_id, loyalties_earning_rules_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param earning_rule_id: A unique earning rule ID. (required)
+        :type earning_rule_id: str
+        :param loyalties_earning_rules_update_request_body: Specify the parameters that you would like to update for the given earning rule.
+        :type loyalties_earning_rules_update_request_body: LoyaltiesEarningRulesUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesEarningRulesUpdateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_earning_rule_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_earning_rule_with_http_info(campaign_id, earning_rule_id, loyalties_earning_rules_update_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_earning_rule_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], earning_rule_id : Annotated[StrictStr, Field(..., description="A unique earning rule ID.")], loyalties_earning_rules_update_request_body : Annotated[Optional[LoyaltiesEarningRulesUpdateRequestBody], Field(description="Specify the parameters that you would like to update for the given earning rule.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Earning Rule  # noqa: E501
+
+        Update an earning rule definition.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_earning_rule_with_http_info(campaign_id, earning_rule_id, loyalties_earning_rules_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param earning_rule_id: A unique earning rule ID. (required)
+        :type earning_rule_id: str
+        :param loyalties_earning_rules_update_request_body: Specify the parameters that you would like to update for the given earning rule.
+        :type loyalties_earning_rules_update_request_body: LoyaltiesEarningRulesUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesEarningRulesUpdateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'earning_rule_id',
+            'loyalties_earning_rules_update_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_earning_rule" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+        if _params['earning_rule_id']:
+            _path_params['earningRuleId'] = _params['earning_rule_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_earning_rules_update_request_body'] is not None:
+            _body_params = _params['loyalties_earning_rules_update_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesEarningRulesUpdateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/earning-rules/{earningRuleId}', 'PUT',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
     def update_loyalty_card_balance(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], loyalties_members_balance_update_request_body : Annotated[Optional[LoyaltiesMembersBalanceUpdateRequestBody], Field(description="Specify the point adjustment along with the expiration mechanism.")] = None, **kwargs) -> LoyaltiesMembersBalanceUpdateResponseBody:  # noqa: E501
         """Add or Remove Loyalty Card Balance  # noqa: E501
 
-        This method gives adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.   <!-- theme: info --> > 📘 Alternative endpoint > This endpoint is an alternative to this <!-- [endpoint](OpenAPI.json/paths/~1loyalties~1{campaignId}~1members~1{memberId}~1balance) -->[endpoint](ref:update-loyalty-card-balance-1). The URL was re-designed to allow you to add or remove loyalty card balance without having to provide the `campaignId` as a path parameter.  # noqa: E501
+        This method gives adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.   >🚧 Async Action    This is an async action. If you want to perform several add or remove loyalty card balance actions in a short time and their order matters, set up sufficient time-out between the calls.  📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to add or remove loyalty card balance without having to provide the campaignId as a path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3769,7 +6338,7 @@ class LoyaltiesApi:
     def update_loyalty_card_balance_with_http_info(self, member_id : Annotated[StrictStr, Field(..., description="Unique loyalty card assigned to a particular customer.")], loyalties_members_balance_update_request_body : Annotated[Optional[LoyaltiesMembersBalanceUpdateRequestBody], Field(description="Specify the point adjustment along with the expiration mechanism.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Add or Remove Loyalty Card Balance  # noqa: E501
 
-        This method gives adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.   <!-- theme: info --> > 📘 Alternative endpoint > This endpoint is an alternative to this <!-- [endpoint](OpenAPI.json/paths/~1loyalties~1{campaignId}~1members~1{memberId}~1balance) -->[endpoint](ref:update-loyalty-card-balance-1). The URL was re-designed to allow you to add or remove loyalty card balance without having to provide the `campaignId` as a path parameter.  # noqa: E501
+        This method gives adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.   >🚧 Async Action    This is an async action. If you want to perform several add or remove loyalty card balance actions in a short time and their order matters, set up sufficient time-out between the calls.  📘 Alternative endpoint  This endpoint is an alternative to this endpoint. The URL was re-designed to allow you to add or remove loyalty card balance without having to provide the campaignId as a path parameter.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3892,7 +6461,7 @@ class LoyaltiesApi:
     def update_loyalty_card_balance1(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID.")], member_id : Annotated[StrictStr, Field(..., description="A code that identifies the loyalty card.")], loyalties_members_balance_update_request_body : Annotated[Optional[LoyaltiesMembersBalanceUpdateRequestBody], Field(description="Specify the point adjustment along with the expiration mechanism.")] = None, **kwargs) -> LoyaltiesMembersBalanceUpdateResponseBody:  # noqa: E501
         """Add or Remove Loyalty Card Balance  # noqa: E501
 
-        This method adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.  # noqa: E501
+        This method adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.   >🚧 Async Action    This is an async action. If you want to perform several add or remove loyalty card balance actions in a short time and their order matters, set up sufficient time-out between the calls.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -3926,7 +6495,7 @@ class LoyaltiesApi:
     def update_loyalty_card_balance1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID.")], member_id : Annotated[StrictStr, Field(..., description="A code that identifies the loyalty card.")], loyalties_members_balance_update_request_body : Annotated[Optional[LoyaltiesMembersBalanceUpdateRequestBody], Field(description="Specify the point adjustment along with the expiration mechanism.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Add or Remove Loyalty Card Balance  # noqa: E501
 
-        This method adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.  # noqa: E501
+        This method adds or removes balance to an existing loyalty card. The removal of points will consume the points that expire the soonest.   >🚧 Async Action    This is an async action. If you want to perform several add or remove loyalty card balance actions in a short time and their order matters, set up sufficient time-out between the calls.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -4036,6 +6605,324 @@ class LoyaltiesApi:
 
         return self.api_client.call_api(
             '/v1/loyalties/{campaignId}/members/{memberId}/balance', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def update_loyalty_program(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], loyalties_update_campaign_request_body : Annotated[Optional[LoyaltiesUpdateCampaignRequestBody], Field(description="Specify the new values for the parameters that you would like to update for the given loyalty campaign.")] = None, **kwargs) -> LoyaltiesUpdateCampaignResponseBody:  # noqa: E501
+        """Update Loyalty Campaign  # noqa: E501
+
+        Updates a loyalty program.  Fields other than those specified in the allowed request body payload wont be modified (even if provided they are silently skipped). Any parameters not provided will be left unchanged.  This method will update the loyalty cards which have not been published or redeemed yet.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_loyalty_program(campaign_id, loyalties_update_campaign_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param loyalties_update_campaign_request_body: Specify the new values for the parameters that you would like to update for the given loyalty campaign.
+        :type loyalties_update_campaign_request_body: LoyaltiesUpdateCampaignRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesUpdateCampaignResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_loyalty_program_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_loyalty_program_with_http_info(campaign_id, loyalties_update_campaign_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_loyalty_program_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], loyalties_update_campaign_request_body : Annotated[Optional[LoyaltiesUpdateCampaignRequestBody], Field(description="Specify the new values for the parameters that you would like to update for the given loyalty campaign.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Loyalty Campaign  # noqa: E501
+
+        Updates a loyalty program.  Fields other than those specified in the allowed request body payload wont be modified (even if provided they are silently skipped). Any parameters not provided will be left unchanged.  This method will update the loyalty cards which have not been published or redeemed yet.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_loyalty_program_with_http_info(campaign_id, loyalties_update_campaign_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param loyalties_update_campaign_request_body: Specify the new values for the parameters that you would like to update for the given loyalty campaign.
+        :type loyalties_update_campaign_request_body: LoyaltiesUpdateCampaignRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesUpdateCampaignResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'loyalties_update_campaign_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_loyalty_program" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_update_campaign_request_body'] is not None:
+            _body_params = _params['loyalties_update_campaign_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesUpdateCampaignResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}', 'PUT',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def update_reward_assignment1(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], loyalties_rewards_update_assignment_request_body : Annotated[Optional[LoyaltiesRewardsUpdateAssignmentRequestBody], Field(description="Update the points cost for the reward assignment.")] = None, **kwargs) -> LoyaltiesRewardsUpdateAssignmentResponseBody:  # noqa: E501
+        """Update Reward Assignment  # noqa: E501
+
+        Updates rewards parameters, i.e. the points cost for the specific reward.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_reward_assignment1(campaign_id, assignment_id, loyalties_rewards_update_assignment_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param assignment_id: A unique reward assignment ID. (required)
+        :type assignment_id: str
+        :param loyalties_rewards_update_assignment_request_body: Update the points cost for the reward assignment.
+        :type loyalties_rewards_update_assignment_request_body: LoyaltiesRewardsUpdateAssignmentRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: LoyaltiesRewardsUpdateAssignmentResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_reward_assignment1_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_reward_assignment1_with_http_info(campaign_id, assignment_id, loyalties_rewards_update_assignment_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_reward_assignment1_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign. ")], assignment_id : Annotated[StrictStr, Field(..., description="A unique reward assignment ID.")], loyalties_rewards_update_assignment_request_body : Annotated[Optional[LoyaltiesRewardsUpdateAssignmentRequestBody], Field(description="Update the points cost for the reward assignment.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Reward Assignment  # noqa: E501
+
+        Updates rewards parameters, i.e. the points cost for the specific reward.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_reward_assignment1_with_http_info(campaign_id, assignment_id, loyalties_rewards_update_assignment_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: The campaign ID or name of the loyalty campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty%20Campaign.  (required)
+        :type campaign_id: str
+        :param assignment_id: A unique reward assignment ID. (required)
+        :type assignment_id: str
+        :param loyalties_rewards_update_assignment_request_body: Update the points cost for the reward assignment.
+        :type loyalties_rewards_update_assignment_request_body: LoyaltiesRewardsUpdateAssignmentRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(LoyaltiesRewardsUpdateAssignmentResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'assignment_id',
+            'loyalties_rewards_update_assignment_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_reward_assignment1" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+        if _params['assignment_id']:
+            _path_params['assignmentId'] = _params['assignment_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['loyalties_rewards_update_assignment_request_body'] is not None:
+            _body_params = _params['loyalties_rewards_update_assignment_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "LoyaltiesRewardsUpdateAssignmentResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/loyalties/{campaignId}/rewards/{assignmentId}', 'PUT',
             _path_params,
             _query_params,
             _header_params,

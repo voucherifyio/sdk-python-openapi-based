@@ -54,6 +54,16 @@ class PromotionTierSummaryOrders(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if total_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_amount is None and "total_amount" in self.__fields_set__:
+            _dict['total_amount'] = None
+
+        # set to None if total_discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_discount_amount is None and "total_discount_amount" in self.__fields_set__:
+            _dict['total_discount_amount'] = None
+
         return _dict
 
     @classmethod

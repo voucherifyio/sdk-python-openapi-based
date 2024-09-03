@@ -19,14 +19,14 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class VoucherTransactionDetailsEarningRuleSource(BaseModel):
     """
     Contains the custom earning rule name.  # noqa: E501
     """
-    banner: StrictStr = Field(..., description="Name of the earning rule. This is displayed as a header for the earning rule in the Dashboard.")
+    banner: Optional[StrictStr] = Field(None, description="Name of the earning rule. This is displayed as a header for the earning rule in the Dashboard.")
     __properties = ["banner"]
 
     class Config:
@@ -53,6 +53,11 @@ class VoucherTransactionDetailsEarningRuleSource(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if banner (nullable) is None
+        # and __fields_set__ contains the field
+        if self.banner is None and "banner" in self.__fields_set__:
+            _dict['banner'] = None
+
         return _dict
 
     @classmethod

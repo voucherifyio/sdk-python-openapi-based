@@ -14,129 +14,82 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.reward_assignments_create_coin_reward_request_body import RewardAssignmentsCreateCoinRewardRequestBody
-from voucherify_client.models.reward_assignments_create_digital_or_material_reward_request_body import RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
 
-REWARDS_ASSIGNMENTS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS = ["RewardAssignmentsCreateCoinRewardRequestBody", "RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody"]
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictStr, conlist
+from voucherify_client.models.rewards_assignments_create_request_body_parameters import RewardsAssignmentsCreateRequestBodyParameters
 
 class RewardsAssignmentsCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/rewards/{rewardID}/assignments`.
+    RewardsAssignmentsCreateRequestBody
     """
-    # data type: RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody
-    oneof_schema_1_validator: Optional[RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody] = None
-    # data type: RewardAssignmentsCreateCoinRewardRequestBody
-    oneof_schema_2_validator: Optional[RewardAssignmentsCreateCoinRewardRequestBody] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[RewardAssignmentsCreateCoinRewardRequestBody, RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(REWARDS_ASSIGNMENTS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS, const=True)
+    campaign: Optional[StrictStr] = Field(None, description="The campaign ID of the campaign to which the reward is to be assigned.")
+    parameters: Optional[RewardsAssignmentsCreateRequestBodyParameters] = None
+    validation_rules: Optional[conlist(StrictStr)] = None
+    __properties = ["campaign", "parameters", "validation_rules"]
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = RewardsAssignmentsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody
-        if not isinstance(v, RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody`")
-        else:
-            match += 1
-        # validate data type: RewardAssignmentsCreateCoinRewardRequestBody
-        if not isinstance(v, RewardAssignmentsCreateCoinRewardRequestBody):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RewardAssignmentsCreateCoinRewardRequestBody`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in RewardsAssignmentsCreateRequestBody with oneOf schemas: RewardAssignmentsCreateCoinRewardRequestBody, RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in RewardsAssignmentsCreateRequestBody with oneOf schemas: RewardAssignmentsCreateCoinRewardRequestBody, RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> RewardsAssignmentsCreateRequestBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> RewardsAssignmentsCreateRequestBody:
-        """Returns the object represented by the json string"""
-        instance = RewardsAssignmentsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of RewardsAssignmentsCreateRequestBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody
-        try:
-            instance.actual_instance = RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into RewardAssignmentsCreateCoinRewardRequestBody
-        try:
-            instance.actual_instance = RewardAssignmentsCreateCoinRewardRequestBody.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of parameters
+        if self.parameters:
+            _dict['parameters'] = self.parameters.to_dict()
+        # set to None if campaign (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign is None and "campaign" in self.__fields_set__:
+            _dict['campaign'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into RewardsAssignmentsCreateRequestBody with oneOf schemas: RewardAssignmentsCreateCoinRewardRequestBody, RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into RewardsAssignmentsCreateRequestBody with oneOf schemas: RewardAssignmentsCreateCoinRewardRequestBody, RewardAssignmentsCreateDigitalOrMaterialRewardRequestBody. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if validation_rules (nullable) is None
+        # and __fields_set__ contains the field
+        if self.validation_rules is None and "validation_rules" in self.__fields_set__:
+            _dict['validation_rules'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        return _dict
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+    @classmethod
+    def from_dict(cls, obj: dict) -> RewardsAssignmentsCreateRequestBody:
+        """Create an instance of RewardsAssignmentsCreateRequestBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return RewardsAssignmentsCreateRequestBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = RewardsAssignmentsCreateRequestBody.parse_obj({
+            "campaign": obj.get("campaign"),
+            "parameters": RewardsAssignmentsCreateRequestBodyParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None,
+            "validation_rules": obj.get("validation_rules")
+        })
+        return _obj
 
 

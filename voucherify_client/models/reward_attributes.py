@@ -54,6 +54,16 @@ class RewardAttributes(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if image_url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.image_url is None and "image_url" in self.__fields_set__:
+            _dict['image_url'] = None
+
+        # set to None if description (nullable) is None
+        # and __fields_set__ contains the field
+        if self.description is None and "description" in self.__fields_set__:
+            _dict['description'] = None
+
         return _dict
 
     @classmethod

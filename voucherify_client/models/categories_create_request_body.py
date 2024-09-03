@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 class CategoriesCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/categories`.  # noqa: E501
+    Request body schema for **POST** `v1/categories`.  # noqa: E501
     """
-    name: StrictStr = Field(..., description="Category name.")
-    hierarchy: StrictInt = Field(..., description="Category hierarchy.")
+    name: Optional[StrictStr] = Field(None, description="Category name.")
+    hierarchy: Optional[StrictInt] = Field(None, description="Category hierarchy.")
     __properties = ["name", "hierarchy"]
 
     class Config:
@@ -54,6 +54,16 @@ class CategoriesCreateRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if hierarchy (nullable) is None
+        # and __fields_set__ contains the field
+        if self.hierarchy is None and "hierarchy" in self.__fields_set__:
+            _dict['hierarchy'] = None
+
         return _dict
 
     @classmethod

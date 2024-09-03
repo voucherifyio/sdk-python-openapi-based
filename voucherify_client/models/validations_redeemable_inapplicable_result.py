@@ -22,13 +22,15 @@ import json
 from typing import Optional
 from pydantic import BaseModel
 from voucherify_client.models.error import Error
+from voucherify_client.models.validations_redeemable_inapplicable_result_details import ValidationsRedeemableInapplicableResultDetails
 
 class ValidationsRedeemableInapplicableResult(BaseModel):
     """
-    ValidationsRedeemableInapplicableResult
+    Includes the error object with details about the reason why the redeemable is inapplicable  # noqa: E501
     """
     error: Optional[Error] = None
-    __properties = ["error"]
+    details: Optional[ValidationsRedeemableInapplicableResultDetails] = None
+    __properties = ["error", "details"]
 
     class Config:
         """Pydantic configuration"""
@@ -57,6 +59,14 @@ class ValidationsRedeemableInapplicableResult(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of error
         if self.error:
             _dict['error'] = self.error.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of details
+        if self.details:
+            _dict['details'] = self.details.to_dict()
+        # set to None if details (nullable) is None
+        # and __fields_set__ contains the field
+        if self.details is None and "details" in self.__fields_set__:
+            _dict['details'] = None
+
         return _dict
 
     @classmethod
@@ -69,7 +79,8 @@ class ValidationsRedeemableInapplicableResult(BaseModel):
             return ValidationsRedeemableInapplicableResult.parse_obj(obj)
 
         _obj = ValidationsRedeemableInapplicableResult.parse_obj({
-            "error": Error.from_dict(obj.get("error")) if obj.get("error") is not None else None
+            "error": Error.from_dict(obj.get("error")) if obj.get("error") is not None else None,
+            "details": ValidationsRedeemableInapplicableResultDetails.from_dict(obj.get("details")) if obj.get("details") is not None else None
         })
         return _obj
 

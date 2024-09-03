@@ -14,199 +14,85 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.export_customer_base import ExportCustomerBase
-from voucherify_client.models.export_order_base import ExportOrderBase
-from voucherify_client.models.export_points_expiration_base import ExportPointsExpirationBase
-from voucherify_client.models.export_publication_base import ExportPublicationBase
-from voucherify_client.models.export_redemption_base import ExportRedemptionBase
-from voucherify_client.models.export_voucher_base import ExportVoucherBase
-from voucherify_client.models.export_voucher_transactions_base import ExportVoucherTransactionsBase
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
 
-EXPORTS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS = ["ExportCustomerBase", "ExportOrderBase", "ExportPointsExpirationBase", "ExportPublicationBase", "ExportRedemptionBase", "ExportVoucherBase", "ExportVoucherTransactionsBase"]
+from typing import Optional
+from pydantic import BaseModel, StrictStr, validator
+from voucherify_client.models.exports_create_request_body_parameters import ExportsCreateRequestBodyParameters
 
 class ExportsCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/exports`.
+    ExportsCreateRequestBody
     """
-    # data type: ExportVoucherBase
-    oneof_schema_1_validator: Optional[ExportVoucherBase] = None
-    # data type: ExportRedemptionBase
-    oneof_schema_2_validator: Optional[ExportRedemptionBase] = None
-    # data type: ExportCustomerBase
-    oneof_schema_3_validator: Optional[ExportCustomerBase] = None
-    # data type: ExportPublicationBase
-    oneof_schema_4_validator: Optional[ExportPublicationBase] = None
-    # data type: ExportOrderBase
-    oneof_schema_5_validator: Optional[ExportOrderBase] = None
-    # data type: ExportPointsExpirationBase
-    oneof_schema_6_validator: Optional[ExportPointsExpirationBase] = None
-    # data type: ExportVoucherTransactionsBase
-    oneof_schema_7_validator: Optional[ExportVoucherTransactionsBase] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[ExportCustomerBase, ExportOrderBase, ExportPointsExpirationBase, ExportPublicationBase, ExportRedemptionBase, ExportVoucherBase, ExportVoucherTransactionsBase]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(EXPORTS_CREATE_REQUEST_BODY_ONE_OF_SCHEMAS, const=True)
+    exported_object: Optional[StrictStr] = None
+    parameters: Optional[ExportsCreateRequestBodyParameters] = None
+    __properties = ["exported_object", "parameters"]
+
+    @validator('exported_object')
+    def exported_object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions',):
+            raise ValueError("must be one of enum values ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = ExportsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: ExportVoucherBase
-        if not isinstance(v, ExportVoucherBase):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportVoucherBase`")
-        else:
-            match += 1
-        # validate data type: ExportRedemptionBase
-        if not isinstance(v, ExportRedemptionBase):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportRedemptionBase`")
-        else:
-            match += 1
-        # validate data type: ExportCustomerBase
-        if not isinstance(v, ExportCustomerBase):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportCustomerBase`")
-        else:
-            match += 1
-        # validate data type: ExportPublicationBase
-        if not isinstance(v, ExportPublicationBase):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportPublicationBase`")
-        else:
-            match += 1
-        # validate data type: ExportOrderBase
-        if not isinstance(v, ExportOrderBase):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportOrderBase`")
-        else:
-            match += 1
-        # validate data type: ExportPointsExpirationBase
-        if not isinstance(v, ExportPointsExpirationBase):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportPointsExpirationBase`")
-        else:
-            match += 1
-        # validate data type: ExportVoucherTransactionsBase
-        if not isinstance(v, ExportVoucherTransactionsBase):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportVoucherTransactionsBase`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ExportsCreateRequestBody with oneOf schemas: ExportCustomerBase, ExportOrderBase, ExportPointsExpirationBase, ExportPublicationBase, ExportRedemptionBase, ExportVoucherBase, ExportVoucherTransactionsBase. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in ExportsCreateRequestBody with oneOf schemas: ExportCustomerBase, ExportOrderBase, ExportPointsExpirationBase, ExportPublicationBase, ExportRedemptionBase, ExportVoucherBase, ExportVoucherTransactionsBase. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> ExportsCreateRequestBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> ExportsCreateRequestBody:
-        """Returns the object represented by the json string"""
-        instance = ExportsCreateRequestBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of ExportsCreateRequestBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into ExportVoucherBase
-        try:
-            instance.actual_instance = ExportVoucherBase.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportRedemptionBase
-        try:
-            instance.actual_instance = ExportRedemptionBase.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportCustomerBase
-        try:
-            instance.actual_instance = ExportCustomerBase.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportPublicationBase
-        try:
-            instance.actual_instance = ExportPublicationBase.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportOrderBase
-        try:
-            instance.actual_instance = ExportOrderBase.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportPointsExpirationBase
-        try:
-            instance.actual_instance = ExportPointsExpirationBase.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportVoucherTransactionsBase
-        try:
-            instance.actual_instance = ExportVoucherTransactionsBase.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of parameters
+        if self.parameters:
+            _dict['parameters'] = self.parameters.to_dict()
+        # set to None if exported_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exported_object is None and "exported_object" in self.__fields_set__:
+            _dict['exported_object'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ExportsCreateRequestBody with oneOf schemas: ExportCustomerBase, ExportOrderBase, ExportPointsExpirationBase, ExportPublicationBase, ExportRedemptionBase, ExportVoucherBase, ExportVoucherTransactionsBase. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into ExportsCreateRequestBody with oneOf schemas: ExportCustomerBase, ExportOrderBase, ExportPointsExpirationBase, ExportPublicationBase, ExportRedemptionBase, ExportVoucherBase, ExportVoucherTransactionsBase. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        return _dict
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
-
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+    @classmethod
+    def from_dict(cls, obj: dict) -> ExportsCreateRequestBody:
+        """Create an instance of ExportsCreateRequestBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return ExportsCreateRequestBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = ExportsCreateRequestBody.parse_obj({
+            "exported_object": obj.get("exported_object"),
+            "parameters": ExportsCreateRequestBodyParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None
+        })
+        return _obj
 
 

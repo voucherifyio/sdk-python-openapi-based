@@ -21,49 +21,52 @@ import json
 from datetime import datetime
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
-from voucherify_client.models.order_calculated_no_customer_data import OrderCalculatedNoCustomerData
+from voucherify_client.models.order_calculated import OrderCalculated
 from voucherify_client.models.promotion_tier import PromotionTier
-from voucherify_client.models.redemption_channel import RedemptionChannel
-from voucherify_client.models.redemption_gift import RedemptionGift
-from voucherify_client.models.redemption_loyalty_card import RedemptionLoyaltyCard
 from voucherify_client.models.redemption_reward_result import RedemptionRewardResult
-from voucherify_client.models.redemption_rollback_related_redemptions import RedemptionRollbackRelatedRedemptions
+from voucherify_client.models.redemptions_rollback_create_response_body_channel import RedemptionsRollbackCreateResponseBodyChannel
+from voucherify_client.models.redemptions_rollback_create_response_body_gift import RedemptionsRollbackCreateResponseBodyGift
+from voucherify_client.models.redemptions_rollback_create_response_body_loyalty_card import RedemptionsRollbackCreateResponseBodyLoyaltyCard
+from voucherify_client.models.redemptions_rollback_create_response_body_related_redemptions import RedemptionsRollbackCreateResponseBodyRelatedRedemptions
 from voucherify_client.models.simple_customer import SimpleCustomer
 from voucherify_client.models.voucher import Voucher
 
 class RedemptionsRollbackCreateResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/redemptions/{redemptionId}/rollback`.  # noqa: E501
+    Response body schema for **POST** `v1/redemptions/{redemptionId}/rollback`.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique redemption ID.")
-    object: StrictStr = Field(..., description="The type of object represented by the JSON")
-    var_date: datetime = Field(..., alias="date", description="Timestamp representing the date and time when the object was created in ISO 8601 format.")
+    id: Optional[StrictStr] = Field(None, description="Unique identifier of the redemption rollback.")
+    object: Optional[StrictStr] = Field('redemption_rollback', description="The type of the object represented by the JSON")
+    var_date: Optional[datetime] = Field(None, alias="date", description="Timestamp representing the date and time when the object was created. The value is shown in the ISO 8601 format.")
     customer_id: Optional[StrictStr] = Field(None, description="Unique customer ID of the redeeming customer.")
     tracking_id: Optional[StrictStr] = Field(None, description="Hashed customer source ID.")
     metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the redemption.")
-    amount: Optional[StrictInt] = Field(None, description="A positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the total amount of the order. This is the sum of the order items' amounts.")
+    amount: Optional[StrictInt] = Field(None, description="For gift cards, this represents the number of the credits restored to the card in the rolledback redemption. The number is a negative integer in the smallest currency unit, e.g. -100 cents for $1.00 added back to the card. For loyalty cards, this represents the number of loyalty points restored to the card in the rolledback redemption. The number is a negative integer.")
     redemption: Optional[StrictStr] = Field(None, description="Unique redemption ID of the parent redemption.")
     reason: Optional[StrictStr] = Field(None, description="System generated cause for the redemption being invalid in the context of the provided parameters.")
-    result: StrictStr = Field(..., description="Redemption result.")
-    status: StrictStr = Field(..., description="Redemption status.")
-    related_redemptions: Optional[RedemptionRollbackRelatedRedemptions] = None
+    result: Optional[StrictStr] = Field(None, description="Redemption result.")
+    status: Optional[StrictStr] = Field(None, description="Redemption status.")
+    related_redemptions: Optional[RedemptionsRollbackCreateResponseBodyRelatedRedemptions] = None
     failure_code: Optional[StrictStr] = Field(None, description="If the result is `FAILURE`, this parameter will provide a generic reason as to why the redemption failed.")
     failure_message: Optional[StrictStr] = Field(None, description="If the result is `FAILURE`, this parameter will provide a more expanded reason as to why the redemption failed.")
-    order: Optional[OrderCalculatedNoCustomerData] = None
-    channel: RedemptionChannel = Field(...)
+    order: Optional[OrderCalculated] = None
+    channel: Optional[RedemptionsRollbackCreateResponseBodyChannel] = None
     customer: Optional[SimpleCustomer] = None
-    related_object_type: StrictStr = Field(..., description="Defines the related object.")
-    related_object_id: StrictStr = Field(..., description="Unique related object ID assigned by Voucherify, i.e. v_lfZi4rcEGe0sN9gmnj40bzwK2FH6QUno for a voucher.")
+    related_object_type: Optional[StrictStr] = Field(None, description="Defines the related object.")
+    related_object_id: Optional[StrictStr] = Field(None, description="Unique identifier of the related object. It is assigned by Voucherify, i.e. `v_lfZi4rcEGe0sN9gmnj40bzwK2FH6QUno` for a voucher.")
     voucher: Optional[Voucher] = None
     promotion_tier: Optional[PromotionTier] = None
     reward: Optional[RedemptionRewardResult] = None
-    gift: Optional[RedemptionGift] = None
-    loyalty_card: Optional[RedemptionLoyaltyCard] = None
+    gift: Optional[RedemptionsRollbackCreateResponseBodyGift] = None
+    loyalty_card: Optional[RedemptionsRollbackCreateResponseBodyLoyaltyCard] = None
     __properties = ["id", "object", "date", "customer_id", "tracking_id", "metadata", "amount", "redemption", "reason", "result", "status", "related_redemptions", "failure_code", "failure_message", "order", "channel", "customer", "related_object_type", "related_object_id", "voucher", "promotion_tier", "reward", "gift", "loyalty_card"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('redemption_rollback',):
             raise ValueError("must be one of enum values ('redemption_rollback')")
         return value
@@ -71,6 +74,9 @@ class RedemptionsRollbackCreateResponseBody(BaseModel):
     @validator('result')
     def result_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('SUCCESS', 'FAILURE',):
             raise ValueError("must be one of enum values ('SUCCESS', 'FAILURE')")
         return value
@@ -78,6 +84,9 @@ class RedemptionsRollbackCreateResponseBody(BaseModel):
     @validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('SUCCEEDED', 'FAILED',):
             raise ValueError("must be one of enum values ('SUCCEEDED', 'FAILED')")
         return value
@@ -85,6 +94,9 @@ class RedemptionsRollbackCreateResponseBody(BaseModel):
     @validator('related_object_type')
     def related_object_type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('voucher', 'promotion_tier', 'redemption',):
             raise ValueError("must be one of enum values ('voucher', 'promotion_tier', 'redemption')")
         return value
@@ -140,6 +152,21 @@ class RedemptionsRollbackCreateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of loyalty_card
         if self.loyalty_card:
             _dict['loyalty_card'] = self.loyalty_card.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if var_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_date is None and "var_date" in self.__fields_set__:
+            _dict['date'] = None
+
         # set to None if customer_id (nullable) is None
         # and __fields_set__ contains the field
         if self.customer_id is None and "customer_id" in self.__fields_set__:
@@ -155,20 +182,70 @@ class RedemptionsRollbackCreateResponseBody(BaseModel):
         if self.metadata is None and "metadata" in self.__fields_set__:
             _dict['metadata'] = None
 
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
         # set to None if redemption (nullable) is None
         # and __fields_set__ contains the field
         if self.redemption is None and "redemption" in self.__fields_set__:
             _dict['redemption'] = None
 
-        # set to None if order (nullable) is None
+        # set to None if reason (nullable) is None
         # and __fields_set__ contains the field
-        if self.order is None and "order" in self.__fields_set__:
-            _dict['order'] = None
+        if self.reason is None and "reason" in self.__fields_set__:
+            _dict['reason'] = None
 
-        # set to None if customer (nullable) is None
+        # set to None if result (nullable) is None
         # and __fields_set__ contains the field
-        if self.customer is None and "customer" in self.__fields_set__:
-            _dict['customer'] = None
+        if self.result is None and "result" in self.__fields_set__:
+            _dict['result'] = None
+
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
+
+        # set to None if related_redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_redemptions is None and "related_redemptions" in self.__fields_set__:
+            _dict['related_redemptions'] = None
+
+        # set to None if failure_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.failure_code is None and "failure_code" in self.__fields_set__:
+            _dict['failure_code'] = None
+
+        # set to None if failure_message (nullable) is None
+        # and __fields_set__ contains the field
+        if self.failure_message is None and "failure_message" in self.__fields_set__:
+            _dict['failure_message'] = None
+
+        # set to None if channel (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel is None and "channel" in self.__fields_set__:
+            _dict['channel'] = None
+
+        # set to None if related_object_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_type is None and "related_object_type" in self.__fields_set__:
+            _dict['related_object_type'] = None
+
+        # set to None if related_object_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_id is None and "related_object_id" in self.__fields_set__:
+            _dict['related_object_id'] = None
+
+        # set to None if gift (nullable) is None
+        # and __fields_set__ contains the field
+        if self.gift is None and "gift" in self.__fields_set__:
+            _dict['gift'] = None
+
+        # set to None if loyalty_card (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty_card is None and "loyalty_card" in self.__fields_set__:
+            _dict['loyalty_card'] = None
 
         return _dict
 
@@ -193,19 +270,19 @@ class RedemptionsRollbackCreateResponseBody(BaseModel):
             "reason": obj.get("reason"),
             "result": obj.get("result"),
             "status": obj.get("status"),
-            "related_redemptions": RedemptionRollbackRelatedRedemptions.from_dict(obj.get("related_redemptions")) if obj.get("related_redemptions") is not None else None,
+            "related_redemptions": RedemptionsRollbackCreateResponseBodyRelatedRedemptions.from_dict(obj.get("related_redemptions")) if obj.get("related_redemptions") is not None else None,
             "failure_code": obj.get("failure_code"),
             "failure_message": obj.get("failure_message"),
-            "order": OrderCalculatedNoCustomerData.from_dict(obj.get("order")) if obj.get("order") is not None else None,
-            "channel": RedemptionChannel.from_dict(obj.get("channel")) if obj.get("channel") is not None else None,
+            "order": OrderCalculated.from_dict(obj.get("order")) if obj.get("order") is not None else None,
+            "channel": RedemptionsRollbackCreateResponseBodyChannel.from_dict(obj.get("channel")) if obj.get("channel") is not None else None,
             "customer": SimpleCustomer.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
             "related_object_type": obj.get("related_object_type"),
             "related_object_id": obj.get("related_object_id"),
             "voucher": Voucher.from_dict(obj.get("voucher")) if obj.get("voucher") is not None else None,
             "promotion_tier": PromotionTier.from_dict(obj.get("promotion_tier")) if obj.get("promotion_tier") is not None else None,
             "reward": RedemptionRewardResult.from_dict(obj.get("reward")) if obj.get("reward") is not None else None,
-            "gift": RedemptionGift.from_dict(obj.get("gift")) if obj.get("gift") is not None else None,
-            "loyalty_card": RedemptionLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None
+            "gift": RedemptionsRollbackCreateResponseBodyGift.from_dict(obj.get("gift")) if obj.get("gift") is not None else None,
+            "loyalty_card": RedemptionsRollbackCreateResponseBodyLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None
         })
         return _obj
 

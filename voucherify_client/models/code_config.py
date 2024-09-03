@@ -24,14 +24,14 @@ from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
 
 class CodeConfig(BaseModel):
     """
-    Schema containing information about config used for voucher. Defines code's pattern (prefix, suffix, length, charset, etc).  # noqa: E501
+    Contains information about the config used for the voucher code. Defines the code's pattern (prefix, postfix, length, charset, etc).  # noqa: E501
     """
     length: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Number of characters in a generated code (excluding prefix and postfix).")
     charset: Optional[StrictStr] = Field(None, description="Characters that can appear in the code.    Examples:  - Alphanumeric: `0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`  - Alphabetic: `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`  - Alphabetic Lowercase: `abcdefghijklmnopqrstuvwxyz`  - Alphabetic Uppercase: `ABCDEFGHIJKLMNOPQRSTUVWXYZ`  - Numbers: `0123456789`   - Custom: a custom character set")
     prefix: Optional[StrictStr] = Field(None, description="A text appended before the code.")
     postfix: Optional[StrictStr] = Field(None, description="A text appended after the code.")
     pattern: Optional[StrictStr] = Field(None, description="A pattern for codes where hashes (#) will be replaced with random characters. Overrides `length`.")
-    initial_count: Optional[StrictInt] = Field(None, description="The initial count")
+    initial_count: Optional[StrictInt] = Field(None, description="Internal value, does not change anything if provided.")
     __properties = ["length", "charset", "prefix", "postfix", "pattern", "initial_count"]
 
     class Config:
@@ -58,6 +58,36 @@ class CodeConfig(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if length (nullable) is None
+        # and __fields_set__ contains the field
+        if self.length is None and "length" in self.__fields_set__:
+            _dict['length'] = None
+
+        # set to None if charset (nullable) is None
+        # and __fields_set__ contains the field
+        if self.charset is None and "charset" in self.__fields_set__:
+            _dict['charset'] = None
+
+        # set to None if prefix (nullable) is None
+        # and __fields_set__ contains the field
+        if self.prefix is None and "prefix" in self.__fields_set__:
+            _dict['prefix'] = None
+
+        # set to None if postfix (nullable) is None
+        # and __fields_set__ contains the field
+        if self.postfix is None and "postfix" in self.__fields_set__:
+            _dict['postfix'] = None
+
+        # set to None if pattern (nullable) is None
+        # and __fields_set__ contains the field
+        if self.pattern is None and "pattern" in self.__fields_set__:
+            _dict['pattern'] = None
+
+        # set to None if initial_count (nullable) is None
+        # and __fields_set__ contains the field
+        if self.initial_count is None and "initial_count" in self.__fields_set__:
+            _dict['initial_count'] = None
+
         return _dict
 
     @classmethod

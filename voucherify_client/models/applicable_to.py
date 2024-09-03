@@ -27,12 +27,12 @@ class ApplicableTo(BaseModel):
     """
     ApplicableTo
     """
-    object: StrictStr = Field(..., description="This object stores information about the product collection.")
-    id: StrictStr = Field(..., description="Unique product collection ID assigned by Voucherify.")
+    object: Optional[StrictStr] = Field(None, description="This object stores information about the product collection.")
+    id: Optional[StrictStr] = Field(None, description="Unique product collection ID assigned by Voucherify.")
     source_id: Optional[StrictStr] = Field(None, description="The source ID from your inventory system.")
     product_id: Optional[StrictStr] = Field(None, description="Parent product's unique ID assigned by Voucherify.")
     product_source_id: Optional[StrictStr] = Field(None, description="Parent product's source ID from your inventory system.")
-    strict: StrictBool = Field(...)
+    strict: Optional[StrictBool] = None
     price: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="New fixed price of an item. Value is multiplied by 100 to precisely represent 2 decimal places. For example, a $10 price is written as 1000. In case of the fixed price being calculated by the formula, i.e. the price_formula parameter is present in the fixed price definition, this value becomes the fallback value. Such that in a case where the formula cannot be calculated due to missing metadata, for example, this value will be used as the fixed price.")
     price_formula: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Formula used to calculate the discounted price of an item.")
     effect: ApplicableToEffect = Field(...)
@@ -41,11 +41,17 @@ class ApplicableTo(BaseModel):
     amount_limit: Optional[StrictInt] = Field(None, description="Upper limit allowed to be applied as a discount per order line item. Value is multiplied by 100 to precisely represent 2 decimal places. For example, a $6 maximum discount is written as 600.")
     aggregated_amount_limit: Optional[StrictInt] = Field(None, description="Maximum discount amount per order. Value is multiplied by 100 to precisely represent 2 decimal places. For example, a $6 maximum discount on the entire order is written as 600. This value is definable for the following discount effects: - `APPLY_TO_ITEMS` (each item subtotal is discounted equally) - `APPLY_TO_ITEMS_BY_QUANTITY` (each unit of matched products has the same discount value)")
     order_item_indices: Optional[conlist(StrictInt)] = None
-    __properties = ["object", "id", "source_id", "product_id", "product_source_id", "strict", "price", "price_formula", "effect", "quantity_limit", "aggregated_quantity_limit", "amount_limit", "aggregated_amount_limit", "order_item_indices"]
+    repeat: Optional[StrictInt] = None
+    skip_initially: Optional[StrictInt] = None
+    target: Optional[StrictStr] = None
+    __properties = ["object", "id", "source_id", "product_id", "product_source_id", "strict", "price", "price_formula", "effect", "quantity_limit", "aggregated_quantity_limit", "amount_limit", "aggregated_amount_limit", "order_item_indices", "repeat", "skip_initially", "target"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('product', 'sku', 'products_collection',):
             raise ValueError("must be one of enum values ('product', 'sku', 'products_collection')")
         return value
@@ -74,6 +80,86 @@ class ApplicableTo(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if product_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.product_id is None and "product_id" in self.__fields_set__:
+            _dict['product_id'] = None
+
+        # set to None if product_source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.product_source_id is None and "product_source_id" in self.__fields_set__:
+            _dict['product_source_id'] = None
+
+        # set to None if strict (nullable) is None
+        # and __fields_set__ contains the field
+        if self.strict is None and "strict" in self.__fields_set__:
+            _dict['strict'] = None
+
+        # set to None if price (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price is None and "price" in self.__fields_set__:
+            _dict['price'] = None
+
+        # set to None if price_formula (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price_formula is None and "price_formula" in self.__fields_set__:
+            _dict['price_formula'] = None
+
+        # set to None if quantity_limit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.quantity_limit is None and "quantity_limit" in self.__fields_set__:
+            _dict['quantity_limit'] = None
+
+        # set to None if aggregated_quantity_limit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.aggregated_quantity_limit is None and "aggregated_quantity_limit" in self.__fields_set__:
+            _dict['aggregated_quantity_limit'] = None
+
+        # set to None if amount_limit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount_limit is None and "amount_limit" in self.__fields_set__:
+            _dict['amount_limit'] = None
+
+        # set to None if aggregated_amount_limit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.aggregated_amount_limit is None and "aggregated_amount_limit" in self.__fields_set__:
+            _dict['aggregated_amount_limit'] = None
+
+        # set to None if order_item_indices (nullable) is None
+        # and __fields_set__ contains the field
+        if self.order_item_indices is None and "order_item_indices" in self.__fields_set__:
+            _dict['order_item_indices'] = None
+
+        # set to None if repeat (nullable) is None
+        # and __fields_set__ contains the field
+        if self.repeat is None and "repeat" in self.__fields_set__:
+            _dict['repeat'] = None
+
+        # set to None if skip_initially (nullable) is None
+        # and __fields_set__ contains the field
+        if self.skip_initially is None and "skip_initially" in self.__fields_set__:
+            _dict['skip_initially'] = None
+
+        # set to None if target (nullable) is None
+        # and __fields_set__ contains the field
+        if self.target is None and "target" in self.__fields_set__:
+            _dict['target'] = None
+
         return _dict
 
     @classmethod
@@ -99,7 +185,10 @@ class ApplicableTo(BaseModel):
             "aggregated_quantity_limit": obj.get("aggregated_quantity_limit"),
             "amount_limit": obj.get("amount_limit"),
             "aggregated_amount_limit": obj.get("aggregated_amount_limit"),
-            "order_item_indices": obj.get("order_item_indices")
+            "order_item_indices": obj.get("order_item_indices"),
+            "repeat": obj.get("repeat"),
+            "skip_initially": obj.get("skip_initially"),
+            "target": obj.get("target")
         })
         return _obj
 

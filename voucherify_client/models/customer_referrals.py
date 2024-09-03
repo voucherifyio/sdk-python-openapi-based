@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, conlist
 from voucherify_client.models.customer_referrals_campaigns_item import CustomerReferralsCampaignsItem
 
@@ -27,8 +27,8 @@ class CustomerReferrals(BaseModel):
     """
     Summary of customer's referrals, in this case, the customer being the referee, i.e. information about the source of referrals and number of times the customer was referred by other customers.  # noqa: E501
     """
-    total: StrictInt = Field(..., description="Total number of times this customer received a referral, i.e. was referred by another customer.")
-    campaigns: conlist(CustomerReferralsCampaignsItem) = Field(..., description="Contains an array of campaigns that served as the source of a referral for the customer.")
+    total: Optional[StrictInt] = Field(None, description="Total number of times this customer received a referral, i.e. was referred by another customer.")
+    campaigns: Optional[conlist(CustomerReferralsCampaignsItem)] = Field(None, description="Contains an array of campaigns that served as the source of a referral for the customer.")
     __properties = ["total", "campaigns"]
 
     class Config:
@@ -62,6 +62,16 @@ class CustomerReferrals(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['campaigns'] = _items
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
+        # set to None if campaigns (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaigns is None and "campaigns" in self.__fields_set__:
+            _dict['campaigns'] = None
+
         return _dict
 
     @classmethod

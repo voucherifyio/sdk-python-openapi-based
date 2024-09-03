@@ -69,6 +69,21 @@ class ReferralProgramRefereeReward(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of related_object_parent
         if self.related_object_parent:
             _dict['related_object_parent'] = self.related_object_parent.to_dict()
+        # set to None if related_object_parent (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_parent is None and "related_object_parent" in self.__fields_set__:
+            _dict['related_object_parent'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
         return _dict
 
     @classmethod

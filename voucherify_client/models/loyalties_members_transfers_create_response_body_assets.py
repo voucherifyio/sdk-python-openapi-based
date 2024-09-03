@@ -62,6 +62,16 @@ class LoyaltiesMembersTransfersCreateResponseBodyAssets(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of barcode
         if self.barcode:
             _dict['barcode'] = self.barcode.to_dict()
+        # set to None if qr (nullable) is None
+        # and __fields_set__ contains the field
+        if self.qr is None and "qr" in self.__fields_set__:
+            _dict['qr'] = None
+
+        # set to None if barcode (nullable) is None
+        # and __fields_set__ contains the field
+        if self.barcode is None and "barcode" in self.__fields_set__:
+            _dict['barcode'] = None
+
         return _dict
 
     @classmethod

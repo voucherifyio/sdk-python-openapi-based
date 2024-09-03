@@ -21,14 +21,14 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
-from voucherify_client.models.promotion_stack_base_tiers import PromotionStackBaseTiers
+from voucherify_client.models.promotions_stacks_create_request_body_tiers import PromotionsStacksCreateRequestBodyTiers
 
 class PromotionsStacksCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/promotions/{campaignId}/stacks`.  # noqa: E501
+    Request body schema for **POST** `v1/promotions/{campaignId}/stacks`.  # noqa: E501
     """
-    name: StrictStr = Field(..., description="Promotion stack name.")
-    tiers: PromotionStackBaseTiers = Field(...)
+    name: Optional[StrictStr] = Field(None, description="Promotion stack name.")
+    tiers: Optional[PromotionsStacksCreateRequestBodyTiers] = None
     category_id: Optional[StrictStr] = Field(None, description="Promotion stack category ID.")
     __properties = ["name", "tiers", "category_id"]
 
@@ -59,6 +59,21 @@ class PromotionsStacksCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of tiers
         if self.tiers:
             _dict['tiers'] = self.tiers.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if tiers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tiers is None and "tiers" in self.__fields_set__:
+            _dict['tiers'] = None
+
+        # set to None if category_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.category_id is None and "category_id" in self.__fields_set__:
+            _dict['category_id'] = None
+
         return _dict
 
     @classmethod
@@ -72,7 +87,7 @@ class PromotionsStacksCreateRequestBody(BaseModel):
 
         _obj = PromotionsStacksCreateRequestBody.parse_obj({
             "name": obj.get("name"),
-            "tiers": PromotionStackBaseTiers.from_dict(obj.get("tiers")) if obj.get("tiers") is not None else None,
+            "tiers": PromotionsStacksCreateRequestBodyTiers.from_dict(obj.get("tiers")) if obj.get("tiers") is not None else None,
             "category_id": obj.get("category_id")
         })
         return _obj

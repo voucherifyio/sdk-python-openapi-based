@@ -19,23 +19,26 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
 from voucherify_client.models.export import Export
 
 class ExportsListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/exports`.  # noqa: E501
+    Response body schema for **GET** `v1/exports`.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about exports.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the attribute that contains the array of exports.")
-    exports: conlist(Export) = Field(..., description="An array of export objects.")
-    total: StrictInt = Field(..., description="Total number of exports.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about exports.")
+    data_ref: Optional[StrictStr] = Field('exports', description="Identifies the name of the attribute that contains the array of exports.")
+    exports: Optional[conlist(Export)] = Field(None, description="An array of export objects.")
+    total: Optional[StrictInt] = Field(None, description="Total number of exports.")
     __properties = ["object", "data_ref", "exports", "total"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('list',):
             raise ValueError("must be one of enum values ('list')")
         return value
@@ -43,6 +46,9 @@ class ExportsListResponseBody(BaseModel):
     @validator('data_ref')
     def data_ref_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('exports',):
             raise ValueError("must be one of enum values ('exports')")
         return value
@@ -78,6 +84,26 @@ class ExportsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['exports'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if exports (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exports is None and "exports" in self.__fields_set__:
+            _dict['exports'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod

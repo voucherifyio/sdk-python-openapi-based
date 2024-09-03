@@ -28,7 +28,7 @@ class ProductCollectionsItemProductsItem(BaseModel):
     """
     id: StrictStr = Field(..., description="The product ID.")
     product_id: Optional[StrictStr] = Field(None, description="Product ID for SKUs.")
-    object: StrictStr = Field(..., description="Denotes the type of object represented by the ID.")
+    object: StrictStr = Field(..., description="Denotes the type of the object represented by the ID.")
     __properties = ["id", "product_id", "object"]
 
     @validator('object')

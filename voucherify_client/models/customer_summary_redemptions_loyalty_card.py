@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictInt
 
 class CustomerSummaryRedemptionsLoyaltyCard(BaseModel):
     """
     Summary of loyalty points.  # noqa: E501
     """
-    redeemed_points: StrictInt = Field(..., description="Total number of loyalty points redeemed by the customer.")
-    points_to_go: StrictInt = Field(..., description="Sum of remaining available point balance across all loyalty cards.")
+    redeemed_points: Optional[StrictInt] = Field(None, description="Total number of loyalty points redeemed by the customer.")
+    points_to_go: Optional[StrictInt] = Field(None, description="Sum of remaining available point balance across all loyalty cards.")
     __properties = ["redeemed_points", "points_to_go"]
 
     class Config:
@@ -54,6 +54,16 @@ class CustomerSummaryRedemptionsLoyaltyCard(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if redeemed_points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemed_points is None and "redeemed_points" in self.__fields_set__:
+            _dict['redeemed_points'] = None
+
+        # set to None if points_to_go (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points_to_go is None and "points_to_go" in self.__fields_set__:
+            _dict['points_to_go'] = None
+
         return _dict
 
     @classmethod

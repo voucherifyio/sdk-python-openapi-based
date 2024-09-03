@@ -25,9 +25,9 @@ from voucherify_client.models.campaign_base import CampaignBase
 
 class CampaignsListResponseBody(BaseModel):
     """
-    Schema model for **GET** `/campaigns`.  # noqa: E501
+    Schema model for **GET** `v1/campaigns`.  # noqa: E501
     """
-    object: Optional[StrictStr] = Field('list', description="The type of object represented by JSON. This object stores information about campaigns in a dictionary.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about campaigns in a dictionary.")
     data_ref: Optional[StrictStr] = Field('campaigns', description="Identifies the name of the attribute that contains the array of campaign objects.")
     campaigns: Optional[conlist(CampaignBase)] = Field(None, description="Contains array of campaign objects.")
     total: Optional[StrictInt] = Field(None, description="Total number of campaigns.")
@@ -64,6 +64,26 @@ class CampaignsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['campaigns'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if campaigns (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaigns is None and "campaigns" in self.__fields_set__:
+            _dict['campaigns'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod

@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictInt
 from voucherify_client.models.customer_summary_redemptions_gift import CustomerSummaryRedemptionsGift
 from voucherify_client.models.customer_summary_redemptions_loyalty_card import CustomerSummaryRedemptionsLoyaltyCard
@@ -28,14 +28,14 @@ class CustomerSummaryRedemptions(BaseModel):
     """
     CustomerSummaryRedemptions
     """
-    total_redeemed: StrictInt = Field(..., description="Total number of redemptions made by the customer.")
-    total_failed: StrictInt = Field(..., description="Total number of redemptions that failed.")
-    total_succeeded: StrictInt = Field(..., description="Total number of redemptions that succeeded.")
-    total_rolled_back: StrictInt = Field(..., description="Total number of redemptions that were rolled back for the customer.")
-    total_rollback_failed: StrictInt = Field(..., description="Total number of redemption rollbacks that failed.")
-    total_rollback_succeeded: StrictInt = Field(..., description="Total number of redemption rollbacks that succeeded.")
-    gift: CustomerSummaryRedemptionsGift = Field(...)
-    loyalty_card: CustomerSummaryRedemptionsLoyaltyCard = Field(...)
+    total_redeemed: Optional[StrictInt] = Field(None, description="Total number of redemptions made by the customer.")
+    total_failed: Optional[StrictInt] = Field(None, description="Total number of redemptions that failed.")
+    total_succeeded: Optional[StrictInt] = Field(None, description="Total number of redemptions that succeeded.")
+    total_rolled_back: Optional[StrictInt] = Field(None, description="Total number of redemptions that were rolled back for the customer.")
+    total_rollback_failed: Optional[StrictInt] = Field(None, description="Total number of redemption rollbacks that failed.")
+    total_rollback_succeeded: Optional[StrictInt] = Field(None, description="Total number of redemption rollbacks that succeeded.")
+    gift: Optional[CustomerSummaryRedemptionsGift] = None
+    loyalty_card: Optional[CustomerSummaryRedemptionsLoyaltyCard] = None
     __properties = ["total_redeemed", "total_failed", "total_succeeded", "total_rolled_back", "total_rollback_failed", "total_rollback_succeeded", "gift", "loyalty_card"]
 
     class Config:
@@ -68,6 +68,46 @@ class CustomerSummaryRedemptions(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of loyalty_card
         if self.loyalty_card:
             _dict['loyalty_card'] = self.loyalty_card.to_dict()
+        # set to None if total_redeemed (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_redeemed is None and "total_redeemed" in self.__fields_set__:
+            _dict['total_redeemed'] = None
+
+        # set to None if total_failed (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_failed is None and "total_failed" in self.__fields_set__:
+            _dict['total_failed'] = None
+
+        # set to None if total_succeeded (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_succeeded is None and "total_succeeded" in self.__fields_set__:
+            _dict['total_succeeded'] = None
+
+        # set to None if total_rolled_back (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_rolled_back is None and "total_rolled_back" in self.__fields_set__:
+            _dict['total_rolled_back'] = None
+
+        # set to None if total_rollback_failed (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_rollback_failed is None and "total_rollback_failed" in self.__fields_set__:
+            _dict['total_rollback_failed'] = None
+
+        # set to None if total_rollback_succeeded (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_rollback_succeeded is None and "total_rollback_succeeded" in self.__fields_set__:
+            _dict['total_rollback_succeeded'] = None
+
+        # set to None if gift (nullable) is None
+        # and __fields_set__ contains the field
+        if self.gift is None and "gift" in self.__fields_set__:
+            _dict['gift'] = None
+
+        # set to None if loyalty_card (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty_card is None and "loyalty_card" in self.__fields_set__:
+            _dict['loyalty_card'] = None
+
         return _dict
 
     @classmethod

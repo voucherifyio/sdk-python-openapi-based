@@ -64,6 +64,16 @@ class RedemptionChannel(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if channel_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel_id is None and "channel_id" in self.__fields_set__:
+            _dict['channel_id'] = None
+
+        # set to None if channel_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel_type is None and "channel_type" in self.__fields_set__:
+            _dict['channel_type'] = None
+
         return _dict
 
     @classmethod

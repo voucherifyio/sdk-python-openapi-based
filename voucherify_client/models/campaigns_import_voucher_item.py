@@ -21,30 +21,42 @@ import json
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist, validator
-from voucherify_client.models.campaign_base_validity_timeframe import CampaignBaseValidityTimeframe
 from voucherify_client.models.campaigns_import_voucher_item_redemption import CampaignsImportVoucherItemRedemption
-from voucherify_client.models.campaigns_import_voucher_loyalty_card import CampaignsImportVoucherLoyaltyCard
 from voucherify_client.models.discount import Discount
 from voucherify_client.models.gift import Gift
+from voucherify_client.models.simple_loyalty_card import SimpleLoyaltyCard
+from voucherify_client.models.validity_timeframe import ValidityTimeframe
 
 class CampaignsImportVoucherItem(BaseModel):
     """
-    Import Vouchers to Campaign  # noqa: E501
+    CampaignsImportVoucherItem
     """
-    code: StrictStr = Field(..., description="Unique custom voucher code.")
-    type: Optional[StrictStr] = Field(None, description="Type of voucher.")
+    code: Optional[StrictStr] = Field(None, description="Value representing the imported code.")
     redemption: Optional[CampaignsImportVoucherItemRedemption] = None
     active: Optional[StrictBool] = Field(None, description="A flag to toggle the voucher on or off. You can disable a voucher even though it's within the active period defined by the `start_date` and `expiration_date`.    - `true` indicates an *active* voucher - `false` indicates an *inactive* voucher")
-    metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the voucher. A set of key/value pairs that you can attach to a voucher object. It can be useful for storing additional information about the voucher in a structured format.")
-    category: Optional[StrictStr] = Field(None, description="The category assigned to the campaign. Either pass this parameter OR the `category_id`.")
-    start_date: Optional[datetime] = Field(None, description="Activation timestamp defines when the campaign starts to be active in ISO 8601 format. Campaign is *inactive before* this date. ")
-    validity_timeframe: Optional[CampaignBaseValidityTimeframe] = None
-    validity_day_of_week: Optional[conlist(StrictInt)] = Field(None, description="Integer array corresponding to the particular days of the week in which the campaign is valid.  - `0`  Sunday   - `1`  Monday   - `2`  Tuesday   - `3`  Wednesday   - `4`  Thursday   - `5`  Friday   - `6`  Saturday  ")
+    metadata: Optional[Dict[str, Any]] = None
+    category: Optional[StrictStr] = Field(None, description="Tag defining the category that this voucher belongs to. Useful when listing vouchers using the [List Vouchers](ref:list-vouchers) endpoint.")
+    start_date: Optional[datetime] = Field(None, description="Activation timestamp presented in the ISO 8601 format. Voucher is *inactive before* this date. Start date defines when the code starts to be active. Allowed date formats are: - YYYY-MM-DD - YYYY-MM-DDTHH - YYYY-MM-DDTHH:mm - YYYY-MM-DDTHH:mm:ss - YYYY-MM-DDTHH:mm:ssZ - YYYY-MM-DDTHH:mm:ss.SSSZ")
+    expiration_date: Optional[datetime] = Field(None, description="Expiration date defines when the code expires. Expiration timestamp is presented in the ISO 8601 format.  Voucher is *inactive after* this date. Allowed date formats are: - YYYY-MM-DD - YYYY-MM-DDTHH - YYYY-MM-DDTHH:mm - YYYY-MM-DDTHH:mm:ss - YYYY-MM-DDTHH:mm:ssZ - YYYY-MM-DDTHH:mm:ss.SSSZ")
+    validity_timeframe: Optional[ValidityTimeframe] = None
+    validity_day_of_week: Optional[conlist(StrictInt)] = Field(None, description="Integer array corresponding to the particular days of the week in which the voucher is valid.  - `0` Sunday - `1` Monday - `2` Tuesday - `3` Wednesday - `4` Thursday - `5` Friday - `6` Saturday")
     additional_info: Optional[StrictStr] = Field(None, description="An optional field to keep any extra textual information about the code such as a code description and details.")
-    discount: Optional[Discount] = None
+    type: Optional[StrictStr] = None
+    loyalty_card: Optional[SimpleLoyaltyCard] = None
     gift: Optional[Gift] = None
-    loyalty_card: Optional[CampaignsImportVoucherLoyaltyCard] = None
-    __properties = ["code", "type", "redemption", "active", "metadata", "category", "start_date", "validity_timeframe", "validity_day_of_week", "additional_info", "discount", "gift", "loyalty_card"]
+    discount: Optional[Discount] = None
+    __properties = ["code", "redemption", "active", "metadata", "category", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "additional_info", "type", "loyalty_card", "gift", "discount"]
+
+    @validator('validity_day_of_week')
+    def validity_day_of_week_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in (0, 1, 2, 3, 4, 5, 6,):
+                raise ValueError("each list item must be one of (0, 1, 2, 3, 4, 5, 6)")
+        return value
 
     @validator('type')
     def type_validate_enum(cls, value):
@@ -52,8 +64,8 @@ class CampaignsImportVoucherItem(BaseModel):
         if value is None:
             return value
 
-        if value not in ('DISCOUNT_VOUCHER', 'GIFT_VOUCHER', 'LOYALTY_CARD', 'LUCKY_DRAW_CODE',):
-            raise ValueError("must be one of enum values ('DISCOUNT_VOUCHER', 'GIFT_VOUCHER', 'LOYALTY_CARD', 'LUCKY_DRAW_CODE')")
+        if value not in ('LOYALTY_CARD', 'GIFT_VOUCHER', 'DISCOUNT_VOUCHER',):
+            raise ValueError("must be one of enum values ('LOYALTY_CARD', 'GIFT_VOUCHER', 'DISCOUNT_VOUCHER')")
         return value
 
     class Config:
@@ -86,15 +98,60 @@ class CampaignsImportVoucherItem(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of validity_timeframe
         if self.validity_timeframe:
             _dict['validity_timeframe'] = self.validity_timeframe.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of discount
-        if self.discount:
-            _dict['discount'] = self.discount.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of gift
-        if self.gift:
-            _dict['gift'] = self.gift.to_dict()
         # override the default output from pydantic by calling `to_dict()` of loyalty_card
         if self.loyalty_card:
             _dict['loyalty_card'] = self.loyalty_card.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of gift
+        if self.gift:
+            _dict['gift'] = self.gift.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of discount
+        if self.discount:
+            _dict['discount'] = self.discount.to_dict()
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
+        # set to None if redemption (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
+        # set to None if active (nullable) is None
+        # and __fields_set__ contains the field
+        if self.active is None and "active" in self.__fields_set__:
+            _dict['active'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if category (nullable) is None
+        # and __fields_set__ contains the field
+        if self.category is None and "category" in self.__fields_set__:
+            _dict['category'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
+        # set to None if additional_info (nullable) is None
+        # and __fields_set__ contains the field
+        if self.additional_info is None and "additional_info" in self.__fields_set__:
+            _dict['additional_info'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
         return _dict
 
     @classmethod
@@ -108,18 +165,19 @@ class CampaignsImportVoucherItem(BaseModel):
 
         _obj = CampaignsImportVoucherItem.parse_obj({
             "code": obj.get("code"),
-            "type": obj.get("type"),
             "redemption": CampaignsImportVoucherItemRedemption.from_dict(obj.get("redemption")) if obj.get("redemption") is not None else None,
             "active": obj.get("active"),
             "metadata": obj.get("metadata"),
             "category": obj.get("category"),
             "start_date": obj.get("start_date"),
-            "validity_timeframe": CampaignBaseValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
+            "expiration_date": obj.get("expiration_date"),
+            "validity_timeframe": ValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
             "validity_day_of_week": obj.get("validity_day_of_week"),
             "additional_info": obj.get("additional_info"),
-            "discount": Discount.from_dict(obj.get("discount")) if obj.get("discount") is not None else None,
+            "type": obj.get("type"),
+            "loyalty_card": SimpleLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None,
             "gift": Gift.from_dict(obj.get("gift")) if obj.get("gift") is not None else None,
-            "loyalty_card": CampaignsImportVoucherLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None
+            "discount": Discount.from_dict(obj.get("discount")) if obj.get("discount") is not None else None
         })
         return _obj
 

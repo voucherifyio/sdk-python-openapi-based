@@ -15,8 +15,8 @@ Method | HTTP request | Description
 [**list_products**](ProductsApi.md#list_products) | **GET** /v1/products | List Products
 [**list_skus_in_product**](ProductsApi.md#list_skus_in_product) | **GET** /v1/products/{productId}/skus | List SKUs in Product
 [**update_product**](ProductsApi.md#update_product) | **PUT** /v1/products/{productId} | Update Product
-[**update_products_in_bulk**](ProductsApi.md#update_products_in_bulk) | **POST** /v1/products/bulk/async | Update Products in bulk
-[**update_products_metadata_in_bulk**](ProductsApi.md#update_products_metadata_in_bulk) | **POST** /v1/products/metadata/async | Update Products&#39; Metadata in bulk
+[**update_products_in_bulk**](ProductsApi.md#update_products_in_bulk) | **POST** /v1/products/bulk/async | Update Products in Bulk
+[**update_products_metadata_in_bulk**](ProductsApi.md#update_products_metadata_in_bulk) | **POST** /v1/products/metadata/async | Update Products&#39; Metadata in Bulk
 [**update_sku**](ProductsApi.md#update_sku) | **PUT** /v1/products/{productId}/skus/{skuId} | Update SKU
 
 
@@ -25,7 +25,7 @@ Method | HTTP request | Description
 
 Create Product
 
-Creates a product object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the product database, Voucherify will return a related product object with updated fields.
+Creates a product object.  📘 Upsert Mode  If you pass an id or a source_id that already exists in the product database, Voucherify will return a related product object with updated fields.
 
 ### Example
 
@@ -111,7 +111,7 @@ Name | Type | Description  | Notes
 
 Create SKU
 
-This method adds product variants to a <!-- [created product](OpenAPI.json/paths/~1products/post) -->[created product](ref:create-product).   <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the sku database, Voucherify will return a related sku object with updated fields.
+This method adds product variants to a created product.   📘 Upsert Mode  If you pass an id or a source_id that already exists in the sku database, Voucherify will return a related sku object with updated fields.
 
 ### Example
 
@@ -153,7 +153,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    product_id = 'product_id_example' # str | A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
+    product_id = 'product_id_example' # str | A Voucherify product ID or product source ID.
     products_skus_create_request_body = {"source_id":"first_product_sku_1","sku":"Samsung phone 256GB","price":1300,"currency":"USD","attributes":{"color":"vintage-black","memory":"256","processor":"Intel"},"image_url":"https://www.website.com/image.png","metadata":{"imported":true}} # ProductsSkusCreateRequestBody | Specify the SKU parameters to be created. (optional)
 
     try:
@@ -171,7 +171,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **product_id** | **str**| A Voucherify &lt;!-- [product](OpenAPI.json/components/schemas/Product) --&gt;[product](ref:get-product) ID or product source ID. | 
+ **product_id** | **str**| A Voucherify product ID or product source ID. | 
  **products_skus_create_request_body** | [**ProductsSkusCreateRequestBody**](ProductsSkusCreateRequestBody.md)| Specify the SKU parameters to be created. | [optional] 
 
 ### Return type
@@ -199,7 +199,7 @@ Name | Type | Description  | Notes
 
 Delete Product
 
-This method deletes a product.
+Deletes a product and all related SKUs. This operation cannot be undone.  If the force parameter is set to false or not set at all, the product and all related SKUs will be moved to the bin.
 
 ### Example
 
@@ -240,7 +240,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
     product_id = 'product_id_example' # str | A Voucherify product ID or source ID.
-    force = True # bool | If this flag is set to `true`, the product will be removed permanently. Going forward, the user will be able to create another product with exactly the same `source_id`. (optional)
+    force = True # bool | If this flag is set to true, the product and all related SKUs will be removed permanently. If it is set to false or not set at all, the product and all related SKUs will be moved to the bin. Going forward, the user will be able to create another product with exactly the same source_id. (optional)
 
     try:
         # Delete Product
@@ -256,7 +256,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **product_id** | **str**| A Voucherify product ID or source ID. | 
- **force** | **bool**| If this flag is set to &#x60;true&#x60;, the product will be removed permanently. Going forward, the user will be able to create another product with exactly the same &#x60;source_id&#x60;. | [optional] 
+ **force** | **bool**| If this flag is set to true, the product and all related SKUs will be removed permanently. If it is set to false or not set at all, the product and all related SKUs will be moved to the bin. Going forward, the user will be able to create another product with exactly the same source_id. | [optional] 
 
 ### Return type
 
@@ -283,7 +283,7 @@ void (empty response body)
 
 Delete SKU
 
-This method deletes a product SKU.
+Deletes a product SKU. This operation cannot be undone.  If the force parameter is set to false or not set at all, the SKU will be moved to the bin.
 
 ### Example
 
@@ -323,9 +323,9 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    product_id = 'product_id_example' # str | A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
-    sku_id = 'sku_id_example' # str | A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.
-    force = True # bool | If this flag is set to `true`, the SKU will be removed permanently. Going forward, the user will be able to create another SKU with exactly the same `source_id`. (optional)
+    product_id = 'product_id_example' # str | A unique Voucherify product ID or product source ID.
+    sku_id = 'sku_id_example' # str | A Voucherify SKU ID or SKU source ID.
+    force = True # bool | If this flag is set to true, the SKU will be removed permanently. If it is set to false or not set at all, the SKU will be moved to the bin. Going forward, the user will be able to create another SKU with exactly the same source_id. (optional)
 
     try:
         # Delete SKU
@@ -340,9 +340,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **product_id** | **str**| A unique Voucherify &lt;!-- [product](OpenAPI.json/components/schemas/Product) --&gt;[product](ref:get-product) ID or product source ID. | 
- **sku_id** | **str**| A Voucherify &lt;!-- [SKU](OpenAPI.json/components/schemas/Sku) --&gt;[SKU ID](ref:get-sku) or SKU source ID. | 
- **force** | **bool**| If this flag is set to &#x60;true&#x60;, the SKU will be removed permanently. Going forward, the user will be able to create another SKU with exactly the same &#x60;source_id&#x60;. | [optional] 
+ **product_id** | **str**| A unique Voucherify product ID or product source ID. | 
+ **sku_id** | **str**| A Voucherify SKU ID or SKU source ID. | 
+ **force** | **bool**| If this flag is set to true, the SKU will be removed permanently. If it is set to false or not set at all, the SKU will be moved to the bin. Going forward, the user will be able to create another SKU with exactly the same source_id. | [optional] 
 
 ### Return type
 
@@ -535,11 +535,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_products_using_csv**
-> ProductsImportCsvCreateResponseBody import_products_using_csv(file)
+> ProductsImportCsvCreateResponseBody import_products_using_csv(file=file)
 
 Import Products using CSV
 
-Import products into the repository using a CSV file.    Curl Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/products/importCSV \\   -F file=@/path/to/products.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ```  The CSV file has to include headers in the first line.  <!-- theme: info -->  > 📘 Standard product fields mapping > > - Create a **comma separated value (CSV) file** or download our CSV import template. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b82ed68d51e779443f550/Import_products_template.csv). > - Supported CSV file headers: `name,source_id,price,attributes,image_url,Metadata_property_name` > - **Name** is a **required** field. The remaining fields in the CSV template are optional. > - Override/Update products' **names** in Voucherify using this method. Data will be updated for each product included in the CSV file whose **source_id** matches a source ID in Voucherify. No other data can be updated other than the product name. > - Note that dates and date-time attributes need to be provided in compliance with the **ISO 8601 norms**. For example, 2022-03-11T09:00:00.000Z or 2022-03-11 >    - `YYYY-MM-DD` >    - `YYYY-MM-DDTHH` >    - `YYYY-MM-DDTHH:mm` >    - `YYYY-MM-DDTHH:mm:ss` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ss.SSSZ` > - Columns that can't be mapped to standard fields, will be mapped to **Custom attributes** and added as **products' metadata**. There is no limit on the number of custom attributes that you can import as metadata.  > - To provide the proper data type, you need to add all custom attributes to the metadata schema **before importing the file**. Read more [here](https://support.voucherify.io/article/99-schema-validation-metadata#add-metadata). > - **Product attributes** (not custom attributes) need to be separated by a comma and enclosed in double quotes, i.e \"attribute1,attribute2\". > - Headers with metadata names **can't contain white-space characters**. > - If you import metadata defined in the schema as **arrays (multiple)**, you need to separate each value using a comma, for example:   >    - array of strings: \"subscribed,premium\"   >    - array of numbers: \"123,234\".  >    - array of dates: \"2000-01-01,2000-01-02\"  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Import products into the repository using a CSV file.   This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.
 
 ### Example
 
@@ -580,11 +580,11 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    file = None # bytearray | File path.
+    file = None # bytearray | File path. (optional)
 
     try:
         # Import Products using CSV
-        api_response = api_instance.import_products_using_csv(file)
+        api_response = api_instance.import_products_using_csv(file=file)
         print("The response of ProductsApi->import_products_using_csv:\n")
         pprint(api_response)
     except Exception as e:
@@ -597,7 +597,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **bytearray**| File path. | 
+ **file** | **bytearray**| File path. | [optional] 
 
 ### Return type
 
@@ -620,11 +620,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_skus_using_csv**
-> SkusImportCsvCreateResponseBody import_skus_using_csv(file)
+> SkusImportCsvCreateResponseBody import_skus_using_csv(file=file)
 
 Import SKUs using CSV
 
-Import SKUs into the repository using a CSV file.  The CSV file has to include headers in the first line. All properties which cannot be mapped to standard SKU fields will be added to the metadata object. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b98d08c9b585083488a4c/Import_SKUS_template.csv).   Curl Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/skus/importCSV \\   -F file=@/path/to/skus.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ``` > 🚧 Import sequence > > First import products using the [dedicated endpoint](ref:import-products-using-csv), then import SKUs using this endpoint to properly match SKUs to products.  <!-- theme: info -->  > 📘 Standard SKU fields mapping > > - **Required** fields are source_id and product_id. > - Supported CSV file headers: `product_id,sku,source_id,price,image_url,attributes` > - SKU **source_id**'s must be unique in the entire product catalog, no duplicates allowed. > - SKU attributes need to be in the form of a stringy-fied json, i.e.`\"{'color':'blue'}\"`. These attributes must be defined in the **product** beforehand in order for you to be able to import them to the SKU. > - You can use this method to update the following parameters in bulk: **sku** and the sku **price**.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Import SKUs into the repository using a CSV file. The CSV file has to include headers in the first line. All properties which cannot be mapped to standard SKU fields will be added to the metadata object. You can find an example template [here](https://s3.amazonaws.com/helpscout.net/docs/assets/5902f1c12c7d3a057f88a36d/attachments/627b98d08c9b585083488a4c/Import_SKUS_template.csv).  This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.
 
 ### Example
 
@@ -665,11 +665,11 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    file = None # bytearray | File path.
+    file = None # bytearray | File path. (optional)
 
     try:
         # Import SKUs using CSV
-        api_response = api_instance.import_skus_using_csv(file)
+        api_response = api_instance.import_skus_using_csv(file=file)
         print("The response of ProductsApi->import_skus_using_csv:\n")
         pprint(api_response)
     except Exception as e:
@@ -682,7 +682,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **bytearray**| File path. | 
+ **file** | **bytearray**| File path. | [optional] 
 
 ### Return type
 
@@ -751,9 +751,9 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
     start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
 
@@ -772,9 +772,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
  **start_date** | **datetime**| Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. | [optional] 
  **end_date** | **datetime**| Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. | [optional] 
 
@@ -845,10 +845,10 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    product_id = 'product_id_example' # str | A Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    product_id = 'product_id_example' # str | A Voucherify product ID or product source ID.
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
     start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
 
@@ -867,10 +867,10 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **product_id** | **str**| A Voucherify &lt;!-- [product](OpenAPI.json/components/schemas/Product) --&gt;[product](ref:get-product) ID or product source ID. | 
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **product_id** | **str**| A Voucherify product ID or product source ID. | 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
  **start_date** | **datetime**| Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. | [optional] 
  **end_date** | **datetime**| Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. | [optional] 
 
@@ -985,9 +985,9 @@ Name | Type | Description  | Notes
 # **update_products_in_bulk**
 > ProductsUpdateInBulkResponseBody update_products_in_bulk(products_update_in_bulk_request_body=products_update_in_bulk_request_body)
 
-Update Products in bulk
+Update Products in Bulk
 
-Update several products in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier. If a requested product object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Update products in one asynchronous operation. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.
 
 ### Example
 
@@ -1029,10 +1029,10 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    products_update_in_bulk_request_body = [{"source_id":"first_product","name":"Samsung Phone 1","price":220000,"attributes":["color","memory","processor"],"metadata":{"test":true,"vendor":"Online Store - 3"},"image_url":"https://voucherify-uploads.s3.amazonaws.com/org_2qt8DYlM/img_Z2qvs2KFnQyo2Ohz4uhsjGtf.png"},{"source_id":"second_product","name":"Samsung Phone 2","price":230000,"attributes":["color","memory","processor"],"metadata":{"test":true,"vendor":"Online Store - 4"},"image_url":"https://voucherify-uploads.s3.amazonaws.com/org_2qt8DYlM/img_Z2qvs2KFnQyo2Ohz4uhsjGtf.png"}] # List[ProductsUpdateInBulkRequestBody] | Create an array of product objects, each with the parameters which you want to update. (optional)
+    products_update_in_bulk_request_body = [{"source_id":"first_product","name":"Samsung Phone 1","price":220000,"attributes":["color","memory","processor"],"metadata":{"test":true,"vendor":"Online Store - 3"},"image_url":"https://voucherify-uploads.s3.amazonaws.com/org_2qt8DYlM/img_Z2qvs2KFnQyo2Ohz4uhsjGtf.png"},{"source_id":"second_product","name":"Samsung Phone 2","price":230000,"attributes":["color","memory","processor"],"metadata":{"test":true,"vendor":"Online Store - 4"},"image_url":"https://voucherify-uploads.s3.amazonaws.com/org_2qt8DYlM/img_Z2qvs2KFnQyo2Ohz4uhsjGtf.png"}] # List[ProductsUpdateInBulkRequestBody] | List the product fields to be updated in each customer object. (optional)
 
     try:
-        # Update Products in bulk
+        # Update Products in Bulk
         api_response = api_instance.update_products_in_bulk(products_update_in_bulk_request_body=products_update_in_bulk_request_body)
         print("The response of ProductsApi->update_products_in_bulk:\n")
         pprint(api_response)
@@ -1046,7 +1046,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **products_update_in_bulk_request_body** | [**List[ProductsUpdateInBulkRequestBody]**](ProductsUpdateInBulkRequestBody.md)| Create an array of product objects, each with the parameters which you want to update. | [optional] 
+ **products_update_in_bulk_request_body** | [**List[ProductsUpdateInBulkRequestBody]**](ProductsUpdateInBulkRequestBody.md)| List the product fields to be updated in each customer object. | [optional] 
 
 ### Return type
 
@@ -1064,16 +1064,16 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**202** | Returns ID of the scheduled async action. The response informs you that your request has been accepted and updates will be added to the repository asynchronously. To check the update status and result, copy the &#x60;async_action_id&#x60; from the response and pass it using the &lt;!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) --&gt;[Get Async Action](ref:get-async-action) endpoint. |  -  |
+**202** | Returns the ID of the scheduled asynchronous action. The response informs you that the request has been accepted and the resources will be updated in the repository asynchronously. To check the status and result, copy the &#x60;async_action_id&#x60; from the response and use it as a query parameter in the [GET Async Action](ref:get-async-action) endpoint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_products_metadata_in_bulk**
 > ProductsMetadataUpdateInBulkResponseBody update_products_metadata_in_bulk(products_metadata_update_in_bulk_request_body=products_metadata_update_in_bulk_request_body)
 
-Update Products' Metadata in bulk
+Update Products' Metadata in Bulk
 
-Update several product metadata properties in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier. If a requested product object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Updates metadata parameters for a list of products. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.
 
 ### Example
 
@@ -1115,10 +1115,10 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    products_metadata_update_in_bulk_request_body = {"source_ids":["123-567-3433","test_volleyball"],"metadata":{"label":true,"origin":"PL"}} # ProductsMetadataUpdateInBulkRequestBody | Specify the list of product source IDs and the metadata key value pairs to be udpated for these products. (optional)
+    products_metadata_update_in_bulk_request_body = {"source_ids":["123-567-3433","test_volleyball"],"metadata":{"label":true,"origin":"PL"}} # ProductsMetadataUpdateInBulkRequestBody | List the source_ids of the products you would like to update with the metadata key/value pairs. (optional)
 
     try:
-        # Update Products' Metadata in bulk
+        # Update Products' Metadata in Bulk
         api_response = api_instance.update_products_metadata_in_bulk(products_metadata_update_in_bulk_request_body=products_metadata_update_in_bulk_request_body)
         print("The response of ProductsApi->update_products_metadata_in_bulk:\n")
         pprint(api_response)
@@ -1132,7 +1132,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **products_metadata_update_in_bulk_request_body** | [**ProductsMetadataUpdateInBulkRequestBody**](ProductsMetadataUpdateInBulkRequestBody.md)| Specify the list of product source IDs and the metadata key value pairs to be udpated for these products. | [optional] 
+ **products_metadata_update_in_bulk_request_body** | [**ProductsMetadataUpdateInBulkRequestBody**](ProductsMetadataUpdateInBulkRequestBody.md)| List the source_ids of the products you would like to update with the metadata key/value pairs. | [optional] 
 
 ### Return type
 
@@ -1150,7 +1150,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**202** | Returns ID of the scheduled async action. The response informs you that your request has been accepted and updates will be added to the repository asynchronously. To check the update status and result, copy the &#x60;async_action_id&#x60; from the response and pass it using the &lt;!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) --&gt;[Get Async Action](ref:get-async-action) endpoint. |  -  |
+**202** | Returns the ID of the scheduled asynchronous action. The response informs you that the request has been accepted and the resources will be updated in the repository asynchronously. To check the status and result, copy the &#x60;async_action_id&#x60; from the response and use it as a query parameter in the [GET Async Action](ref:get-async-action) endpoint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1159,7 +1159,7 @@ Name | Type | Description  | Notes
 
 Update SKU
 
-Updates the specified SKU by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged.  Fields other than the ones listed in the request body schema won't be modified. Even if provided, they will be silently skipped.
+Updates the specified SKU by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged. Fields other than the ones listed in the request body schema wont be modified. Even if provided, they will be silently skipped.
 
 ### Example
 
@@ -1201,8 +1201,8 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductsApi(api_client)
-    product_id = 'product_id_example' # str | A unique Voucherify <!-- [product](OpenAPI.json/components/schemas/Product) -->[product](ref:get-product) ID or product source ID.
-    sku_id = 'sku_id_example' # str | A Voucherify <!-- [SKU](OpenAPI.json/components/schemas/Sku) -->[SKU ID](ref:get-sku) or SKU source ID.
+    product_id = 'product_id_example' # str | A unique Voucherify product ID or product source ID.
+    sku_id = 'sku_id_example' # str | A Voucherify SKU ID or SKU source ID.
     products_skus_update_request_body = {"price":210000,"currency":"PLN"} # ProductsSkusUpdateRequestBody | Specify the parameters to be updated. (optional)
 
     try:
@@ -1220,8 +1220,8 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **product_id** | **str**| A unique Voucherify &lt;!-- [product](OpenAPI.json/components/schemas/Product) --&gt;[product](ref:get-product) ID or product source ID. | 
- **sku_id** | **str**| A Voucherify &lt;!-- [SKU](OpenAPI.json/components/schemas/Sku) --&gt;[SKU ID](ref:get-sku) or SKU source ID. | 
+ **product_id** | **str**| A unique Voucherify product ID or product source ID. | 
+ **sku_id** | **str**| A Voucherify SKU ID or SKU source ID. | 
  **products_skus_update_request_body** | [**ProductsSkusUpdateRequestBody**](ProductsSkusUpdateRequestBody.md)| Specify the parameters to be updated. | [optional] 
 
 ### Return type

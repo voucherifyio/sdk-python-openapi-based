@@ -27,14 +27,17 @@ class LoyaltyTiersExpirationAllExpirationDate(BaseModel):
     """
     Defines the conditions for the expiration date of a tier.  # noqa: E501
     """
-    type: StrictStr = Field(..., description="What triggers the tier to expire for a customer.     `END_OF_PERIOD`: Expire tier at the end of the period.     `END_OF_NEXT_PERIOD`:  Expire tier at the end of the next period.   `BALANCE_DROP`: Tier expires when the points balance drops below the required range of the tier.   `CUSTOM`: Tier expires after a certain time period passes following the instance the points balance drops below the required range of the tier.")
-    extend: StrictStr = Field(..., description="Extend the expiration by adding extra months or days in ISO 8601 format. The tier will remain active even though it reaches its expiration time period. For example, a tier with a duration of `P3M` will be valid for an additional duration of 3 months and a tier with a duration of `P1D` will be valid for an additional duration of 1 day.")
+    type: Optional[StrictStr] = Field(None, description="What triggers the tier to expire for a customer.     `END_OF_PERIOD`: Expire tier at the end of the period.     `END_OF_NEXT_PERIOD`:  Expire tier at the end of the next period.   `BALANCE_DROP`: Tier expires when the points balance drops below the required range of the tier.   `CUSTOM`: Tier expires after a certain time period passes following the instance the points balance drops below the required range of the tier.")
+    extend: Optional[StrictStr] = Field(None, description="Extend the expiration by adding extra months or days in ISO 8601 format. The tier will remain active even though it reaches its expiration time period. For example, a tier with a duration of `P3M` will be valid for an additional duration of 3 months and a tier with a duration of `P1D` will be valid for an additional duration of 1 day.")
     rounding: Optional[LoyaltyTiersExpirationAllExpirationDateRounding] = None
     __properties = ["type", "extend", "rounding"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('END_OF_PERIOD', 'END_OF_NEXT_PERIOD', 'BALANCE_DROP', 'CUSTOM',):
             raise ValueError("must be one of enum values ('END_OF_PERIOD', 'END_OF_NEXT_PERIOD', 'BALANCE_DROP', 'CUSTOM')")
         return value
@@ -66,6 +69,16 @@ class LoyaltyTiersExpirationAllExpirationDate(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of rounding
         if self.rounding:
             _dict['rounding'] = self.rounding.to_dict()
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if extend (nullable) is None
+        # and __fields_set__ contains the field
+        if self.extend is None and "extend" in self.__fields_set__:
+            _dict['extend'] = None
+
         return _dict
 
     @classmethod

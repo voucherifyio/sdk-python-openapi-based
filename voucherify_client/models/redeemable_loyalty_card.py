@@ -27,7 +27,7 @@ class RedeemableLoyaltyCard(BaseModel):
     """
     Redeemable loyalty card object response  # noqa: E501
     """
-    points: Optional[StrictInt] = Field(None, description="Total points incurred over lifespan of loyalty card.")
+    points: Optional[StrictInt] = Field(None, description="Total points incurred over the lifespan of the loyalty card.")
     balance: Optional[StrictInt] = Field(None, description="Points available for reward redemption.")
     exchange_ratio: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="The cash equivalent of the points defined in the points_ratio property.")
     points_ratio: Optional[StrictInt] = Field(None, description="The number of loyalty points that will map to the predefined cash amount defined by the exchange_ratio property.")
@@ -65,6 +65,31 @@ class RedeemableLoyaltyCard(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['transfers'] = _items
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if exchange_ratio (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exchange_ratio is None and "exchange_ratio" in self.__fields_set__:
+            _dict['exchange_ratio'] = None
+
+        # set to None if points_ratio (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points_ratio is None and "points_ratio" in self.__fields_set__:
+            _dict['points_ratio'] = None
+
+        # set to None if transfers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.transfers is None and "transfers" in self.__fields_set__:
+            _dict['transfers'] = None
+
         return _dict
 
     @classmethod

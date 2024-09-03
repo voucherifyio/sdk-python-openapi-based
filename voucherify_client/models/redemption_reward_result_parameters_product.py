@@ -27,7 +27,7 @@ class RedemptionRewardResultParametersProduct(BaseModel):
     Defines the product redeemed as a reward.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="Unique product ID, assigned by Voucherify. ")
-    sku_id: Optional[StrictStr] = Field(None, description="A unique SKU ID assigned by Voucherify.")
+    sku_id: Optional[StrictStr] = Field(None, description="Unique identifier of the SKU. It is assigned by Voucherify.")
     __properties = ["id", "sku_id"]
 
     class Config:
@@ -54,6 +54,16 @@ class RedemptionRewardResultParametersProduct(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if sku_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.sku_id is None and "sku_id" in self.__fields_set__:
+            _dict['sku_id'] = None
+
         return _dict
 
     @classmethod

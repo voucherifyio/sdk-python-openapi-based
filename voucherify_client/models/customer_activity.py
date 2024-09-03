@@ -19,9 +19,8 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist, validator
-from voucherify_client.models.customer_activity_data import CustomerActivityData
+from typing import Any, Dict, Optional
+from pydantic import BaseModel, Field, StrictStr
 
 class CustomerActivity(BaseModel):
     """
@@ -29,19 +28,10 @@ class CustomerActivity(BaseModel):
     """
     id: Optional[StrictStr] = Field(None, description="Unique event ID, assigned by Voucherify.")
     type: Optional[StrictStr] = Field(None, description="Event type.")
-    data: Optional[conlist(CustomerActivityData)] = Field(None, description="Contains details about the event. The objects that are returned in the data attribute differ based on the context of the event type.")
+    data: Optional[Dict[str, Any]] = Field(None, description="Contains details about the event. The objects that are returned in the data attribute differ based on the context of the event type.")
     created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the customer activity occurred in ISO 8601 format.")
-    __properties = ["id", "type", "data", "created_at"]
-
-    @validator('type')
-    def type_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in ('customer.confirmed', 'customer.created', 'customer.updated', 'customer.deleted', 'customer.referred', 'customer.custom_event', 'customer.segment.entered', 'customer.segment.left', 'customer.sms.sent', 'customer.sms.recovered', 'customer.sms.failed', 'customer.email.sent', 'customer.email.recovered', 'customer.email.failed', 'customer.activecampaign.sent', 'customer.activecampaign.recovered', 'customer.activecampaign.failed', 'customer.braze.sent', 'customer.braze.recovered', 'customer.braze.failed', 'customer.mailchimp.sent', 'customer.mailchimp.recovered', 'customer.mailchimp.failed', 'customer.intercom.sent', 'customer.intercom.recovered', 'customer.intercom.failed', 'customer.shopify.sent', 'customer.shopify.recovered', 'customer.shopify.failed', 'customer.klaviyo.sent', 'customer.klaviyo.recovered', 'customer.klaviyo.failed', 'customer.batch.sent', 'customer.batch.recovered', 'customer.batch.failed', 'customer.rewarded', 'customer.rewarded.loyalty_points', 'customer.voucher.gift.balance_added', 'customer.voucher.loyalty_card.points_added', 'customer.voucher.loyalty_card.points_transferred', 'customer.voucher.loyalty_card.points_expired', 'customer.voucher.deleted', 'customer.publication.succeeded', 'customer.publication.failed', 'customer.validation.succeeded', 'customer.validation.failed', 'customer.redemption.failed', 'customer.redemption.succeeded', 'customer.redemption.rollback.failed', 'customer.redemption.rollback.succeeded', 'customer.consents.given', 'customer.consents.revoked', 'customer.order.canceled', 'customer.order.created', 'customer.order.fulfilled', 'customer.order.paid', 'customer.order.processing', 'customer.order.updated', 'customer.reward_redemptions.created', 'customer.reward_redemptions.pending', 'customer.reward_redemptions.completed', 'customer.reward_redemptions.rolledback', 'customer.loyalty.updated', 'customer.loyalty.tier.upgraded', 'customer.loyalty.tier.downgraded', 'customer.loyalty.tier.prolonged', 'customer.loyalty.tier.expiration.changed', 'customer.loyalty.tier.joined', 'customer.loyalty.tier.left',):
-            raise ValueError("must be one of enum values ('customer.confirmed', 'customer.created', 'customer.updated', 'customer.deleted', 'customer.referred', 'customer.custom_event', 'customer.segment.entered', 'customer.segment.left', 'customer.sms.sent', 'customer.sms.recovered', 'customer.sms.failed', 'customer.email.sent', 'customer.email.recovered', 'customer.email.failed', 'customer.activecampaign.sent', 'customer.activecampaign.recovered', 'customer.activecampaign.failed', 'customer.braze.sent', 'customer.braze.recovered', 'customer.braze.failed', 'customer.mailchimp.sent', 'customer.mailchimp.recovered', 'customer.mailchimp.failed', 'customer.intercom.sent', 'customer.intercom.recovered', 'customer.intercom.failed', 'customer.shopify.sent', 'customer.shopify.recovered', 'customer.shopify.failed', 'customer.klaviyo.sent', 'customer.klaviyo.recovered', 'customer.klaviyo.failed', 'customer.batch.sent', 'customer.batch.recovered', 'customer.batch.failed', 'customer.rewarded', 'customer.rewarded.loyalty_points', 'customer.voucher.gift.balance_added', 'customer.voucher.loyalty_card.points_added', 'customer.voucher.loyalty_card.points_transferred', 'customer.voucher.loyalty_card.points_expired', 'customer.voucher.deleted', 'customer.publication.succeeded', 'customer.publication.failed', 'customer.validation.succeeded', 'customer.validation.failed', 'customer.redemption.failed', 'customer.redemption.succeeded', 'customer.redemption.rollback.failed', 'customer.redemption.rollback.succeeded', 'customer.consents.given', 'customer.consents.revoked', 'customer.order.canceled', 'customer.order.created', 'customer.order.fulfilled', 'customer.order.paid', 'customer.order.processing', 'customer.order.updated', 'customer.reward_redemptions.created', 'customer.reward_redemptions.pending', 'customer.reward_redemptions.completed', 'customer.reward_redemptions.rolledback', 'customer.loyalty.updated', 'customer.loyalty.tier.upgraded', 'customer.loyalty.tier.downgraded', 'customer.loyalty.tier.prolonged', 'customer.loyalty.tier.expiration.changed', 'customer.loyalty.tier.joined', 'customer.loyalty.tier.left')")
-        return value
+    group_id: Optional[StrictStr] = Field(None, description="Unique identifier of the request that caused the event.")
+    __properties = ["id", "type", "data", "created_at", "group_id"]
 
     class Config:
         """Pydantic configuration"""
@@ -67,13 +57,31 @@ class CustomerActivity(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
-        _items = []
-        if self.data:
-            for _item in self.data:
-                if _item:
-                    _items.append(_item.to_dict())
-            _dict['data'] = _items
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if data (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data is None and "data" in self.__fields_set__:
+            _dict['data'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if group_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.group_id is None and "group_id" in self.__fields_set__:
+            _dict['group_id'] = None
+
         return _dict
 
     @classmethod
@@ -88,8 +96,9 @@ class CustomerActivity(BaseModel):
         _obj = CustomerActivity.parse_obj({
             "id": obj.get("id"),
             "type": obj.get("type"),
-            "data": [CustomerActivityData.from_dict(_item) for _item in obj.get("data")] if obj.get("data") is not None else None,
-            "created_at": obj.get("created_at")
+            "data": obj.get("data"),
+            "created_at": obj.get("created_at"),
+            "group_id": obj.get("group_id")
         })
         return _obj
 

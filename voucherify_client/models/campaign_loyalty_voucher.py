@@ -29,7 +29,7 @@ class CampaignLoyaltyVoucher(BaseModel):
     """
     Schema model for a discount voucher.  # noqa: E501
     """
-    type: StrictStr = Field(..., description="Type of voucher.")
+    type: Optional[StrictStr] = Field('LOYALTY_CARD', description="Type of voucher.")
     loyalty_card: CampaignLoyaltyCard = Field(...)
     redemption: Optional[CampaignLoyaltyVoucherRedemption] = None
     code_config: Optional[CodeConfig] = None
@@ -38,6 +38,9 @@ class CampaignLoyaltyVoucher(BaseModel):
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('LOYALTY_CARD',):
             raise ValueError("must be one of enum values ('LOYALTY_CARD')")
         return value
@@ -75,6 +78,16 @@ class CampaignLoyaltyVoucher(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of code_config
         if self.code_config:
             _dict['code_config'] = self.code_config.to_dict()
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if redemption (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
         return _dict
 
     @classmethod

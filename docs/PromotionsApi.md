@@ -4,6 +4,7 @@ All URIs are relative to *https://api.voucherify.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**add_promotion_tier_to_campaign**](PromotionsApi.md#add_promotion_tier_to_campaign) | **POST** /v1/promotions/{campaignId}/tiers | Add Promotion Tier to Campaign
 [**create_promotion_stack**](PromotionsApi.md#create_promotion_stack) | **POST** /v1/promotions/{campaignId}/stacks | Create Promotion Stack
 [**delete_promotion_stack**](PromotionsApi.md#delete_promotion_stack) | **DELETE** /v1/promotions/{campaignId}/stacks/{stackId} | Delete Promotion Stack
 [**delete_promotion_tier**](PromotionsApi.md#delete_promotion_tier) | **DELETE** /v1/promotions/tiers/{promotionTierId} | Delete Promotion Tier
@@ -13,9 +14,99 @@ Method | HTTP request | Description
 [**get_promotion_tier**](PromotionsApi.md#get_promotion_tier) | **GET** /v1/promotions/tiers/{promotionTierId} | Get Promotion Tier
 [**list_all_promotion_stacks**](PromotionsApi.md#list_all_promotion_stacks) | **GET** /v1/promotions/stacks | List Promotion Stacks
 [**list_promotion_stacks_in_campaign**](PromotionsApi.md#list_promotion_stacks_in_campaign) | **GET** /v1/promotions/{campaignId}/stacks | List Promotion Stacks in Campaign
+[**list_promotion_tiers**](PromotionsApi.md#list_promotion_tiers) | **GET** /v1/promotions/tiers | List Promotion Tiers
 [**list_promotion_tiers_from_campaign**](PromotionsApi.md#list_promotion_tiers_from_campaign) | **GET** /v1/promotions/{campaignId}/tiers | List Promotion Tiers from Campaign
 [**update_promotion_stack**](PromotionsApi.md#update_promotion_stack) | **PUT** /v1/promotions/{campaignId}/stacks/{stackId} | Update Promotion Stack
+[**update_promotion_tier**](PromotionsApi.md#update_promotion_tier) | **PUT** /v1/promotions/tiers/{promotionTierId} | Update Promotion Tier
 
+
+# **add_promotion_tier_to_campaign**
+> PromotionsTiersCreateResponseBody add_promotion_tier_to_campaign(campaign_id, promotions_tiers_create_request_body=promotions_tiers_create_request_body)
+
+Add Promotion Tier to Campaign
+
+This method allows you to add a new promotion tier to an existing campaign. The tier hierarchy will be set as the next consequtive integer following the lowest ranking tier.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.promotions_tiers_create_request_body import PromotionsTiersCreateRequestBody
+from voucherify_client.models.promotions_tiers_create_response_body import PromotionsTiersCreateResponseBody
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.PromotionsApi(api_client)
+    campaign_id = 'campaign_id_example' # str | Unique campaign ID assigned by Voucherify.
+    promotions_tiers_create_request_body = {"name":"Order more than $100","banner":"Order more than $100","action":{"discount":{"type":"AMOUNT","amount_off":3000,"effect":"APPLY_TO_ORDER"}},"metadata":{},"active":true,"start_date":"2022-09-21T00:00:00.000Z","expiration_date":"2022-09-30T00:00:00.000Z","validity_timeframe":{"interval":"P2D","duration":"P1D"},"validity_day_of_week":[1,2,3,4],"validation_rules":["val_q8qUBMOh5qIQ"]} # PromotionsTiersCreateRequestBody | Specify the promotion tier parameters. (optional)
+
+    try:
+        # Add Promotion Tier to Campaign
+        api_response = api_instance.add_promotion_tier_to_campaign(campaign_id, promotions_tiers_create_request_body=promotions_tiers_create_request_body)
+        print("The response of PromotionsApi->add_promotion_tier_to_campaign:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling PromotionsApi->add_promotion_tier_to_campaign: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **campaign_id** | **str**| Unique campaign ID assigned by Voucherify. | 
+ **promotions_tiers_create_request_body** | [**PromotionsTiersCreateRequestBody**](PromotionsTiersCreateRequestBody.md)| Specify the promotion tier parameters. | [optional] 
+
+### Return type
+
+[**PromotionsTiersCreateResponseBody**](PromotionsTiersCreateResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a promotion tier object if the promotion tier was successfully added to the campaign. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_promotion_stack**
 > PromotionsStacksCreateResponseBody create_promotion_stack(campaign_id, promotions_stacks_create_request_body=promotions_stacks_create_request_body)
@@ -150,7 +241,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.PromotionsApi(api_client)
-    campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. 
+    campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. 
     stack_id = 'stack_id_example' # str | Promotion stack ID.
 
     try:
@@ -166,7 +257,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **campaign_id** | **str**| ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the &#x60;name&#x60; of the campaign as the path parameter value, e.g., &#x60;Loyalty Campaign&#x60;.  | 
+ **campaign_id** | **str**| ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  | 
  **stack_id** | **str**| Promotion stack ID. | 
 
 ### Return type
@@ -276,7 +367,7 @@ void (empty response body)
 
 Disable Promotion Tier
 
-This method disables a promotion tier, i.e. makes the `active` parameter = `false`.
+This method disables a promotion tier, i.e. makes the active parameter   false.
 
 ### Example
 
@@ -361,7 +452,7 @@ Name | Type | Description  | Notes
 
 Enable Promotion Tier
 
-This method enables a promotion tier, i.e. makes the `active` parameter = `true`.
+This method enables a promotion tier, i.e. makes the active parameter   true.
 
 ### Example
 
@@ -487,7 +578,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.PromotionsApi(api_client)
-    campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. 
+    campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. 
     stack_id = 'stack_id_example' # str | Promotion stack ID.
 
     try:
@@ -505,7 +596,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **campaign_id** | **str**| ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the &#x60;name&#x60; of the campaign as the path parameter value, e.g., &#x60;Loyalty Campaign&#x60;.  | 
+ **campaign_id** | **str**| ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  | 
  **stack_id** | **str**| Promotion stack ID. | 
 
 ### Return type
@@ -618,7 +709,7 @@ Name | Type | Description  | Notes
 
 List Promotion Stacks
 
-This method enables you to list promotion stacks irrespective of the campaign they are associated with.   You can use filters in the query parameters to specify the stacks to be returned in the response.  ## Advanced filters for fetching promotion stacks  | **Filters** | **Examples** | | :--- | :--- | | Created Before | - `[created_at][before]=2021-12-30T13:52:18.227Z`<br>- `[filters][created_at][conditions][$before][0]=2021-12-30T13:52:18.227Z` | | Created After | - `[created_at][after]=2021-12-30T13:52:18.227Z`<br>- `[filters][created_at][conditions][$after][0]=2021-12-30T13:52:18.227Z` | | Updated Before | - `[updated_at][before]=2021-12-30T13:52:18.227Z`<br>- `[filters][updated_at][conditions][$before][0]=2021-12-30T13:52:18.227Z` | | Updated After | - `[updated_at][after]=2021-12-30T13:52:18.227Z`<br>- `[filters][updated_at][conditions][$after][0]=2021-12-30T13:52:18.227Z` |
+This method enables you to list promotion stacks irrespective of the campaign they are associated with.  You can use filters in the query parameters to specify the stacks to be returned in the response. # Advanced filters for fetching promotion stacks  
 
 ### Example
 
@@ -662,11 +753,11 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.PromotionsApi(api_client)
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    order = voucherify_client.ParameterOrderListAllPromotionStacks() # ParameterOrderListAllPromotionStacks | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
-    created_at = voucherify_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z` (optional)
-    updated_at = voucherify_client.ParameterUpdatedBeforeAfter() # ParameterUpdatedBeforeAfter | A filter on the list based on the object `updated_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[updated_at][before]=2017-09-08T13:52:18.227Z` (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrderListAllPromotionStacks() # ParameterOrderListAllPromotionStacks | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
+    created_at = voucherify_client.ParameterCreatedBeforeAfter() # ParameterCreatedBeforeAfter | A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z (optional)
+    updated_at = voucherify_client.ParameterUpdatedBeforeAfter() # ParameterUpdatedBeforeAfter | A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z (optional)
 
     try:
         # List Promotion Stacks
@@ -683,11 +774,11 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **order** | [**ParameterOrderListAllPromotionStacks**](.md)| Sorts the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
- **created_at** | [**ParameterCreatedBeforeAfter**](.md)| A filter on the list based on the object &#x60;created_at&#x60; field. The value is a dictionary with the following options: &#x60;before&#x60;, &#x60;after&#x60;. A date value must be presented in ISO 8601 format (&#x60;2016-11-16T14:14:31Z&#x60; or &#x60;2016-11-16&#x60;). An example: &#x60;[created_at][before]&#x3D;2017-09-08T13:52:18.227Z&#x60; | [optional] 
- **updated_at** | [**ParameterUpdatedBeforeAfter**](.md)| A filter on the list based on the object &#x60;updated_at&#x60; field. The value is a dictionary with the following options: &#x60;before&#x60;, &#x60;after&#x60;. A date value must be presented in ISO 8601 format (&#x60;2016-11-16T14:14:31Z&#x60; or &#x60;2016-11-16&#x60;). An example: &#x60;[updated_at][before]&#x3D;2017-09-08T13:52:18.227Z&#x60; | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrderListAllPromotionStacks**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
+ **created_at** | [**ParameterCreatedBeforeAfter**](.md)| A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z | [optional] 
+ **updated_at** | [**ParameterUpdatedBeforeAfter**](.md)| A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z | [optional] 
 
 ### Return type
 
@@ -791,6 +882,98 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns a list of promotion stack objects. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_promotion_tiers**
+> PromotionsTiersListResponseBody list_promotion_tiers(is_available=is_available, limit=limit, page=page, order=order)
+
+List Promotion Tiers
+
+This method enables you to list promotion tiers.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.parameter_order_list_promotion_tiers import ParameterOrderListPromotionTiers
+from voucherify_client.models.promotions_tiers_list_response_body import PromotionsTiersListResponseBody
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.PromotionsApi(api_client)
+    is_available = True # bool | This parameter allows filtering promotions that are only available at the moment. When set to true, it selects only non-expired and active promotions. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrderListPromotionTiers() # ParameterOrderListPromotionTiers | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
+
+    try:
+        # List Promotion Tiers
+        api_response = api_instance.list_promotion_tiers(is_available=is_available, limit=limit, page=page, order=order)
+        print("The response of PromotionsApi->list_promotion_tiers:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling PromotionsApi->list_promotion_tiers: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **is_available** | **bool**| This parameter allows filtering promotions that are only available at the moment. When set to true, it selects only non-expired and active promotions. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrderListPromotionTiers**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
+
+### Return type
+
+[**PromotionsTiersListResponseBody**](PromotionsTiersListResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a dictionary with a &#x60;tiers&#x60; property that contains an array of promotion tiers. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -926,7 +1109,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.PromotionsApi(api_client)
-    campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. 
+    campaign_id = 'campaign_id_example' # str | ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. 
     stack_id = 'stack_id_example' # str | Promotion stack ID.
     promotions_stacks_update_request_body = {"name":"Fifth Stack Modified","tiers":{"ids":["promo_aaAF8mVAzA0PF1igia2OC63d","promo_t9zdL6XMFk7B8fQ23zxELtdE"],"hierarchy_mode":"MANUAL"}} # PromotionsStacksUpdateRequestBody | Specify the promotion stack parameters that you would like to update. (optional)
 
@@ -945,7 +1128,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **campaign_id** | **str**| ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the &#x60;name&#x60; of the campaign as the path parameter value, e.g., &#x60;Loyalty Campaign&#x60;.  | 
+ **campaign_id** | **str**| ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  | 
  **stack_id** | **str**| Promotion stack ID. | 
  **promotions_stacks_update_request_body** | [**PromotionsStacksUpdateRequestBody**](PromotionsStacksUpdateRequestBody.md)| Specify the promotion stack parameters that you would like to update. | [optional] 
 
@@ -966,6 +1149,94 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns a promotion stack with updated parameters if the update was successful. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_promotion_tier**
+> PromotionsTiersUpdateResponseBody update_promotion_tier(promotion_tier_id, promotions_tiers_update_request_body=promotions_tiers_update_request_body)
+
+Update Promotion Tier
+
+This method updates a promotion tier.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.promotions_tiers_update_request_body import PromotionsTiersUpdateRequestBody
+from voucherify_client.models.promotions_tiers_update_response_body import PromotionsTiersUpdateResponseBody
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.PromotionsApi(api_client)
+    promotion_tier_id = 'promotion_tier_id_example' # str | Unique promotion tier ID.
+    promotions_tiers_update_request_body = {"name":"Order more than $100 USD","banner":"Order more than $100 USD","action":{"discount":{"type":"PERCENT","percent_off":25,"effect":"APPLY_TO_ORDER"}},"metadata":{"level":"A-21"},"hierarchy":1,"start_date":"2022-09-22T00:00:00.000Z","expiration_date":"2022-09-29T00:00:00.000Z","validity_timeframe":{"interval":"P3D","duration":"P2D"},"validity_day_of_week":[1,2,3]} # PromotionsTiersUpdateRequestBody | Specify the promotion tier parameters that you would like to update. (optional)
+
+    try:
+        # Update Promotion Tier
+        api_response = api_instance.update_promotion_tier(promotion_tier_id, promotions_tiers_update_request_body=promotions_tiers_update_request_body)
+        print("The response of PromotionsApi->update_promotion_tier:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling PromotionsApi->update_promotion_tier: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **promotion_tier_id** | **str**| Unique promotion tier ID. | 
+ **promotions_tiers_update_request_body** | [**PromotionsTiersUpdateRequestBody**](PromotionsTiersUpdateRequestBody.md)| Specify the promotion tier parameters that you would like to update. | [optional] 
+
+### Return type
+
+[**PromotionsTiersUpdateResponseBody**](PromotionsTiersUpdateResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a promotion tier object if the update was successful. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

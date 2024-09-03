@@ -61,6 +61,11 @@ class LoyaltiesMembersTransactionsExportCreateRequestBodyParameters(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of filters
         if self.filters:
             _dict['filters'] = self.filters.to_dict()
+        # set to None if fields (nullable) is None
+        # and __fields_set__ contains the field
+        if self.fields is None and "fields" in self.__fields_set__:
+            _dict['fields'] = None
+
         return _dict
 
     @classmethod

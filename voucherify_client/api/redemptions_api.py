@@ -29,8 +29,12 @@ from voucherify_client.models.parameter_filters_list_redemptions import Paramete
 from voucherify_client.models.parameter_order_list_redemptions import ParameterOrderListRedemptions
 from voucherify_client.models.redemptions_get_response_body import RedemptionsGetResponseBody
 from voucherify_client.models.redemptions_list_response_body import RedemptionsListResponseBody
+from voucherify_client.models.redemptions_redeem_request_body import RedemptionsRedeemRequestBody
+from voucherify_client.models.redemptions_redeem_response_body import RedemptionsRedeemResponseBody
 from voucherify_client.models.redemptions_rollback_create_request_body import RedemptionsRollbackCreateRequestBody
 from voucherify_client.models.redemptions_rollback_create_response_body import RedemptionsRollbackCreateResponseBody
+from voucherify_client.models.redemptions_rollbacks_create_request_body import RedemptionsRollbacksCreateRequestBody
+from voucherify_client.models.redemptions_rollbacks_create_response_body import RedemptionsRollbacksCreateResponseBody
 from voucherify_client.models.vouchers_redemption_get_response_body import VouchersRedemptionGetResponseBody
 
 from voucherify_client.api_client import ApiClient
@@ -334,29 +338,29 @@ class RedemptionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_redemptions(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, result : Annotated[Optional[StrictStr], Field(description="A filter on the list based on the redemption result. Available options are: `SUCCESS`, `FAILURE`. You can provide multiple values by repeating the param.")] = None, campaign : Annotated[Optional[StrictStr], Field(description="A filter by the campaign **name** that the redemption resources originate from.")] = None, customer : Annotated[Optional[StrictStr], Field(description="Return redemptions performed by the customer with given `id` or `source_id`.")] = None, order : Annotated[Optional[ParameterOrderListRedemptions], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`")] = None, filters : Annotated[Optional[ParameterFiltersListRedemptions], Field(description="Filters for listing responses.")] = None, **kwargs) -> RedemptionsListResponseBody:  # noqa: E501
+    def list_redemptions(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, result : Annotated[Optional[StrictStr], Field(description="A filter on the list based on the redemption result. Available options are: SUCCESS, FAILURE. You can provide multiple values by repeating the param.")] = None, campaign : Annotated[Optional[StrictStr], Field(description="A filter by the campaign **name** that the redemption resources originate from.")] = None, customer : Annotated[Optional[StrictStr], Field(description="Return redemptions performed by the customer with given id or source_id.")] = None, order : Annotated[Optional[ParameterOrderListRedemptions], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, filters : Annotated[Optional[ParameterFiltersListRedemptions], Field(description="Filters for listing responses.")] = None, **kwargs) -> RedemptionsListResponseBody:  # noqa: E501
         """List Redemptions  # noqa: E501
 
-        Returns a list of redemptions previously created. The redemptions are returned in a sorted order, with the most recent redemptions appearing first. The response returns a list of redemptions of all vouchers.   ## Filtering results The result can be narrowed according to specified (or default) filters, for example, you can sort redemptions by date: `https://api.voucherify.io/v1/redemptions?limit=3&[created_at][before]=2017-09-08T13:52:18.227Z`. A filter based on the object `created_at` field narrows down the results and lists redemptions done before or after a particular date time. You can use the following options: `[created_at][after]`, `[created_at][before]`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`.  ## Failed Redemptions  A redemption may fail for various reasons. You can figure out an exact reason from the `failure_code`: - `resource_not_found` - voucher with given code does not exist - `voucher_not_active` - voucher is not active yet (before start date) - `voucher_expired` - voucher has already expired (after expiration date) - `voucher_disabled` -  voucher has been disabled (`active: false`) - `quantity_exceeded` - voucher's redemptions limit has been exceeded - `gift_amount_exceeded` - gift amount has been exceeded - `customer_rules_violated` - customer did not match the segment - `order_rules_violated` - order did not match validation rules - `invalid_order` - order was specified incorrectly - `invalid_amount` - order amount was specified incorrectly - `missing_amount` - order amount was not specified - `missing_order_items` - order items were not specified - `missing_customer` - customer was not specified  # noqa: E501
+        Returns a list of redemptions previously created. The redemptions are returned in a sorted order, with the most recent redemptions appearing first. The response returns a list of redemptions of all vouchers.  # Filtering results The result can be narrowed according to specified (or default) filters, for example, you can sort redemptions by date: https://api.voucherify.io/v1/redemptions?limit 3&[created_at][before] 2017-09-08T13:52:18.227Z. A filter based on the object created_at field narrows down the results and lists redemptions done before or after a particular date time. You can use the following options: [created_at][after], [created_at][before]. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z. # Failed Redemptions A redemption may fail for various reasons. You can figure out an exact reason from the failure_code: - resource_not_found - voucher with given code does not exist - voucher_not_active - voucher is not active yet (before start date) - voucher_expired - voucher has already expired (after expiration date) - voucher_disabled -  voucher has been disabled (active: false) - quantity_exceeded - vouchers redemptions limit has been exceeded - gift_amount_exceeded - gift amount has been exceeded - customer_rules_violated - customer did not match the segment - order_rules_violated - order did not match validation rules - invalid_order - order was specified incorrectly - invalid_amount - order amount was specified incorrectly - missing_amount - order amount was not specified - missing_order_items - order items were not specified - missing_customer - customer was not specified  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.list_redemptions(limit, page, result, campaign, customer, order, created_at, filters, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param result: A filter on the list based on the redemption result. Available options are: `SUCCESS`, `FAILURE`. You can provide multiple values by repeating the param.
+        :param result: A filter on the list based on the redemption result. Available options are: SUCCESS, FAILURE. You can provide multiple values by repeating the param.
         :type result: str
         :param campaign: A filter by the campaign **name** that the redemption resources originate from.
         :type campaign: str
-        :param customer: Return redemptions performed by the customer with given `id` or `source_id`.
+        :param customer: Return redemptions performed by the customer with given id or source_id.
         :type customer: str
         :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListRedemptions
-        :param created_at: A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
         :type created_at: ParameterCreatedBeforeAfter
         :param filters: Filters for listing responses.
         :type filters: ParameterFiltersListRedemptions
@@ -378,29 +382,29 @@ class RedemptionsApi:
         return self.list_redemptions_with_http_info(limit, page, result, campaign, customer, order, created_at, filters, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_redemptions_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, result : Annotated[Optional[StrictStr], Field(description="A filter on the list based on the redemption result. Available options are: `SUCCESS`, `FAILURE`. You can provide multiple values by repeating the param.")] = None, campaign : Annotated[Optional[StrictStr], Field(description="A filter by the campaign **name** that the redemption resources originate from.")] = None, customer : Annotated[Optional[StrictStr], Field(description="Return redemptions performed by the customer with given `id` or `source_id`.")] = None, order : Annotated[Optional[ParameterOrderListRedemptions], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`")] = None, filters : Annotated[Optional[ParameterFiltersListRedemptions], Field(description="Filters for listing responses.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_redemptions_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, result : Annotated[Optional[StrictStr], Field(description="A filter on the list based on the redemption result. Available options are: SUCCESS, FAILURE. You can provide multiple values by repeating the param.")] = None, campaign : Annotated[Optional[StrictStr], Field(description="A filter by the campaign **name** that the redemption resources originate from.")] = None, customer : Annotated[Optional[StrictStr], Field(description="Return redemptions performed by the customer with given id or source_id.")] = None, order : Annotated[Optional[ParameterOrderListRedemptions], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, filters : Annotated[Optional[ParameterFiltersListRedemptions], Field(description="Filters for listing responses.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Redemptions  # noqa: E501
 
-        Returns a list of redemptions previously created. The redemptions are returned in a sorted order, with the most recent redemptions appearing first. The response returns a list of redemptions of all vouchers.   ## Filtering results The result can be narrowed according to specified (or default) filters, for example, you can sort redemptions by date: `https://api.voucherify.io/v1/redemptions?limit=3&[created_at][before]=2017-09-08T13:52:18.227Z`. A filter based on the object `created_at` field narrows down the results and lists redemptions done before or after a particular date time. You can use the following options: `[created_at][after]`, `[created_at][before]`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`.  ## Failed Redemptions  A redemption may fail for various reasons. You can figure out an exact reason from the `failure_code`: - `resource_not_found` - voucher with given code does not exist - `voucher_not_active` - voucher is not active yet (before start date) - `voucher_expired` - voucher has already expired (after expiration date) - `voucher_disabled` -  voucher has been disabled (`active: false`) - `quantity_exceeded` - voucher's redemptions limit has been exceeded - `gift_amount_exceeded` - gift amount has been exceeded - `customer_rules_violated` - customer did not match the segment - `order_rules_violated` - order did not match validation rules - `invalid_order` - order was specified incorrectly - `invalid_amount` - order amount was specified incorrectly - `missing_amount` - order amount was not specified - `missing_order_items` - order items were not specified - `missing_customer` - customer was not specified  # noqa: E501
+        Returns a list of redemptions previously created. The redemptions are returned in a sorted order, with the most recent redemptions appearing first. The response returns a list of redemptions of all vouchers.  # Filtering results The result can be narrowed according to specified (or default) filters, for example, you can sort redemptions by date: https://api.voucherify.io/v1/redemptions?limit 3&[created_at][before] 2017-09-08T13:52:18.227Z. A filter based on the object created_at field narrows down the results and lists redemptions done before or after a particular date time. You can use the following options: [created_at][after], [created_at][before]. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z. # Failed Redemptions A redemption may fail for various reasons. You can figure out an exact reason from the failure_code: - resource_not_found - voucher with given code does not exist - voucher_not_active - voucher is not active yet (before start date) - voucher_expired - voucher has already expired (after expiration date) - voucher_disabled -  voucher has been disabled (active: false) - quantity_exceeded - vouchers redemptions limit has been exceeded - gift_amount_exceeded - gift amount has been exceeded - customer_rules_violated - customer did not match the segment - order_rules_violated - order did not match validation rules - invalid_order - order was specified incorrectly - invalid_amount - order amount was specified incorrectly - missing_amount - order amount was not specified - missing_order_items - order items were not specified - missing_customer - customer was not specified  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.list_redemptions_with_http_info(limit, page, result, campaign, customer, order, created_at, filters, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param result: A filter on the list based on the redemption result. Available options are: `SUCCESS`, `FAILURE`. You can provide multiple values by repeating the param.
+        :param result: A filter on the list based on the redemption result. Available options are: SUCCESS, FAILURE. You can provide multiple values by repeating the param.
         :type result: str
         :param campaign: A filter by the campaign **name** that the redemption resources originate from.
         :type campaign: str
-        :param customer: Return redemptions performed by the customer with given `id` or `source_id`.
+        :param customer: Return redemptions performed by the customer with given id or source_id.
         :type customer: str
         :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListRedemptions
-        :param created_at: A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
         :type created_at: ParameterCreatedBeforeAfter
         :param filters: Filters for listing responses.
         :type filters: ParameterFiltersListRedemptions
@@ -530,10 +534,157 @@ class RedemptionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def rollback_redemption(self, redemption_id : Annotated[StrictStr, Field(..., description="The original redemption ID to be rolled back (undone).")], reason : Annotated[Optional[StrictStr], Field(description="Reason for the rollback.")] = None, tracking_id : Annotated[Optional[StrictStr], Field(description="Customer's `source_id`.")] = None, redemptions_rollback_create_request_body : Annotated[Optional[RedemptionsRollbackCreateRequestBody], Field(description="Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.")] = None, **kwargs) -> RedemptionsRollbackCreateResponseBody:  # noqa: E501
+    def redeem_stacked_discounts(self, redemptions_redeem_request_body : Optional[RedemptionsRedeemRequestBody] = None, **kwargs) -> RedemptionsRedeemResponseBody:  # noqa: E501
+        """Redeem Stackable Discounts  # noqa: E501
+
+        # How API returns calculated discounts and order amounts in the response In the table below, you can see the logic the API follows to calculate discounts and amounts:    📘 Rollbacks  You cant roll back a child redemption. When you call rollback on a stacked redemption, all child redemptions will be rolled back. You need to refer to a parent redemption ID in your rollback request.      📘 Also available on client-side  This method is also accessible through public keys which you can use in client-side​ apps: mobile and web browser apps. Go to the dedicated endpoint to learn more.  - Use X-Client-Application-Id as the application ID header.  - Use X-Client-Token as the appliction secret key header.  - Use client-side base URL.  - Use an origin header for your custom domain.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.redeem_stacked_discounts(redemptions_redeem_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param redemptions_redeem_request_body:
+        :type redemptions_redeem_request_body: RedemptionsRedeemRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: RedemptionsRedeemResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the redeem_stacked_discounts_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.redeem_stacked_discounts_with_http_info(redemptions_redeem_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def redeem_stacked_discounts_with_http_info(self, redemptions_redeem_request_body : Optional[RedemptionsRedeemRequestBody] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Redeem Stackable Discounts  # noqa: E501
+
+        # How API returns calculated discounts and order amounts in the response In the table below, you can see the logic the API follows to calculate discounts and amounts:    📘 Rollbacks  You cant roll back a child redemption. When you call rollback on a stacked redemption, all child redemptions will be rolled back. You need to refer to a parent redemption ID in your rollback request.      📘 Also available on client-side  This method is also accessible through public keys which you can use in client-side​ apps: mobile and web browser apps. Go to the dedicated endpoint to learn more.  - Use X-Client-Application-Id as the application ID header.  - Use X-Client-Token as the appliction secret key header.  - Use client-side base URL.  - Use an origin header for your custom domain.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.redeem_stacked_discounts_with_http_info(redemptions_redeem_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param redemptions_redeem_request_body:
+        :type redemptions_redeem_request_body: RedemptionsRedeemRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(RedemptionsRedeemResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'redemptions_redeem_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method redeem_stacked_discounts" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['redemptions_redeem_request_body'] is not None:
+            _body_params = _params['redemptions_redeem_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "RedemptionsRedeemResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/redemptions', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def rollback_redemption(self, redemption_id : Annotated[StrictStr, Field(..., description="The original redemption ID to be rolled back (undone).")], reason : Annotated[Optional[StrictStr], Field(description="Reason for the rollback.")] = None, tracking_id : Annotated[Optional[StrictStr], Field(description="Customers source_id.")] = None, redemptions_rollback_create_request_body : Annotated[Optional[RedemptionsRollbackCreateRequestBody], Field(description="Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.")] = None, **kwargs) -> RedemptionsRollbackCreateResponseBody:  # noqa: E501
         """Rollback Redemption  # noqa: E501
 
-        Your business logic may include a case when you need to undo a redemption. You can revert a redemption by calling this API endpoint.    ## Effect  The operation  - creates a rollback entry in voucher's redemption history (`redemption.redemption_entries`) and  - gives 1 redemption back to the pool (decreases `redeemed_quantity` by 1).  ## Returned funds  In case of *gift card vouchers*, this method returns funds back according to the source redemption. In case of *loyalty card vouchers*, this method returns points back according to the source redemption.  # noqa: E501
+        Your business logic may include a case when you need to undo a redemption. You can revert a redemption by calling this API endpoint.  🚧  You can roll back a redemption up to 3 months back.   # Effect  The operation  - creates a rollback entry in vouchers redemption history (redemption.redemption_entries) and  - gives 1 redemption back to the pool (decreases redeemed_quantity by 1).  # Returned funds  In case of *gift card vouchers*, this method returns funds back according to the source redemption. In case of *loyalty card vouchers*, this method returns points back according to the source redemption.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -544,7 +695,7 @@ class RedemptionsApi:
         :type redemption_id: str
         :param reason: Reason for the rollback.
         :type reason: str
-        :param tracking_id: Customer's `source_id`.
+        :param tracking_id: Customers source_id.
         :type tracking_id: str
         :param redemptions_rollback_create_request_body: Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.
         :type redemptions_rollback_create_request_body: RedemptionsRollbackCreateRequestBody
@@ -566,10 +717,10 @@ class RedemptionsApi:
         return self.rollback_redemption_with_http_info(redemption_id, reason, tracking_id, redemptions_rollback_create_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def rollback_redemption_with_http_info(self, redemption_id : Annotated[StrictStr, Field(..., description="The original redemption ID to be rolled back (undone).")], reason : Annotated[Optional[StrictStr], Field(description="Reason for the rollback.")] = None, tracking_id : Annotated[Optional[StrictStr], Field(description="Customer's `source_id`.")] = None, redemptions_rollback_create_request_body : Annotated[Optional[RedemptionsRollbackCreateRequestBody], Field(description="Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def rollback_redemption_with_http_info(self, redemption_id : Annotated[StrictStr, Field(..., description="The original redemption ID to be rolled back (undone).")], reason : Annotated[Optional[StrictStr], Field(description="Reason for the rollback.")] = None, tracking_id : Annotated[Optional[StrictStr], Field(description="Customers source_id.")] = None, redemptions_rollback_create_request_body : Annotated[Optional[RedemptionsRollbackCreateRequestBody], Field(description="Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Rollback Redemption  # noqa: E501
 
-        Your business logic may include a case when you need to undo a redemption. You can revert a redemption by calling this API endpoint.    ## Effect  The operation  - creates a rollback entry in voucher's redemption history (`redemption.redemption_entries`) and  - gives 1 redemption back to the pool (decreases `redeemed_quantity` by 1).  ## Returned funds  In case of *gift card vouchers*, this method returns funds back according to the source redemption. In case of *loyalty card vouchers*, this method returns points back according to the source redemption.  # noqa: E501
+        Your business logic may include a case when you need to undo a redemption. You can revert a redemption by calling this API endpoint.  🚧  You can roll back a redemption up to 3 months back.   # Effect  The operation  - creates a rollback entry in vouchers redemption history (redemption.redemption_entries) and  - gives 1 redemption back to the pool (decreases redeemed_quantity by 1).  # Returned funds  In case of *gift card vouchers*, this method returns funds back according to the source redemption. In case of *loyalty card vouchers*, this method returns points back according to the source redemption.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -580,7 +731,7 @@ class RedemptionsApi:
         :type redemption_id: str
         :param reason: Reason for the rollback.
         :type reason: str
-        :param tracking_id: Customer's `source_id`.
+        :param tracking_id: Customers source_id.
         :type tracking_id: str
         :param redemptions_rollback_create_request_body: Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.
         :type redemptions_rollback_create_request_body: RedemptionsRollbackCreateRequestBody
@@ -685,6 +836,177 @@ class RedemptionsApi:
 
         return self.api_client.call_api(
             '/v1/redemptions/{redemptionId}/rollback', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def rollback_stacked_redemptions(self, parent_redemption_id : Annotated[StrictStr, Field(..., description="Unique identifier of a parent redemption, e.g. r_JQfm73zWSJFQxs3bGxweYjgm.")], reason : Annotated[Optional[StrictStr], Field(description="Reason for the rollback.")] = None, tracking_id : Annotated[Optional[StrictStr], Field(description="Customers source_id.")] = None, redemptions_rollbacks_create_request_body : Annotated[Optional[RedemptionsRollbacksCreateRequestBody], Field(description="Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.")] = None, **kwargs) -> RedemptionsRollbacksCreateResponseBody:  # noqa: E501
+        """Rollback Stackable Redemptions  # noqa: E501
+
+        Rollback a stackable redemption. When you rollback a stacked redemption, all child redemptions will be rolled back. Provide the parent redemption ID as the path parameter.  🚧   You can roll back a redemption up to 3 months back.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.rollback_stacked_redemptions(parent_redemption_id, reason, tracking_id, redemptions_rollbacks_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param parent_redemption_id: Unique identifier of a parent redemption, e.g. r_JQfm73zWSJFQxs3bGxweYjgm. (required)
+        :type parent_redemption_id: str
+        :param reason: Reason for the rollback.
+        :type reason: str
+        :param tracking_id: Customers source_id.
+        :type tracking_id: str
+        :param redemptions_rollbacks_create_request_body: Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.
+        :type redemptions_rollbacks_create_request_body: RedemptionsRollbacksCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: RedemptionsRollbacksCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the rollback_stacked_redemptions_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.rollback_stacked_redemptions_with_http_info(parent_redemption_id, reason, tracking_id, redemptions_rollbacks_create_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def rollback_stacked_redemptions_with_http_info(self, parent_redemption_id : Annotated[StrictStr, Field(..., description="Unique identifier of a parent redemption, e.g. r_JQfm73zWSJFQxs3bGxweYjgm.")], reason : Annotated[Optional[StrictStr], Field(description="Reason for the rollback.")] = None, tracking_id : Annotated[Optional[StrictStr], Field(description="Customers source_id.")] = None, redemptions_rollbacks_create_request_body : Annotated[Optional[RedemptionsRollbacksCreateRequestBody], Field(description="Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Rollback Stackable Redemptions  # noqa: E501
+
+        Rollback a stackable redemption. When you rollback a stacked redemption, all child redemptions will be rolled back. Provide the parent redemption ID as the path parameter.  🚧   You can roll back a redemption up to 3 months back.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.rollback_stacked_redemptions_with_http_info(parent_redemption_id, reason, tracking_id, redemptions_rollbacks_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param parent_redemption_id: Unique identifier of a parent redemption, e.g. r_JQfm73zWSJFQxs3bGxweYjgm. (required)
+        :type parent_redemption_id: str
+        :param reason: Reason for the rollback.
+        :type reason: str
+        :param tracking_id: Customers source_id.
+        :type tracking_id: str
+        :param redemptions_rollbacks_create_request_body: Add information about the original customer and order. Customer data and Redemption metadata can be updated in Voucherify when passing the customer data in the request body.
+        :type redemptions_rollbacks_create_request_body: RedemptionsRollbacksCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(RedemptionsRollbacksCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'parent_redemption_id',
+            'reason',
+            'tracking_id',
+            'redemptions_rollbacks_create_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method rollback_stacked_redemptions" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['parent_redemption_id']:
+            _path_params['parentRedemptionId'] = _params['parent_redemption_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('reason') is not None:  # noqa: E501
+            _query_params.append(('reason', _params['reason']))
+
+        if _params.get('tracking_id') is not None:  # noqa: E501
+            _query_params.append(('tracking_id', _params['tracking_id']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['redemptions_rollbacks_create_request_body'] is not None:
+            _body_params = _params['redemptions_rollbacks_create_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "RedemptionsRollbacksCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/redemptions/{parentRedemptionId}/rollbacks', 'POST',
             _path_params,
             _query_params,
             _header_params,

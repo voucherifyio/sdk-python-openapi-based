@@ -19,14 +19,14 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, conlist, constr
 
 class VoucherTransactionsExportFilterConditionsVoucherIdConditions(BaseModel):
     """
-    Data filters used to narrow the data records to be returned in the result.  # noqa: E501
+    Data filters used to narrow down the data records to be returned in the result.  # noqa: E501
     """
-    var_in: conlist(constr(strict=True, max_length=1, min_length=1), max_items=1, min_items=1) = Field(..., alias="$in")
+    var_in: Optional[conlist(constr(strict=True, max_length=1, min_length=1), max_items=1, min_items=1)] = Field(None, alias="$in")
     __properties = ["$in"]
 
     class Config:
@@ -53,6 +53,11 @@ class VoucherTransactionsExportFilterConditionsVoucherIdConditions(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if var_in (nullable) is None
+        # and __fields_set__ contains the field
+        if self.var_in is None and "var_in" in self.__fields_set__:
+            _dict['$in'] = None
+
         return _dict
 
     @classmethod

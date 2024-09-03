@@ -4,13 +4,103 @@ All URIs are relative to *https://api.voucherify.io*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**create_reward**](RewardsApi.md#create_reward) | **POST** /v1/rewards | Create Reward
 [**create_reward_assignment**](RewardsApi.md#create_reward_assignment) | **POST** /v1/rewards/{rewardId}/assignments | Create Reward Assignment
 [**delete_reward**](RewardsApi.md#delete_reward) | **DELETE** /v1/rewards/{rewardId} | Delete Reward
 [**delete_reward_assignment**](RewardsApi.md#delete_reward_assignment) | **DELETE** /v1/rewards/{rewardId}/assignments/{assignmentId} | Delete Reward Assignment
+[**get_reward**](RewardsApi.md#get_reward) | **GET** /v1/rewards/{rewardId} | Get Reward
 [**get_reward_assignment**](RewardsApi.md#get_reward_assignment) | **GET** /v1/rewards/{rewardId}/assignments/{assignmentId} | Get Reward Assignment
 [**list_reward_assignments**](RewardsApi.md#list_reward_assignments) | **GET** /v1/rewards/{rewardId}/assignments | List Reward Assignments
+[**list_rewards**](RewardsApi.md#list_rewards) | **GET** /v1/rewards | List Rewards
+[**update_reward**](RewardsApi.md#update_reward) | **PUT** /v1/rewards/{rewardId} | Update Reward
 [**update_reward_assignment**](RewardsApi.md#update_reward_assignment) | **PUT** /v1/rewards/{rewardId}/assignments/{assignmentId} | Update Reward Assignment
 
+
+# **create_reward**
+> RewardsCreateResponseBody create_reward(rewards_create_request_body=rewards_create_request_body)
+
+Create Reward
+
+Create a new reward.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.rewards_create_request_body import RewardsCreateRequestBody
+from voucherify_client.models.rewards_create_response_body import RewardsCreateResponseBody
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.RewardsApi(api_client)
+    rewards_create_request_body = {"name":"Digital - Gift Card Reward","type":"CAMPAIGN","metadata":{"Type":"Gift"},"parameters":{"campaign":{"id":"camp_hC2GdqYtOmTT45zfhib62cK1","balance":3000}}} # RewardsCreateRequestBody | Define parameters of the new reward. (optional)
+
+    try:
+        # Create Reward
+        api_response = api_instance.create_reward(rewards_create_request_body=rewards_create_request_body)
+        print("The response of RewardsApi->create_reward:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RewardsApi->create_reward: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **rewards_create_request_body** | [**RewardsCreateRequestBody**](RewardsCreateRequestBody.md)| Define parameters of the new reward. | [optional] 
+
+### Return type
+
+[**RewardsCreateResponseBody**](RewardsCreateResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a reward object. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_reward_assignment**
 > RewardsAssignmentsCreateResponseBody create_reward_assignment(reward_id, rewards_assignments_create_request_body=rewards_assignments_create_request_body)
@@ -266,6 +356,91 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_reward**
+> Reward get_reward(reward_id)
+
+Get Reward
+
+Retrieve a reward by the reward ID.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.reward import Reward
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.RewardsApi(api_client)
+    reward_id = 'reward_id_example' # str | A unique reward ID.
+
+    try:
+        # Get Reward
+        api_response = api_instance.get_reward(reward_id)
+        print("The response of RewardsApi->get_reward:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RewardsApi->get_reward: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reward_id** | **str**| A unique reward ID. | 
+
+### Return type
+
+[**Reward**](Reward.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a reward object if a valid identifier was provided.  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_reward_assignment**
 > RewardsAssignmentsGetResponseBody get_reward_assignment(reward_id, assignment_id)
 
@@ -400,8 +575,8 @@ with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.RewardsApi(api_client)
     reward_id = 'reward_id_example' # str | A unique reward ID.
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
 
     try:
         # List Reward Assignments
@@ -419,8 +594,8 @@ with voucherify_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **reward_id** | **str**| A unique reward ID. | 
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
 
 ### Return type
 
@@ -439,6 +614,183 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns a dictionary of reward assignment objects. Each object contains information regarding the resource to which the reward was assigned and the cost in loyalty points for the reward. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **list_rewards**
+> RewardsListResponseBody list_rewards(limit=limit, page=page, assignment_id=assignment_id)
+
+List Rewards
+
+Retrieve rewards.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.rewards_list_response_body import RewardsListResponseBody
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.RewardsApi(api_client)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    assignment_id = 'assignment_id_example' # str | A unique reward assignment ID. Use this parameter to get the reward details in the context of an assignment ID. (optional)
+
+    try:
+        # List Rewards
+        api_response = api_instance.list_rewards(limit=limit, page=page, assignment_id=assignment_id)
+        print("The response of RewardsApi->list_rewards:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RewardsApi->list_rewards: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **assignment_id** | **str**| A unique reward assignment ID. Use this parameter to get the reward details in the context of an assignment ID. | [optional] 
+
+### Return type
+
+[**RewardsListResponseBody**](RewardsListResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns a dictionary of reward objects. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_reward**
+> RewardsUpdateResponseBody update_reward(reward_id, rewards_update_request_body=rewards_update_request_body)
+
+Update Reward
+
+Update the details of a reward.
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.rewards_update_request_body import RewardsUpdateRequestBody
+from voucherify_client.models.rewards_update_response_body import RewardsUpdateResponseBody
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.RewardsApi(api_client)
+    reward_id = 'reward_id_example' # str | A unique reward ID.
+    rewards_update_request_body = {"name":"Digital - Gift Card Reward","metadata":{"Type":"Gift"},"parameters":{"campaign":{"id":"camp_hC2GdqYtOmTT45zfhib62cK1","balance":3000}}} # RewardsUpdateRequestBody | Define the parameters to be updated for the reward. (optional)
+
+    try:
+        # Update Reward
+        api_response = api_instance.update_reward(reward_id, rewards_update_request_body=rewards_update_request_body)
+        print("The response of RewardsApi->update_reward:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling RewardsApi->update_reward: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reward_id** | **str**| A unique reward ID. | 
+ **rewards_update_request_body** | [**RewardsUpdateRequestBody**](RewardsUpdateRequestBody.md)| Define the parameters to be updated for the reward. | [optional] 
+
+### Return type
+
+[**RewardsUpdateResponseBody**](RewardsUpdateResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Returns an updated reward object. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

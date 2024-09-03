@@ -27,7 +27,7 @@ class OrderItemProduct(BaseModel):
     An object containing details of the related product.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="A unique identifier that represents the product and is assigned by Voucherify.")
-    source_id: Optional[StrictStr] = Field(None, description="The merchant’s product ID (if it is different than Voucherify's product ID). It is really useful in case of integration between multiple systems. It can be an ID from an eCommerce site, a database or a 3rd party service.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's product ID (if it is different than Voucherify's product ID). It is really useful in case of integration between multiple systems. It can be an ID from an eCommerce site, a database or a 3rd party service.")
     override: Optional[StrictBool] = Field(None, description="The override set to `true` is used to store the product information in the system. If the product does not exist, it will be created with a source_id; if it does exist, the provided values for the name, price, and metadata will replace those already stored in the system.")
     name: Optional[StrictStr] = Field(None, description="Product name.")
     metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to a product. It can be useful for storing additional information about the product in a structured format.")
@@ -58,6 +58,36 @@ class OrderItemProduct(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if override (nullable) is None
+        # and __fields_set__ contains the field
+        if self.override is None and "override" in self.__fields_set__:
+            _dict['override'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if price (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price is None and "price" in self.__fields_set__:
+            _dict['price'] = None
+
         return _dict
 
     @classmethod

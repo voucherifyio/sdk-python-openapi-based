@@ -26,8 +26,8 @@ class RedemptionRollbackRelatedRedemptionsRollbacksItem(BaseModel):
     """
     RedemptionRollbackRelatedRedemptionsRollbacksItem
     """
-    id: Optional[StrictStr] = Field(None, description="Unique rollback redemption ID.")
-    var_date: Optional[datetime] = Field(None, alias="date", description="Timestamp representing the date and time when the object was created in ISO 8601 format.")
+    id: Optional[StrictStr] = Field(None, description="Unique identifier of the redemption rollback.")
+    var_date: Optional[datetime] = Field(None, alias="date", description="Timestamp representing the date and time when the object was created. The value is shown in the ISO 8601 format.")
     __properties = ["id", "date"]
 
     class Config:

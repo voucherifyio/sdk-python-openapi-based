@@ -21,24 +21,24 @@ import json
 
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist
-from voucherify_client.models.client_redemptions_redeem_request_body_all_of_options import ClientRedemptionsRedeemRequestBodyAllOfOptions
+from voucherify_client.models.client_redemptions_redeem_request_body_options import ClientRedemptionsRedeemRequestBodyOptions
+from voucherify_client.models.client_redemptions_redeem_request_body_redeemables_item import ClientRedemptionsRedeemRequestBodyRedeemablesItem
 from voucherify_client.models.customer import Customer
 from voucherify_client.models.order import Order
 from voucherify_client.models.session import Session
-from voucherify_client.models.stackable_validate_redeem_base_redeemables_item import StackableValidateRedeemBaseRedeemablesItem
 
 class ClientRedemptionsRedeemRequestBody(BaseModel):
     """
-    Response body schema for **POST** `/redemptions`.  # noqa: E501
+    Response body schema for **POST** `v1/redemptions`.  # noqa: E501
     """
-    redeemables: conlist(StackableValidateRedeemBaseRedeemablesItem, max_items=5, min_items=1) = Field(..., description="An array of redeemables. You can combine `voucher`(s) and `promotion_tier`(s). Alternatively, send one unique`promotion_stack` in the array.")
+    options: Optional[ClientRedemptionsRedeemRequestBodyOptions] = None
+    redeemables: Optional[conlist(ClientRedemptionsRedeemRequestBodyRedeemablesItem)] = None
     order: Optional[Order] = None
     customer: Optional[Customer] = None
     session: Optional[Session] = None
     tracking_id: Optional[StrictStr] = Field(None, description="Is correspondent to Customer's source_id")
     metadata: Optional[Dict[str, Any]] = Field(None, description="A set of key/value pairs that you can attach to a redemption object. It can be useful for storing additional information about the redemption in a structured format.")
-    options: Optional[ClientRedemptionsRedeemRequestBodyAllOfOptions] = None
-    __properties = ["redeemables", "order", "customer", "session", "tracking_id", "metadata", "options"]
+    __properties = ["options", "redeemables", "order", "customer", "session", "tracking_id", "metadata"]
 
     class Config:
         """Pydantic configuration"""
@@ -64,6 +64,9 @@ class ClientRedemptionsRedeemRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of options
+        if self.options:
+            _dict['options'] = self.options.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in redeemables (list)
         _items = []
         if self.redeemables:
@@ -80,9 +83,26 @@ class ClientRedemptionsRedeemRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of session
         if self.session:
             _dict['session'] = self.session.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of options
-        if self.options:
-            _dict['options'] = self.options.to_dict()
+        # set to None if options (nullable) is None
+        # and __fields_set__ contains the field
+        if self.options is None and "options" in self.__fields_set__:
+            _dict['options'] = None
+
+        # set to None if redeemables (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemables is None and "redeemables" in self.__fields_set__:
+            _dict['redeemables'] = None
+
+        # set to None if tracking_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tracking_id is None and "tracking_id" in self.__fields_set__:
+            _dict['tracking_id'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod
@@ -95,13 +115,13 @@ class ClientRedemptionsRedeemRequestBody(BaseModel):
             return ClientRedemptionsRedeemRequestBody.parse_obj(obj)
 
         _obj = ClientRedemptionsRedeemRequestBody.parse_obj({
-            "redeemables": [StackableValidateRedeemBaseRedeemablesItem.from_dict(_item) for _item in obj.get("redeemables")] if obj.get("redeemables") is not None else None,
+            "options": ClientRedemptionsRedeemRequestBodyOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None,
+            "redeemables": [ClientRedemptionsRedeemRequestBodyRedeemablesItem.from_dict(_item) for _item in obj.get("redeemables")] if obj.get("redeemables") is not None else None,
             "order": Order.from_dict(obj.get("order")) if obj.get("order") is not None else None,
             "customer": Customer.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
             "session": Session.from_dict(obj.get("session")) if obj.get("session") is not None else None,
             "tracking_id": obj.get("tracking_id"),
-            "metadata": obj.get("metadata"),
-            "options": ClientRedemptionsRedeemRequestBodyAllOfOptions.from_dict(obj.get("options")) if obj.get("options") is not None else None
+            "metadata": obj.get("metadata")
         })
         return _obj
 

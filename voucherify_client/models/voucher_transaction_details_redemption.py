@@ -19,14 +19,14 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class VoucherTransactionDetailsRedemption(BaseModel):
     """
     Contains information about the original redemption.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique redemption ID.")
+    id: Optional[StrictStr] = Field(None, description="Unique redemption ID.")
     __properties = ["id"]
 
     class Config:
@@ -53,6 +53,11 @@ class VoucherTransactionDetailsRedemption(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
         return _dict
 
     @classmethod

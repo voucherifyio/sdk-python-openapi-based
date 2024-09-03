@@ -22,17 +22,15 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist, validator
 from voucherify_client.models.customer_id import CustomerId
-from voucherify_client.models.order_item_calculated import OrderItemCalculated
+from voucherify_client.models.order_calculated_item import OrderCalculatedItem
 from voucherify_client.models.referrer_id import ReferrerId
 
 class OrdersGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/orders/{orderId}`.  # noqa: E501
+    Response body schema for **GET** `v1/orders/{orderId}`.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="Unique ID assigned by Voucherify of an existing order that will be linked to the redemption of this request.")
     source_id: Optional[StrictStr] = Field(None, description="Unique source ID of an existing order that will be linked to the redemption of this request.")
-    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the order was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the order was last updated in ISO 8601 format.")
     status: Optional[StrictStr] = Field(None, description="The order status.")
     amount: Optional[StrictInt] = Field(None, description="A positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the total amount of the order. This is the sum of the order items' amounts.")
     initial_amount: Optional[StrictInt] = Field(None, description="A positive integer in the smallest currency unit (e.g. 100 cents for $1.00) representing the total amount of the order. This is the sum of the order items' amounts.")
@@ -43,15 +41,17 @@ class OrdersGetResponseBody(BaseModel):
     applied_discount_amount: Optional[StrictInt] = Field(None, description="This field shows the order-level discount applied.")
     items_applied_discount_amount: Optional[StrictInt] = Field(None, description="Sum of all product-specific discounts applied in a particular request.   `sum(items, i => i.applied_discount_amount)`")
     total_applied_discount_amount: Optional[StrictInt] = Field(None, description="Sum of all order-level AND all product-specific discounts applied in a particular request.   `total_applied_discount_amount` = `applied_discount_amount` + `items_applied_discount_amount`")
-    items: Optional[conlist(OrderItemCalculated)] = Field(None, description="Array of items applied to the order.")
+    items: Optional[conlist(OrderCalculatedItem)] = Field(None, description="Array of items applied to the order.")
     metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to an order. It can be useful for storing additional information about the order in a structured format.")
+    object: Optional[StrictStr] = Field('order', description="The type of the object represented by JSON.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the order was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the order was last updated in ISO 8601 format.")
     customer_id: Optional[StrictStr] = Field(None, description="Unique customer ID of the customer making the purchase.")
     referrer_id: Optional[StrictStr] = Field(None, description="Unique referrer ID.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON.")
-    redemptions: Optional[Dict[str, Any]] = None
     customer: Optional[CustomerId] = None
     referrer: Optional[ReferrerId] = None
-    __properties = ["id", "source_id", "created_at", "updated_at", "status", "amount", "initial_amount", "discount_amount", "items_discount_amount", "total_discount_amount", "total_amount", "applied_discount_amount", "items_applied_discount_amount", "total_applied_discount_amount", "items", "metadata", "customer_id", "referrer_id", "object", "redemptions", "customer", "referrer"]
+    redemptions: Optional[Dict[str, Any]] = None
+    __properties = ["id", "source_id", "status", "amount", "initial_amount", "discount_amount", "items_discount_amount", "total_discount_amount", "total_amount", "applied_discount_amount", "items_applied_discount_amount", "total_applied_discount_amount", "items", "metadata", "object", "created_at", "updated_at", "customer_id", "referrer_id", "customer", "referrer", "redemptions"]
 
     @validator('status')
     def status_validate_enum(cls, value):
@@ -66,6 +66,9 @@ class OrdersGetResponseBody(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('order',):
             raise ValueError("must be one of enum values ('order')")
         return value
@@ -107,10 +110,85 @@ class OrdersGetResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of referrer
         if self.referrer:
             _dict['referrer'] = self.referrer.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
         # set to None if source_id (nullable) is None
         # and __fields_set__ contains the field
         if self.source_id is None and "source_id" in self.__fields_set__:
             _dict['source_id'] = None
+
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
+
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
+        # set to None if initial_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.initial_amount is None and "initial_amount" in self.__fields_set__:
+            _dict['initial_amount'] = None
+
+        # set to None if discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.discount_amount is None and "discount_amount" in self.__fields_set__:
+            _dict['discount_amount'] = None
+
+        # set to None if items_discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.items_discount_amount is None and "items_discount_amount" in self.__fields_set__:
+            _dict['items_discount_amount'] = None
+
+        # set to None if total_discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_discount_amount is None and "total_discount_amount" in self.__fields_set__:
+            _dict['total_discount_amount'] = None
+
+        # set to None if total_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_amount is None and "total_amount" in self.__fields_set__:
+            _dict['total_amount'] = None
+
+        # set to None if applied_discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.applied_discount_amount is None and "applied_discount_amount" in self.__fields_set__:
+            _dict['applied_discount_amount'] = None
+
+        # set to None if items_applied_discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.items_applied_discount_amount is None and "items_applied_discount_amount" in self.__fields_set__:
+            _dict['items_applied_discount_amount'] = None
+
+        # set to None if total_applied_discount_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_applied_discount_amount is None and "total_applied_discount_amount" in self.__fields_set__:
+            _dict['total_applied_discount_amount'] = None
+
+        # set to None if items (nullable) is None
+        # and __fields_set__ contains the field
+        if self.items is None and "items" in self.__fields_set__:
+            _dict['items'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
 
         # set to None if updated_at (nullable) is None
         # and __fields_set__ contains the field
@@ -127,6 +205,11 @@ class OrdersGetResponseBody(BaseModel):
         if self.referrer_id is None and "referrer_id" in self.__fields_set__:
             _dict['referrer_id'] = None
 
+        # set to None if redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemptions is None and "redemptions" in self.__fields_set__:
+            _dict['redemptions'] = None
+
         return _dict
 
     @classmethod
@@ -141,8 +224,6 @@ class OrdersGetResponseBody(BaseModel):
         _obj = OrdersGetResponseBody.parse_obj({
             "id": obj.get("id"),
             "source_id": obj.get("source_id"),
-            "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at"),
             "status": obj.get("status"),
             "amount": obj.get("amount"),
             "initial_amount": obj.get("initial_amount"),
@@ -153,14 +234,16 @@ class OrdersGetResponseBody(BaseModel):
             "applied_discount_amount": obj.get("applied_discount_amount"),
             "items_applied_discount_amount": obj.get("items_applied_discount_amount"),
             "total_applied_discount_amount": obj.get("total_applied_discount_amount"),
-            "items": [OrderItemCalculated.from_dict(_item) for _item in obj.get("items")] if obj.get("items") is not None else None,
+            "items": [OrderCalculatedItem.from_dict(_item) for _item in obj.get("items")] if obj.get("items") is not None else None,
             "metadata": obj.get("metadata"),
+            "object": obj.get("object") if obj.get("object") is not None else 'order',
+            "created_at": obj.get("created_at"),
+            "updated_at": obj.get("updated_at"),
             "customer_id": obj.get("customer_id"),
             "referrer_id": obj.get("referrer_id"),
-            "object": obj.get("object") if obj.get("object") is not None else 'order',
-            "redemptions": obj.get("redemptions"),
             "customer": CustomerId.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
-            "referrer": ReferrerId.from_dict(obj.get("referrer")) if obj.get("referrer") is not None else None
+            "referrer": ReferrerId.from_dict(obj.get("referrer")) if obj.get("referrer") is not None else None,
+            "redemptions": obj.get("redemptions")
         })
         return _obj
 

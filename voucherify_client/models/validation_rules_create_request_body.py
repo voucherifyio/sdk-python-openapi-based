@@ -21,17 +21,17 @@ import json
 
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictStr, validator
-from voucherify_client.models.validation_rule_base_applicable_to import ValidationRuleBaseApplicableTo
-from voucherify_client.models.validation_rule_base_error import ValidationRuleBaseError
+from voucherify_client.models.validation_rules_create_request_body_applicable_to import ValidationRulesCreateRequestBodyApplicableTo
+from voucherify_client.models.validation_rules_create_request_body_error import ValidationRulesCreateRequestBodyError
 
 class ValidationRulesCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/validation-rules`.  # noqa: E501
+    Request body schema for **POST** `v1/validation-rules`.  # noqa: E501
     """
-    name: StrictStr = Field(..., description="Custom, unique name for set of validation rules.")
+    name: Optional[StrictStr] = Field(None, description="Custom, unique name for set of validation rules.")
     rules: Optional[Dict[str, Any]] = Field(None, description="Contains all the rule definitions for the validation rule. It is a set of key value pairs representing the rules and logic between the rules. The keys are numbered consecutively beginning from `1`. The values are objects containing the rule conditions.")
-    error: Optional[ValidationRuleBaseError] = None
-    applicable_to: Optional[ValidationRuleBaseApplicableTo] = None
+    error: Optional[ValidationRulesCreateRequestBodyError] = None
+    applicable_to: Optional[ValidationRulesCreateRequestBodyApplicableTo] = None
     type: Optional[StrictStr] = Field('expression', description="Type of validation rule.")
     context_type: Optional[StrictStr] = Field('global', description="Validation rule context type.    | **Context Type** | **Definition** | |:---|:---| | earning_rule.order.paid |  | | earning_rule.custom_event |  | | earning_rule.customer.segment.entered |  | | campaign.discount_coupons |  | | campaign.discount_coupons.discount.apply_to_order |  | | campaign.discount_coupons.discount.apply_to_items |  | | campaign.discount_coupons.discount.apply_to_items_proportionally |  | | campaign.discount_coupons.discount.apply_to_items_proportionally_by_quantity |  | | campaign.discount_coupons.discount.fixed.apply_to_items |  | | campaign.gift_vouchers |  | | campaign.gift_vouchers.gift.apply_to_order |  | | campaign.gift_vouchers.gift.apply_to_items |  | | campaign.referral_program |  | | campaign.referral_program.discount.apply_to_order |  | | campaign.referral_program.discount.apply_to_items |  | | campaign.referral_program.discount.apply_to_items_proportionally |  | | campaign.referral_program.discount.apply_to_items_proportionally_by_quantity |  | | campaign.referral_program.discount.fixed.apply_to_items |  | | campaign.promotion |  | | campaign.promotion.discount.apply_to_order |  | | campaign.promotion.discount.apply_to_items |  | | campaign.promotion.discount.apply_to_items_proportionally |  | | campaign.promotion.discount.apply_to_items_proportionally_by_quantity |  | | campaign.promotion.discount.fixed.apply_to_items |  | | campaign.loyalty_program |  | | campaign.lucky_draw |  | | voucher.discount_voucher |  | | voucher.discount_voucher.discount.apply_to_order |  | | voucher.discount_voucher.discount.apply_to_items |  | | voucher.discount_voucher.discount.apply_to_items_proportionally |  | | voucher.discount_voucher.discount.apply_to_items_proportionally_by_quantity |  | | voucher.discount_voucher.discount.fixed.apply_to_items |  | | voucher.gift_voucher |  | | voucher.gift_voucher.gift.apply_to_order |  | | voucher.gift_voucher.gift.apply_to_items |  | | voucher.loyalty_card |  | | voucher.lucky_draw_code |  | | distribution.custom_event |  | | reward_assignment.pay_with_points |  | | global |  |")
     __properties = ["name", "rules", "error", "applicable_to", "type", "context_type"]
@@ -86,6 +86,31 @@ class ValidationRulesCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of applicable_to
         if self.applicable_to:
             _dict['applicable_to'] = self.applicable_to.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if error (nullable) is None
+        # and __fields_set__ contains the field
+        if self.error is None and "error" in self.__fields_set__:
+            _dict['error'] = None
+
+        # set to None if applicable_to (nullable) is None
+        # and __fields_set__ contains the field
+        if self.applicable_to is None and "applicable_to" in self.__fields_set__:
+            _dict['applicable_to'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if context_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.context_type is None and "context_type" in self.__fields_set__:
+            _dict['context_type'] = None
+
         return _dict
 
     @classmethod
@@ -100,8 +125,8 @@ class ValidationRulesCreateRequestBody(BaseModel):
         _obj = ValidationRulesCreateRequestBody.parse_obj({
             "name": obj.get("name"),
             "rules": obj.get("rules"),
-            "error": ValidationRuleBaseError.from_dict(obj.get("error")) if obj.get("error") is not None else None,
-            "applicable_to": ValidationRuleBaseApplicableTo.from_dict(obj.get("applicable_to")) if obj.get("applicable_to") is not None else None,
+            "error": ValidationRulesCreateRequestBodyError.from_dict(obj.get("error")) if obj.get("error") is not None else None,
+            "applicable_to": ValidationRulesCreateRequestBodyApplicableTo.from_dict(obj.get("applicable_to")) if obj.get("applicable_to") is not None else None,
             "type": obj.get("type") if obj.get("type") is not None else 'expression',
             "context_type": obj.get("context_type") if obj.get("context_type") is not None else 'global'
         })

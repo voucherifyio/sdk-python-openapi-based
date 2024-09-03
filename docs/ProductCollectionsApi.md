@@ -311,9 +311,9 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductCollectionsApi(api_client)
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
 
     try:
         # List Product Collections
@@ -330,9 +330,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
 
 ### Return type
 
@@ -402,9 +402,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.ProductCollectionsApi(api_client)
     product_collection_id = 'product_collection_id_example' # str | Unique product collection ID.
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
-    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
+    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
     starting_after = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format. (optional)
 
     try:
@@ -423,9 +423,9 @@ with voucherify_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **product_collection_id** | **str**| Unique product collection ID. | 
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
- **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
+ **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
  **starting_after** | **datetime**| Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format. | [optional] 
 
 ### Return type

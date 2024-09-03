@@ -30,8 +30,8 @@ class DiscountUnitMultipleOneUnit(BaseModel):
     """
     unit_off: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Number of units to be granted a full value discount.")
     unit_off_formula: Optional[StrictStr] = None
-    effect: StrictStr = Field(..., description="Defines how the unit is added to the customer's order.  ")
-    unit_type: StrictStr = Field(..., description="The product deemed as free, chosen from product inventory (e.g. time, items).")
+    effect: Optional[StrictStr] = Field(None, description="Defines how the unit is added to the customer's order.  ")
+    unit_type: Optional[StrictStr] = Field(None, description="The product deemed as free, chosen from product inventory (e.g. time, items).")
     product: Optional[SimpleProductDiscountUnit] = None
     sku: Optional[SimpleSkuDiscountUnit] = None
     __properties = ["unit_off", "unit_off_formula", "effect", "unit_type", "product", "sku"]
@@ -39,6 +39,9 @@ class DiscountUnitMultipleOneUnit(BaseModel):
     @validator('effect')
     def effect_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('ADD_NEW_ITEMS', 'ADD_MISSING_ITEMS',):
             raise ValueError("must be one of enum values ('ADD_NEW_ITEMS', 'ADD_MISSING_ITEMS')")
         return value
@@ -73,6 +76,26 @@ class DiscountUnitMultipleOneUnit(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of sku
         if self.sku:
             _dict['sku'] = self.sku.to_dict()
+        # set to None if unit_off (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unit_off is None and "unit_off" in self.__fields_set__:
+            _dict['unit_off'] = None
+
+        # set to None if unit_off_formula (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unit_off_formula is None and "unit_off_formula" in self.__fields_set__:
+            _dict['unit_off_formula'] = None
+
+        # set to None if effect (nullable) is None
+        # and __fields_set__ contains the field
+        if self.effect is None and "effect" in self.__fields_set__:
+            _dict['effect'] = None
+
+        # set to None if unit_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unit_type is None and "unit_type" in self.__fields_set__:
+            _dict['unit_type'] = None
+
         return _dict
 
     @classmethod

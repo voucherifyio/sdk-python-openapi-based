@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
 from voucherify_client.models.vouchers_balance_update_response_body_related_object import VouchersBalanceUpdateResponseBodyRelatedObject
 
@@ -27,18 +27,21 @@ class VouchersBalanceUpdateResponseBody(BaseModel):
     """
     Response body schema for `vouchers/{code}/balance.`  # noqa: E501
     """
-    amount: StrictInt = Field(..., description="The incremental amount added (positive integer) or subtracted (negative integer) to the current balance on the gift card or loyalty card. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
-    total: StrictInt = Field(..., description="Total income incurred over the lifespan of the gift card or loyalty card.")
-    balance: StrictInt = Field(..., description="The balance after adding or subtracting a specified amount. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
-    type: StrictStr = Field(..., description="The type of voucher being modified.")
-    operation_type: StrictStr = Field(...)
-    object: StrictStr = Field(..., description="The type of object represented by JSON. Default is `balance`.")
-    related_object: VouchersBalanceUpdateResponseBodyRelatedObject = Field(...)
+    amount: Optional[StrictInt] = Field(None, description="The incremental amount added (positive integer) or subtracted (negative integer) to the current balance on the gift card or loyalty card. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
+    total: Optional[StrictInt] = Field(None, description="Total income incurred over the lifespan of the gift card or loyalty card.")
+    balance: Optional[StrictInt] = Field(None, description="The balance after adding or subtracting a specified amount. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
+    type: Optional[StrictStr] = Field(None, description="The type of voucher being modified.")
+    operation_type: Optional[StrictStr] = 'MANUAL'
+    object: Optional[StrictStr] = Field('balance', description="The type of the object represented by JSON. Default is `balance`.")
+    related_object: Optional[VouchersBalanceUpdateResponseBodyRelatedObject] = None
     __properties = ["amount", "total", "balance", "type", "operation_type", "object", "related_object"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('gift_voucher', 'loyalty_card',):
             raise ValueError("must be one of enum values ('gift_voucher', 'loyalty_card')")
         return value
@@ -46,6 +49,9 @@ class VouchersBalanceUpdateResponseBody(BaseModel):
     @validator('operation_type')
     def operation_type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('MANUAL',):
             raise ValueError("must be one of enum values ('MANUAL')")
         return value
@@ -53,6 +59,9 @@ class VouchersBalanceUpdateResponseBody(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('balance',):
             raise ValueError("must be one of enum values ('balance')")
         return value
@@ -84,6 +93,41 @@ class VouchersBalanceUpdateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of related_object
         if self.related_object:
             _dict['related_object'] = self.related_object.to_dict()
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if operation_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.operation_type is None and "operation_type" in self.__fields_set__:
+            _dict['operation_type'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if related_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object is None and "related_object" in self.__fields_set__:
+            _dict['related_object'] = None
+
         return _dict
 
     @classmethod

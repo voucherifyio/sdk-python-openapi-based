@@ -65,6 +65,21 @@ class VoucherGift(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if effect (nullable) is None
+        # and __fields_set__ contains the field
+        if self.effect is None and "effect" in self.__fields_set__:
+            _dict['effect'] = None
+
         return _dict
 
     @classmethod

@@ -26,21 +26,11 @@ class Session(BaseModel):
     """
     Session
     """
-    key: Optional[StrictStr] = Field('LOCK', description="The session unique ID assigned by Voucherify or your own unique session ID. Sending an existing ID will result in overwriting an existing session. If no session key is provided, then a new ID will be generated.")
-    type: Optional[StrictStr] = Field('LOCK', description="This parameter is required to establish a new session. The session locks the redemption quantity by 1.")
+    key: Optional[StrictStr] = Field(None, description="The session unique ID assigned by Voucherify or your own unique session ID. Sending an existing ID will result in overwriting an existing session. If no session key is provided, then a new ID will be generated.")
+    type: Optional[StrictStr] = Field('LOCK', description="This parameter is required to establish a new session.")
     ttl: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Value for the period of time that the session is active. Units for this parameter are defined by the session.ttl_unit parameter.")
     ttl_unit: Optional[StrictStr] = Field(None, description="Defines the type of unit in which the session time is counted.")
     __properties = ["key", "type", "ttl", "ttl_unit"]
-
-    @validator('key')
-    def key_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in ('LOCK',):
-            raise ValueError("must be one of enum values ('LOCK')")
-        return value
 
     @validator('type')
     def type_validate_enum(cls, value):
@@ -86,6 +76,26 @@ class Session(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if key (nullable) is None
+        # and __fields_set__ contains the field
+        if self.key is None and "key" in self.__fields_set__:
+            _dict['key'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if ttl (nullable) is None
+        # and __fields_set__ contains the field
+        if self.ttl is None and "ttl" in self.__fields_set__:
+            _dict['ttl'] = None
+
+        # set to None if ttl_unit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.ttl_unit is None and "ttl_unit" in self.__fields_set__:
+            _dict['ttl_unit'] = None
+
         return _dict
 
     @classmethod
@@ -98,7 +108,7 @@ class Session(BaseModel):
             return Session.parse_obj(obj)
 
         _obj = Session.parse_obj({
-            "key": obj.get("key") if obj.get("key") is not None else 'LOCK',
+            "key": obj.get("key"),
             "type": obj.get("type") if obj.get("type") is not None else 'LOCK',
             "ttl": obj.get("ttl"),
             "ttl_unit": obj.get("ttl_unit")

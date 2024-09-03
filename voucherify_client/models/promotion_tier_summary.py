@@ -62,6 +62,16 @@ class PromotionTierSummary(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of orders
         if self.orders:
             _dict['orders'] = self.orders.to_dict()
+        # set to None if redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemptions is None and "redemptions" in self.__fields_set__:
+            _dict['redemptions'] = None
+
+        # set to None if orders (nullable) is None
+        # and __fields_set__ contains the field
+        if self.orders is None and "orders" in self.__fields_set__:
+            _dict['orders'] = None
+
         return _dict
 
     @classmethod

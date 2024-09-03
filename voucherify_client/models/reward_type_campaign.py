@@ -19,16 +19,27 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field
-from voucherify_client.models.reward_type_campaign_campaign import RewardTypeCampaignCampaign
+from typing import Optional
+from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
 
 class RewardTypeCampaign(BaseModel):
     """
-    RewardTypeCampaign
+    Objects stores information about the campaign related to the reward.  # noqa: E501
     """
-    campaign: RewardTypeCampaignCampaign = Field(...)
-    __properties = ["campaign"]
+    id: Optional[StrictStr] = Field(None, description="Unique campaign ID, assigned by Voucherify.")
+    balance: Optional[StrictInt] = Field(None, description="The number of points to be added to a loyalty card or the amount to be added to the current balance on the gift card.  For gift cards, the value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000.")
+    type: Optional[StrictStr] = Field(None, description="Campaign type.")
+    __properties = ["id", "balance", "type"]
+
+    @validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('DISCOUNT_COUPONS', 'GIFT_VOUCHERS', 'LOYALTY_PROGRAM',):
+            raise ValueError("must be one of enum values ('DISCOUNT_COUPONS', 'GIFT_VOUCHERS', 'LOYALTY_PROGRAM')")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -54,9 +65,21 @@ class RewardTypeCampaign(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of campaign
-        if self.campaign:
-            _dict['campaign'] = self.campaign.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
         return _dict
 
     @classmethod
@@ -69,7 +92,9 @@ class RewardTypeCampaign(BaseModel):
             return RewardTypeCampaign.parse_obj(obj)
 
         _obj = RewardTypeCampaign.parse_obj({
-            "campaign": RewardTypeCampaignCampaign.from_dict(obj.get("campaign")) if obj.get("campaign") is not None else None
+            "id": obj.get("id"),
+            "balance": obj.get("balance"),
+            "type": obj.get("type")
         })
         return _obj
 

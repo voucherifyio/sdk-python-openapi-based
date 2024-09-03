@@ -28,11 +28,10 @@ class VoucherRedemption(BaseModel):
     """
     quantity: Optional[StrictInt] = Field(None, description="How many times a voucher can be redeemed. A `null` value means unlimited.")
     redeemed_quantity: Optional[StrictInt] = Field(None, description="How many times a voucher has already been redeemed.")
-    redeemed_amount: Optional[StrictInt] = Field(None, description="Total amount redeemed. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 balance is written as 10000.")
     redeemed_points: Optional[StrictInt] = Field(None, description="Total loyalty points redeemed.")
-    object: Optional[StrictStr] = Field('list', description="The type of object represented is by default `list`. To get this list, you need to make a call to the endpoint returned in the url attribute.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented is by default `list`. To get this list, you need to make a call to the endpoint returned in the url attribute.")
     url: Optional[StrictStr] = Field(None, description="The endpoint where this list of redemptions can be accessed using a GET method. `/v1/vouchers/{voucher_code}/redemptions`")
-    __properties = ["quantity", "redeemed_quantity", "redeemed_amount", "redeemed_points", "object", "url"]
+    __properties = ["quantity", "redeemed_quantity", "redeemed_points", "object", "url"]
 
     class Config:
         """Pydantic configuration"""
@@ -58,6 +57,31 @@ class VoucherRedemption(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if quantity (nullable) is None
+        # and __fields_set__ contains the field
+        if self.quantity is None and "quantity" in self.__fields_set__:
+            _dict['quantity'] = None
+
+        # set to None if redeemed_quantity (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemed_quantity is None and "redeemed_quantity" in self.__fields_set__:
+            _dict['redeemed_quantity'] = None
+
+        # set to None if redeemed_points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redeemed_points is None and "redeemed_points" in self.__fields_set__:
+            _dict['redeemed_points'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.url is None and "url" in self.__fields_set__:
+            _dict['url'] = None
+
         return _dict
 
     @classmethod
@@ -72,7 +96,6 @@ class VoucherRedemption(BaseModel):
         _obj = VoucherRedemption.parse_obj({
             "quantity": obj.get("quantity"),
             "redeemed_quantity": obj.get("redeemed_quantity"),
-            "redeemed_amount": obj.get("redeemed_amount"),
             "redeemed_points": obj.get("redeemed_points"),
             "object": obj.get("object") if obj.get("object") is not None else 'list',
             "url": obj.get("url")

@@ -54,6 +54,16 @@ class RedeemableGift(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if credits (nullable) is None
+        # and __fields_set__ contains the field
+        if self.credits is None and "credits" in self.__fields_set__:
+            _dict['credits'] = None
+
         return _dict
 
     @classmethod

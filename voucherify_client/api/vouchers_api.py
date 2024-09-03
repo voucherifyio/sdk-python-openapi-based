@@ -20,19 +20,33 @@ import warnings
 from pydantic import validate_arguments, ValidationError
 
 from typing_extensions import Annotated
-from pydantic import Field, StrictBool, StrictBytes, StrictStr, conint
+from pydantic import Field, StrictBool, StrictBytes, StrictStr, conint, conlist
 
-from typing import Optional, Union
+from typing import Any, Dict, Optional, Union
 
+from voucherify_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
+from voucherify_client.models.parameter_order_vouchers import ParameterOrderVouchers
+from voucherify_client.models.parameter_updated_before_after import ParameterUpdatedBeforeAfter
 from voucherify_client.models.vouchers_balance_update_request_body import VouchersBalanceUpdateRequestBody
 from voucherify_client.models.vouchers_balance_update_response_body import VouchersBalanceUpdateResponseBody
+from voucherify_client.models.vouchers_create_response_body import VouchersCreateResponseBody
+from voucherify_client.models.vouchers_create_with_specific_code_request_body import VouchersCreateWithSpecificCodeRequestBody
 from voucherify_client.models.vouchers_disable_response_body import VouchersDisableResponseBody
 from voucherify_client.models.vouchers_enable_response_body import VouchersEnableResponseBody
 from voucherify_client.models.vouchers_get_response_body import VouchersGetResponseBody
+from voucherify_client.models.vouchers_import_create_item_request_body import VouchersImportCreateItemRequestBody
+from voucherify_client.models.vouchers_import_create_response_body import VouchersImportCreateResponseBody
 from voucherify_client.models.vouchers_import_csv_create_response_body import VouchersImportCsvCreateResponseBody
+from voucherify_client.models.vouchers_list_response_body import VouchersListResponseBody
+from voucherify_client.models.vouchers_metadata_update_in_bulk_request_body import VouchersMetadataUpdateInBulkRequestBody
+from voucherify_client.models.vouchers_metadata_update_in_bulk_response_body import VouchersMetadataUpdateInBulkResponseBody
 from voucherify_client.models.vouchers_transactions_export_create_request_body import VouchersTransactionsExportCreateRequestBody
 from voucherify_client.models.vouchers_transactions_export_create_response_body import VouchersTransactionsExportCreateResponseBody
 from voucherify_client.models.vouchers_transactions_list_response_body import VouchersTransactionsListResponseBody
+from voucherify_client.models.vouchers_update_in_bulk_item_request_body import VouchersUpdateInBulkItemRequestBody
+from voucherify_client.models.vouchers_update_in_bulk_response_body import VouchersUpdateInBulkResponseBody
+from voucherify_client.models.vouchers_update_request_body import VouchersUpdateRequestBody
+from voucherify_client.models.vouchers_update_response_body import VouchersUpdateResponseBody
 
 from voucherify_client.api_client import ApiClient
 from voucherify_client.api_response import ApiResponse
@@ -55,10 +69,165 @@ class VouchersApi:
         self.api_client = api_client
 
     @validate_arguments
-    def delete_voucher(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the voucher will be removed permanently. Going forward, the user will be able to create another voucher with exactly the same code.")] = None, **kwargs) -> None:  # noqa: E501
+    def create_voucher(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], vouchers_create_with_specific_code_request_body : Annotated[Optional[VouchersCreateWithSpecificCodeRequestBody], Field(description="Specify the details of the voucher that you would like to create.")] = None, **kwargs) -> VouchersCreateResponseBody:  # noqa: E501
+        """Create Voucher  # noqa: E501
+
+        Create a standalone voucher. You can choose to create a GIFT_VOUCHER, a DISCOUNT_VOUCHER, or a LOYALTY_CARD. The code path parameter can use all letters of the English alphabet, Arabic numerals and special characters.   When you create a new voucher, you can specify a type to create it. Creating a new voucher will create a new stand alone voucher if no campaign name or campaign_id is provided. In case of the loyalty card, a campaign name is required.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_voucher(code, vouchers_create_with_specific_code_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param code: A unique **code** that identifies the voucher. (required)
+        :type code: str
+        :param vouchers_create_with_specific_code_request_body: Specify the details of the voucher that you would like to create.
+        :type vouchers_create_with_specific_code_request_body: VouchersCreateWithSpecificCodeRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: VouchersCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the create_voucher_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.create_voucher_with_http_info(code, vouchers_create_with_specific_code_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def create_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], vouchers_create_with_specific_code_request_body : Annotated[Optional[VouchersCreateWithSpecificCodeRequestBody], Field(description="Specify the details of the voucher that you would like to create.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Voucher  # noqa: E501
+
+        Create a standalone voucher. You can choose to create a GIFT_VOUCHER, a DISCOUNT_VOUCHER, or a LOYALTY_CARD. The code path parameter can use all letters of the English alphabet, Arabic numerals and special characters.   When you create a new voucher, you can specify a type to create it. Creating a new voucher will create a new stand alone voucher if no campaign name or campaign_id is provided. In case of the loyalty card, a campaign name is required.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_voucher_with_http_info(code, vouchers_create_with_specific_code_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param code: A unique **code** that identifies the voucher. (required)
+        :type code: str
+        :param vouchers_create_with_specific_code_request_body: Specify the details of the voucher that you would like to create.
+        :type vouchers_create_with_specific_code_request_body: VouchersCreateWithSpecificCodeRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(VouchersCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'code',
+            'vouchers_create_with_specific_code_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_voucher" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['code']:
+            _path_params['code'] = _params['code']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['vouchers_create_with_specific_code_request_body'] is not None:
+            _body_params = _params['vouchers_create_with_specific_code_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "VouchersCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/vouchers/{code}', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def delete_voucher(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the voucher will be removed permanently. If it is set to false or not set at all, the voucher will be moved to the bin. Going forward, the user will be able to create another voucher with exactly the same code.")] = None, **kwargs) -> None:  # noqa: E501
         """Delete Voucher  # noqa: E501
 
-        Deletes a voucher. This operation cannot be undone. Additionally, this operation removes any redemptions on the voucher.  # noqa: E501
+        Deletes a voucher. This operation cannot be undone. Additionally, this operation removes any redemptions on the voucher. If the force parameter is set to false or not set at all, the voucher will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -67,7 +236,7 @@ class VouchersApi:
 
         :param code: A unique **code** that identifies the voucher. (required)
         :type code: str
-        :param force: If this flag is set to `true`, the voucher will be removed permanently. Going forward, the user will be able to create another voucher with exactly the same code.
+        :param force: If this flag is set to true, the voucher will be removed permanently. If it is set to false or not set at all, the voucher will be moved to the bin. Going forward, the user will be able to create another voucher with exactly the same code.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -87,10 +256,10 @@ class VouchersApi:
         return self.delete_voucher_with_http_info(code, force, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to `true`, the voucher will be removed permanently. Going forward, the user will be able to create another voucher with exactly the same code.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the voucher will be removed permanently. If it is set to false or not set at all, the voucher will be moved to the bin. Going forward, the user will be able to create another voucher with exactly the same code.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Voucher  # noqa: E501
 
-        Deletes a voucher. This operation cannot be undone. Additionally, this operation removes any redemptions on the voucher.  # noqa: E501
+        Deletes a voucher. This operation cannot be undone. Additionally, this operation removes any redemptions on the voucher. If the force parameter is set to false or not set at all, the voucher will be moved to the bin.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -99,7 +268,7 @@ class VouchersApi:
 
         :param code: A unique **code** that identifies the voucher. (required)
         :type code: str
-        :param force: If this flag is set to `true`, the voucher will be removed permanently. Going forward, the user will be able to create another voucher with exactly the same code.
+        :param force: If this flag is set to true, the voucher will be removed permanently. If it is set to false or not set at all, the voucher will be moved to the bin. Going forward, the user will be able to create another voucher with exactly the same code.
         :type force: bool
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -197,17 +366,17 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def disable_voucher(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], **kwargs) -> VouchersDisableResponseBody:  # noqa: E501
+    def disable_voucher(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], **kwargs) -> VouchersDisableResponseBody:  # noqa: E501
         """Disable Voucher  # noqa: E501
 
-        There are various times when you'll want to manage a voucher's accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ This method sets the voucher state to **inactive**. The voucher cannot be redeemed.  # noqa: E501
+        There are various times when youll want to manage a vouchers accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ This method sets the voucher state to **inactive**. The voucher cannot be redeemed.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.disable_voucher(code, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -227,17 +396,17 @@ class VouchersApi:
         return self.disable_voucher_with_http_info(code, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def disable_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def disable_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Disable Voucher  # noqa: E501
 
-        There are various times when you'll want to manage a voucher's accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ This method sets the voucher state to **inactive**. The voucher cannot be redeemed.  # noqa: E501
+        There are various times when youll want to manage a vouchers accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ This method sets the voucher state to **inactive**. The voucher cannot be redeemed.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.disable_voucher_with_http_info(code, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -337,17 +506,17 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def enable_voucher(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], **kwargs) -> VouchersEnableResponseBody:  # noqa: E501
+    def enable_voucher(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], **kwargs) -> VouchersEnableResponseBody:  # noqa: E501
         """Enable Voucher  # noqa: E501
 
-        There are various times when you'll want to manage a voucher's accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ The method sets the voucher state to **active**. The voucher can be redeemed - only if the redemption occurs after the start date and the voucher is not expired.  # noqa: E501
+        There are various times when youll want to manage a vouchers accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ The method sets the voucher state to **active**. The voucher can be redeemed - only if the redemption occurs after the start date and the voucher is not expired.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.enable_voucher(code, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -367,17 +536,17 @@ class VouchersApi:
         return self.enable_voucher_with_http_info(code, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def enable_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def enable_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Enable Voucher  # noqa: E501
 
-        There are various times when you'll want to manage a voucher's accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ The method sets the voucher state to **active**. The voucher can be redeemed - only if the redemption occurs after the start date and the voucher is not expired.  # noqa: E501
+        There are various times when youll want to manage a vouchers accessibility. This can be done by two API methods for managing the voucher state - *enable* and *disable*.   ___ The method sets the voucher state to **active**. The voucher can be redeemed - only if the redemption occurs after the start date and the voucher is not expired.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.enable_voucher_with_http_info(code, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -477,17 +646,17 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def export_voucher_transactions(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], vouchers_transactions_export_create_request_body : Annotated[Optional[VouchersTransactionsExportCreateRequestBody], Field(description="Specify the parameters for the transaction export.")] = None, **kwargs) -> VouchersTransactionsExportCreateResponseBody:  # noqa: E501
+    def export_voucher_transactions(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], vouchers_transactions_export_create_request_body : Annotated[Optional[VouchersTransactionsExportCreateRequestBody], Field(description="Specify the parameters for the transaction export.")] = None, **kwargs) -> VouchersTransactionsExportCreateResponseBody:  # noqa: E501
         """Export Voucher Transactions  # noqa: E501
 
-        Export transactions that are associated with credit movements on a gift card or loyalty card.  | **Field** | **Definition** | **Example Export** | |:---|:---|:---| | id | Unique transaction ID. | vtx_0cb7811f1c07765800 | | type | Transaction type. | - `CREDITS_REMOVAL` <br> - `CREDITS_ADDITION` <br> - `CREDITS_REFUND` <br> - `CREDITS_REDEMPTION` <br> - `POINTS_ACCRUAL` <br> - `POINTS_CANCELLATION` <br> - `POINTS_REDEMPTION`<br> - `POINTS_REFUND`<br> - `POINTS_ADDITION`<br> - `POINTS_REMOVAL`<br> - `POINTS_EXPIRATION`<br> - `POINTS_TRANSFER_IN`<br> - `POINTS_TRANSFER_OUT` | | source_id | Unique transaction source ID. | 8638 | | reason | Contains the reason for the transaction if one was included originally. |  | | balance | The gift card or loyalty card balance after the transaction. |  | | amount | The amount of gift card or loyalty card credits being allocated during the transaction. This value can either be negative or positive depending on the nature of the transaction. |  | | created_at | Timestamp in ISO 8601 format representing the date and time when the transaction was created. | 2022-03-09T09:16:32.521Z  | | voucher_id | Unique Voucher ID. | v_dky7ksKfPX50Wb2Bxvcoeb1xT20b6tcp | | campaign_id | Parent campaign ID. | camp_FNYR4jhqZBM9xTptxDGgeNBV | | source|  Channel through which the transaction was initiated. | API | | details | More detailed information stored in the form of a JSON. | Provides more details related to the transaction in the form of an object. | | related_transaction_id | Unique transaction ID related to a receiver/donor card in the case of a points transfer from/to another card. | vtx_0c9afe802593b34b80 |  # noqa: E501
+        Export transactions that are associated with credit movements on a gift card or loyalty card.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.export_voucher_transactions(code, vouchers_transactions_export_create_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param vouchers_transactions_export_create_request_body: Specify the parameters for the transaction export.
         :type vouchers_transactions_export_create_request_body: VouchersTransactionsExportCreateRequestBody
@@ -509,17 +678,17 @@ class VouchersApi:
         return self.export_voucher_transactions_with_http_info(code, vouchers_transactions_export_create_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def export_voucher_transactions_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], vouchers_transactions_export_create_request_body : Annotated[Optional[VouchersTransactionsExportCreateRequestBody], Field(description="Specify the parameters for the transaction export.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def export_voucher_transactions_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], vouchers_transactions_export_create_request_body : Annotated[Optional[VouchersTransactionsExportCreateRequestBody], Field(description="Specify the parameters for the transaction export.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Export Voucher Transactions  # noqa: E501
 
-        Export transactions that are associated with credit movements on a gift card or loyalty card.  | **Field** | **Definition** | **Example Export** | |:---|:---|:---| | id | Unique transaction ID. | vtx_0cb7811f1c07765800 | | type | Transaction type. | - `CREDITS_REMOVAL` <br> - `CREDITS_ADDITION` <br> - `CREDITS_REFUND` <br> - `CREDITS_REDEMPTION` <br> - `POINTS_ACCRUAL` <br> - `POINTS_CANCELLATION` <br> - `POINTS_REDEMPTION`<br> - `POINTS_REFUND`<br> - `POINTS_ADDITION`<br> - `POINTS_REMOVAL`<br> - `POINTS_EXPIRATION`<br> - `POINTS_TRANSFER_IN`<br> - `POINTS_TRANSFER_OUT` | | source_id | Unique transaction source ID. | 8638 | | reason | Contains the reason for the transaction if one was included originally. |  | | balance | The gift card or loyalty card balance after the transaction. |  | | amount | The amount of gift card or loyalty card credits being allocated during the transaction. This value can either be negative or positive depending on the nature of the transaction. |  | | created_at | Timestamp in ISO 8601 format representing the date and time when the transaction was created. | 2022-03-09T09:16:32.521Z  | | voucher_id | Unique Voucher ID. | v_dky7ksKfPX50Wb2Bxvcoeb1xT20b6tcp | | campaign_id | Parent campaign ID. | camp_FNYR4jhqZBM9xTptxDGgeNBV | | source|  Channel through which the transaction was initiated. | API | | details | More detailed information stored in the form of a JSON. | Provides more details related to the transaction in the form of an object. | | related_transaction_id | Unique transaction ID related to a receiver/donor card in the case of a points transfer from/to another card. | vtx_0c9afe802593b34b80 |  # noqa: E501
+        Export transactions that are associated with credit movements on a gift card or loyalty card.     # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.export_voucher_transactions_with_http_info(code, vouchers_transactions_export_create_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param vouchers_transactions_export_create_request_body: Specify the parameters for the transaction export.
         :type vouchers_transactions_export_create_request_body: VouchersTransactionsExportCreateRequestBody
@@ -632,10 +801,157 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
+    def generate_random_code(self, body : Annotated[Optional[Dict[str, Any]], Field(description="Specify the details of the voucher that you would like to create.")] = None, **kwargs) -> VouchersCreateResponseBody:  # noqa: E501
+        """Generate Random Code  # noqa: E501
+
+        Create a standalone voucher. You can choose to create a GIFT_VOUCHER, a DISCOUNT_VOUCHER, or a LOYALTY_CARD.  When you create a new voucher, you can specify a type to create it. Creating a new voucher will create a new stand alone voucher if no campaign name or campaign_id is provided. In case of the loyalty card, a campaign name is required. You can optionally use the code parameter to define a specific code or the code_config parameter to design rules for Voucherify API to create a random code. If neither of the two parameters are passed, then a random code is generated by the Voucherify API. This method will return an error when trying to create a voucher that already exists.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.generate_random_code(body, async_req=True)
+        >>> result = thread.get()
+
+        :param body: Specify the details of the voucher that you would like to create.
+        :type body: object
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: VouchersCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the generate_random_code_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.generate_random_code_with_http_info(body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def generate_random_code_with_http_info(self, body : Annotated[Optional[Dict[str, Any]], Field(description="Specify the details of the voucher that you would like to create.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Generate Random Code  # noqa: E501
+
+        Create a standalone voucher. You can choose to create a GIFT_VOUCHER, a DISCOUNT_VOUCHER, or a LOYALTY_CARD.  When you create a new voucher, you can specify a type to create it. Creating a new voucher will create a new stand alone voucher if no campaign name or campaign_id is provided. In case of the loyalty card, a campaign name is required. You can optionally use the code parameter to define a specific code or the code_config parameter to design rules for Voucherify API to create a random code. If neither of the two parameters are passed, then a random code is generated by the Voucherify API. This method will return an error when trying to create a voucher that already exists.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.generate_random_code_with_http_info(body, async_req=True)
+        >>> result = thread.get()
+
+        :param body: Specify the details of the voucher that you would like to create.
+        :type body: object
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(VouchersCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method generate_random_code" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['body'] is not None:
+            _body_params = _params['body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "VouchersCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/vouchers', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
     def get_voucher(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], **kwargs) -> VouchersGetResponseBody:  # noqa: E501
         """Get Voucher  # noqa: E501
 
-        Retrieves the voucher with the given `code` or unique Voucherify ID. You can either pass the voucher ID which was assigned by Voucherify, e.g., `v_7HxHkf4VAkMuc8u4lZs78lyRwhRze5UE`, or the `code` of the voucher as the path parameter value, e.g., `7fjWdr`.  # noqa: E501
+        Retrieves the voucher with the given code or unique Voucherify ID. You can either pass the voucher ID which was assigned by Voucherify, e.g., v_7HxHkf4VAkMuc8u4lZs78lyRwhRze5UE, or the code of the voucher as the path parameter value, e.g., 7fjWdr.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -665,7 +981,7 @@ class VouchersApi:
     def get_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Voucher  # noqa: E501
 
-        Retrieves the voucher with the given `code` or unique Voucherify ID. You can either pass the voucher ID which was assigned by Voucherify, e.g., `v_7HxHkf4VAkMuc8u4lZs78lyRwhRze5UE`, or the `code` of the voucher as the path parameter value, e.g., `7fjWdr`.  # noqa: E501
+        Retrieves the voucher with the given code or unique Voucherify ID. You can either pass the voucher ID which was assigned by Voucherify, e.g., v_7HxHkf4VAkMuc8u4lZs78lyRwhRze5UE, or the code of the voucher as the path parameter value, e.g., 7fjWdr.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -772,17 +1088,164 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def import_vouchers_using_csv(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> VouchersImportCsvCreateResponseBody:  # noqa: E501
+    def import_vouchers(self, vouchers_import_create_item_request_body : Annotated[conlist(VouchersImportCreateItemRequestBody), Field(..., description="The request body is an array of objects. Each object contains details about a specific voucher. ")], **kwargs) -> VouchersImportCreateResponseBody:  # noqa: E501
+        """Import Vouchers  # noqa: E501
+
+        Import standalone vouchers and gift cards into the repository.  📘 Important notes  - **Start and expiration dates** need to be provided in compliance with the ISO 8601 norms. For example, 2020-03-11T09:00:00.000Z.  - Custom code attributes (not supported by-default) need to be added as code **metadata**.  - You **cannot import the same codes** to a single Voucherify Project. Any parameters not provided in the payload will be left blank or null. For both **standalone discount vouchers and gift cards**, you can import the following fields:   - code - category - active - type - start_date - expiration_date - redemption.quantity - additional_info - metadata For **gift cards**, you can also import the following field: - gift.amount For **discount vouchers**, you can import the discount object. The object will slightly vary depending on the type of discount. Each discount type **requires** the type to be defined in the import.   Fields other than the ones listed above wont be imported. Even if provided, they will be silently skipped. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.import_vouchers(vouchers_import_create_item_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param vouchers_import_create_item_request_body: The request body is an array of objects. Each object contains details about a specific voucher.  (required)
+        :type vouchers_import_create_item_request_body: List[VouchersImportCreateItemRequestBody]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: VouchersImportCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the import_vouchers_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.import_vouchers_with_http_info(vouchers_import_create_item_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def import_vouchers_with_http_info(self, vouchers_import_create_item_request_body : Annotated[conlist(VouchersImportCreateItemRequestBody), Field(..., description="The request body is an array of objects. Each object contains details about a specific voucher. ")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Import Vouchers  # noqa: E501
+
+        Import standalone vouchers and gift cards into the repository.  📘 Important notes  - **Start and expiration dates** need to be provided in compliance with the ISO 8601 norms. For example, 2020-03-11T09:00:00.000Z.  - Custom code attributes (not supported by-default) need to be added as code **metadata**.  - You **cannot import the same codes** to a single Voucherify Project. Any parameters not provided in the payload will be left blank or null. For both **standalone discount vouchers and gift cards**, you can import the following fields:   - code - category - active - type - start_date - expiration_date - redemption.quantity - additional_info - metadata For **gift cards**, you can also import the following field: - gift.amount For **discount vouchers**, you can import the discount object. The object will slightly vary depending on the type of discount. Each discount type **requires** the type to be defined in the import.   Fields other than the ones listed above wont be imported. Even if provided, they will be silently skipped. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.import_vouchers_with_http_info(vouchers_import_create_item_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param vouchers_import_create_item_request_body: The request body is an array of objects. Each object contains details about a specific voucher.  (required)
+        :type vouchers_import_create_item_request_body: List[VouchersImportCreateItemRequestBody]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(VouchersImportCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'vouchers_import_create_item_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method import_vouchers" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['vouchers_import_create_item_request_body'] is not None:
+            _body_params = _params['vouchers_import_create_item_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '202': "VouchersImportCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/vouchers/import', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def import_vouchers_using_csv(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> VouchersImportCsvCreateResponseBody:  # noqa: E501
         """Import Vouchers using CSV  # noqa: E501
 
-        Import standalone vouchers into the repository using a CSV file.  The CSV file has to include headers in the first line. All properties listed in the file headers that cannot be mapped to standard voucher fields will be added to the metadata object.    You can find an example CSV file [here](https://support.voucherify.io/article/45-import-codes-and-share-them-digitally#coupons). ___ <!-- title: \"cURL Example Request\" lineNumbers: true --> ```cURL cURL example curl -X POST \\   https://api.voucherify.io/v1/vouchers/importCSV \\   -F file=@/path/to/vouchers.csv \\   -H \"X-App-Id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\" \\   -H \"X-App-Token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\" ```  <!-- theme: info -->  > 📘 Standard voucher fields mapping > > - Go to the <!-- [import vouchers](OpenAPI.json/paths/~1vouchers~1import) -->[import vouchers](ref:import-vouchers) endpoint to see all standard CSV fields description (body params section). > - Supported CSV file headers: Code,Voucher Type,Value,Discount Type,Category,Start Date,Expiration Date,Redemption Limit,Redeemed Quantity, Redeemed Amount,Active,Additional Info,Custom Metadata Property Name >- **Start and expiration dates** need to be provided in compliance with the ISO 8601 norms. For example, 2020-03-11T09:00:00.000Z.   >    - `YYYY-MM-DD` >    - `YYYY-MM-DDTHH` >    - `YYYY-MM-DDTHH:mm` >    - `YYYY-MM-DDTHH:mm:ss` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ss.SSSZ` > - Custom code attributes (not supported by-default) need to be added as code **metadata**. > - You **cannot import the same codes** to a single Voucherify Project.  <!-- theme: info -->  > 📘 Categories > > In the structure representing your data, you can define a category that the voucher belongs to. You can later use the category of a voucher to group and search by specific criteria in the Dashboard and using the [List Vouchers](ref:list-vouchers) endpoint.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Import standalone vouchers into the repository using a CSV file. The CSV file has to include headers in the first line. All properties listed in the file headers that cannot be mapped to standard voucher fields will be added to the metadata object.   You can find an example CSV file [here](https://support.voucherify.io/article/45-import-codes-and-share-them-digitally#coupons). ___  📘 Standard voucher fields mapping  - Go to the import vouchers endpoint to see all standard CSV fields description (body params section).  - Supported CSV file headers: Code,Voucher Type,Value,Discount Type,Category,Start Date,Expiration Date,Redemption Limit,Redeemed Quantity, Redeemed Amount,Active,Additional Info,Custom Metadata Property Name - **Start and expiration dates** need to be provided in compliance with the ISO 8601 norms. For example, 2020-03-11T09:00:00.000Z.       - YYYY-MM-DD     - YYYY-MM-DDTHH     - YYYY-MM-DDTHH:mm     - YYYY-MM-DDTHH:mm:ss     - YYYY-MM-DDTHH:mm:ssZ     - YYYY-MM-DDTHH:mm:ssZ     - YYYY-MM-DDTHH:mm:ss.SSSZ  - Custom code attributes (not supported by-default) need to be added as code **metadata**.  - You **cannot import the same codes** to a single Voucherify Project.  📘 Categories  In the structure representing your data, you can define a category that the voucher belongs to. You can later use the category of a voucher to group and search by specific criteria in the Dashboard and using the List Vouchers endpoint. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_vouchers_using_csv(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -802,17 +1265,17 @@ class VouchersApi:
         return self.import_vouchers_using_csv_with_http_info(file, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def import_vouchers_using_csv_with_http_info(self, file : Annotated[Union[StrictBytes, StrictStr], Field(..., description="File path.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def import_vouchers_using_csv_with_http_info(self, file : Annotated[Optional[Union[StrictBytes, StrictStr]], Field(description="File path.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Import Vouchers using CSV  # noqa: E501
 
-        Import standalone vouchers into the repository using a CSV file.  The CSV file has to include headers in the first line. All properties listed in the file headers that cannot be mapped to standard voucher fields will be added to the metadata object.    You can find an example CSV file [here](https://support.voucherify.io/article/45-import-codes-and-share-them-digitally#coupons). ___ <!-- title: \"cURL Example Request\" lineNumbers: true --> ```cURL cURL example curl -X POST \\   https://api.voucherify.io/v1/vouchers/importCSV \\   -F file=@/path/to/vouchers.csv \\   -H \"X-App-Id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\" \\   -H \"X-App-Token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\" ```  <!-- theme: info -->  > 📘 Standard voucher fields mapping > > - Go to the <!-- [import vouchers](OpenAPI.json/paths/~1vouchers~1import) -->[import vouchers](ref:import-vouchers) endpoint to see all standard CSV fields description (body params section). > - Supported CSV file headers: Code,Voucher Type,Value,Discount Type,Category,Start Date,Expiration Date,Redemption Limit,Redeemed Quantity, Redeemed Amount,Active,Additional Info,Custom Metadata Property Name >- **Start and expiration dates** need to be provided in compliance with the ISO 8601 norms. For example, 2020-03-11T09:00:00.000Z.   >    - `YYYY-MM-DD` >    - `YYYY-MM-DDTHH` >    - `YYYY-MM-DDTHH:mm` >    - `YYYY-MM-DDTHH:mm:ss` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ssZ` >    - `YYYY-MM-DDTHH:mm:ss.SSSZ` > - Custom code attributes (not supported by-default) need to be added as code **metadata**. > - You **cannot import the same codes** to a single Voucherify Project.  <!-- theme: info -->  > 📘 Categories > > In the structure representing your data, you can define a category that the voucher belongs to. You can later use the category of a voucher to group and search by specific criteria in the Dashboard and using the [List Vouchers](ref:list-vouchers) endpoint.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).  # noqa: E501
+        Import standalone vouchers into the repository using a CSV file. The CSV file has to include headers in the first line. All properties listed in the file headers that cannot be mapped to standard voucher fields will be added to the metadata object.   You can find an example CSV file [here](https://support.voucherify.io/article/45-import-codes-and-share-them-digitally#coupons). ___  📘 Standard voucher fields mapping  - Go to the import vouchers endpoint to see all standard CSV fields description (body params section).  - Supported CSV file headers: Code,Voucher Type,Value,Discount Type,Category,Start Date,Expiration Date,Redemption Limit,Redeemed Quantity, Redeemed Amount,Active,Additional Info,Custom Metadata Property Name - **Start and expiration dates** need to be provided in compliance with the ISO 8601 norms. For example, 2020-03-11T09:00:00.000Z.       - YYYY-MM-DD     - YYYY-MM-DDTHH     - YYYY-MM-DDTHH:mm     - YYYY-MM-DDTHH:mm:ss     - YYYY-MM-DDTHH:mm:ssZ     - YYYY-MM-DDTHH:mm:ssZ     - YYYY-MM-DDTHH:mm:ss.SSSZ  - Custom code attributes (not supported by-default) need to be added as code **metadata**.  - You **cannot import the same codes** to a single Voucherify Project.  📘 Categories  In the structure representing your data, you can define a category that the voucher belongs to. You can later use the category of a voucher to group and search by specific criteria in the Dashboard and using the List Vouchers endpoint. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.import_vouchers_using_csv_with_http_info(file, async_req=True)
         >>> result = thread.get()
 
-        :param file: File path. (required)
+        :param file: File path.
         :type file: bytearray
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -919,7 +1382,7 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_voucher_transactions(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> VouchersTransactionsListResponseBody:  # noqa: E501
+    def list_voucher_transactions(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> VouchersTransactionsListResponseBody:  # noqa: E501
         """List Voucher Transactions  # noqa: E501
 
         List transactions that are associated with credit movements on a gift card or loyalty card.  # noqa: E501
@@ -929,11 +1392,11 @@ class VouchersApi:
         >>> thread = api.list_voucher_transactions(code, limit, page, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -953,7 +1416,7 @@ class VouchersApi:
         return self.list_voucher_transactions_with_http_info(code, limit, page, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_voucher_transactions_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_voucher_transactions_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Voucher Transactions  # noqa: E501
 
         List transactions that are associated with credit movements on a gift card or loyalty card.  # noqa: E501
@@ -963,11 +1426,11 @@ class VouchersApi:
         >>> thread = api.list_voucher_transactions_with_http_info(code, limit, page, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1075,10 +1538,231 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
+    def list_vouchers(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, category : Annotated[Optional[StrictStr], Field(description="Limit search results to vouchers within the specified category.")] = None, campaign_id : Annotated[Optional[StrictStr], Field(description="Limit search results to vouchers within the specified campaign")] = None, customer : Annotated[Optional[StrictStr], Field(description="A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.")] = None, campaign : Annotated[Optional[StrictStr], Field(description="A unique campaign name, identifies the parent campaign.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z")] = None, order : Annotated[Optional[ParameterOrderVouchers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, code : Optional[StrictStr] = None, ids : Optional[conlist(StrictStr)] = None, **kwargs) -> VouchersListResponseBody:  # noqa: E501
+        """List Vouchers  # noqa: E501
+
+        Returns a list of vouchers. By default, the vouchers are returned sorted by creation date, with the most recent vouchers appearing first. A maximum of 100 vouchers are returned in the response. When you get a list of vouchers, you can optionally specify query parameters to customize the number of vouchers returned per call using limit, which page of vouchers to return using page, sort the vouchers using the order query parameter and more. This method will return an error when trying to return a limit of more than 100 vouchers.   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_vouchers(limit, page, category, campaign_id, customer, campaign, created_at, updated_at, order, code, ids, async_req=True)
+        >>> result = thread.get()
+
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param category: Limit search results to vouchers within the specified category.
+        :type category: str
+        :param campaign_id: Limit search results to vouchers within the specified campaign
+        :type campaign_id: str
+        :param customer: A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.
+        :type customer: str
+        :param campaign: A unique campaign name, identifies the parent campaign.
+        :type campaign: str
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
+        :type created_at: ParameterCreatedBeforeAfter
+        :param updated_at: A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z
+        :type updated_at: ParameterUpdatedBeforeAfter
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderVouchers
+        :param code:
+        :type code: str
+        :param ids:
+        :type ids: List[str]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: VouchersListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_vouchers_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_vouchers_with_http_info(limit, page, category, campaign_id, customer, campaign, created_at, updated_at, order, code, ids, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_vouchers_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, category : Annotated[Optional[StrictStr], Field(description="Limit search results to vouchers within the specified category.")] = None, campaign_id : Annotated[Optional[StrictStr], Field(description="Limit search results to vouchers within the specified campaign")] = None, customer : Annotated[Optional[StrictStr], Field(description="A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.")] = None, campaign : Annotated[Optional[StrictStr], Field(description="A unique campaign name, identifies the parent campaign.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z")] = None, order : Annotated[Optional[ParameterOrderVouchers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, code : Optional[StrictStr] = None, ids : Optional[conlist(StrictStr)] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Vouchers  # noqa: E501
+
+        Returns a list of vouchers. By default, the vouchers are returned sorted by creation date, with the most recent vouchers appearing first. A maximum of 100 vouchers are returned in the response. When you get a list of vouchers, you can optionally specify query parameters to customize the number of vouchers returned per call using limit, which page of vouchers to return using page, sort the vouchers using the order query parameter and more. This method will return an error when trying to return a limit of more than 100 vouchers.   # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_vouchers_with_http_info(limit, page, category, campaign_id, customer, campaign, created_at, updated_at, order, code, ids, async_req=True)
+        >>> result = thread.get()
+
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param category: Limit search results to vouchers within the specified category.
+        :type category: str
+        :param campaign_id: Limit search results to vouchers within the specified campaign
+        :type campaign_id: str
+        :param customer: A tracking identifier of a customer who is the holder of the vouchers. It can be an id generated by Voucherify or the source_id. Remember to use the proper URL escape codes if the source_id contains special characters.
+        :type customer: str
+        :param campaign: A unique campaign name, identifies the parent campaign.
+        :type campaign: str
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
+        :type created_at: ParameterCreatedBeforeAfter
+        :param updated_at: A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z
+        :type updated_at: ParameterUpdatedBeforeAfter
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderVouchers
+        :param code:
+        :type code: str
+        :param ids:
+        :type ids: List[str]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(VouchersListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'limit',
+            'page',
+            'category',
+            'campaign_id',
+            'customer',
+            'campaign',
+            'created_at',
+            'updated_at',
+            'order',
+            'code',
+            'ids'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_vouchers" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('category') is not None:  # noqa: E501
+            _query_params.append(('category', _params['category']))
+
+        if _params.get('campaign_id') is not None:  # noqa: E501
+            _query_params.append(('campaign_id', _params['campaign_id']))
+
+        if _params.get('customer') is not None:  # noqa: E501
+            _query_params.append(('customer', _params['customer']))
+
+        if _params.get('campaign') is not None:  # noqa: E501
+            _query_params.append(('campaign', _params['campaign']))
+
+        if _params.get('created_at') is not None:  # noqa: E501
+            _query_params.append(('created_at', _params['created_at']))
+
+        if _params.get('updated_at') is not None:  # noqa: E501
+            _query_params.append(('updated_at', _params['updated_at']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        if _params.get('code') is not None:  # noqa: E501
+            _query_params.append(('code', _params['code']))
+
+        if _params.get('ids') is not None:  # noqa: E501
+            _query_params.append(('ids', _params['ids']))
+            _collection_formats['ids'] = 'multi'
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "VouchersListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/vouchers', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
     def release_validation_session(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify.")], session_key : Annotated[StrictStr, Field(..., description="A unique session identifier.")], **kwargs) -> None:  # noqa: E501
         """Release Validation Session  # noqa: E501
 
-        Manually release a validation session that has been set up for the voucher. This method undos the actions that are explained in our guide on how a validation session was established, you can read more [here](doc:locking-validation-session).   > 📘 Release Session using Dashboard > > You can also use the Validations Manager in the Dashboard to unlock sessions. [Read more](https://support.voucherify.io/article/16-dashboard-sections#validations).  # noqa: E501
+        Manually release a validation session that has been set up for the voucher. This method undos the actions that are explained in our guide on how a validation session was established, you can read more here.   📘 Release Session using Dashboard  You can also use the Validations Manager in the Dashboard to unlock sessions. [Read more](https://support.voucherify.io/article/16-dashboard-sections#validations).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1110,7 +1794,7 @@ class VouchersApi:
     def release_validation_session_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify.")], session_key : Annotated[StrictStr, Field(..., description="A unique session identifier.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Release Validation Session  # noqa: E501
 
-        Manually release a validation session that has been set up for the voucher. This method undos the actions that are explained in our guide on how a validation session was established, you can read more [here](doc:locking-validation-session).   > 📘 Release Session using Dashboard > > You can also use the Validations Manager in the Dashboard to unlock sessions. [Read more](https://support.voucherify.io/article/16-dashboard-sections#validations).  # noqa: E501
+        Manually release a validation session that has been set up for the voucher. This method undos the actions that are explained in our guide on how a validation session was established, you can read more here.   📘 Release Session using Dashboard  You can also use the Validations Manager in the Dashboard to unlock sessions. [Read more](https://support.voucherify.io/article/16-dashboard-sections#validations).  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1217,7 +1901,162 @@ class VouchersApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_voucher_balance(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], vouchers_balance_update_request_body : Annotated[VouchersBalanceUpdateRequestBody, Field(..., description="Provide the amount to be added to/subtracted from the voucher.")], **kwargs) -> VouchersBalanceUpdateResponseBody:  # noqa: E501
+    def update_voucher(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], vouchers_update_request_body : Annotated[VouchersUpdateRequestBody, Field(..., description="Specify the parameters to be updated.")], **kwargs) -> VouchersUpdateResponseBody:  # noqa: E501
+        """Update Voucher  # noqa: E501
+
+        Updates the specified voucher by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged. Fields other than the ones listed in the request body wont be modified. Even if provided, they will be silently skipped.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_voucher(code, vouchers_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param code: A unique **code** that identifies the voucher. (required)
+        :type code: str
+        :param vouchers_update_request_body: Specify the parameters to be updated. (required)
+        :type vouchers_update_request_body: VouchersUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: VouchersUpdateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_voucher_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_voucher_with_http_info(code, vouchers_update_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_voucher_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A unique **code** that identifies the voucher.")], vouchers_update_request_body : Annotated[VouchersUpdateRequestBody, Field(..., description="Specify the parameters to be updated.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Voucher  # noqa: E501
+
+        Updates the specified voucher by setting the values of the parameters passed in the request body. Any parameters not provided in the payload will be left unchanged. Fields other than the ones listed in the request body wont be modified. Even if provided, they will be silently skipped.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_voucher_with_http_info(code, vouchers_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param code: A unique **code** that identifies the voucher. (required)
+        :type code: str
+        :param vouchers_update_request_body: Specify the parameters to be updated. (required)
+        :type vouchers_update_request_body: VouchersUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(VouchersUpdateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'code',
+            'vouchers_update_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_voucher" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['code']:
+            _path_params['code'] = _params['code']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['vouchers_update_request_body'] is not None:
+            _body_params = _params['vouchers_update_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "VouchersUpdateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/vouchers/{code}', 'PUT',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def update_voucher_balance(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], vouchers_balance_update_request_body : Annotated[VouchersBalanceUpdateRequestBody, Field(..., description="Provide the amount to be added to/subtracted from the voucher.")], **kwargs) -> VouchersBalanceUpdateResponseBody:  # noqa: E501
         """Add or Remove Voucher Balance  # noqa: E501
 
         Add balance to an existing gift card or loyalty card.  # noqa: E501
@@ -1227,7 +2066,7 @@ class VouchersApi:
         >>> thread = api.update_voucher_balance(code, vouchers_balance_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param vouchers_balance_update_request_body: Provide the amount to be added to/subtracted from the voucher. (required)
         :type vouchers_balance_update_request_body: VouchersBalanceUpdateRequestBody
@@ -1249,7 +2088,7 @@ class VouchersApi:
         return self.update_voucher_balance_with_http_info(code, vouchers_balance_update_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_voucher_balance_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`.")], vouchers_balance_update_request_body : Annotated[VouchersBalanceUpdateRequestBody, Field(..., description="Provide the amount to be added to/subtracted from the voucher.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def update_voucher_balance_with_http_info(self, code : Annotated[StrictStr, Field(..., description="A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u.")], vouchers_balance_update_request_body : Annotated[VouchersBalanceUpdateRequestBody, Field(..., description="Provide the amount to be added to/subtracted from the voucher.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Add or Remove Voucher Balance  # noqa: E501
 
         Add balance to an existing gift card or loyalty card.  # noqa: E501
@@ -1259,7 +2098,7 @@ class VouchersApi:
         >>> thread = api.update_voucher_balance_with_http_info(code, vouchers_balance_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. `v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u`. (required)
+        :param code: A **code** that identifies the voucher or a unique voucher ID assigned by Voucherify, i.e. v_TzD19aeNiqGc9LWciMWknyEZT8IW7u4u. (required)
         :type code: str
         :param vouchers_balance_update_request_body: Provide the amount to be added to/subtracted from the voucher. (required)
         :type vouchers_balance_update_request_body: VouchersBalanceUpdateRequestBody
@@ -1356,6 +2195,300 @@ class VouchersApi:
 
         return self.api_client.call_api(
             '/v1/vouchers/{code}/balance', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def update_vouchers_in_bulk(self, vouchers_update_in_bulk_item_request_body : Annotated[conlist(VouchersUpdateInBulkItemRequestBody), Field(..., description="List the codes to be updated with the metadata key/value pairs for that code.")], **kwargs) -> VouchersUpdateInBulkResponseBody:  # noqa: E501
+        """Update Vouchers in Bulk  # noqa: E501
+
+        Updates specific metadata parameters for each code, respectively, in one asynchronous operation. The request can include up to **10 MB** of data. Upserts are not supported.  🚧    Currently, only **metadata** updates are supported. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_vouchers_in_bulk(vouchers_update_in_bulk_item_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param vouchers_update_in_bulk_item_request_body: List the codes to be updated with the metadata key/value pairs for that code. (required)
+        :type vouchers_update_in_bulk_item_request_body: List[VouchersUpdateInBulkItemRequestBody]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: VouchersUpdateInBulkResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_vouchers_in_bulk_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_vouchers_in_bulk_with_http_info(vouchers_update_in_bulk_item_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_vouchers_in_bulk_with_http_info(self, vouchers_update_in_bulk_item_request_body : Annotated[conlist(VouchersUpdateInBulkItemRequestBody), Field(..., description="List the codes to be updated with the metadata key/value pairs for that code.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Vouchers in Bulk  # noqa: E501
+
+        Updates specific metadata parameters for each code, respectively, in one asynchronous operation. The request can include up to **10 MB** of data. Upserts are not supported.  🚧    Currently, only **metadata** updates are supported. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_vouchers_in_bulk_with_http_info(vouchers_update_in_bulk_item_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param vouchers_update_in_bulk_item_request_body: List the codes to be updated with the metadata key/value pairs for that code. (required)
+        :type vouchers_update_in_bulk_item_request_body: List[VouchersUpdateInBulkItemRequestBody]
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(VouchersUpdateInBulkResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'vouchers_update_in_bulk_item_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_vouchers_in_bulk" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['vouchers_update_in_bulk_item_request_body'] is not None:
+            _body_params = _params['vouchers_update_in_bulk_item_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '202': "VouchersUpdateInBulkResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/vouchers/bulk/async', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def update_vouchers_metadata_in_bulk(self, vouchers_metadata_update_in_bulk_request_body : Annotated[VouchersMetadataUpdateInBulkRequestBody, Field(..., description="List the codes of the vouchers you would like to update with the metadata key/value pairs.")], **kwargs) -> VouchersMetadataUpdateInBulkResponseBody:  # noqa: E501
+        """Update Vouchers' Metadata in Bulk  # noqa: E501
+
+        Updates metadata parameters for a list of codes. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. Upserts are not supported. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_vouchers_metadata_in_bulk(vouchers_metadata_update_in_bulk_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param vouchers_metadata_update_in_bulk_request_body: List the codes of the vouchers you would like to update with the metadata key/value pairs. (required)
+        :type vouchers_metadata_update_in_bulk_request_body: VouchersMetadataUpdateInBulkRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: VouchersMetadataUpdateInBulkResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_vouchers_metadata_in_bulk_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_vouchers_metadata_in_bulk_with_http_info(vouchers_metadata_update_in_bulk_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_vouchers_metadata_in_bulk_with_http_info(self, vouchers_metadata_update_in_bulk_request_body : Annotated[VouchersMetadataUpdateInBulkRequestBody, Field(..., description="List the codes of the vouchers you would like to update with the metadata key/value pairs.")], **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Vouchers' Metadata in Bulk  # noqa: E501
+
+        Updates metadata parameters for a list of codes. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. Upserts are not supported. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_vouchers_metadata_in_bulk_with_http_info(vouchers_metadata_update_in_bulk_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param vouchers_metadata_update_in_bulk_request_body: List the codes of the vouchers you would like to update with the metadata key/value pairs. (required)
+        :type vouchers_metadata_update_in_bulk_request_body: VouchersMetadataUpdateInBulkRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(VouchersMetadataUpdateInBulkResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'vouchers_metadata_update_in_bulk_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_vouchers_metadata_in_bulk" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['vouchers_metadata_update_in_bulk_request_body'] is not None:
+            _body_params = _params['vouchers_metadata_update_in_bulk_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '202': "VouchersMetadataUpdateInBulkResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/vouchers/metadata/async', 'POST',
             _path_params,
             _query_params,
             _header_params,

@@ -25,7 +25,7 @@ from voucherify_client.models.voucher_transactions_export_parameters import Vouc
 
 class VouchersTransactionsExportCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/vouchers/transactions/export`.  # noqa: E501
+    Request body schema for **POST** `v1/vouchers/transactions/export`.  # noqa: E501
     """
     parameters: Optional[VoucherTransactionsExportParameters] = None
     __properties = ["parameters"]

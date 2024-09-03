@@ -24,9 +24,9 @@ from pydantic import BaseModel, Field, StrictStr, conlist, validator
 
 class PromotionStackBaseTiers(BaseModel):
     """
-    Contains the tier configuration.  # noqa: E501
+    Contains the tier configuration. A promotion stack can include up to 30 tiers.  # noqa: E501
     """
-    ids: conlist(StrictStr, min_items=1) = Field(..., description="Contains the list of tiers in a pre-defined sequence.")
+    ids: Optional[conlist(StrictStr, min_items=1)] = Field(None, description="Contains the list of tiers in a pre-defined sequence.")
     hierarchy_mode: Optional[StrictStr] = 'MANUAL'
     __properties = ["ids", "hierarchy_mode"]
 
@@ -64,6 +64,16 @@ class PromotionStackBaseTiers(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if ids (nullable) is None
+        # and __fields_set__ contains the field
+        if self.ids is None and "ids" in self.__fields_set__:
+            _dict['ids'] = None
+
+        # set to None if hierarchy_mode (nullable) is None
+        # and __fields_set__ contains the field
+        if self.hierarchy_mode is None and "hierarchy_mode" in self.__fields_set__:
+            _dict['hierarchy_mode'] = None
+
         return _dict
 
     @classmethod

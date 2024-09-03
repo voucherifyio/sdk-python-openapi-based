@@ -26,7 +26,7 @@ from voucherify_client.models.order import Order
 
 class LoyaltiesMembersRedemptionRedeemRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/loyalties/{campaignId}/members/{memberId}/redemption` and for **POST** and `/loyalties/members/{memberId}/redemption`.  # noqa: E501
+    Request body schema for **POST** `v1/loyalties/{campaignId}/members/{memberId}/redemption` and for **POST** `v1/loyalties/members/{memberId}/redemption`.  # noqa: E501
     """
     reward: Optional[LoyaltiesMembersRedemptionRedeemRequestBodyReward] = None
     order: Optional[Order] = None
@@ -63,6 +63,16 @@ class LoyaltiesMembersRedemptionRedeemRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of order
         if self.order:
             _dict['order'] = self.order.to_dict()
+        # set to None if reward (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reward is None and "reward" in self.__fields_set__:
+            _dict['reward'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod

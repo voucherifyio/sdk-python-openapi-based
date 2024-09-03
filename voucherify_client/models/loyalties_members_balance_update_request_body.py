@@ -25,13 +25,13 @@ from voucherify_client.models.points_expiration_types import PointsExpirationTyp
 
 class LoyaltiesMembersBalanceUpdateRequestBody(BaseModel):
     """
-    Request Body schema for **post** `/loyalties/members/{memberId}/balance` and **POST** `/loyalties/{campaignId}/members/{memberId}/balance`.  # noqa: E501
+    Request Body schema for **POST** `v1/loyalties/members/{memberId}/balance` and **POST** `v1/loyalties/{campaignId}/members/{memberId}/balance`.  # noqa: E501
     """
-    points: StrictInt = Field(..., description="Incremental balance to be added to/subtracted from the loyalty card.  - To add points: 100 - To subtract points, add a minus: -100")
+    points: Optional[StrictInt] = Field(None, description="Incremental balance to be added to/subtracted from the loyalty card.  - To add points: 100 - To subtract points, add a minus: -100")
     expiration_type: Optional[PointsExpirationTypes] = None
     expiration_date: Optional[datetime] = Field(None, description="Set expiration date for added points, i.e. `YYYY-MM-DD`. This parameter is required only when expiration_type is set to `CUSTOM_DATE`.")
     reason: Optional[StrictStr] = Field(None, description="Reason for the transfer.")
-    source_id: Optional[StrictStr] = Field(None, description="The merchant’s transaction ID if it is different from the Voucherify transaction ID. It is really useful in case of an integration between multiple systems. It can be a transaction ID from a CRM system, database or 3rd-party service.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's transaction ID if it is different from the Voucherify transaction ID. It is really useful in case of an integration between multiple systems. It can be a transaction ID from a CRM system, database or 3rd-party service.")
     __properties = ["points", "expiration_type", "expiration_date", "reason", "source_id"]
 
     class Config:
@@ -58,6 +58,26 @@ class LoyaltiesMembersBalanceUpdateRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
+        # set to None if reason (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reason is None and "reason" in self.__fields_set__:
+            _dict['reason'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
         return _dict
 
     @classmethod

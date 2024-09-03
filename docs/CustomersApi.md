@@ -9,14 +9,14 @@ Method | HTTP request | Description
 [**delete_customer**](CustomersApi.md#delete_customer) | **DELETE** /v1/customers/{customerId} | Delete Customer
 [**get_customer**](CustomersApi.md#get_customer) | **GET** /v1/customers/{customerId} | Get Customer
 [**import_customers_using_csv**](CustomersApi.md#import_customers_using_csv) | **POST** /v1/customers/importCSV | Import and Update Customers using CSV
-[**list_customer_activities**](CustomersApi.md#list_customer_activities) | **GET** /v1/customers/{customerId}/activities | List Customer Activities
+[**list_customer_activity**](CustomersApi.md#list_customer_activity) | **GET** /v1/customers/{customerId}/activity | List Customer Activity
+[**list_customer_redeemables**](CustomersApi.md#list_customer_redeemables) | **GET** /v1/customers/{customerId}/redeemables | List Customer&#39;s Redeemables
 [**list_customer_segments**](CustomersApi.md#list_customer_segments) | **GET** /v1/customers/{customerId}/segments | List Customer&#39;s Segments
 [**list_customers**](CustomersApi.md#list_customers) | **GET** /v1/customers | List Customers
 [**update_customer**](CustomersApi.md#update_customer) | **PUT** /v1/customers/{customerId} | Update Customer
-[**update_customers_consents**](CustomersApi.md#update_customers_consents) | **PUT** /v1/customers/{customerId}/consents | Update Customer&#39;s consents
-[**update_customers_consents_client_side**](CustomersApi.md#update_customers_consents_client_side) | **PUT** /client/v1/customers/{customerId}/consents | Update Customer&#39;s consents (client-side)
-[**update_customers_in_bulk**](CustomersApi.md#update_customers_in_bulk) | **POST** /v1/customers/bulk/async | Update Customers in bulk
-[**update_customers_metadata_in_bulk**](CustomersApi.md#update_customers_metadata_in_bulk) | **POST** /v1/customers/metadata/async | Update Customers&#39; Metadata in bulk
+[**update_customers_consents**](CustomersApi.md#update_customers_consents) | **PUT** /v1/customers/{customerId}/consents | Update Customer&#39;s consents [Deprecated]
+[**update_customers_in_bulk**](CustomersApi.md#update_customers_in_bulk) | **POST** /v1/customers/bulk/async | Update Customers in Bulk
+[**update_customers_metadata_in_bulk**](CustomersApi.md#update_customers_metadata_in_bulk) | **POST** /v1/customers/metadata/async | Update Customers&#39; Metadata in Bulk
 
 
 # **create_customer**
@@ -24,7 +24,7 @@ Method | HTTP request | Description
 
 Create Customer
 
-Creates a customer object.  <!-- theme: info -->  > 📘 Upsert Mode > > If you pass an `id` or a `source_id` that already exists in the customer database, Voucherify will return a related customer object with updated fields.
+Creates a customer object.  📘 Upsert Mode  If you pass an id or a source_id that already exists in the customer database, Voucherify will return a related customer object with updated fields.
 
 ### Example
 
@@ -110,7 +110,7 @@ Name | Type | Description  | Notes
 
 Delete Customer Permanently
 
-The organization user can remove consumer data permanently from the Voucherify system by using this API method. It d​eletes all customer data and connected resources. It makes the customer profile forgotten by Voucherify.
+The organization user can remove consumer data permanently from the Voucherify system by using this API method. It deletes all customer data and connected resources. It makes the customer profile forgotten by Voucherify.
 
 ### Example
 
@@ -151,7 +151,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
+    customer_id = 'customer_id_example' # str | A Voucherify customers id or source_id.
 
     try:
         # Delete Customer Permanently
@@ -168,7 +168,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer&#39;s &#x60;id&#x60; or &#x60;source_id&#x60;. | 
+ **customer_id** | **str**| A Voucherify customers id or source_id. | 
 
 ### Return type
 
@@ -235,7 +235,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
+    customer_id = 'customer_id_example' # str | A Voucherify customers id or source_id.
 
     try:
         # Delete Customer
@@ -250,7 +250,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer&#39;s &#x60;id&#x60; or &#x60;source_id&#x60;. | 
+ **customer_id** | **str**| A Voucherify customers id or source_id. | 
 
 ### Return type
 
@@ -318,7 +318,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
+    customer_id = 'customer_id_example' # str | A Voucherify customers id or source_id.
 
     try:
         # Get Customer
@@ -335,7 +335,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer&#39;s &#x60;id&#x60; or &#x60;source_id&#x60;. | 
+ **customer_id** | **str**| A Voucherify customers id or source_id. | 
 
 ### Return type
 
@@ -358,11 +358,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_customers_using_csv**
-> CustomersImportCsvCreateResponseBody import_customers_using_csv(file)
+> CustomersImportCsvCreateResponseBody import_customers_using_csv(file=file)
 
 Import and Update Customers using CSV
 
-This API method lets you import or update customer data. To get a proper and valid response, please send a CSV file with data separated by commas.    ## Request Example <!-- title: \"Example Request\" lineNumbers: true --> ```cURL curl -X POST \\   https://api.voucherify.io/v1/customers/importCSV \\   -F file=@/path/to/customers.csv \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" ``` ## CSV File Format  The CSV file has to include headers in the first line. All properties which cannot be mapped to standard customer fields will be added to the metadata object.  <!-- theme: info --> > 📘 Standard customer fields mapping > > **No spaces allowed in field names**   > Id, Name, Email, Phone, Birthdate, Source_id, Address_line_1, Address_line_2, Address_Postal_Code, Address_City, Address_State, Address_Country, Description, Metadata_name_1, Metadata_name_2  ## Update Customers using CSV  If you would like to update customer's data, you can do it using the CSV file with new data. However, remember to include a `source_id` in your CSV file to manage the update successfully.  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+This API method lets you import or update customer data. To get a proper and valid response, please send a CSV file with data separated by commas.   # Request Example # CSV File Format The CSV file has to include headers in the first line. All properties which cannot be mapped to standard customer fields will be added to the metadata object.  📘 Standard customer fields mapping  **No spaces allowed in field names**    Id, Name, Email, Phone, Birthdate, Source_id, Address_line_1, Address_line_2, Address_Postal_Code, Address_City, Address_State, Address_Country, Description, Metadata_name_1, Metadata_name_2 # Update Customers using CSV If you would like to update customers data, you can do it using the CSV file with new data. However, remember to include a source_id in your CSV file to manage the update successfully. This API request starts a process that affects Voucherify data in bulk.  In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the IN_PROGRESS status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.  The result will return the async ID. You can verify the status of your request via this API request.
 
 ### Example
 
@@ -403,11 +403,11 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    file = None # bytearray | File path.
+    file = None # bytearray | File path. (optional)
 
     try:
         # Import and Update Customers using CSV
-        api_response = api_instance.import_customers_using_csv(file)
+        api_response = api_instance.import_customers_using_csv(file=file)
         print("The response of CustomersApi->import_customers_using_csv:\n")
         pprint(api_response)
     except Exception as e:
@@ -420,7 +420,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **bytearray**| File path. | 
+ **file** | **bytearray**| File path. | [optional] 
 
 ### Return type
 
@@ -442,10 +442,10 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **list_customer_activities**
-> CustomersActivitiesListResponseBody list_customer_activities(customer_id, limit=limit, order=order, starting_after=starting_after, starting_after_id=starting_after_id, campaign_type=campaign_type, campaign_id=campaign_id, product_id=product_id, start_date=start_date, end_date=end_date)
+# **list_customer_activity**
+> CustomersActivityListResponseBody list_customer_activity(customer_id, limit=limit, order=order, starting_after_id=starting_after_id, start_date=start_date, end_date=end_date, campaign_id=campaign_id, campaign_type=campaign_type, category=category, type=type)
 
-List Customer Activities
+List Customer Activity
 
 Retrieve customer activities.
 
@@ -457,9 +457,10 @@ Retrieve customer activities.
 import time
 import os
 import voucherify_client
-from voucherify_client.models.customers_activities_list_response_body import CustomersActivitiesListResponseBody
+from voucherify_client.models.customers_activity_list_response_body import CustomersActivityListResponseBody
+from voucherify_client.models.parameter_activity_category import ParameterActivityCategory
 from voucherify_client.models.parameter_campaign_type import ParameterCampaignType
-from voucherify_client.models.parameter_order import ParameterOrder
+from voucherify_client.models.parameter_order_created_at import ParameterOrderCreatedAt
 from voucherify_client.rest import ApiException
 from pprint import pprint
 
@@ -490,24 +491,24 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or source ID of the customer who performed the activities.
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    order = voucherify_client.ParameterOrder() # ParameterOrder | Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
-    starting_after = '2013-10-20T19:20:30+01:00' # datetime | A cursor for use in pagination. `starting_after` is a date-time value that defines your place in the list based on `created_at` property from the activity object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list. (optional)
-    starting_after_id = 'starting_after_id_example' # str | By applying this filter value, you will get events starting after an event with the given ID. (optional)
-    campaign_type = voucherify_client.ParameterCampaignType() # ParameterCampaignType | Through this parameter you can control a type of campaign by which Voucherify will filter related customer's activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM (optional)
-    campaign_id = 'campaign_id_example' # str | By applying this parameter you request only events related to specific campaign identified by its ID. (optional)
-    product_id = 'product_id_example' # str | By applying this parameter you request only events related to specific product identified by its ID. (optional)
-    start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
+    customer_id = 'customer_id_example' # str | A Voucherify customers id or source ID of the customer who performed the activities.
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    order = voucherify_client.ParameterOrderCreatedAt() # ParameterOrderCreatedAt | Apply this filter to order the events according the date and time when it was created.  (optional)
+    starting_after_id = 'starting_after_id_example' # str | A cursor for pagination. It retrieves the events starting after an event with the given ID. (optional)
+    start_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must begin on. Represented in ISO 8601 format. (optional)
     end_date = '2013-10-20T19:20:30+01:00' # datetime | Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. (optional)
+    campaign_id = 'campaign_id_example' # str | Requests only events related to specific campaign identified by its ID. (optional)
+    campaign_type = voucherify_client.ParameterCampaignType() # ParameterCampaignType | Filters related customers activity for the selected campaign types. Allowed values:  DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM. (optional)
+    category = voucherify_client.ParameterActivityCategory() # ParameterActivityCategory | Filters activities for actions or effects. Allowed values:  ACTION, EFFECT. (optional)
+    type = 'type_example' # str | Event name of the customer event. (optional)
 
     try:
-        # List Customer Activities
-        api_response = api_instance.list_customer_activities(customer_id, limit=limit, order=order, starting_after=starting_after, starting_after_id=starting_after_id, campaign_type=campaign_type, campaign_id=campaign_id, product_id=product_id, start_date=start_date, end_date=end_date)
-        print("The response of CustomersApi->list_customer_activities:\n")
+        # List Customer Activity
+        api_response = api_instance.list_customer_activity(customer_id, limit=limit, order=order, starting_after_id=starting_after_id, start_date=start_date, end_date=end_date, campaign_id=campaign_id, campaign_type=campaign_type, category=category, type=type)
+        print("The response of CustomersApi->list_customer_activity:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling CustomersApi->list_customer_activities: %s\n" % e)
+        print("Exception when calling CustomersApi->list_customer_activity: %s\n" % e)
 ```
 
 
@@ -516,20 +517,20 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer&#39;s &#x60;id&#x60; or source ID of the customer who performed the activities. | 
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **order** | [**ParameterOrder**](.md)| Sorts the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
- **starting_after** | **datetime**| A cursor for use in pagination. &#x60;starting_after&#x60; is a date-time value that defines your place in the list based on &#x60;created_at&#x60; property from the activity object. For instance, if you make a list request and receive 100 objects, ending with an object created at &#x60;2020-05-24T13:43:09.024Z&#x60;, your subsequent call can include &#x60;starting_after&#x3D;2020-05-24T13:43:09.024Z&#x60; in order to fetch the next page of the list. | [optional] 
- **starting_after_id** | **str**| By applying this filter value, you will get events starting after an event with the given ID. | [optional] 
- **campaign_type** | [**ParameterCampaignType**](.md)| Through this parameter you can control a type of campaign by which Voucherify will filter related customer&#39;s activity. API will return only records related to that given type. Allowed values: DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM | [optional] 
- **campaign_id** | **str**| By applying this parameter you request only events related to specific campaign identified by its ID. | [optional] 
- **product_id** | **str**| By applying this parameter you request only events related to specific product identified by its ID. | [optional] 
- **start_date** | **datetime**| Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. | [optional] 
+ **customer_id** | **str**| A Voucherify customers id or source ID of the customer who performed the activities. | 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **order** | [**ParameterOrderCreatedAt**](.md)| Apply this filter to order the events according the date and time when it was created.  | [optional] 
+ **starting_after_id** | **str**| A cursor for pagination. It retrieves the events starting after an event with the given ID. | [optional] 
+ **start_date** | **datetime**| Timestamp representing the date and time which results must begin on. Represented in ISO 8601 format. | [optional] 
  **end_date** | **datetime**| Timestamp representing the date and time which results must end on. Represented in ISO 8601 format. | [optional] 
+ **campaign_id** | **str**| Requests only events related to specific campaign identified by its ID. | [optional] 
+ **campaign_type** | [**ParameterCampaignType**](.md)| Filters related customers activity for the selected campaign types. Allowed values:  DISCOUNT_COUPONS, REFERRAL_PROGRAM, GIFT_VOUCHERS, PROMOTION, LOYALTY_PROGRAM. | [optional] 
+ **category** | [**ParameterActivityCategory**](.md)| Filters activities for actions or effects. Allowed values:  ACTION, EFFECT. | [optional] 
+ **type** | **str**| Event name of the customer event. | [optional] 
 
 ### Return type
 
-[**CustomersActivitiesListResponseBody**](CustomersActivitiesListResponseBody.md)
+[**CustomersActivityListResponseBody**](CustomersActivityListResponseBody.md)
 
 ### Authorization
 
@@ -547,12 +548,107 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **list_customer_redeemables**
+> CustomersRedeemablesListResponseBody list_customer_redeemables(customer_id, limit=limit, order=order, starting_after_id=starting_after_id, filters=filters)
+
+List Customer's Redeemables
+
+Retrieves all the redeemables that have been assigned to the customer. To use this endpoint, you must have the following permissions: - Read Customers (customers.details.read)
+
+### Example
+
+* Api Key Authentication (X-App-Id):
+* Api Key Authentication (X-App-Token):
+```python
+import time
+import os
+import voucherify_client
+from voucherify_client.models.customers_redeemables_list_response_body import CustomersRedeemablesListResponseBody
+from voucherify_client.models.parameter_filters_list_customer_redeemables import ParameterFiltersListCustomerRedeemables
+from voucherify_client.models.parameter_order_list_redeemables import ParameterOrderListRedeemables
+from voucherify_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.voucherify.io
+# See configuration.py for a list of all supported configuration parameters.
+configuration = voucherify_client.Configuration(
+    host = "https://api.voucherify.io"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: X-App-Id
+configuration.api_key['X-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Id'] = 'Bearer'
+
+# Configure API key authorization: X-App-Token
+configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['X-App-Token'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with voucherify_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = voucherify_client.CustomersApi(api_client)
+    customer_id = 'customer_id_example' # str | Unique identifier of a customer represented by an internal customer ID or customer source ID.
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    order = voucherify_client.ParameterOrderListRedeemables() # ParameterOrderListRedeemables | Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
+    starting_after_id = 'starting_after_id_example' # str | A cursor for pagination. It retrieves the events starting after an event with the given ID. (optional)
+    filters = voucherify_client.ParameterFiltersListCustomerRedeemables() # ParameterFiltersListCustomerRedeemables | Filters for listing customer redeemables. (optional)
+
+    try:
+        # List Customer's Redeemables
+        api_response = api_instance.list_customer_redeemables(customer_id, limit=limit, order=order, starting_after_id=starting_after_id, filters=filters)
+        print("The response of CustomersApi->list_customer_redeemables:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling CustomersApi->list_customer_redeemables: %s\n" % e)
+```
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **customer_id** | **str**| Unique identifier of a customer represented by an internal customer ID or customer source ID. | 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **order** | [**ParameterOrderListRedeemables**](.md)| Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
+ **starting_after_id** | **str**| A cursor for pagination. It retrieves the events starting after an event with the given ID. | [optional] 
+ **filters** | [**ParameterFiltersListCustomerRedeemables**](.md)| Filters for listing customer redeemables. | [optional] 
+
+### Return type
+
+[**CustomersRedeemablesListResponseBody**](CustomersRedeemablesListResponseBody.md)
+
+### Authorization
+
+[X-App-Id](../README.md#X-App-Id), [X-App-Token](../README.md#X-App-Token)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The method returns redeemable(s) to which the given customer is assigned. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **list_customer_segments**
 > CustomersSegmentsListResponseBody list_customer_segments(customer_id)
 
 List Customer's Segments
 
-Returns the list of segments IDs to which the customer belongs to.    If you pass a `customerId` which is not stored and recognized by Voucherify as an existing customer in the system, the response will generate a list of segments that the customer would potentialy qualify for if they were to become a customer tracked in the system.
+Returns the list of segments IDs to which the customer belongs to.   If you pass a customerId which is not stored and recognized by Voucherify as an existing customer in the system, the response will generate a list of segments that the customer would potentialy qualify for if they were to become a customer tracked in the system.
 
 ### Example
 
@@ -679,8 +775,8 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    limit = 56 # int | A limit on the number of objects to be returned. Limit can range between 1 and 100 items. (optional)
-    page = 56 # int | Which page of results to return. (optional)
+    limit = 56 # int | Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. (optional)
+    page = 56 # int | Which page of results to return. The lowest value is 1. (optional)
     email = 'email_example' # str | Limit the customers to the ones that have this specific email address. (optional)
     city = 'city_example' # str | Limit the customers to the ones that are located in the specified city. (optional)
     name = 'name_example' # str | Filter customers by the name property. (optional)
@@ -689,8 +785,8 @@ with voucherify_client.ApiClient(configuration) as api_client:
     created_at_after = '2013-10-20T19:20:30+01:00' # datetime | Filter customers by date customer was created. (optional)
     updated_at_before = '2013-10-20T19:20:30+01:00' # datetime | Filter customers by date customer was updated last time. (optional)
     updated_at_after = '2013-10-20T19:20:30+01:00' # datetime | Filter customers by date customer was updated last time. (optional)
-    order = voucherify_client.ParameterOrderListCustomers() # ParameterOrderListCustomers | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order. (optional)
-    starting_after = '2013-10-20T19:20:30+01:00' # datetime | A cursor for use in pagination. This is a date-time value that defines your place in the list based on `created_at` property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at `2020-05-24T13:43:09.024Z`, your subsequent call can include `starting_after=2020-05-24T13:43:09.024Z` in order to fetch the next page of the list.  <!-- title: Options --> | **Option** | **Format** | **Sorting** | |:---|:---|:---| | Return customers **before** a specific creation date  | - set `starting_after` parameter to the breakpoint date | Sorting order is **descending**; the most recent dates first and least recent dates last. | | Return customers **after** a specific create or update date | - include the `order` parameter set to `created_at` or `updated_at`<br>- set `starting_after` to the breakpoint date | Sorting order is **ascending**; the least recent dates first and the most recent dates last. |  (optional)
+    order = voucherify_client.ParameterOrderListCustomers() # ParameterOrderListCustomers | This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. (optional)
+    starting_after = '2013-10-20T19:20:30+01:00' # datetime | A cursor for pagination. This is a date-time value that defines your place in the list based on created_at property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at 2020-05-24T13:43:09.024Z, your subsequent call can include starting_after 2020-05-24T13:43:09.024Z in order to fetch the next page of the list.   (optional)
 
     try:
         # List Customers
@@ -707,8 +803,8 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**| A limit on the number of objects to be returned. Limit can range between 1 and 100 items. | [optional] 
- **page** | **int**| Which page of results to return. | [optional] 
+ **limit** | **int**| Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items. | [optional] 
+ **page** | **int**| Which page of results to return. The lowest value is 1. | [optional] 
  **email** | **str**| Limit the customers to the ones that have this specific email address. | [optional] 
  **city** | **str**| Limit the customers to the ones that are located in the specified city. | [optional] 
  **name** | **str**| Filter customers by the name property. | [optional] 
@@ -717,8 +813,8 @@ Name | Type | Description  | Notes
  **created_at_after** | **datetime**| Filter customers by date customer was created. | [optional] 
  **updated_at_before** | **datetime**| Filter customers by date customer was updated last time. | [optional] 
  **updated_at_after** | **datetime**| Filter customers by date customer was updated last time. | [optional] 
- **order** | [**ParameterOrderListCustomers**](.md)| This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash &#x60;-&#x60; preceding a sorting option means sorting in a descending order. | [optional] 
- **starting_after** | **datetime**| A cursor for use in pagination. This is a date-time value that defines your place in the list based on &#x60;created_at&#x60; property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at &#x60;2020-05-24T13:43:09.024Z&#x60;, your subsequent call can include &#x60;starting_after&#x3D;2020-05-24T13:43:09.024Z&#x60; in order to fetch the next page of the list.  &lt;!-- title: Options --&gt; | **Option** | **Format** | **Sorting** | |:---|:---|:---| | Return customers **before** a specific creation date  | - set &#x60;starting_after&#x60; parameter to the breakpoint date | Sorting order is **descending**; the most recent dates first and least recent dates last. | | Return customers **after** a specific create or update date | - include the &#x60;order&#x60; parameter set to &#x60;created_at&#x60; or &#x60;updated_at&#x60;&lt;br&gt;- set &#x60;starting_after&#x60; to the breakpoint date | Sorting order is **ascending**; the least recent dates first and the most recent dates last. |  | [optional] 
+ **order** | [**ParameterOrderListCustomers**](.md)| This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order. | [optional] 
+ **starting_after** | **datetime**| A cursor for pagination. This is a date-time value that defines your place in the list based on created_at property from the customer object. For instance, if you make a list request and receive 100 objects, ending with an object created at 2020-05-24T13:43:09.024Z, your subsequent call can include starting_after 2020-05-24T13:43:09.024Z in order to fetch the next page of the list.   | [optional] 
 
 ### Return type
 
@@ -787,7 +883,7 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer's `id` or `source_id`.
+    customer_id = 'customer_id_example' # str | A Voucherify customers id or source_id.
     customers_update_request_body = {"name":"Alice McDonald","email":"alice.mdconald@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthdate":"2022-01-01","birthday":"2022-01-02"} # CustomersUpdateRequestBody | Specify the parameters to be updated. (optional)
 
     try:
@@ -805,7 +901,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer&#39;s &#x60;id&#x60; or &#x60;source_id&#x60;. | 
+ **customer_id** | **str**| A Voucherify customers id or source_id. | 
  **customers_update_request_body** | [**CustomersUpdateRequestBody**](CustomersUpdateRequestBody.md)| Specify the parameters to be updated. | [optional] 
 
 ### Return type
@@ -831,9 +927,9 @@ Name | Type | Description  | Notes
 # **update_customers_consents**
 > update_customers_consents(customer_id, body=body)
 
-Update Customer's consents
+Update Customer's consents [Deprecated]
 
-Update marketing permissions for the specified customer.
+Update marketing permissions for the specified customer. ❗️ Deprecated  This endpoint is deprecated. The feature of managing consents will be soon removed from Voucherify, including this endpoint.
 
 ### Example
 
@@ -874,10 +970,10 @@ with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
     customer_id = 'customer_id_example' # str | A Voucherify unique customer identifier or source ID.
-    body = {"cnst_6jQ5XcUOLnj5L7ImQAdBsJ1I":true,"cnst_VCmucIvAsmDYw2PPAok6bcYy":false} # object | Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ``` (optional)
+    body = {"cnst_6jQ5XcUOLnj5L7ImQAdBsJ1I":true,"cnst_VCmucIvAsmDYw2PPAok6bcYy":false} # object | Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication:  (optional)
 
     try:
-        # Update Customer's consents
+        # Update Customer's consents [Deprecated]
         api_instance.update_customers_consents(customer_id, body=body)
     except Exception as e:
         print("Exception when calling CustomersApi->update_customers_consents: %s\n" % e)
@@ -890,7 +986,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**| A Voucherify unique customer identifier or source ID. | 
- **body** | **object**| Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \&quot;unsubscribed\&quot; as a consent identifier and \&quot;true\&quot; as its value.    #### Examples  &lt;!-- title: \&quot;Request Body\&quot; lineNumbers: true --&gt; &#x60;&#x60;&#x60;json {     \&quot;cnst_aIdUulAh0SCsOCaS3005y7yS\&quot;: true,     \&quot;cnst_aIdUulAhwewqaS31213fdsfds\&quot;: false } &#x60;&#x60;&#x60;  Opt-out from all communication:  &lt;!-- title: \&quot;Request Body\&quot; lineNumbers: true --&gt; &#x60;&#x60;&#x60;json {     \&quot;unsubscribed\&quot;: true } &#x60;&#x60;&#x60; | [optional] 
+ **body** | **object**| Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use unsubscribed as a consent identifier and true as its value.   ## Examples  Opt-out from all communication:  | [optional] 
 
 ### Return type
 
@@ -912,96 +1008,12 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_customers_consents_client_side**
-> update_customers_consents_client_side(customer_id, body=body)
-
-Update Customer's consents (client-side)
-
-Update marketing permissions for the specified customer.
-
-### Example
-
-* Api Key Authentication (X-Client-Application-Id):
-* Api Key Authentication (X-Client-Token):
-```python
-import time
-import os
-import voucherify_client
-from voucherify_client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://api.voucherify.io
-# See configuration.py for a list of all supported configuration parameters.
-configuration = voucherify_client.Configuration(
-    host = "https://api.voucherify.io"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: X-Client-Application-Id
-configuration.api_key['X-Client-Application-Id'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-Client-Application-Id'] = 'Bearer'
-
-# Configure API key authorization: X-Client-Token
-configuration.api_key['X-Client-Token'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['X-Client-Token'] = 'Bearer'
-
-# Enter a context with an instance of the API client
-with voucherify_client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = voucherify_client.CustomersApi(api_client)
-    customer_id = 'customer_id_example' # str | A Voucherify customer identifier or `source_id`
-    body = {"cnst_6jQ5XcUOLnj5L7ImQAdBsJ1I":true,"cnst_VCmucIvAsmDYw2PPAok6bcYy":false} # object | Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \"unsubscribed\" as a consent identifier and \"true\" as its value.    #### Examples  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"cnst_aIdUulAh0SCsOCaS3005y7yS\": true,     \"cnst_aIdUulAhwewqaS31213fdsfds\": false } ```  Opt-out from all communication:  <!-- title: \"Request Body\" lineNumbers: true --> ```json {     \"unsubscribed\": true } ``` (optional)
-
-    try:
-        # Update Customer's consents (client-side)
-        api_instance.update_customers_consents_client_side(customer_id, body=body)
-    except Exception as e:
-        print("Exception when calling CustomersApi->update_customers_consents_client_side: %s\n" % e)
-```
-
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **customer_id** | **str**| A Voucherify customer identifier or &#x60;source_id&#x60; | 
- **body** | **object**| Key-value pairs where the key is the consent identifier and value is a boolean that identifies if a customer has given the consent or not. To deny all consents use \&quot;unsubscribed\&quot; as a consent identifier and \&quot;true\&quot; as its value.    #### Examples  &lt;!-- title: \&quot;Request Body\&quot; lineNumbers: true --&gt; &#x60;&#x60;&#x60;json {     \&quot;cnst_aIdUulAh0SCsOCaS3005y7yS\&quot;: true,     \&quot;cnst_aIdUulAhwewqaS31213fdsfds\&quot;: false } &#x60;&#x60;&#x60;  Opt-out from all communication:  &lt;!-- title: \&quot;Request Body\&quot; lineNumbers: true --&gt; &#x60;&#x60;&#x60;json {     \&quot;unsubscribed\&quot;: true } &#x60;&#x60;&#x60; | [optional] 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[X-Client-Application-Id](../README.md#X-Client-Application-Id), [X-Client-Token](../README.md#X-Client-Token)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: Not defined
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Returns no content if the consents were updated successfully. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **update_customers_in_bulk**
 > CustomersUpdateInBulkResponseBody update_customers_in_bulk(customers_update_in_bulk_request_body=customers_update_in_bulk_request_body)
 
-Update Customers in bulk
+Update Customers in Bulk
 
-Update several customers in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier.    If a requested customer object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Updates customers in one asynchronous operation. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a customer object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.
 
 ### Example
 
@@ -1043,10 +1055,10 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    customers_update_in_bulk_request_body = [{"source_id":"John.Smith@email.com","name":"John Smith","email":"john.smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthday":"2022-04-04"},{"source_id":"Jane.Smith@email.com","name":"Jane Smith","email":"Jane.Smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthday":"2022-03-03"},{"source_id":"Sally.Smith@email.com","name":"Sally Smith","email":"Sally.Smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthdate":"2022-02-02"}] # List[CustomersUpdateInBulkRequestBody] | Specify the customer fields that you would like to update in each customer object. (optional)
+    customers_update_in_bulk_request_body = [{"source_id":"John.Smith@email.com","name":"John Smith","email":"john.smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthday":"2022-04-04"},{"source_id":"Jane.Smith@email.com","name":"Jane Smith","email":"Jane.Smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthday":"2022-03-03"},{"source_id":"Sally.Smith@email.com","name":"Sally Smith","email":"Sally.Smith@email.com","description":"Updating customer data","phone":"+1 (132) 222-2222","address":{"city":"New York","country":"United States","line_1":"123 Main St.","line_2":"APT 3 BLG 4","postal_code":"10001","state":"NY"},"metadata":{"lang":"en","test":true},"birthdate":"2022-02-02"}] # List[CustomersUpdateInBulkRequestBody] | List the customer fields to be updated in each customer object. (optional)
 
     try:
-        # Update Customers in bulk
+        # Update Customers in Bulk
         api_response = api_instance.update_customers_in_bulk(customers_update_in_bulk_request_body=customers_update_in_bulk_request_body)
         print("The response of CustomersApi->update_customers_in_bulk:\n")
         pprint(api_response)
@@ -1060,7 +1072,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **customers_update_in_bulk_request_body** | [**List[CustomersUpdateInBulkRequestBody]**](CustomersUpdateInBulkRequestBody.md)| Specify the customer fields that you would like to update in each customer object. | [optional] 
+ **customers_update_in_bulk_request_body** | [**List[CustomersUpdateInBulkRequestBody]**](CustomersUpdateInBulkRequestBody.md)| List the customer fields to be updated in each customer object. | [optional] 
 
 ### Return type
 
@@ -1078,16 +1090,16 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**202** | Returns ID of the scheduled async action. The response informs you that your request has been accepted and customers will be updated in the repository asynchronously. To check the update status and result, copy the &#x60;async_action_id&#x60; from the response and pass it using the &lt;!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) --&gt;[Get Async Action](ref:get-async-action) endpoint. |  -  |
+**202** | Returns the ID of the scheduled asynchronous action. The response informs you that the request has been accepted and the resources will be updated in the repository asynchronously. To check the status and result, copy the &#x60;async_action_id&#x60; from the response and use it as a query parameter in the [GET Async Action](ref:get-async-action) endpoint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_customers_metadata_in_bulk**
 > CustomersMetadataUpdateInBulkResponseBody update_customers_metadata_in_bulk(customers_metadata_update_in_bulk_request_body=customers_metadata_update_in_bulk_request_body)
 
-Update Customers' Metadata in bulk
+Update Customers' Metadata in Bulk
 
-Update several customers metadata properties in one asynchronous operation.   In one request, it is possible to update a maximum of **100** records. In the response body, you get a unique async action identifier.    If a requested customer object is not found, then an **upsert** occurs. This is reflected in the <!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) -->[Get Async Action](ref:get-async-action) endpoint as follows:    <!-- title: \"Response\" lineNumbers: true --> ```json {     \"found\": false,     \"updated\": true } ```  This API request starts a process that affects Voucherify data in bulk.   In case of small jobs (like bulk update) the request is put into a queue and processed once every other bulk request placed in the queue prior to this request is finished. However, when the job takes a longer time (like vouchers generation) then it is processed in small portions in a round-robin fashion. When there is a list of vouchers generation scheduled, then they will all have the `IN_PROGRESS` status shortly. This way, small jobs added just after scheduling big jobs of the same type will be processed in a short time window.   The result will return the async ID. You can verify the status of your request via this [API request](ref:get-async-action).
+Updates metadata parameters for a list of customers. Every resource in the list will receive the metadata defined in the request. The request can include up to **10 MB** of data. The response returns a unique asynchronous action ID. Use this ID in the query paramater of the GET Async Action endpoint to check, e.g.: - The status of your request (in queue, in progress, done, or failed) - Resources that failed to be updated - The report file with details about the update If a product object is not found, it is **upserted**. This is shown in the report file in the GET Async Action endpoint. The upserted resources have value false in the found column and true in the updated column. This API request starts a process that affects Voucherify data in bulk. In the case of small jobs (like bulk update), the request is put into a queue and processed when every other bulk request placed in the queue prior to this request is finished.
 
 ### Example
 
@@ -1129,10 +1141,10 @@ configuration.api_key['X-App-Token'] = os.environ["API_KEY"]
 with voucherify_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = voucherify_client.CustomersApi(api_client)
-    customers_metadata_update_in_bulk_request_body = {"source_ids":["source_123","source_456"],"metadata":{"lang":"en","test":false}} # CustomersMetadataUpdateInBulkRequestBody | List the `source_ids` of the customer's you would like to update along with the metadata key value pairs. (optional)
+    customers_metadata_update_in_bulk_request_body = {"source_ids":["source_123","source_456"],"metadata":{"lang":"en","test":false}} # CustomersMetadataUpdateInBulkRequestBody | List the source_ids of the customers you would like to update with the metadata key/value pairs. (optional)
 
     try:
-        # Update Customers' Metadata in bulk
+        # Update Customers' Metadata in Bulk
         api_response = api_instance.update_customers_metadata_in_bulk(customers_metadata_update_in_bulk_request_body=customers_metadata_update_in_bulk_request_body)
         print("The response of CustomersApi->update_customers_metadata_in_bulk:\n")
         pprint(api_response)
@@ -1146,7 +1158,7 @@ with voucherify_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **customers_metadata_update_in_bulk_request_body** | [**CustomersMetadataUpdateInBulkRequestBody**](CustomersMetadataUpdateInBulkRequestBody.md)| List the &#x60;source_ids&#x60; of the customer&#39;s you would like to update along with the metadata key value pairs. | [optional] 
+ **customers_metadata_update_in_bulk_request_body** | [**CustomersMetadataUpdateInBulkRequestBody**](CustomersMetadataUpdateInBulkRequestBody.md)| List the source_ids of the customers you would like to update with the metadata key/value pairs. | [optional] 
 
 ### Return type
 
@@ -1164,7 +1176,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**202** | Returns ID of the scheduled async action. The response informs you that your request has been accepted and customers will be updated in the repository asynchronously. To check the update status and result, copy the &#x60;async_action_id&#x60; from the response and pass it using the &lt;!-- [Get Async Action](OpenAPI.json/paths/~1async-actions~1{asyncActionId}/get) --&gt;[Get Async Action](ref:get-async-action) endpoint. |  -  |
+**202** | Returns the ID of the scheduled asynchronous action. The response informs you that the request has been accepted and the resources will be updated in the repository asynchronously. To check the status and result, copy the &#x60;async_action_id&#x60; from the response and use it as a query parameter in the [GET Async Action](ref:get-async-action) endpoint. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

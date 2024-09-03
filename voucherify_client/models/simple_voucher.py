@@ -19,29 +19,40 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, validator
+from typing import Any, Dict, List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictStr, conlist, validator
+from voucherify_client.models.category import Category
 from voucherify_client.models.discount import Discount
 from voucherify_client.models.gift import Gift
+from voucherify_client.models.simple_loyalty_card import SimpleLoyaltyCard
+from voucherify_client.models.simple_voucher_redemption import SimpleVoucherRedemption
 
 class SimpleVoucher(BaseModel):
     """
-    SimpleVoucher
+    Simplified voucher data.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="A unique identifier that represents the voucher assigned by Voucherify.")
-    code: StrictStr = Field(..., description="Voucher code.")
+    code: Optional[StrictStr] = Field(None, description="Voucher code.")
     gift: Optional[Gift] = None
     discount: Optional[Discount] = None
-    loyalty_card: Optional[Dict[str, Any]] = Field(None, description="Defines the loyalty card details.")
-    type: Optional[StrictStr] = Field('voucher', description="Type of the object.")
-    campaign: Optional[Dict[str, Any]] = Field(None, description="Campaign object")
+    loyalty_card: Optional[SimpleLoyaltyCard] = None
+    type: Optional[StrictStr] = Field(None, description="Type of the voucher.")
+    campaign: Optional[StrictStr] = Field(None, description="Campaign name.")
     campaign_id: Optional[StrictStr] = Field(None, description="Campaign unique ID.")
     is_referral_code: Optional[StrictBool] = Field(None, description="Flag indicating whether this voucher is a referral code; `true` for campaign type `REFERRAL_PROGRAM`.")
-    holder_id: Optional[StrictStr] = Field(None, description="Unique customer ID of campaign owner.")
-    referrer_id: Optional[StrictStr] = Field(None, description="Unique referrer ID.")
-    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the order was created in ISO 8601 format.")
-    object: Optional[StrictStr] = Field('voucher', description="The type of object represented by JSON.")
-    __properties = ["id", "code", "gift", "discount", "loyalty_card", "type", "campaign", "campaign_id", "is_referral_code", "holder_id", "referrer_id", "created_at", "object"]
+    holder_id: Optional[StrictStr] = Field(None, description="Unique customer identifier of the redeemable holder. It equals to the customer ID assigned by Voucherify.")
+    referrer_id: Optional[StrictStr] = Field(None, description="Unique identifier of the referrer assigned by Voucherify.")
+    category_id: Optional[StrictStr] = Field(None, description="Unique identifier of the category that this voucher belongs to.")
+    categories: Optional[conlist(Category)] = Field(None, description="Contains details about the category.")
+    active: Optional[StrictBool] = Field(None, description="Shows whether the voucher is on or off. `true` indicates an *active* voucher and `false` indicates an *inactive* voucher.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the order was created in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the order was created. The value is shown in the ISO 8601 format.")
+    redemption: Optional[SimpleVoucherRedemption] = None
+    start_date: Optional[datetime] = Field(None, description="Activation timestamp defines when the code starts to be active in ISO 8601 format. Voucher is *inactive before* this date.")
+    expiration_date: Optional[datetime] = Field(None, description="Expiration timestamp defines when the code expires in ISO 8601 format.  Voucher is *inactive after* this date.")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to a voucher. The metadata object stores all custom attributes assigned to the voucher.")
+    object: Optional[StrictStr] = Field('voucher', description="The type of the object represented by JSON.")
+    __properties = ["id", "code", "gift", "discount", "loyalty_card", "type", "campaign", "campaign_id", "is_referral_code", "holder_id", "referrer_id", "category_id", "categories", "active", "created_at", "updated_at", "redemption", "start_date", "expiration_date", "metadata", "object"]
 
     @validator('type')
     def type_validate_enum(cls, value):
@@ -49,8 +60,8 @@ class SimpleVoucher(BaseModel):
         if value is None:
             return value
 
-        if value not in ('voucher',):
-            raise ValueError("must be one of enum values ('voucher')")
+        if value not in ('DISCOUNT_VOUCHER', 'LOYALTY_CARD', 'GIFT_VOUCHER',):
+            raise ValueError("must be one of enum values ('DISCOUNT_VOUCHER', 'LOYALTY_CARD', 'GIFT_VOUCHER')")
         return value
 
     @validator('object')
@@ -93,6 +104,109 @@ class SimpleVoucher(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of discount
         if self.discount:
             _dict['discount'] = self.discount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of loyalty_card
+        if self.loyalty_card:
+            _dict['loyalty_card'] = self.loyalty_card.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in categories (list)
+        _items = []
+        if self.categories:
+            for _item in self.categories:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['categories'] = _items
+        # override the default output from pydantic by calling `to_dict()` of redemption
+        if self.redemption:
+            _dict['redemption'] = self.redemption.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if campaign (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign is None and "campaign" in self.__fields_set__:
+            _dict['campaign'] = None
+
+        # set to None if campaign_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_id is None and "campaign_id" in self.__fields_set__:
+            _dict['campaign_id'] = None
+
+        # set to None if is_referral_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_referral_code is None and "is_referral_code" in self.__fields_set__:
+            _dict['is_referral_code'] = None
+
+        # set to None if holder_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.holder_id is None and "holder_id" in self.__fields_set__:
+            _dict['holder_id'] = None
+
+        # set to None if referrer_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.referrer_id is None and "referrer_id" in self.__fields_set__:
+            _dict['referrer_id'] = None
+
+        # set to None if category_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.category_id is None and "category_id" in self.__fields_set__:
+            _dict['category_id'] = None
+
+        # set to None if categories (nullable) is None
+        # and __fields_set__ contains the field
+        if self.categories is None and "categories" in self.__fields_set__:
+            _dict['categories'] = None
+
+        # set to None if active (nullable) is None
+        # and __fields_set__ contains the field
+        if self.active is None and "active" in self.__fields_set__:
+            _dict['active'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
+        # set to None if redemption (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         return _dict
 
     @classmethod
@@ -109,14 +223,22 @@ class SimpleVoucher(BaseModel):
             "code": obj.get("code"),
             "gift": Gift.from_dict(obj.get("gift")) if obj.get("gift") is not None else None,
             "discount": Discount.from_dict(obj.get("discount")) if obj.get("discount") is not None else None,
-            "loyalty_card": obj.get("loyalty_card"),
-            "type": obj.get("type") if obj.get("type") is not None else 'voucher',
+            "loyalty_card": SimpleLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None,
+            "type": obj.get("type"),
             "campaign": obj.get("campaign"),
             "campaign_id": obj.get("campaign_id"),
             "is_referral_code": obj.get("is_referral_code"),
             "holder_id": obj.get("holder_id"),
             "referrer_id": obj.get("referrer_id"),
+            "category_id": obj.get("category_id"),
+            "categories": [Category.from_dict(_item) for _item in obj.get("categories")] if obj.get("categories") is not None else None,
+            "active": obj.get("active"),
             "created_at": obj.get("created_at"),
+            "updated_at": obj.get("updated_at"),
+            "redemption": SimpleVoucherRedemption.from_dict(obj.get("redemption")) if obj.get("redemption") is not None else None,
+            "start_date": obj.get("start_date"),
+            "expiration_date": obj.get("expiration_date"),
+            "metadata": obj.get("metadata"),
             "object": obj.get("object") if obj.get("object") is not None else 'voucher'
         })
         return _obj

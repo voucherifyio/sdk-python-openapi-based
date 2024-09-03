@@ -1,6 +1,6 @@
 # RedemptionsRollbacksCreateRequestBody
 
-Request body schema for **POST** `/redemptions/{parentRedemptionId}/rollbacks`.
+Request body schema for **POST** `v1/redemptions/{parentRedemptionId}/rollbacks`.
 
 ## Properties
 Name | Type | Description | Notes

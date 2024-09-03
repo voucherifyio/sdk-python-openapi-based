@@ -19,30 +19,44 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr
-from voucherify_client.models.campaign_base_validity_timeframe import CampaignBaseValidityTimeframe
+from typing import List, Optional
+from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist, validator
 from voucherify_client.models.campaign_loyalty_card import CampaignLoyaltyCard
-from voucherify_client.models.campaign_loyalty_voucher_redemption import CampaignLoyaltyVoucherRedemption
-from voucherify_client.models.code_config_required_length_charset_pattern import CodeConfigRequiredLengthCharsetPattern
+from voucherify_client.models.campaign_voucher_redemption import CampaignVoucherRedemption
+from voucherify_client.models.code_config import CodeConfig
 from voucherify_client.models.discount import Discount
 from voucherify_client.models.gift import Gift
+from voucherify_client.models.validity_hours import ValidityHours
+from voucherify_client.models.validity_timeframe import ValidityTimeframe
 
 class CampaignVoucher(BaseModel):
     """
     Schema model for a campaign voucher.  # noqa: E501
     """
-    type: StrictStr = Field(..., description="Type of voucher.")
+    type: Optional[StrictStr] = Field(None, description="Type of voucher.")
     discount: Optional[Discount] = None
     gift: Optional[Gift] = None
     loyalty_card: Optional[CampaignLoyaltyCard] = None
-    redemption: CampaignLoyaltyVoucherRedemption = Field(...)
-    code_config: CodeConfigRequiredLengthCharsetPattern = Field(...)
-    is_referral_code: StrictBool = Field(..., description="Flag indicating whether this voucher is a referral code; `true` for campaign type `REFERRAL_PROGRAM`.")
+    redemption: Optional[CampaignVoucherRedemption] = None
+    code_config: CodeConfig = Field(...)
+    is_referral_code: Optional[StrictBool] = Field(None, description="Flag indicating whether this voucher is a referral code; `true` for campaign type `REFERRAL_PROGRAM`.")
     start_date: Optional[datetime] = Field(None, description="Activation timestamp defines when the campaign starts to be active in ISO 8601 format. Campaign is *inactive before* this date. ")
     expiration_date: Optional[datetime] = Field(None, description="Expiration timestamp defines when the campaign expires in ISO 8601 format.  Campaign is *inactive after* this date.")
-    validity_timeframe: Optional[CampaignBaseValidityTimeframe] = None
-    __properties = ["type", "discount", "gift", "loyalty_card", "redemption", "code_config", "is_referral_code", "start_date", "expiration_date", "validity_timeframe"]
+    validity_timeframe: Optional[ValidityTimeframe] = None
+    validity_day_of_week: Optional[conlist(StrictInt)] = Field(None, description="Integer array corresponding to the particular days of the week in which the voucher is valid.  - `0` Sunday - `1` Monday - `2` Tuesday - `3` Wednesday - `4` Thursday - `5` Friday - `6` Saturday")
+    validity_hours: Optional[ValidityHours] = None
+    __properties = ["type", "discount", "gift", "loyalty_card", "redemption", "code_config", "is_referral_code", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "validity_hours"]
+
+    @validator('validity_day_of_week')
+    def validity_day_of_week_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in (0, 1, 2, 3, 4, 5, 6,):
+                raise ValueError("each list item must be one of (0, 1, 2, 3, 4, 5, 6)")
+        return value
 
     class Config:
         """Pydantic configuration"""
@@ -86,6 +100,34 @@ class CampaignVoucher(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of validity_timeframe
         if self.validity_timeframe:
             _dict['validity_timeframe'] = self.validity_timeframe.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of validity_hours
+        if self.validity_hours:
+            _dict['validity_hours'] = self.validity_hours.to_dict()
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if redemption (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
+        # set to None if is_referral_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_referral_code is None and "is_referral_code" in self.__fields_set__:
+            _dict['is_referral_code'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
         return _dict
 
     @classmethod
@@ -98,16 +140,18 @@ class CampaignVoucher(BaseModel):
             return CampaignVoucher.parse_obj(obj)
 
         _obj = CampaignVoucher.parse_obj({
-            "type": obj.get("type") if obj.get("type") is not None else 'DISCOUNT_VOUCHER',
+            "type": obj.get("type"),
             "discount": Discount.from_dict(obj.get("discount")) if obj.get("discount") is not None else None,
             "gift": Gift.from_dict(obj.get("gift")) if obj.get("gift") is not None else None,
             "loyalty_card": CampaignLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None,
-            "redemption": CampaignLoyaltyVoucherRedemption.from_dict(obj.get("redemption")) if obj.get("redemption") is not None else None,
-            "code_config": CodeConfigRequiredLengthCharsetPattern.from_dict(obj.get("code_config")) if obj.get("code_config") is not None else None,
+            "redemption": CampaignVoucherRedemption.from_dict(obj.get("redemption")) if obj.get("redemption") is not None else None,
+            "code_config": CodeConfig.from_dict(obj.get("code_config")) if obj.get("code_config") is not None else None,
             "is_referral_code": obj.get("is_referral_code"),
             "start_date": obj.get("start_date"),
             "expiration_date": obj.get("expiration_date"),
-            "validity_timeframe": CampaignBaseValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None
+            "validity_timeframe": ValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
+            "validity_day_of_week": obj.get("validity_day_of_week"),
+            "validity_hours": ValidityHours.from_dict(obj.get("validity_hours")) if obj.get("validity_hours") is not None else None
         })
         return _obj
 

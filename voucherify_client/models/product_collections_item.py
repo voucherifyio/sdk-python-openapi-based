@@ -21,25 +21,28 @@ import json
 from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist, validator
-from voucherify_client.models.product_collections_create_dynamic_request_body_filter import ProductCollectionsCreateDynamicRequestBodyFilter
+from voucherify_client.models.product_collections_item_filter import ProductCollectionsItemFilter
 from voucherify_client.models.product_collections_item_products_item import ProductCollectionsItemProductsItem
 
 class ProductCollectionsItem(BaseModel):
     """
     This is an object representing a product collection base.   # noqa: E501
     """
-    id: StrictStr = Field(..., description="Product collection ID.")
-    name: StrictStr = Field(..., description="Unique user-defined product collection name.")
-    type: StrictStr = Field(..., description="Describes whether the product collection is dynamic (products come in and leave based on set criteria) or static (manually selected products).")
-    filter: Optional[ProductCollectionsCreateDynamicRequestBodyFilter] = None
+    id: Optional[StrictStr] = Field(None, description="Product collection ID.")
+    name: Optional[StrictStr] = Field(None, description="Unique user-defined product collection name.")
+    type: Optional[StrictStr] = Field(None, description="Describes whether the product collection is dynamic (products come in and leave based on set criteria) or static (manually selected products).")
+    filter: Optional[ProductCollectionsItemFilter] = None
     products: Optional[conlist(ProductCollectionsItemProductsItem)] = Field(None, description="Defines a set of products for a `STATIC` product collection type.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the product collection was created in ISO 8601 format.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about the static product collection.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the product collection was created. The value is shown in the ISO 8601 format.")
+    object: Optional[StrictStr] = Field('products_collection', description="The type of the object represented by JSON. This object stores information about the static product collection.")
     __properties = ["id", "name", "type", "filter", "products", "created_at", "object"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('STATIC', 'AUTO_UPDATE',):
             raise ValueError("must be one of enum values ('STATIC', 'AUTO_UPDATE')")
         return value
@@ -47,6 +50,9 @@ class ProductCollectionsItem(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('products_collection',):
             raise ValueError("must be one of enum values ('products_collection')")
         return value
@@ -85,6 +91,41 @@ class ProductCollectionsItem(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['products'] = _items
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if filter (nullable) is None
+        # and __fields_set__ contains the field
+        if self.filter is None and "filter" in self.__fields_set__:
+            _dict['filter'] = None
+
+        # set to None if products (nullable) is None
+        # and __fields_set__ contains the field
+        if self.products is None and "products" in self.__fields_set__:
+            _dict['products'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         return _dict
 
     @classmethod
@@ -100,7 +141,7 @@ class ProductCollectionsItem(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "type": obj.get("type"),
-            "filter": ProductCollectionsCreateDynamicRequestBodyFilter.from_dict(obj.get("filter")) if obj.get("filter") is not None else None,
+            "filter": ProductCollectionsItemFilter.from_dict(obj.get("filter")) if obj.get("filter") is not None else None,
             "products": [ProductCollectionsItemProductsItem.from_dict(_item) for _item in obj.get("products")] if obj.get("products") is not None else None,
             "created_at": obj.get("created_at"),
             "object": obj.get("object") if obj.get("object") is not None else 'products_collection'

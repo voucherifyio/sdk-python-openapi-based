@@ -19,24 +19,27 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
 
 class ValidationRuleAssignment(BaseModel):
     """
     This is an object representing a validation rule assignment.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Validation rule assignment ID.")
-    rule_id: StrictStr = Field(..., description="Validation rule ID.")
-    related_object_id: StrictStr = Field(..., description="The resource ID to which the validation rule was assigned.")
-    related_object_type: StrictStr = Field(..., description="The type of resource to which the validation rule was assigned.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the validation rule assignment was created in ISO 8601 format.")
-    object: StrictStr = Field(..., description="The type of object represented by the ID.")
+    id: Optional[StrictStr] = Field(None, description="Validation rule assignment ID.")
+    rule_id: Optional[StrictStr] = Field(None, description="Validation rule ID.")
+    related_object_id: Optional[StrictStr] = Field(None, description="The resource ID to which the validation rule was assigned.")
+    related_object_type: Optional[StrictStr] = Field(None, description="The type of resource to which the validation rule was assigned.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the validation rule assignment was created. The value is shown in the ISO 8601 format.")
+    object: Optional[StrictStr] = Field('validation_rules_assignment', description="The type of the object represented by the ID.")
     __properties = ["id", "rule_id", "related_object_id", "related_object_type", "created_at", "object"]
 
     @validator('related_object_type')
     def related_object_type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('voucher', 'campaign', 'earning_rule', 'reward_assignment', 'promotion_tier', 'distribution',):
             raise ValueError("must be one of enum values ('voucher', 'campaign', 'earning_rule', 'reward_assignment', 'promotion_tier', 'distribution')")
         return value
@@ -44,6 +47,9 @@ class ValidationRuleAssignment(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('validation_rules_assignment',):
             raise ValueError("must be one of enum values ('validation_rules_assignment')")
         return value
@@ -72,6 +78,36 @@ class ValidationRuleAssignment(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if rule_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rule_id is None and "rule_id" in self.__fields_set__:
+            _dict['rule_id'] = None
+
+        # set to None if related_object_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_id is None and "related_object_id" in self.__fields_set__:
+            _dict['related_object_id'] = None
+
+        # set to None if related_object_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_type is None and "related_object_type" in self.__fields_set__:
+            _dict['related_object_type'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         return _dict
 
     @classmethod

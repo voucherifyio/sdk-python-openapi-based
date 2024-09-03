@@ -14,199 +14,154 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.export_customer_scheduled import ExportCustomerScheduled
-from voucherify_client.models.export_order_scheduled import ExportOrderScheduled
-from voucherify_client.models.export_points_expiration_scheduled import ExportPointsExpirationScheduled
-from voucherify_client.models.export_publication_scheduled import ExportPublicationScheduled
-from voucherify_client.models.export_redemption_scheduled import ExportRedemptionScheduled
-from voucherify_client.models.export_voucher_scheduled import ExportVoucherScheduled
-from voucherify_client.models.export_voucher_transactions_scheduled import ExportVoucherTransactionsScheduled
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
-
-EXPORTS_CREATE_RESPONSE_BODY_ONE_OF_SCHEMAS = ["ExportCustomerScheduled", "ExportOrderScheduled", "ExportPointsExpirationScheduled", "ExportPublicationScheduled", "ExportRedemptionScheduled", "ExportVoucherScheduled", "ExportVoucherTransactionsScheduled"]
+from datetime import datetime
+from typing import Any, Dict, Optional
+from pydantic import BaseModel, Field, StrictStr, validator
+from voucherify_client.models.exports_create_response_body_parameters import ExportsCreateResponseBodyParameters
 
 class ExportsCreateResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/exports`.
+    ExportsCreateResponseBody
     """
-    # data type: ExportVoucherScheduled
-    oneof_schema_1_validator: Optional[ExportVoucherScheduled] = None
-    # data type: ExportRedemptionScheduled
-    oneof_schema_2_validator: Optional[ExportRedemptionScheduled] = None
-    # data type: ExportCustomerScheduled
-    oneof_schema_3_validator: Optional[ExportCustomerScheduled] = None
-    # data type: ExportPublicationScheduled
-    oneof_schema_4_validator: Optional[ExportPublicationScheduled] = None
-    # data type: ExportOrderScheduled
-    oneof_schema_5_validator: Optional[ExportOrderScheduled] = None
-    # data type: ExportPointsExpirationScheduled
-    oneof_schema_6_validator: Optional[ExportPointsExpirationScheduled] = None
-    # data type: ExportVoucherTransactionsScheduled
-    oneof_schema_7_validator: Optional[ExportVoucherTransactionsScheduled] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[ExportCustomerScheduled, ExportOrderScheduled, ExportPointsExpirationScheduled, ExportPublicationScheduled, ExportRedemptionScheduled, ExportVoucherScheduled, ExportVoucherTransactionsScheduled]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(EXPORTS_CREATE_RESPONSE_BODY_ONE_OF_SCHEMAS, const=True)
+    id: Optional[StrictStr] = Field(None, description="Unique export ID.")
+    object: Optional[StrictStr] = Field('export', description="The type of object being represented. This object stores information about the export.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the export was scheduled in ISO 8601 format.")
+    status: Optional[StrictStr] = Field('SCHEDULED', description="Status of the export. Informs you whether the export has already been completed, i.e. indicates whether the file containing the exported data has been generated.")
+    channel: Optional[StrictStr] = Field(None, description="The channel through which the export was triggered.")
+    result: Optional[Dict[str, Any]] = Field(None, description="Contains the URL of the CSV file.")
+    user_id: Optional[StrictStr] = Field(None, description="Identifies the specific user who initiated the export through the Voucherify Dashboard; returned when the channel value is WEBSITE.")
+    exported_object: Optional[StrictStr] = None
+    parameters: Optional[ExportsCreateResponseBodyParameters] = None
+    __properties = ["id", "object", "created_at", "status", "channel", "result", "user_id", "exported_object", "parameters"]
+
+    @validator('object')
+    def object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('export',):
+            raise ValueError("must be one of enum values ('export')")
+        return value
+
+    @validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('SCHEDULED',):
+            raise ValueError("must be one of enum values ('SCHEDULED')")
+        return value
+
+    @validator('exported_object')
+    def exported_object_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions',):
+            raise ValueError("must be one of enum values ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = ExportsCreateResponseBody.construct()
-        error_messages = []
-        match = 0
-        # validate data type: ExportVoucherScheduled
-        if not isinstance(v, ExportVoucherScheduled):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportVoucherScheduled`")
-        else:
-            match += 1
-        # validate data type: ExportRedemptionScheduled
-        if not isinstance(v, ExportRedemptionScheduled):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportRedemptionScheduled`")
-        else:
-            match += 1
-        # validate data type: ExportCustomerScheduled
-        if not isinstance(v, ExportCustomerScheduled):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportCustomerScheduled`")
-        else:
-            match += 1
-        # validate data type: ExportPublicationScheduled
-        if not isinstance(v, ExportPublicationScheduled):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportPublicationScheduled`")
-        else:
-            match += 1
-        # validate data type: ExportOrderScheduled
-        if not isinstance(v, ExportOrderScheduled):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportOrderScheduled`")
-        else:
-            match += 1
-        # validate data type: ExportPointsExpirationScheduled
-        if not isinstance(v, ExportPointsExpirationScheduled):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportPointsExpirationScheduled`")
-        else:
-            match += 1
-        # validate data type: ExportVoucherTransactionsScheduled
-        if not isinstance(v, ExportVoucherTransactionsScheduled):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `ExportVoucherTransactionsScheduled`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ExportsCreateResponseBody with oneOf schemas: ExportCustomerScheduled, ExportOrderScheduled, ExportPointsExpirationScheduled, ExportPublicationScheduled, ExportRedemptionScheduled, ExportVoucherScheduled, ExportVoucherTransactionsScheduled. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in ExportsCreateResponseBody with oneOf schemas: ExportCustomerScheduled, ExportOrderScheduled, ExportPointsExpirationScheduled, ExportPublicationScheduled, ExportRedemptionScheduled, ExportVoucherScheduled, ExportVoucherTransactionsScheduled. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> ExportsCreateResponseBody:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> ExportsCreateResponseBody:
-        """Returns the object represented by the json string"""
-        instance = ExportsCreateResponseBody.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of ExportsCreateResponseBody from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into ExportVoucherScheduled
-        try:
-            instance.actual_instance = ExportVoucherScheduled.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportRedemptionScheduled
-        try:
-            instance.actual_instance = ExportRedemptionScheduled.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportCustomerScheduled
-        try:
-            instance.actual_instance = ExportCustomerScheduled.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportPublicationScheduled
-        try:
-            instance.actual_instance = ExportPublicationScheduled.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportOrderScheduled
-        try:
-            instance.actual_instance = ExportOrderScheduled.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportPointsExpirationScheduled
-        try:
-            instance.actual_instance = ExportPointsExpirationScheduled.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into ExportVoucherTransactionsScheduled
-        try:
-            instance.actual_instance = ExportVoucherTransactionsScheduled.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of parameters
+        if self.parameters:
+            _dict['parameters'] = self.parameters.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ExportsCreateResponseBody with oneOf schemas: ExportCustomerScheduled, ExportOrderScheduled, ExportPointsExpirationScheduled, ExportPublicationScheduled, ExportRedemptionScheduled, ExportVoucherScheduled, ExportVoucherTransactionsScheduled. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into ExportsCreateResponseBody with oneOf schemas: ExportCustomerScheduled, ExportOrderScheduled, ExportPointsExpirationScheduled, ExportPublicationScheduled, ExportRedemptionScheduled, ExportVoucherScheduled, ExportVoucherTransactionsScheduled. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+        # set to None if channel (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel is None and "channel" in self.__fields_set__:
+            _dict['channel'] = None
+
+        # set to None if result (nullable) is None
+        # and __fields_set__ contains the field
+        if self.result is None and "result" in self.__fields_set__:
+            _dict['result'] = None
+
+        # set to None if user_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.user_id is None and "user_id" in self.__fields_set__:
+            _dict['user_id'] = None
+
+        # set to None if exported_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exported_object is None and "exported_object" in self.__fields_set__:
+            _dict['exported_object'] = None
+
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: dict) -> ExportsCreateResponseBody:
+        """Create an instance of ExportsCreateResponseBody from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return ExportsCreateResponseBody.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = ExportsCreateResponseBody.parse_obj({
+            "id": obj.get("id"),
+            "object": obj.get("object") if obj.get("object") is not None else 'export',
+            "created_at": obj.get("created_at"),
+            "status": obj.get("status") if obj.get("status") is not None else 'SCHEDULED',
+            "channel": obj.get("channel"),
+            "result": obj.get("result"),
+            "user_id": obj.get("user_id"),
+            "exported_object": obj.get("exported_object"),
+            "parameters": ExportsCreateResponseBodyParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None
+        })
+        return _obj
 
 

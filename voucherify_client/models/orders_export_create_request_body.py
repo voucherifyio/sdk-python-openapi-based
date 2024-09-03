@@ -25,7 +25,7 @@ from voucherify_client.models.orders_export_create_request_body_parameters impor
 
 class OrdersExportCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/orders/export`.  # noqa: E501
+    Request body schema for **POST** `v1/orders/export`.  # noqa: E501
     """
     parameters: Optional[OrdersExportCreateRequestBodyParameters] = None
     __properties = ["parameters"]
@@ -57,6 +57,11 @@ class OrdersExportCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of parameters
         if self.parameters:
             _dict['parameters'] = self.parameters.to_dict()
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
+
         return _dict
 
     @classmethod

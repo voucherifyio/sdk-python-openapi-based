@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | **str** | Voucher code. | 
-**object** | **str** | The type of object represented by JSON. | [default to 'voucher']
-**campaign** | **str** | Campaign name | 
+**code** | **str** | Voucher code. | [optional] 
+**object** | **str** | The type of the object represented by JSON. | [optional] [default to 'voucher']
+**campaign** | **str** | Campaign name | [optional] 
 **gift** | [**Gift**](Gift.md) |  | [optional] 
 **loyalty_card** | **object** | Defines the loyalty card details. | [optional] 
 **discount** | [**Discount**](Discount.md) |  | [optional] 

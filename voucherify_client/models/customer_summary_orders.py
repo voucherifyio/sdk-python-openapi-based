@@ -26,10 +26,10 @@ class CustomerSummaryOrders(BaseModel):
     """
     CustomerSummaryOrders
     """
-    total_amount: StrictInt = Field(..., description="The total amount spent by the customer. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
-    total_count: StrictInt = Field(..., description="Total number of orders made by the customer.")
-    average_amount: StrictInt = Field(..., description="Average amount spent on orders. `total_amount` &divide; `total_count`. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
-    last_order_amount: StrictInt = Field(..., description="Amount spent on last order. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
+    total_amount: Optional[StrictInt] = Field(None, description="The total amount spent by the customer. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
+    total_count: Optional[StrictInt] = Field(None, description="Total number of orders made by the customer.")
+    average_amount: Optional[StrictInt] = Field(None, description="Average amount spent on orders. `total_amount` &divide; `total_count`. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
+    last_order_amount: Optional[StrictInt] = Field(None, description="Amount spent on last order. Value is multiplied by 100 to precisely represent 2 decimal places. For example `10000 cents` for `$100.00`.")
     last_order_date: Optional[datetime] = Field(None, description="Timestamp representing the date and time of the customer's last order in ISO 8601 format.")
     __properties = ["total_amount", "total_count", "average_amount", "last_order_amount", "last_order_date"]
 
@@ -57,6 +57,31 @@ class CustomerSummaryOrders(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if total_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_amount is None and "total_amount" in self.__fields_set__:
+            _dict['total_amount'] = None
+
+        # set to None if total_count (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_count is None and "total_count" in self.__fields_set__:
+            _dict['total_count'] = None
+
+        # set to None if average_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.average_amount is None and "average_amount" in self.__fields_set__:
+            _dict['average_amount'] = None
+
+        # set to None if last_order_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.last_order_amount is None and "last_order_amount" in self.__fields_set__:
+            _dict['last_order_amount'] = None
+
+        # set to None if last_order_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.last_order_date is None and "last_order_date" in self.__fields_set__:
+            _dict['last_order_date'] = None
+
         return _dict
 
     @classmethod

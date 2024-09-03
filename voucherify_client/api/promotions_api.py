@@ -20,12 +20,13 @@ import warnings
 from pydantic import validate_arguments, ValidationError
 
 from typing_extensions import Annotated
-from pydantic import Field, StrictStr, conint
+from pydantic import Field, StrictBool, StrictStr, conint
 
 from typing import Optional
 
 from voucherify_client.models.parameter_created_before_after import ParameterCreatedBeforeAfter
 from voucherify_client.models.parameter_order_list_all_promotion_stacks import ParameterOrderListAllPromotionStacks
+from voucherify_client.models.parameter_order_list_promotion_tiers import ParameterOrderListPromotionTiers
 from voucherify_client.models.parameter_updated_before_after import ParameterUpdatedBeforeAfter
 from voucherify_client.models.promotions_stacks_create_request_body import PromotionsStacksCreateRequestBody
 from voucherify_client.models.promotions_stacks_create_response_body import PromotionsStacksCreateResponseBody
@@ -33,10 +34,14 @@ from voucherify_client.models.promotions_stacks_get_response_body import Promoti
 from voucherify_client.models.promotions_stacks_list_response_body import PromotionsStacksListResponseBody
 from voucherify_client.models.promotions_stacks_update_request_body import PromotionsStacksUpdateRequestBody
 from voucherify_client.models.promotions_stacks_update_response_body import PromotionsStacksUpdateResponseBody
+from voucherify_client.models.promotions_tiers_create_request_body import PromotionsTiersCreateRequestBody
+from voucherify_client.models.promotions_tiers_create_response_body import PromotionsTiersCreateResponseBody
 from voucherify_client.models.promotions_tiers_disable_response_body import PromotionsTiersDisableResponseBody
 from voucherify_client.models.promotions_tiers_enable_response_body import PromotionsTiersEnableResponseBody
 from voucherify_client.models.promotions_tiers_get_response_body import PromotionsTiersGetResponseBody
 from voucherify_client.models.promotions_tiers_list_response_body import PromotionsTiersListResponseBody
+from voucherify_client.models.promotions_tiers_update_request_body import PromotionsTiersUpdateRequestBody
+from voucherify_client.models.promotions_tiers_update_response_body import PromotionsTiersUpdateResponseBody
 
 from voucherify_client.api_client import ApiClient
 from voucherify_client.api_response import ApiResponse
@@ -57,6 +62,161 @@ class PromotionsApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+    @validate_arguments
+    def add_promotion_tier_to_campaign(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID assigned by Voucherify.")], promotions_tiers_create_request_body : Annotated[Optional[PromotionsTiersCreateRequestBody], Field(description="Specify the promotion tier parameters.")] = None, **kwargs) -> PromotionsTiersCreateResponseBody:  # noqa: E501
+        """Add Promotion Tier to Campaign  # noqa: E501
+
+        This method allows you to add a new promotion tier to an existing campaign. The tier hierarchy will be set as the next consequtive integer following the lowest ranking tier.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.add_promotion_tier_to_campaign(campaign_id, promotions_tiers_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID assigned by Voucherify. (required)
+        :type campaign_id: str
+        :param promotions_tiers_create_request_body: Specify the promotion tier parameters.
+        :type promotions_tiers_create_request_body: PromotionsTiersCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: PromotionsTiersCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the add_promotion_tier_to_campaign_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.add_promotion_tier_to_campaign_with_http_info(campaign_id, promotions_tiers_create_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def add_promotion_tier_to_campaign_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID assigned by Voucherify.")], promotions_tiers_create_request_body : Annotated[Optional[PromotionsTiersCreateRequestBody], Field(description="Specify the promotion tier parameters.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Add Promotion Tier to Campaign  # noqa: E501
+
+        This method allows you to add a new promotion tier to an existing campaign. The tier hierarchy will be set as the next consequtive integer following the lowest ranking tier.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.add_promotion_tier_to_campaign_with_http_info(campaign_id, promotions_tiers_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param campaign_id: Unique campaign ID assigned by Voucherify. (required)
+        :type campaign_id: str
+        :param promotions_tiers_create_request_body: Specify the promotion tier parameters.
+        :type promotions_tiers_create_request_body: PromotionsTiersCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(PromotionsTiersCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'campaign_id',
+            'promotions_tiers_create_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method add_promotion_tier_to_campaign" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['campaign_id']:
+            _path_params['campaignId'] = _params['campaign_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['promotions_tiers_create_request_body'] is not None:
+            _body_params = _params['promotions_tiers_create_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "PromotionsTiersCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/promotions/{campaignId}/tiers', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def create_promotion_stack(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID.")], promotions_stacks_create_request_body : Annotated[Optional[PromotionsStacksCreateRequestBody], Field(description="Specify the order of promotion tiers for the promotion stack.")] = None, **kwargs) -> PromotionsStacksCreateResponseBody:  # noqa: E501
@@ -214,7 +374,7 @@ class PromotionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def delete_promotion_stack(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> None:  # noqa: E501
+    def delete_promotion_stack(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> None:  # noqa: E501
         """Delete Promotion Stack  # noqa: E501
 
         This method deletes a promotion stack.  # noqa: E501
@@ -224,7 +384,7 @@ class PromotionsApi:
         >>> thread = api.delete_promotion_stack(campaign_id, stack_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`.  (required)
+        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  (required)
         :type campaign_id: str
         :param stack_id: Promotion stack ID. (required)
         :type stack_id: str
@@ -246,7 +406,7 @@ class PromotionsApi:
         return self.delete_promotion_stack_with_http_info(campaign_id, stack_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_promotion_stack_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def delete_promotion_stack_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Delete Promotion Stack  # noqa: E501
 
         This method deletes a promotion stack.  # noqa: E501
@@ -256,7 +416,7 @@ class PromotionsApi:
         >>> thread = api.delete_promotion_stack_with_http_info(campaign_id, stack_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`.  (required)
+        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  (required)
         :type campaign_id: str
         :param stack_id: Promotion stack ID. (required)
         :type stack_id: str
@@ -493,7 +653,7 @@ class PromotionsApi:
     def disable_promotion_tier(self, promotion_tier_id : Annotated[StrictStr, Field(..., description="Unique promotion tier ID.")], **kwargs) -> PromotionsTiersDisableResponseBody:  # noqa: E501
         """Disable Promotion Tier  # noqa: E501
 
-        This method disables a promotion tier, i.e. makes the `active` parameter = `false`.  # noqa: E501
+        This method disables a promotion tier, i.e. makes the active parameter   false.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -523,7 +683,7 @@ class PromotionsApi:
     def disable_promotion_tier_with_http_info(self, promotion_tier_id : Annotated[StrictStr, Field(..., description="Unique promotion tier ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Disable Promotion Tier  # noqa: E501
 
-        This method disables a promotion tier, i.e. makes the `active` parameter = `false`.  # noqa: E501
+        This method disables a promotion tier, i.e. makes the active parameter   false.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -633,7 +793,7 @@ class PromotionsApi:
     def enable_promotion_tier(self, promotion_tier_id : Annotated[StrictStr, Field(..., description="Unique promotion tier ID.")], **kwargs) -> PromotionsTiersEnableResponseBody:  # noqa: E501
         """Enable Promotion Tier  # noqa: E501
 
-        This method enables a promotion tier, i.e. makes the `active` parameter = `true`.  # noqa: E501
+        This method enables a promotion tier, i.e. makes the active parameter   true.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -663,7 +823,7 @@ class PromotionsApi:
     def enable_promotion_tier_with_http_info(self, promotion_tier_id : Annotated[StrictStr, Field(..., description="Unique promotion tier ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Enable Promotion Tier  # noqa: E501
 
-        This method enables a promotion tier, i.e. makes the `active` parameter = `true`.  # noqa: E501
+        This method enables a promotion tier, i.e. makes the active parameter   true.  # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -770,7 +930,7 @@ class PromotionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def get_promotion_stack(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> PromotionsStacksGetResponseBody:  # noqa: E501
+    def get_promotion_stack(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> PromotionsStacksGetResponseBody:  # noqa: E501
         """Get Promotion Stack  # noqa: E501
 
         This method returns the details of a promotion stack, including the promotion tiers grouped within the stack.  # noqa: E501
@@ -780,7 +940,7 @@ class PromotionsApi:
         >>> thread = api.get_promotion_stack(campaign_id, stack_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`.  (required)
+        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  (required)
         :type campaign_id: str
         :param stack_id: Promotion stack ID. (required)
         :type stack_id: str
@@ -802,7 +962,7 @@ class PromotionsApi:
         return self.get_promotion_stack_with_http_info(campaign_id, stack_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_promotion_stack_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> ApiResponse:  # noqa: E501
+    def get_promotion_stack_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], **kwargs) -> ApiResponse:  # noqa: E501
         """Get Promotion Stack  # noqa: E501
 
         This method returns the details of a promotion stack, including the promotion tiers grouped within the stack.  # noqa: E501
@@ -812,7 +972,7 @@ class PromotionsApi:
         >>> thread = api.get_promotion_stack_with_http_info(campaign_id, stack_id, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`.  (required)
+        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  (required)
         :type campaign_id: str
         :param stack_id: Promotion stack ID. (required)
         :type stack_id: str
@@ -1058,25 +1218,25 @@ class PromotionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_all_promotion_stacks(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrderListAllPromotionStacks], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object `updated_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[updated_at][before]=2017-09-08T13:52:18.227Z`")] = None, **kwargs) -> PromotionsStacksListResponseBody:  # noqa: E501
+    def list_all_promotion_stacks(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListAllPromotionStacks], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z")] = None, **kwargs) -> PromotionsStacksListResponseBody:  # noqa: E501
         """List Promotion Stacks  # noqa: E501
 
-        This method enables you to list promotion stacks irrespective of the campaign they are associated with.   You can use filters in the query parameters to specify the stacks to be returned in the response.  ## Advanced filters for fetching promotion stacks  | **Filters** | **Examples** | | :--- | :--- | | Created Before | - `[created_at][before]=2021-12-30T13:52:18.227Z`<br>- `[filters][created_at][conditions][$before][0]=2021-12-30T13:52:18.227Z` | | Created After | - `[created_at][after]=2021-12-30T13:52:18.227Z`<br>- `[filters][created_at][conditions][$after][0]=2021-12-30T13:52:18.227Z` | | Updated Before | - `[updated_at][before]=2021-12-30T13:52:18.227Z`<br>- `[filters][updated_at][conditions][$before][0]=2021-12-30T13:52:18.227Z` | | Updated After | - `[updated_at][after]=2021-12-30T13:52:18.227Z`<br>- `[filters][updated_at][conditions][$after][0]=2021-12-30T13:52:18.227Z` |  # noqa: E501
+        This method enables you to list promotion stacks irrespective of the campaign they are associated with.  You can use filters in the query parameters to specify the stacks to be returned in the response. # Advanced filters for fetching promotion stacks    # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.list_all_promotion_stacks(limit, page, order, created_at, updated_at, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListAllPromotionStacks
-        :param created_at: A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
         :type created_at: ParameterCreatedBeforeAfter
-        :param updated_at: A filter on the list based on the object `updated_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[updated_at][before]=2017-09-08T13:52:18.227Z`
+        :param updated_at: A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z
         :type updated_at: ParameterUpdatedBeforeAfter
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1096,25 +1256,25 @@ class PromotionsApi:
         return self.list_all_promotion_stacks_with_http_info(limit, page, order, created_at, updated_at, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_all_promotion_stacks_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrderListAllPromotionStacks], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object `updated_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[updated_at][before]=2017-09-08T13:52:18.227Z`")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_all_promotion_stacks_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListAllPromotionStacks], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, created_at : Annotated[Optional[ParameterCreatedBeforeAfter], Field(description="A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z")] = None, updated_at : Annotated[Optional[ParameterUpdatedBeforeAfter], Field(description="A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Promotion Stacks  # noqa: E501
 
-        This method enables you to list promotion stacks irrespective of the campaign they are associated with.   You can use filters in the query parameters to specify the stacks to be returned in the response.  ## Advanced filters for fetching promotion stacks  | **Filters** | **Examples** | | :--- | :--- | | Created Before | - `[created_at][before]=2021-12-30T13:52:18.227Z`<br>- `[filters][created_at][conditions][$before][0]=2021-12-30T13:52:18.227Z` | | Created After | - `[created_at][after]=2021-12-30T13:52:18.227Z`<br>- `[filters][created_at][conditions][$after][0]=2021-12-30T13:52:18.227Z` | | Updated Before | - `[updated_at][before]=2021-12-30T13:52:18.227Z`<br>- `[filters][updated_at][conditions][$before][0]=2021-12-30T13:52:18.227Z` | | Updated After | - `[updated_at][after]=2021-12-30T13:52:18.227Z`<br>- `[filters][updated_at][conditions][$after][0]=2021-12-30T13:52:18.227Z` |  # noqa: E501
+        This method enables you to list promotion stacks irrespective of the campaign they are associated with.  You can use filters in the query parameters to specify the stacks to be returned in the response. # Advanced filters for fetching promotion stacks    # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
         >>> thread = api.list_all_promotion_stacks_with_http_info(limit, page, order, created_at, updated_at, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListAllPromotionStacks
-        :param created_at: A filter on the list based on the object `created_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[created_at][before]=2017-09-08T13:52:18.227Z`
+        :param created_at: A filter on the list based on the object created_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [created_at][before] 2017-09-08T13:52:18.227Z
         :type created_at: ParameterCreatedBeforeAfter
-        :param updated_at: A filter on the list based on the object `updated_at` field. The value is a dictionary with the following options: `before`, `after`. A date value must be presented in ISO 8601 format (`2016-11-16T14:14:31Z` or `2016-11-16`). An example: `[updated_at][before]=2017-09-08T13:52:18.227Z`
+        :param updated_at: A filter on the list based on the object updated_at field. The value is a dictionary with the following options: before, after. A date value must be presented in ISO 8601 format (2016-11-16T14:14:31Z or 2016-11-16). An example: [updated_at][before] 2017-09-08T13:52:18.227Z
         :type updated_at: ParameterUpdatedBeforeAfter
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1370,6 +1530,170 @@ class PromotionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
+    def list_promotion_tiers(self, is_available : Annotated[Optional[StrictBool], Field(description="This parameter allows filtering promotions that are only available at the moment. When set to true, it selects only non-expired and active promotions.")] = None, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListPromotionTiers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> PromotionsTiersListResponseBody:  # noqa: E501
+        """List Promotion Tiers  # noqa: E501
+
+        This method enables you to list promotion tiers.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_promotion_tiers(is_available, limit, page, order, async_req=True)
+        >>> result = thread.get()
+
+        :param is_available: This parameter allows filtering promotions that are only available at the moment. When set to true, it selects only non-expired and active promotions.
+        :type is_available: bool
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListPromotionTiers
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: PromotionsTiersListResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the list_promotion_tiers_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.list_promotion_tiers_with_http_info(is_available, limit, page, order, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def list_promotion_tiers_with_http_info(self, is_available : Annotated[Optional[StrictBool], Field(description="This parameter allows filtering promotions that are only available at the moment. When set to true, it selects only non-expired and active promotions.")] = None, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListPromotionTiers], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """List Promotion Tiers  # noqa: E501
+
+        This method enables you to list promotion tiers.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.list_promotion_tiers_with_http_info(is_available, limit, page, order, async_req=True)
+        >>> result = thread.get()
+
+        :param is_available: This parameter allows filtering promotions that are only available at the moment. When set to true, it selects only non-expired and active promotions.
+        :type is_available: bool
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items.
+        :type limit: int
+        :param page: Which page of results to return. The lowest value is 1.
+        :type page: int
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
+        :type order: ParameterOrderListPromotionTiers
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(PromotionsTiersListResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'is_available',
+            'limit',
+            'page',
+            'order'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method list_promotion_tiers" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('is_available') is not None:  # noqa: E501
+            _query_params.append(('is_available', _params['is_available']))
+
+        if _params.get('limit') is not None:  # noqa: E501
+            _query_params.append(('limit', _params['limit']))
+
+        if _params.get('page') is not None:  # noqa: E501
+            _query_params.append(('page', _params['page']))
+
+        if _params.get('order') is not None:  # noqa: E501
+            _query_params.append(('order', _params['order'].value))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "PromotionsTiersListResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/promotions/tiers', 'GET',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
     def list_promotion_tiers_from_campaign(self, campaign_id : Annotated[StrictStr, Field(..., description="Unique campaign ID assigned by Voucherify.")], **kwargs) -> PromotionsTiersListResponseBody:  # noqa: E501
         """List Promotion Tiers from Campaign  # noqa: E501
 
@@ -1510,7 +1834,7 @@ class PromotionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def update_promotion_stack(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], promotions_stacks_update_request_body : Annotated[Optional[PromotionsStacksUpdateRequestBody], Field(description="Specify the promotion stack parameters that you would like to update.")] = None, **kwargs) -> PromotionsStacksUpdateResponseBody:  # noqa: E501
+    def update_promotion_stack(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], promotions_stacks_update_request_body : Annotated[Optional[PromotionsStacksUpdateRequestBody], Field(description="Specify the promotion stack parameters that you would like to update.")] = None, **kwargs) -> PromotionsStacksUpdateResponseBody:  # noqa: E501
         """Update Promotion Stack  # noqa: E501
 
         This methods allows for editing an existing stack.  # noqa: E501
@@ -1520,7 +1844,7 @@ class PromotionsApi:
         >>> thread = api.update_promotion_stack(campaign_id, stack_id, promotions_stacks_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`.  (required)
+        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  (required)
         :type campaign_id: str
         :param stack_id: Promotion stack ID. (required)
         :type stack_id: str
@@ -1544,7 +1868,7 @@ class PromotionsApi:
         return self.update_promotion_stack_with_http_info(campaign_id, stack_id, promotions_stacks_update_request_body, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def update_promotion_stack_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], promotions_stacks_update_request_body : Annotated[Optional[PromotionsStacksUpdateRequestBody], Field(description="Specify the promotion stack parameters that you would like to update.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def update_promotion_stack_with_http_info(self, campaign_id : Annotated[StrictStr, Field(..., description="ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign. ")], stack_id : Annotated[StrictStr, Field(..., description="Promotion stack ID.")], promotions_stacks_update_request_body : Annotated[Optional[PromotionsStacksUpdateRequestBody], Field(description="Specify the promotion stack parameters that you would like to update.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """Update Promotion Stack  # noqa: E501
 
         This methods allows for editing an existing stack.  # noqa: E501
@@ -1554,7 +1878,7 @@ class PromotionsApi:
         >>> thread = api.update_promotion_stack_with_http_info(campaign_id, stack_id, promotions_stacks_update_request_body, async_req=True)
         >>> result = thread.get()
 
-        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the `name` of the campaign as the path parameter value, e.g., `Loyalty Campaign`.  (required)
+        :param campaign_id: ID of the promotion campaign. You can either pass the campaign ID, which was assigned by Voucherify, or the name of the campaign as the path parameter value, e.g., Loyalty Campaign.  (required)
         :type campaign_id: str
         :param stack_id: Promotion stack ID. (required)
         :type stack_id: str
@@ -1657,6 +1981,161 @@ class PromotionsApi:
 
         return self.api_client.call_api(
             '/v1/promotions/{campaignId}/stacks/{stackId}', 'PUT',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
+
+    @validate_arguments
+    def update_promotion_tier(self, promotion_tier_id : Annotated[StrictStr, Field(..., description="Unique promotion tier ID.")], promotions_tiers_update_request_body : Annotated[Optional[PromotionsTiersUpdateRequestBody], Field(description="Specify the promotion tier parameters that you would like to update.")] = None, **kwargs) -> PromotionsTiersUpdateResponseBody:  # noqa: E501
+        """Update Promotion Tier  # noqa: E501
+
+        This method updates a promotion tier.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_promotion_tier(promotion_tier_id, promotions_tiers_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param promotion_tier_id: Unique promotion tier ID. (required)
+        :type promotion_tier_id: str
+        :param promotions_tiers_update_request_body: Specify the promotion tier parameters that you would like to update.
+        :type promotions_tiers_update_request_body: PromotionsTiersUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: PromotionsTiersUpdateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the update_promotion_tier_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.update_promotion_tier_with_http_info(promotion_tier_id, promotions_tiers_update_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def update_promotion_tier_with_http_info(self, promotion_tier_id : Annotated[StrictStr, Field(..., description="Unique promotion tier ID.")], promotions_tiers_update_request_body : Annotated[Optional[PromotionsTiersUpdateRequestBody], Field(description="Specify the promotion tier parameters that you would like to update.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Update Promotion Tier  # noqa: E501
+
+        This method updates a promotion tier.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.update_promotion_tier_with_http_info(promotion_tier_id, promotions_tiers_update_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param promotion_tier_id: Unique promotion tier ID. (required)
+        :type promotion_tier_id: str
+        :param promotions_tiers_update_request_body: Specify the promotion tier parameters that you would like to update.
+        :type promotions_tiers_update_request_body: PromotionsTiersUpdateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(PromotionsTiersUpdateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'promotion_tier_id',
+            'promotions_tiers_update_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method update_promotion_tier" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['promotion_tier_id']:
+            _path_params['promotionTierId'] = _params['promotion_tier_id']
+
+
+        # process the query parameters
+        _query_params = []
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['promotions_tiers_update_request_body'] is not None:
+            _body_params = _params['promotions_tiers_update_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "PromotionsTiersUpdateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/promotions/tiers/{promotionTierId}', 'PUT',
             _path_params,
             _query_params,
             _header_params,

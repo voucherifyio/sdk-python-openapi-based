@@ -26,7 +26,7 @@ class ClientEventsCreateRequestBodyReferral(BaseModel):
     """
     If a **conversion event** for a referral program is set to a custom event, then you need to send the referral code in the payload to make a record of the conversion event.   # noqa: E501
     """
-    code: StrictStr = Field(..., description="A code through which a new visitor has been referred to a service.")
+    code: Optional[StrictStr] = Field(None, description="A code through which a new visitor has been referred to a service.")
     referrer_id: Optional[StrictStr] = Field(None, description="Unique ID of the referring person - it is optional and not required if the referral **code** is provided.")
     __properties = ["code", "referrer_id"]
 
@@ -54,6 +54,16 @@ class ClientEventsCreateRequestBodyReferral(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
+        # set to None if referrer_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.referrer_id is None and "referrer_id" in self.__fields_set__:
+            _dict['referrer_id'] = None
+
         return _dict
 
     @classmethod

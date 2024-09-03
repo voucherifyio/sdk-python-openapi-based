@@ -14,143 +14,90 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
+
+from typing import Optional
+from pydantic import BaseModel
 from voucherify_client.models.reward_type_campaign import RewardTypeCampaign
 from voucherify_client.models.reward_type_coin import RewardTypeCoin
-from voucherify_client.models.reward_type_material import RewardTypeMaterial
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
-
-REWARD_TYPE_ONE_OF_SCHEMAS = ["RewardTypeCampaign", "RewardTypeCoin", "RewardTypeMaterial"]
+from voucherify_client.models.reward_type_product import RewardTypeProduct
 
 class RewardType(BaseModel):
     """
     RewardType
     """
-    # data type: RewardTypeCampaign
-    oneof_schema_1_validator: Optional[RewardTypeCampaign] = None
-    # data type: RewardTypeCoin
-    oneof_schema_2_validator: Optional[RewardTypeCoin] = None
-    # data type: RewardTypeMaterial
-    oneof_schema_3_validator: Optional[RewardTypeMaterial] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[RewardTypeCampaign, RewardTypeCoin, RewardTypeMaterial]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(REWARD_TYPE_ONE_OF_SCHEMAS, const=True)
+    campaign: Optional[RewardTypeCampaign] = None
+    coin: Optional[RewardTypeCoin] = None
+    product: Optional[RewardTypeProduct] = None
+    __properties = ["campaign", "coin", "product"]
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = RewardType.construct()
-        error_messages = []
-        match = 0
-        # validate data type: RewardTypeCampaign
-        if not isinstance(v, RewardTypeCampaign):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RewardTypeCampaign`")
-        else:
-            match += 1
-        # validate data type: RewardTypeCoin
-        if not isinstance(v, RewardTypeCoin):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RewardTypeCoin`")
-        else:
-            match += 1
-        # validate data type: RewardTypeMaterial
-        if not isinstance(v, RewardTypeMaterial):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `RewardTypeMaterial`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in RewardType with oneOf schemas: RewardTypeCampaign, RewardTypeCoin, RewardTypeMaterial. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in RewardType with oneOf schemas: RewardTypeCampaign, RewardTypeCoin, RewardTypeMaterial. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> RewardType:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> RewardType:
-        """Returns the object represented by the json string"""
-        instance = RewardType.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of RewardType from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into RewardTypeCampaign
-        try:
-            instance.actual_instance = RewardTypeCampaign.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into RewardTypeCoin
-        try:
-            instance.actual_instance = RewardTypeCoin.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into RewardTypeMaterial
-        try:
-            instance.actual_instance = RewardTypeMaterial.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of campaign
+        if self.campaign:
+            _dict['campaign'] = self.campaign.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of coin
+        if self.coin:
+            _dict['coin'] = self.coin.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of product
+        if self.product:
+            _dict['product'] = self.product.to_dict()
+        # set to None if campaign (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign is None and "campaign" in self.__fields_set__:
+            _dict['campaign'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into RewardType with oneOf schemas: RewardTypeCampaign, RewardTypeCoin, RewardTypeMaterial. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into RewardType with oneOf schemas: RewardTypeCampaign, RewardTypeCoin, RewardTypeMaterial. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if coin (nullable) is None
+        # and __fields_set__ contains the field
+        if self.coin is None and "coin" in self.__fields_set__:
+            _dict['coin'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if product (nullable) is None
+        # and __fields_set__ contains the field
+        if self.product is None and "product" in self.__fields_set__:
+            _dict['product'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        return _dict
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+    @classmethod
+    def from_dict(cls, obj: dict) -> RewardType:
+        """Create an instance of RewardType from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return RewardType.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = RewardType.parse_obj({
+            "campaign": RewardTypeCampaign.from_dict(obj.get("campaign")) if obj.get("campaign") is not None else None,
+            "coin": RewardTypeCoin.from_dict(obj.get("coin")) if obj.get("coin") is not None else None,
+            "product": RewardTypeProduct.from_dict(obj.get("product")) if obj.get("product") is not None else None
+        })
+        return _obj
 
 

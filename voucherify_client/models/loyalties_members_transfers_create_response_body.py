@@ -20,48 +20,61 @@ import json
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictBool, StrictStr, conint, conlist, validator
+from pydantic import BaseModel, Field, StrictBool, StrictInt, StrictStr, conlist, validator
 from voucherify_client.models.category import Category
 from voucherify_client.models.loyalties_members_transfers_create_response_body_assets import LoyaltiesMembersTransfersCreateResponseBodyAssets
 from voucherify_client.models.loyalties_members_transfers_create_response_body_loyalty_card import LoyaltiesMembersTransfersCreateResponseBodyLoyaltyCard
 from voucherify_client.models.loyalties_members_transfers_create_response_body_publish import LoyaltiesMembersTransfersCreateResponseBodyPublish
 from voucherify_client.models.loyalties_members_transfers_create_response_body_redemption import LoyaltiesMembersTransfersCreateResponseBodyRedemption
-from voucherify_client.models.loyalties_members_transfers_create_response_body_validity_timeframe import LoyaltiesMembersTransfersCreateResponseBodyValidityTimeframe
+from voucherify_client.models.validity_hours import ValidityHours
+from voucherify_client.models.validity_timeframe import ValidityTimeframe
 
 class LoyaltiesMembersTransfersCreateResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/loyalties/{campaignId}/members/{memberId}/transfers`.  # noqa: E501
+    Response body schema for **POST** `v1/loyalties/{campaignId}/members/{memberId}/transfers`.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Assigned by the Voucherify API, identifies the voucher.")
-    code: StrictStr = Field(..., description="A code that identifies a voucher. Pattern can use all letters of the English alphabet, Arabic numerals, and special characters.")
+    id: Optional[StrictStr] = Field(None, description="Assigned by the Voucherify API, identifies the voucher.")
+    code: Optional[StrictStr] = Field(None, description="A code that identifies a voucher. Pattern can use all letters of the English alphabet, Arabic numerals, and special characters.")
     campaign: Optional[StrictStr] = Field(None, description="A unique campaign name, identifies the voucher's parent campaign.")
     campaign_id: Optional[StrictStr] = Field(None, description="Assigned by the Voucherify API, identifies the voucher's parent campaign.")
     category: Optional[StrictStr] = Field(None, description="Tag defining the category that this voucher belongs to. Useful when listing vouchers using the List Vouchers endpoint.")
     category_id: Optional[StrictStr] = Field(None, description="Unique category ID assigned by Voucherify.")
     categories: Optional[conlist(Category)] = None
-    type: StrictStr = Field(..., description="Defines the type of the voucher.")
-    loyalty_card: LoyaltiesMembersTransfersCreateResponseBodyLoyaltyCard = Field(...)
+    type: Optional[StrictStr] = Field('LOYALTY_CARD', description="Defines the type of the voucher.")
+    loyalty_card: Optional[LoyaltiesMembersTransfersCreateResponseBodyLoyaltyCard] = None
     start_date: Optional[datetime] = Field(None, description="Activation timestamp defines when the code starts to be active in ISO 8601 format. Voucher is inactive before this date.")
     expiration_date: Optional[datetime] = Field(None, description="Expiration timestamp defines when the code expires in ISO 8601 format. Voucher is inactive after this date.")
-    validity_timeframe: Optional[LoyaltiesMembersTransfersCreateResponseBodyValidityTimeframe] = None
-    validity_day_of_week: Optional[conlist(conint(strict=True, le=6, ge=0))] = Field(None, description="Integer array corresponding to the particular days of the week in which the voucher is valid.  - `0` Sunday - `1` Monday - `2` Tuesday - `3` Wednesday - `4` Thursday - `5` Friday - `6` Saturday")
+    validity_timeframe: ValidityTimeframe = Field(...)
+    validity_day_of_week: conlist(StrictInt) = Field(..., description="Integer array corresponding to the particular days of the week in which the voucher is valid.  - `0` Sunday - `1` Monday - `2` Tuesday - `3` Wednesday - `4` Thursday - `5` Friday - `6` Saturday")
+    validity_hours: Optional[ValidityHours] = None
     publish: Optional[LoyaltiesMembersTransfersCreateResponseBodyPublish] = None
     redemption: Optional[LoyaltiesMembersTransfersCreateResponseBodyRedemption] = None
-    active: StrictStr = Field(..., description="A flag to toggle the voucher on or off. You can disable a voucher even though it's within the active period defined by the start_date and expiration_date.  - `true` indicates an active voucher - `false` indicates an inactive voucher")
+    active: Optional[StrictStr] = Field(None, description="A flag to toggle the voucher on or off. You can disable a voucher even though it's within the active period defined by the start_date and expiration_date.  - `true` indicates an active voucher - `false` indicates an inactive voucher")
     additional_info: Optional[StrictStr] = Field(None, description="An optional field to keep any extra textual information about the code such as a code description and details.")
-    metadata: Dict[str, Any] = Field(..., description="The metadata object stores all custom attributes assigned to the code. A set of key/value pairs that you can attach to a voucher object. It can be useful for storing additional information about the voucher in a structured format.")
+    metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the code. A set of key/value pairs that you can attach to a voucher object. It can be useful for storing additional information about the voucher in a structured format.")
     assets: Optional[LoyaltiesMembersTransfersCreateResponseBodyAssets] = None
-    is_referral_code: StrictBool = Field(..., description="Flag indicating whether this voucher is a referral code; `true` for campaign type `REFERRAL_PROGRAM`.")
-    holder_id: Optional[StrictStr] = Field(None, description="Unique customer ID of voucher owner.")
+    is_referral_code: Optional[StrictBool] = Field(None, description="Flag indicating whether this voucher is a referral code; `true` for campaign type `REFERRAL_PROGRAM`.")
+    holder_id: Optional[StrictStr] = Field(None, description="Unique customer identifier of the redeemable holder. It equals to the customer ID assigned by Voucherify.")
     updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the voucher was last updated in ISO 8601 format.")
-    created_at: datetime = Field(...)
-    __properties = ["id", "code", "campaign", "campaign_id", "category", "category_id", "categories", "type", "loyalty_card", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "publish", "redemption", "active", "additional_info", "metadata", "assets", "is_referral_code", "holder_id", "updated_at", "created_at"]
+    created_at: Optional[datetime] = None
+    __properties = ["id", "code", "campaign", "campaign_id", "category", "category_id", "categories", "type", "loyalty_card", "start_date", "expiration_date", "validity_timeframe", "validity_day_of_week", "validity_hours", "publish", "redemption", "active", "additional_info", "metadata", "assets", "is_referral_code", "holder_id", "updated_at", "created_at"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('LOYALTY_CARD',):
             raise ValueError("must be one of enum values ('LOYALTY_CARD')")
+        return value
+
+    @validator('validity_day_of_week')
+    def validity_day_of_week_validate_enum(cls, value):
+        """Validates the enum"""
+        for i in value:
+            if i not in (0, 1, 2, 3, 4, 5, 6,):
+                raise ValueError("each list item must be one of (0, 1, 2, 3, 4, 5, 6)")
         return value
 
     class Config:
@@ -101,6 +114,9 @@ class LoyaltiesMembersTransfersCreateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of validity_timeframe
         if self.validity_timeframe:
             _dict['validity_timeframe'] = self.validity_timeframe.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of validity_hours
+        if self.validity_hours:
+            _dict['validity_hours'] = self.validity_hours.to_dict()
         # override the default output from pydantic by calling `to_dict()` of publish
         if self.publish:
             _dict['publish'] = self.publish.to_dict()
@@ -110,6 +126,26 @@ class LoyaltiesMembersTransfersCreateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of assets
         if self.assets:
             _dict['assets'] = self.assets.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.code is None and "code" in self.__fields_set__:
+            _dict['code'] = None
+
+        # set to None if campaign (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign is None and "campaign" in self.__fields_set__:
+            _dict['campaign'] = None
+
+        # set to None if campaign_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_id is None and "campaign_id" in self.__fields_set__:
+            _dict['campaign_id'] = None
+
         # set to None if category (nullable) is None
         # and __fields_set__ contains the field
         if self.category is None and "category" in self.__fields_set__:
@@ -119,6 +155,21 @@ class LoyaltiesMembersTransfersCreateResponseBody(BaseModel):
         # and __fields_set__ contains the field
         if self.category_id is None and "category_id" in self.__fields_set__:
             _dict['category_id'] = None
+
+        # set to None if categories (nullable) is None
+        # and __fields_set__ contains the field
+        if self.categories is None and "categories" in self.__fields_set__:
+            _dict['categories'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if loyalty_card (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty_card is None and "loyalty_card" in self.__fields_set__:
+            _dict['loyalty_card'] = None
 
         # set to None if start_date (nullable) is None
         # and __fields_set__ contains the field
@@ -130,20 +181,55 @@ class LoyaltiesMembersTransfersCreateResponseBody(BaseModel):
         if self.expiration_date is None and "expiration_date" in self.__fields_set__:
             _dict['expiration_date'] = None
 
-        # set to None if validity_timeframe (nullable) is None
+        # set to None if publish (nullable) is None
         # and __fields_set__ contains the field
-        if self.validity_timeframe is None and "validity_timeframe" in self.__fields_set__:
-            _dict['validity_timeframe'] = None
+        if self.publish is None and "publish" in self.__fields_set__:
+            _dict['publish'] = None
 
-        # set to None if validity_day_of_week (nullable) is None
+        # set to None if redemption (nullable) is None
         # and __fields_set__ contains the field
-        if self.validity_day_of_week is None and "validity_day_of_week" in self.__fields_set__:
-            _dict['validity_day_of_week'] = None
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
+        # set to None if active (nullable) is None
+        # and __fields_set__ contains the field
+        if self.active is None and "active" in self.__fields_set__:
+            _dict['active'] = None
 
         # set to None if additional_info (nullable) is None
         # and __fields_set__ contains the field
         if self.additional_info is None and "additional_info" in self.__fields_set__:
             _dict['additional_info'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if assets (nullable) is None
+        # and __fields_set__ contains the field
+        if self.assets is None and "assets" in self.__fields_set__:
+            _dict['assets'] = None
+
+        # set to None if is_referral_code (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_referral_code is None and "is_referral_code" in self.__fields_set__:
+            _dict['is_referral_code'] = None
+
+        # set to None if holder_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.holder_id is None and "holder_id" in self.__fields_set__:
+            _dict['holder_id'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
 
         return _dict
 
@@ -168,8 +254,9 @@ class LoyaltiesMembersTransfersCreateResponseBody(BaseModel):
             "loyalty_card": LoyaltiesMembersTransfersCreateResponseBodyLoyaltyCard.from_dict(obj.get("loyalty_card")) if obj.get("loyalty_card") is not None else None,
             "start_date": obj.get("start_date"),
             "expiration_date": obj.get("expiration_date"),
-            "validity_timeframe": LoyaltiesMembersTransfersCreateResponseBodyValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
+            "validity_timeframe": ValidityTimeframe.from_dict(obj.get("validity_timeframe")) if obj.get("validity_timeframe") is not None else None,
             "validity_day_of_week": obj.get("validity_day_of_week"),
+            "validity_hours": ValidityHours.from_dict(obj.get("validity_hours")) if obj.get("validity_hours") is not None else None,
             "publish": LoyaltiesMembersTransfersCreateResponseBodyPublish.from_dict(obj.get("publish")) if obj.get("publish") is not None else None,
             "redemption": LoyaltiesMembersTransfersCreateResponseBodyRedemption.from_dict(obj.get("redemption")) if obj.get("redemption") is not None else None,
             "active": obj.get("active"),

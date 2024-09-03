@@ -26,8 +26,8 @@ class VouchersBalanceUpdateRequestBody(BaseModel):
     """
     Request body schema for `vouchers/{code}/balance`.  # noqa: E501
     """
-    amount: StrictInt = Field(..., description="The incremental amount to be added to or removed from the current balance on the gift card or loyalty card. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000. To remove balance, simply add a minus sign before the value, i.e. to remove $20, use -2000.")
-    source_id: Optional[StrictStr] = Field(None, description="The merchant’s transaction ID if it is different from the Voucherify transaction ID. It is really useful in case of an integration between multiple systems. It can be a transaction ID from a CRM system, database or 3rd-party service.")
+    amount: Optional[StrictInt] = Field(None, description="The incremental amount to be added to or removed from the current balance on the gift card or loyalty card. Value is multiplied by 100 to precisely represent 2 decimal places. For example, $100 amount is written as 10000. To remove balance, simply add a minus sign before the value, i.e. to remove $20, use -2000.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's transaction ID if it is different from the Voucherify transaction ID. It is really useful in case of an integration between multiple systems. It can be a transaction ID from a CRM system, database or 3rd-party service.")
     reason: Optional[StrictStr] = Field(None, description="Reason why the transaction occurred.")
     __properties = ["amount", "source_id", "reason"]
 
@@ -55,6 +55,21 @@ class VouchersBalanceUpdateRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
+        # set to None if reason (nullable) is None
+        # and __fields_set__ contains the field
+        if self.reason is None and "reason" in self.__fields_set__:
+            _dict['reason'] = None
+
         return _dict
 
     @classmethod

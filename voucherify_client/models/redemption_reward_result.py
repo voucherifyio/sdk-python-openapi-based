@@ -19,13 +19,13 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictStr, validator
+from voucherify_client.models.product import Product
 from voucherify_client.models.redemption_reward_result_parameters import RedemptionRewardResultParameters
-from voucherify_client.models.redemption_reward_result_product import RedemptionRewardResultProduct
-from voucherify_client.models.redemption_reward_result_sku import RedemptionRewardResultSku
-from voucherify_client.models.redemption_reward_result_voucher import RedemptionRewardResultVoucher
 from voucherify_client.models.simple_customer import SimpleCustomer
+from voucherify_client.models.sku import Sku
+from voucherify_client.models.voucher import Voucher
 
 class RedemptionRewardResult(BaseModel):
     """
@@ -33,18 +33,19 @@ class RedemptionRewardResult(BaseModel):
     """
     customer: Optional[SimpleCustomer] = None
     assignment_id: Optional[StrictStr] = Field(None, description="Unique reward assignment ID assigned by Voucherify.")
-    voucher: Optional[RedemptionRewardResultVoucher] = None
-    product: Optional[RedemptionRewardResultProduct] = None
-    sku: Optional[RedemptionRewardResultSku] = None
+    voucher: Optional[Voucher] = None
+    product: Optional[Product] = None
+    sku: Optional[Sku] = None
     loyalty_tier_id: Optional[StrictStr] = Field(None, description="Unique loyalty tier ID assigned by Voucherify.")
     id: Optional[StrictStr] = Field(None, description="Unique reward ID.")
     name: Optional[StrictStr] = Field(None, description="Name of the reward.")
-    object: Optional[StrictStr] = Field('reward', description="The type of object represented by the JSON")
-    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the redemption was created in ISO 8601 format.")
+    object: Optional[StrictStr] = Field('reward', description="The type of the object represented by the JSON")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the redemption was created. The value is shown in the ISO 8601 format.")
     updated_at: Optional[datetime] = Field(None, description="Timestamp in ISO 8601 format indicating when the reward was updated.")
     parameters: Optional[RedemptionRewardResultParameters] = None
+    metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to a reward. The metadata object stores all custom attributes assigned to the reward.")
     type: Optional[StrictStr] = Field(None, description="Reward type.")
-    __properties = ["customer", "assignment_id", "voucher", "product", "sku", "loyalty_tier_id", "id", "name", "object", "created_at", "updated_at", "parameters", "type"]
+    __properties = ["customer", "assignment_id", "voucher", "product", "sku", "loyalty_tier_id", "id", "name", "object", "created_at", "updated_at", "parameters", "metadata", "type"]
 
     @validator('object')
     def object_validate_enum(cls, value):
@@ -105,35 +106,55 @@ class RedemptionRewardResult(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of parameters
         if self.parameters:
             _dict['parameters'] = self.parameters.to_dict()
-        # set to None if customer (nullable) is None
-        # and __fields_set__ contains the field
-        if self.customer is None and "customer" in self.__fields_set__:
-            _dict['customer'] = None
-
         # set to None if assignment_id (nullable) is None
         # and __fields_set__ contains the field
         if self.assignment_id is None and "assignment_id" in self.__fields_set__:
             _dict['assignment_id'] = None
 
-        # set to None if voucher (nullable) is None
-        # and __fields_set__ contains the field
-        if self.voucher is None and "voucher" in self.__fields_set__:
-            _dict['voucher'] = None
-
-        # set to None if product (nullable) is None
-        # and __fields_set__ contains the field
-        if self.product is None and "product" in self.__fields_set__:
-            _dict['product'] = None
-
-        # set to None if sku (nullable) is None
-        # and __fields_set__ contains the field
-        if self.sku is None and "sku" in self.__fields_set__:
-            _dict['sku'] = None
-
         # set to None if loyalty_tier_id (nullable) is None
         # and __fields_set__ contains the field
         if self.loyalty_tier_id is None and "loyalty_tier_id" in self.__fields_set__:
             _dict['loyalty_tier_id'] = None
+
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
 
         return _dict
 
@@ -149,9 +170,9 @@ class RedemptionRewardResult(BaseModel):
         _obj = RedemptionRewardResult.parse_obj({
             "customer": SimpleCustomer.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
             "assignment_id": obj.get("assignment_id"),
-            "voucher": RedemptionRewardResultVoucher.from_dict(obj.get("voucher")) if obj.get("voucher") is not None else None,
-            "product": RedemptionRewardResultProduct.from_dict(obj.get("product")) if obj.get("product") is not None else None,
-            "sku": RedemptionRewardResultSku.from_dict(obj.get("sku")) if obj.get("sku") is not None else None,
+            "voucher": Voucher.from_dict(obj.get("voucher")) if obj.get("voucher") is not None else None,
+            "product": Product.from_dict(obj.get("product")) if obj.get("product") is not None else None,
+            "sku": Sku.from_dict(obj.get("sku")) if obj.get("sku") is not None else None,
             "loyalty_tier_id": obj.get("loyalty_tier_id"),
             "id": obj.get("id"),
             "name": obj.get("name"),
@@ -159,6 +180,7 @@ class RedemptionRewardResult(BaseModel):
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),
             "parameters": RedemptionRewardResultParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None,
+            "metadata": obj.get("metadata"),
             "type": obj.get("type")
         })
         return _obj

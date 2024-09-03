@@ -21,27 +21,30 @@ import json
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
-from voucherify_client.models.export_base_result import ExportBaseResult
-from voucherify_client.models.loyalties_members_transactions_export_create_request_body_parameters import LoyaltiesMembersTransactionsExportCreateRequestBodyParameters
+from voucherify_client.models.exports_get_response_body_parameters import ExportsGetResponseBodyParameters
+from voucherify_client.models.exports_get_response_body_result import ExportsGetResponseBodyResult
 
 class ExportsGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/exports/{exportId}`.  # noqa: E501
+    Response body schema for **GET** `v1/exports/{exportId}`.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique export ID.")
-    object: StrictStr = Field(..., description="The type of object being represented. This object stores information about the export.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the export was scheduled in ISO 8601 format.")
-    status: StrictStr = Field(..., description="Status of the export. Informs you whether the export has already been completed, i.e. indicates whether the file containing the exported data has been generated.")
+    id: Optional[StrictStr] = Field(None, description="Unique export ID.")
+    object: Optional[StrictStr] = Field('export', description="The type of object being represented. This object stores information about the export.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the export was scheduled in ISO 8601 format.")
+    status: Optional[StrictStr] = Field(None, description="Status of the export. Informs you whether the export has already been completed, i.e. indicates whether the file containing the exported data has been generated.")
     channel: Optional[StrictStr] = Field(None, description="The channel through which the export was triggered.")
-    result: Optional[ExportBaseResult] = None
+    result: Optional[ExportsGetResponseBodyResult] = None
     user_id: Optional[StrictStr] = Field(None, description="Identifies the specific user who initiated the export through the Voucherify Dashboard; returned when the channel value is WEBSITE.")
-    exported_object: StrictStr = Field(..., description="The type of object to be exported.")
-    parameters: Optional[LoyaltiesMembersTransactionsExportCreateRequestBodyParameters] = None
+    exported_object: Optional[StrictStr] = None
+    parameters: Optional[ExportsGetResponseBodyParameters] = None
     __properties = ["id", "object", "created_at", "status", "channel", "result", "user_id", "exported_object", "parameters"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('export',):
             raise ValueError("must be one of enum values ('export')")
         return value
@@ -49,6 +52,9 @@ class ExportsGetResponseBody(BaseModel):
     @validator('status')
     def status_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('SCHEDULED', 'IN_PROGRESS', 'DONE', 'ERROR',):
             raise ValueError("must be one of enum values ('SCHEDULED', 'IN_PROGRESS', 'DONE', 'ERROR')")
         return value
@@ -56,8 +62,11 @@ class ExportsGetResponseBody(BaseModel):
     @validator('exported_object')
     def exported_object_validate_enum(cls, value):
         """Validates the enum"""
-        if value not in ('voucher_transactions',):
-            raise ValueError("must be one of enum values ('voucher_transactions')")
+        if value is None:
+            return value
+
+        if value not in ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions',):
+            raise ValueError("must be one of enum values ('voucher', 'redemption', 'customer', 'publication', 'order', 'points_expiration', 'voucher_transactions')")
         return value
 
     class Config:
@@ -90,6 +99,31 @@ class ExportsGetResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of parameters
         if self.parameters:
             _dict['parameters'] = self.parameters.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
+
+        # set to None if channel (nullable) is None
+        # and __fields_set__ contains the field
+        if self.channel is None and "channel" in self.__fields_set__:
+            _dict['channel'] = None
+
         # set to None if result (nullable) is None
         # and __fields_set__ contains the field
         if self.result is None and "result" in self.__fields_set__:
@@ -99,6 +133,16 @@ class ExportsGetResponseBody(BaseModel):
         # and __fields_set__ contains the field
         if self.user_id is None and "user_id" in self.__fields_set__:
             _dict['user_id'] = None
+
+        # set to None if exported_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exported_object is None and "exported_object" in self.__fields_set__:
+            _dict['exported_object'] = None
+
+        # set to None if parameters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.parameters is None and "parameters" in self.__fields_set__:
+            _dict['parameters'] = None
 
         return _dict
 
@@ -117,10 +161,10 @@ class ExportsGetResponseBody(BaseModel):
             "created_at": obj.get("created_at"),
             "status": obj.get("status"),
             "channel": obj.get("channel"),
-            "result": ExportBaseResult.from_dict(obj.get("result")) if obj.get("result") is not None else None,
+            "result": ExportsGetResponseBodyResult.from_dict(obj.get("result")) if obj.get("result") is not None else None,
             "user_id": obj.get("user_id"),
-            "exported_object": obj.get("exported_object") if obj.get("exported_object") is not None else 'voucher_transactions',
-            "parameters": LoyaltiesMembersTransactionsExportCreateRequestBodyParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None
+            "exported_object": obj.get("exported_object"),
+            "parameters": ExportsGetResponseBodyParameters.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None
         })
         return _obj
 

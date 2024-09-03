@@ -19,20 +19,23 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
 
 class ReferrerId(BaseModel):
     """
     ReferrerId
     """
-    id: StrictStr = Field(..., description="A unique identifier of an existing customer.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON.")
+    id: Optional[StrictStr] = Field(None, description="A unique identifier of an existing customer.")
+    object: Optional[StrictStr] = Field('customer', description="The type of the object represented by JSON.")
     __properties = ["id", "object"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('customer',):
             raise ValueError("must be one of enum values ('customer')")
         return value
@@ -61,6 +64,16 @@ class ReferrerId(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         return _dict
 
     @classmethod

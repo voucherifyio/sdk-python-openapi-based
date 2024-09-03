@@ -14,171 +14,202 @@
 
 
 from __future__ import annotations
-from inspect import getfullargspec
-import json
 import pprint
 import re  # noqa: F401
+import json
 
-from typing import Any, List, Optional
-from pydantic import BaseModel, Field, StrictStr, ValidationError, validator
-from voucherify_client.models.discount_amount import DiscountAmount
-from voucherify_client.models.discount_fixed import DiscountFixed
-from voucherify_client.models.discount_percent import DiscountPercent
-from voucherify_client.models.discount_unit import DiscountUnit
-from voucherify_client.models.discount_unit_multiple import DiscountUnitMultiple
-from typing import Union, Any, List, TYPE_CHECKING
-from pydantic import StrictStr, Field
 
-DISCOUNT_ONE_OF_SCHEMAS = ["DiscountAmount", "DiscountFixed", "DiscountPercent", "DiscountUnit", "DiscountUnitMultiple"]
+from typing import List, Optional, Union
+from pydantic import BaseModel, Field, StrictBool, StrictFloat, StrictInt, StrictStr, conlist, validator
+from voucherify_client.models.discount_unit_multiple_one_unit import DiscountUnitMultipleOneUnit
+from voucherify_client.models.simple_product_discount_unit import SimpleProductDiscountUnit
+from voucherify_client.models.simple_sku_discount_unit import SimpleSkuDiscountUnit
 
 class Discount(BaseModel):
     """
-    Contains information about discount.
+    Discount
     """
-    # data type: DiscountAmount
-    oneof_schema_1_validator: Optional[DiscountAmount] = None
-    # data type: DiscountUnit
-    oneof_schema_2_validator: Optional[DiscountUnit] = None
-    # data type: DiscountUnitMultiple
-    oneof_schema_3_validator: Optional[DiscountUnitMultiple] = None
-    # data type: DiscountPercent
-    oneof_schema_4_validator: Optional[DiscountPercent] = None
-    # data type: DiscountFixed
-    oneof_schema_5_validator: Optional[DiscountFixed] = None
-    if TYPE_CHECKING:
-        actual_instance: Union[DiscountAmount, DiscountFixed, DiscountPercent, DiscountUnit, DiscountUnitMultiple]
-    else:
-        actual_instance: Any
-    one_of_schemas: List[str] = Field(DISCOUNT_ONE_OF_SCHEMAS, const=True)
+    type: Optional[StrictStr] = None
+    amount_off: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Amount taken off the subtotal of a price. Value is multiplied by 100 to precisely represent 2 decimal places. For example, a $10 discount is written as 1000.")
+    amount_off_formula: Optional[StrictStr] = None
+    aggregated_amount_limit: Optional[StrictInt] = Field(None, description="Maximum discount amount per order.")
+    effect: Optional[StrictStr] = None
+    is_dynamic: Optional[StrictBool] = Field(None, description="Flag indicating whether the discount was calculated using a formula.")
+    unit_off: Optional[StrictInt] = Field(None, description="Number of units to be granted a full value discount.")
+    unit_off_formula: Optional[StrictStr] = None
+    unit_type: Optional[StrictStr] = Field(None, description="The product deemed as free, chosen from product inventory (e.g. time, items).")
+    product: Optional[SimpleProductDiscountUnit] = None
+    sku: Optional[SimpleSkuDiscountUnit] = None
+    units: Optional[conlist(DiscountUnitMultipleOneUnit)] = None
+    percent_off: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="The percent discount that the customer will receive.")
+    percent_off_formula: Optional[StrictStr] = None
+    amount_limit: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Upper limit allowed to be applied as a discount. Value is multiplied by 100 to precisely represent 2 decimal places. For example, a $6 maximum discount is written as 600.")
+    fixed_amount: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="Sets a fixed value for an order total or the item price. The value is multiplied by 100 to precisely represent 2 decimal places. For example, a $10 discount is written as 1000. If the fixed amount is calculated by the formula, i.e. the `fixed_amount_formula` parameter is present in the fixed amount definition, this value becomes the **fallback value**. As a result, if the formula cannot be calculated due to missing metadata, for example, this value will be used as the fixed value.")
+    fixed_amount_formula: Optional[StrictStr] = None
+    __properties = ["type", "amount_off", "amount_off_formula", "aggregated_amount_limit", "effect", "is_dynamic", "unit_off", "unit_off_formula", "unit_type", "product", "sku", "units", "percent_off", "percent_off_formula", "amount_limit", "fixed_amount", "fixed_amount_formula"]
+
+    @validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('AMOUNT', 'UNIT', 'PERCENT', 'FIXED',):
+            raise ValueError("must be one of enum values ('AMOUNT', 'UNIT', 'PERCENT', 'FIXED')")
+        return value
+
+    @validator('effect')
+    def effect_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in ('APPLY_TO_ORDER', 'APPLY_TO_ITEMS', 'APPLY_TO_ITEMS_PROPORTIONALLY', 'APPLY_TO_ITEMS_PROPORTIONALLY_BY_QUANTITY', 'APPLY_TO_ITEMS_BY_QUANTITY', 'ADD_MISSING_ITEMS', 'ADD_NEW_ITEMS', 'ADD_MANY_ITEMS',):
+            raise ValueError("must be one of enum values ('APPLY_TO_ORDER', 'APPLY_TO_ITEMS', 'APPLY_TO_ITEMS_PROPORTIONALLY', 'APPLY_TO_ITEMS_PROPORTIONALLY_BY_QUANTITY', 'APPLY_TO_ITEMS_BY_QUANTITY', 'ADD_MISSING_ITEMS', 'ADD_NEW_ITEMS', 'ADD_MANY_ITEMS')")
+        return value
 
     class Config:
+        """Pydantic configuration"""
+        allow_population_by_field_name = True
         validate_assignment = True
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
-            if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.dict(by_alias=True))
 
-    @validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
-        instance = Discount.construct()
-        error_messages = []
-        match = 0
-        # validate data type: DiscountAmount
-        if not isinstance(v, DiscountAmount):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `DiscountAmount`")
-        else:
-            match += 1
-        # validate data type: DiscountUnit
-        if not isinstance(v, DiscountUnit):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `DiscountUnit`")
-        else:
-            match += 1
-        # validate data type: DiscountUnitMultiple
-        if not isinstance(v, DiscountUnitMultiple):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `DiscountUnitMultiple`")
-        else:
-            match += 1
-        # validate data type: DiscountPercent
-        if not isinstance(v, DiscountPercent):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `DiscountPercent`")
-        else:
-            match += 1
-        # validate data type: DiscountFixed
-        if not isinstance(v, DiscountFixed):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `DiscountFixed`")
-        else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in Discount with oneOf schemas: DiscountAmount, DiscountFixed, DiscountPercent, DiscountUnit, DiscountUnitMultiple. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when setting `actual_instance` in Discount with oneOf schemas: DiscountAmount, DiscountFixed, DiscountPercent, DiscountUnit, DiscountUnitMultiple. Details: " + ", ".join(error_messages))
-        else:
-            return v
-
-    @classmethod
-    def from_dict(cls, obj: dict) -> Discount:
-        return cls.from_json(json.dumps(obj))
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(self.to_dict())
 
     @classmethod
     def from_json(cls, json_str: str) -> Discount:
-        """Returns the object represented by the json string"""
-        instance = Discount.construct()
-        error_messages = []
-        match = 0
+        """Create an instance of Discount from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-        # deserialize data into DiscountAmount
-        try:
-            instance.actual_instance = DiscountAmount.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into DiscountUnit
-        try:
-            instance.actual_instance = DiscountUnit.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into DiscountUnitMultiple
-        try:
-            instance.actual_instance = DiscountUnitMultiple.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into DiscountPercent
-        try:
-            instance.actual_instance = DiscountPercent.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into DiscountFixed
-        try:
-            instance.actual_instance = DiscountFixed.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+    def to_dict(self):
+        """Returns the dictionary representation of the model using alias"""
+        _dict = self.dict(by_alias=True,
+                          exclude={
+                          },
+                          exclude_none=True)
+        # override the default output from pydantic by calling `to_dict()` of product
+        if self.product:
+            _dict['product'] = self.product.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of sku
+        if self.sku:
+            _dict['sku'] = self.sku.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in units (list)
+        _items = []
+        if self.units:
+            for _item in self.units:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['units'] = _items
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into Discount with oneOf schemas: DiscountAmount, DiscountFixed, DiscountPercent, DiscountUnit, DiscountUnitMultiple. Details: " + ", ".join(error_messages))
-        elif match == 0:
-            # no match
-            raise ValueError("No match found when deserializing the JSON string into Discount with oneOf schemas: DiscountAmount, DiscountFixed, DiscountPercent, DiscountUnit, DiscountUnitMultiple. Details: " + ", ".join(error_messages))
-        else:
-            return instance
+        # set to None if amount_off (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount_off is None and "amount_off" in self.__fields_set__:
+            _dict['amount_off'] = None
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        # set to None if amount_off_formula (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount_off_formula is None and "amount_off_formula" in self.__fields_set__:
+            _dict['amount_off_formula'] = None
 
-        to_json = getattr(self.actual_instance, "to_json", None)
-        if callable(to_json):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+        # set to None if aggregated_amount_limit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.aggregated_amount_limit is None and "aggregated_amount_limit" in self.__fields_set__:
+            _dict['aggregated_amount_limit'] = None
 
-    def to_dict(self) -> dict:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+        # set to None if effect (nullable) is None
+        # and __fields_set__ contains the field
+        if self.effect is None and "effect" in self.__fields_set__:
+            _dict['effect'] = None
+
+        # set to None if is_dynamic (nullable) is None
+        # and __fields_set__ contains the field
+        if self.is_dynamic is None and "is_dynamic" in self.__fields_set__:
+            _dict['is_dynamic'] = None
+
+        # set to None if unit_off (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unit_off is None and "unit_off" in self.__fields_set__:
+            _dict['unit_off'] = None
+
+        # set to None if unit_off_formula (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unit_off_formula is None and "unit_off_formula" in self.__fields_set__:
+            _dict['unit_off_formula'] = None
+
+        # set to None if unit_type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.unit_type is None and "unit_type" in self.__fields_set__:
+            _dict['unit_type'] = None
+
+        # set to None if units (nullable) is None
+        # and __fields_set__ contains the field
+        if self.units is None and "units" in self.__fields_set__:
+            _dict['units'] = None
+
+        # set to None if percent_off (nullable) is None
+        # and __fields_set__ contains the field
+        if self.percent_off is None and "percent_off" in self.__fields_set__:
+            _dict['percent_off'] = None
+
+        # set to None if percent_off_formula (nullable) is None
+        # and __fields_set__ contains the field
+        if self.percent_off_formula is None and "percent_off_formula" in self.__fields_set__:
+            _dict['percent_off_formula'] = None
+
+        # set to None if amount_limit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount_limit is None and "amount_limit" in self.__fields_set__:
+            _dict['amount_limit'] = None
+
+        # set to None if fixed_amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.fixed_amount is None and "fixed_amount" in self.__fields_set__:
+            _dict['fixed_amount'] = None
+
+        # set to None if fixed_amount_formula (nullable) is None
+        # and __fields_set__ contains the field
+        if self.fixed_amount_formula is None and "fixed_amount_formula" in self.__fields_set__:
+            _dict['fixed_amount_formula'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: dict) -> Discount:
+        """Create an instance of Discount from a dict"""
+        if obj is None:
             return None
 
-        to_dict = getattr(self.actual_instance, "to_dict", None)
-        if callable(to_dict):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return Discount.parse_obj(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.dict())
+        _obj = Discount.parse_obj({
+            "type": obj.get("type"),
+            "amount_off": obj.get("amount_off"),
+            "amount_off_formula": obj.get("amount_off_formula"),
+            "aggregated_amount_limit": obj.get("aggregated_amount_limit"),
+            "effect": obj.get("effect"),
+            "is_dynamic": obj.get("is_dynamic"),
+            "unit_off": obj.get("unit_off"),
+            "unit_off_formula": obj.get("unit_off_formula"),
+            "unit_type": obj.get("unit_type"),
+            "product": SimpleProductDiscountUnit.from_dict(obj.get("product")) if obj.get("product") is not None else None,
+            "sku": SimpleSkuDiscountUnit.from_dict(obj.get("sku")) if obj.get("sku") is not None else None,
+            "units": [DiscountUnitMultipleOneUnit.from_dict(_item) for _item in obj.get("units")] if obj.get("units") is not None else None,
+            "percent_off": obj.get("percent_off"),
+            "percent_off_formula": obj.get("percent_off_formula"),
+            "amount_limit": obj.get("amount_limit"),
+            "fixed_amount": obj.get("fixed_amount"),
+            "fixed_amount_formula": obj.get("fixed_amount_formula")
+        })
+        return _obj
 
 

@@ -19,23 +19,26 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictInt, conlist, constr, validator
 from voucherify_client.models.loyalties_members_points_expiration_list_response_body_data_item import LoyaltiesMembersPointsExpirationListResponseBodyDataItem
 
 class LoyaltiesMembersPointsExpirationListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/loyalties/{campaignId}/members/{memberId}/points-expiration`.  # noqa: E501
+    Response body schema for **GET** `v1/loyalties/{campaignId}/members/{memberId}/points-expiration`.  # noqa: E501
     """
-    object: constr(strict=True) = Field(..., description="The type of object represented by JSON. This object stores information about loyalty points expiration buckets in a dictionary.")
-    data_ref: constr(strict=True) = Field(..., description="Identifies the name of the attribute that contains the array of loyalty points expiration bucket objects.")
-    data: conlist(LoyaltiesMembersPointsExpirationListResponseBodyDataItem) = Field(..., description="Contains array of loyalty points expiration buckets.")
-    total: StrictInt = Field(..., description="Total number of point expiration buckets.")
+    object: Optional[constr(strict=True)] = Field('list', description="The type of the object represented by JSON. This object stores information about loyalty points expiration buckets in a dictionary.")
+    data_ref: Optional[constr(strict=True)] = Field('data', description="Identifies the name of the attribute that contains the array of loyalty points expiration bucket objects.")
+    data: Optional[conlist(LoyaltiesMembersPointsExpirationListResponseBodyDataItem)] = Field(None, description="Contains array of loyalty points expiration buckets.")
+    total: Optional[StrictInt] = Field(None, description="Total number of point expiration buckets.")
     __properties = ["object", "data_ref", "data", "total"]
 
     @validator('object')
     def object_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"list", value):
             raise ValueError(r"must validate the regular expression /list/")
         return value
@@ -43,6 +46,9 @@ class LoyaltiesMembersPointsExpirationListResponseBody(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('list',):
             raise ValueError("must be one of enum values ('list')")
         return value
@@ -50,6 +56,9 @@ class LoyaltiesMembersPointsExpirationListResponseBody(BaseModel):
     @validator('data_ref')
     def data_ref_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"data", value):
             raise ValueError(r"must validate the regular expression /data/")
         return value
@@ -57,6 +66,9 @@ class LoyaltiesMembersPointsExpirationListResponseBody(BaseModel):
     @validator('data_ref')
     def data_ref_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('data',):
             raise ValueError("must be one of enum values ('data')")
         return value
@@ -92,6 +104,26 @@ class LoyaltiesMembersPointsExpirationListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['data'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if data (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data is None and "data" in self.__fields_set__:
+            _dict['data'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod

@@ -19,19 +19,22 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
 
 class LoyaltyTiersExpirationAllStartDate(BaseModel):
     """
     Defines the conditions for the start date of the tier.  # noqa: E501
     """
-    type: StrictStr = Field(..., description="What triggers the tier to be valid for a customer.     `IMMEDIATE`: After reaching the minimum required points.  `NEXT_PERIOD`: When the next qualification period starts.")
+    type: Optional[StrictStr] = Field(None, description="What triggers the tier to be valid for a customer.     `IMMEDIATE`: After reaching the minimum required points.  `NEXT_PERIOD`: When the next qualification period starts.")
     __properties = ["type"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('IMMEDIATE', 'NEXT_PERIOD',):
             raise ValueError("must be one of enum values ('IMMEDIATE', 'NEXT_PERIOD')")
         return value
@@ -60,6 +63,11 @@ class LoyaltyTiersExpirationAllStartDate(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
         return _dict
 
     @classmethod

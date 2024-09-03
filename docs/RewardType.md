@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**campaign** | [**RewardTypeCampaignCampaign**](RewardTypeCampaignCampaign.md) |  | 
-**coin** | [**RewardTypeCoinCoin**](RewardTypeCoinCoin.md) |  | 
-**product** | [**RewardTypeMaterialProduct**](RewardTypeMaterialProduct.md) |  | 
+**campaign** | [**RewardTypeCampaign**](RewardTypeCampaign.md) |  | [optional] 
+**coin** | [**RewardTypeCoin**](RewardTypeCoin.md) |  | [optional] 
+**product** | [**RewardTypeProduct**](RewardTypeProduct.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

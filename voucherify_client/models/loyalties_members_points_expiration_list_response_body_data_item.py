@@ -31,11 +31,11 @@ class LoyaltiesMembersPointsExpirationListResponseBodyDataItem(BaseModel):
     voucher_id: StrictStr = Field(..., description="Unique parent loyalty card ID.")
     campaign_id: StrictStr = Field(..., description=" Unique parent campaign ID.")
     bucket: LoyaltiesMembersPointsExpirationListResponseBodyDataItemBucket = Field(...)
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the loyalty points bucket object was created in ISO 8601 format.")
+    created_at: datetime = Field(..., description="Timestamp representing the date and time when the loyalty points bucket object was created. The value is shown in the ISO 8601 format.")
     status: StrictStr = Field(..., description="Loyalty points bucket point status.")
     expires_at: datetime = Field(..., description="Date when the number of points defined in the bucket object are due to expire.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty points bucket object was updated in ISO 8601 format.")
-    object: constr(strict=True) = Field(..., description="The type of object represented by JSON. This object stores information about the loyalty points bucket.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty points bucket object was updated. The value is shown in the ISO 8601 format.")
+    object: constr(strict=True) = Field(..., description="The type of the object represented by JSON. This object stores information about the loyalty points bucket.")
     __properties = ["id", "voucher_id", "campaign_id", "bucket", "created_at", "status", "expires_at", "updated_at", "object"]
 
     @validator('object')

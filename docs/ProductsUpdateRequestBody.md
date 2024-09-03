@@ -1,6 +1,6 @@
 # ProductsUpdateRequestBody
 
-Request schema for **PUT** `/products`.
+Request schema for **PUT** `v1/products`.
 
 ## Properties
 Name | Type | Description | Notes

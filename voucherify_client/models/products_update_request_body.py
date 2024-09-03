@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
 
 class ProductsUpdateRequestBody(BaseModel):
     """
-    Request schema for **PUT** `/products`.  # noqa: E501
+    Request schema for **PUT** `v1/products`.  # noqa: E501
     """
     name: Optional[StrictStr] = Field(None, description="Unique user-defined product name.")
     price: Optional[StrictInt] = Field(None, description="Unit price. It is represented by a value multiplied by 100 to accurately reflect 2 decimal places, such as `$100.00` being expressed as `10000`.")
@@ -57,6 +57,31 @@ class ProductsUpdateRequestBody(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if price (nullable) is None
+        # and __fields_set__ contains the field
+        if self.price is None and "price" in self.__fields_set__:
+            _dict['price'] = None
+
+        # set to None if attributes (nullable) is None
+        # and __fields_set__ contains the field
+        if self.attributes is None and "attributes" in self.__fields_set__:
+            _dict['attributes'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if image_url (nullable) is None
+        # and __fields_set__ contains the field
+        if self.image_url is None and "image_url" in self.__fields_set__:
+            _dict['image_url'] = None
+
         return _dict
 
     @classmethod

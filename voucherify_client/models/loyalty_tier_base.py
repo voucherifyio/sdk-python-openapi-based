@@ -27,10 +27,10 @@ class LoyaltyTierBase(BaseModel):
     """
     LoyaltyTierBase
     """
-    name: StrictStr = Field(..., description="Loyalty Tier name.")
+    name: Optional[StrictStr] = Field(None, description="Loyalty Tier name.")
     earning_rules: Optional[Dict[str, Any]] = Field(None, description="Contains a list of earning rule IDs and their points mapping for the given earning rule.")
     rewards: Optional[Dict[str, Any]] = Field(None, description="Contains a list of reward IDs and their points mapping for the given reward.")
-    points: LoyaltyTierBasePoints = Field(...)
+    points: Optional[LoyaltyTierBasePoints] = None
     __properties = ["name", "earning_rules", "rewards", "points"]
 
     class Config:
@@ -60,6 +60,26 @@ class LoyaltyTierBase(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of points
         if self.points:
             _dict['points'] = self.points.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if earning_rules (nullable) is None
+        # and __fields_set__ contains the field
+        if self.earning_rules is None and "earning_rules" in self.__fields_set__:
+            _dict['earning_rules'] = None
+
+        # set to None if rewards (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rewards is None and "rewards" in self.__fields_set__:
+            _dict['rewards'] = None
+
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
         return _dict
 
     @classmethod

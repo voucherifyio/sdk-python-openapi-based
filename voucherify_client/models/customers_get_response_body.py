@@ -21,15 +21,15 @@ import json
 from datetime import date, datetime
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictStr, validator
-from voucherify_client.models.customer_base_address import CustomerBaseAddress
 from voucherify_client.models.customer_loyalty import CustomerLoyalty
 from voucherify_client.models.customer_referrals import CustomerReferrals
-from voucherify_client.models.customer_response_data_assets import CustomerResponseDataAssets
 from voucherify_client.models.customer_summary import CustomerSummary
+from voucherify_client.models.customers_get_response_body_address import CustomersGetResponseBodyAddress
+from voucherify_client.models.customers_get_response_body_assets import CustomersGetResponseBodyAssets
 
 class CustomersGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/customers/{customerId}`.  # noqa: E501
+    Response body schema for **GET** `v1/customers/{customerId}`.  # noqa: E501
     """
     id: Optional[StrictStr] = Field(None, description="The ID of an existing customer that will be linked to redemption in this request.")
     source_id: Optional[StrictStr] = Field(None, description="A unique identifier of the customer who validates a voucher. It can be a customer ID or email from a CRM system, database, or a third-party service. If you also pass a customer ID (unique ID assigned by Voucherify), the source ID will be ignored.")
@@ -37,23 +37,26 @@ class CustomersGetResponseBody(BaseModel):
     loyalty: Optional[CustomerLoyalty] = None
     referrals: Optional[CustomerReferrals] = None
     system_metadata: Optional[Dict[str, Any]] = Field(None, description="Object used to store system metadata information.")
-    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the customer was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the customer was updated in ISO 8601 format.")
-    assets: Optional[CustomerResponseDataAssets] = None
-    object: StrictStr = Field(..., description="The type of object represented by JSON.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the customer was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the customer was updated. The value is shown in the ISO 8601 format.")
+    assets: Optional[CustomersGetResponseBodyAssets] = None
+    object: Optional[StrictStr] = Field('customer', description="The type of the object represented by JSON.")
     name: Optional[StrictStr] = Field(None, description="Customer's first and last name.")
     description: Optional[StrictStr] = Field(None, description="An arbitrary string that you can attach to a customer object.")
     email: Optional[StrictStr] = Field(None, description="Customer's email address.")
     phone: Optional[StrictStr] = Field(None, description="Customer's phone number. This parameter is mandatory when you try to send out codes to customers via an SMS channel.")
-    birthday: Optional[date] = Field(None, description="*Deprecated* Customer's birthdate; format YYYY-MM-DD.")
+    birthday: Optional[date] = Field(None, description="`Deprecated`. ~~Customer's birthdate; format YYYY-MM-DD~~.")
     birthdate: Optional[date] = Field(None, description="Customer's birthdate; format YYYY-MM-DD.")
-    address: Optional[CustomerBaseAddress] = None
+    address: Optional[CustomersGetResponseBodyAddress] = None
     metadata: Optional[Dict[str, Any]] = Field(None, description="A set of custom key/value pairs that you can attach to a customer. The metadata object stores all custom attributes assigned to the customer. It can be useful for storing additional information about the customer in a structured format. This metadata can be used for validating whether the customer qualifies for a discount or it can be used in building customer segments.")
     __properties = ["id", "source_id", "summary", "loyalty", "referrals", "system_metadata", "created_at", "updated_at", "assets", "object", "name", "description", "email", "phone", "birthday", "birthdate", "address", "metadata"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('customer',):
             raise ValueError("must be one of enum values ('customer')")
         return value
@@ -97,25 +100,80 @@ class CustomersGetResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
-        # set to None if summary (nullable) is None
+        # set to None if id (nullable) is None
         # and __fields_set__ contains the field
-        if self.summary is None and "summary" in self.__fields_set__:
-            _dict['summary'] = None
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
 
-        # set to None if loyalty (nullable) is None
+        # set to None if source_id (nullable) is None
         # and __fields_set__ contains the field
-        if self.loyalty is None and "loyalty" in self.__fields_set__:
-            _dict['loyalty'] = None
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
 
-        # set to None if referrals (nullable) is None
+        # set to None if system_metadata (nullable) is None
         # and __fields_set__ contains the field
-        if self.referrals is None and "referrals" in self.__fields_set__:
-            _dict['referrals'] = None
+        if self.system_metadata is None and "system_metadata" in self.__fields_set__:
+            _dict['system_metadata'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
+        # set to None if assets (nullable) is None
+        # and __fields_set__ contains the field
+        if self.assets is None and "assets" in self.__fields_set__:
+            _dict['assets'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if description (nullable) is None
+        # and __fields_set__ contains the field
+        if self.description is None and "description" in self.__fields_set__:
+            _dict['description'] = None
+
+        # set to None if email (nullable) is None
+        # and __fields_set__ contains the field
+        if self.email is None and "email" in self.__fields_set__:
+            _dict['email'] = None
+
+        # set to None if phone (nullable) is None
+        # and __fields_set__ contains the field
+        if self.phone is None and "phone" in self.__fields_set__:
+            _dict['phone'] = None
+
+        # set to None if birthday (nullable) is None
+        # and __fields_set__ contains the field
+        if self.birthday is None and "birthday" in self.__fields_set__:
+            _dict['birthday'] = None
+
+        # set to None if birthdate (nullable) is None
+        # and __fields_set__ contains the field
+        if self.birthdate is None and "birthdate" in self.__fields_set__:
+            _dict['birthdate'] = None
 
         # set to None if address (nullable) is None
         # and __fields_set__ contains the field
         if self.address is None and "address" in self.__fields_set__:
             _dict['address'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
 
         return _dict
 
@@ -137,7 +195,7 @@ class CustomersGetResponseBody(BaseModel):
             "system_metadata": obj.get("system_metadata"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),
-            "assets": CustomerResponseDataAssets.from_dict(obj.get("assets")) if obj.get("assets") is not None else None,
+            "assets": CustomersGetResponseBodyAssets.from_dict(obj.get("assets")) if obj.get("assets") is not None else None,
             "object": obj.get("object") if obj.get("object") is not None else 'customer',
             "name": obj.get("name"),
             "description": obj.get("description"),
@@ -145,7 +203,7 @@ class CustomersGetResponseBody(BaseModel):
             "phone": obj.get("phone"),
             "birthday": obj.get("birthday"),
             "birthdate": obj.get("birthdate"),
-            "address": CustomerBaseAddress.from_dict(obj.get("address")) if obj.get("address") is not None else None,
+            "address": CustomersGetResponseBodyAddress.from_dict(obj.get("address")) if obj.get("address") is not None else None,
             "metadata": obj.get("metadata")
         })
         return _obj

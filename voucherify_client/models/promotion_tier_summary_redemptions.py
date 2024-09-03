@@ -53,6 +53,11 @@ class PromotionTierSummaryRedemptions(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if total_redeemed (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total_redeemed is None and "total_redeemed" in self.__fields_set__:
+            _dict['total_redeemed'] = None
+
         return _dict
 
     @classmethod

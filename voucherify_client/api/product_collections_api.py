@@ -475,7 +475,7 @@ class ProductCollectionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_product_collections(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ProductCollectionsListResponseBody:  # noqa: E501
+    def list_product_collections(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ProductCollectionsListResponseBody:  # noqa: E501
         """List Product Collections  # noqa: E501
 
         This method returns a list of product collections.  # noqa: E501
@@ -485,11 +485,11 @@ class ProductCollectionsApi:
         >>> thread = api.list_product_collections(limit, page, order, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -509,7 +509,7 @@ class ProductCollectionsApi:
         return self.list_product_collections_with_http_info(limit, page, order, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_product_collections_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_product_collections_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Product Collections  # noqa: E501
 
         This method returns a list of product collections.  # noqa: E501
@@ -519,11 +519,11 @@ class ProductCollectionsApi:
         >>> thread = api.list_product_collections_with_http_info(limit, page, order, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -631,7 +631,7 @@ class ProductCollectionsApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_products_in_collection(self, product_collection_id : Annotated[StrictStr, Field(..., description="Unique product collection ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format.")] = None, **kwargs) -> ProductCollectionsProductsListResponseBody:  # noqa: E501
+    def list_products_in_collection(self, product_collection_id : Annotated[StrictStr, Field(..., description="Unique product collection ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format.")] = None, **kwargs) -> ProductCollectionsProductsListResponseBody:  # noqa: E501
         """List Products in Collection  # noqa: E501
 
         Retrieves list of products from a product collection; works for both dynamic and static product collections.  # noqa: E501
@@ -643,11 +643,11 @@ class ProductCollectionsApi:
 
         :param product_collection_id: Unique product collection ID. (required)
         :type product_collection_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param starting_after: Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format.
         :type starting_after: datetime
@@ -669,7 +669,7 @@ class ProductCollectionsApi:
         return self.list_products_in_collection_with_http_info(product_collection_id, limit, page, order, starting_after, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_products_in_collection_with_http_info(self, product_collection_id : Annotated[StrictStr, Field(..., description="Unique product collection ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_products_in_collection_with_http_info(self, product_collection_id : Annotated[StrictStr, Field(..., description="Unique product collection ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrder], Field(description="Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, starting_after : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Products in Collection  # noqa: E501
 
         Retrieves list of products from a product collection; works for both dynamic and static product collections.  # noqa: E501
@@ -681,11 +681,11 @@ class ProductCollectionsApi:
 
         :param product_collection_id: Unique product collection ID. (required)
         :type product_collection_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: Sorts the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrder
         :param starting_after: Timestamp representing the date and time to use in starting_after cursor to get more data. Represented in ISO 8601 format.
         :type starting_after: datetime

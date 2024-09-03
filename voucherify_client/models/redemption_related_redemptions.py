@@ -21,7 +21,7 @@ import json
 
 from typing import List, Optional
 from pydantic import BaseModel, conlist
-from voucherify_client.models.redemption_related_redemptions_item import RedemptionRelatedRedemptionsItem
+from voucherify_client.models.redemption_related_redemptions_redemptions_item import RedemptionRelatedRedemptionsRedemptionsItem
 from voucherify_client.models.redemption_related_redemptions_rollbacks_item import RedemptionRelatedRedemptionsRollbacksItem
 
 class RedemptionRelatedRedemptions(BaseModel):
@@ -29,7 +29,7 @@ class RedemptionRelatedRedemptions(BaseModel):
     RedemptionRelatedRedemptions
     """
     rollbacks: Optional[conlist(RedemptionRelatedRedemptionsRollbacksItem)] = None
-    redemptions: Optional[conlist(RedemptionRelatedRedemptionsItem)] = None
+    redemptions: Optional[conlist(RedemptionRelatedRedemptionsRedemptionsItem)] = None
     __properties = ["rollbacks", "redemptions"]
 
     class Config:
@@ -70,6 +70,16 @@ class RedemptionRelatedRedemptions(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['redemptions'] = _items
+        # set to None if rollbacks (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rollbacks is None and "rollbacks" in self.__fields_set__:
+            _dict['rollbacks'] = None
+
+        # set to None if redemptions (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemptions is None and "redemptions" in self.__fields_set__:
+            _dict['redemptions'] = None
+
         return _dict
 
     @classmethod
@@ -83,7 +93,7 @@ class RedemptionRelatedRedemptions(BaseModel):
 
         _obj = RedemptionRelatedRedemptions.parse_obj({
             "rollbacks": [RedemptionRelatedRedemptionsRollbacksItem.from_dict(_item) for _item in obj.get("rollbacks")] if obj.get("rollbacks") is not None else None,
-            "redemptions": [RedemptionRelatedRedemptionsItem.from_dict(_item) for _item in obj.get("redemptions")] if obj.get("redemptions") is not None else None
+            "redemptions": [RedemptionRelatedRedemptionsRedemptionsItem.from_dict(_item) for _item in obj.get("redemptions")] if obj.get("redemptions") is not None else None
         })
         return _obj
 

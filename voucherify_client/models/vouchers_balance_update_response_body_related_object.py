@@ -19,20 +19,23 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr, validator
 
 class VouchersBalanceUpdateResponseBodyRelatedObject(BaseModel):
     """
     Defines the resource that is being modified with the values that are returned in the balance object.  # noqa: E501
     """
-    type: StrictStr = Field(..., description="The object being modified, i.e. `voucher`.")
-    id: StrictStr = Field(..., description="Identifies the voucher that is being modified, this is the ID that was assigned by the Voucherify API.")
+    type: Optional[StrictStr] = Field('voucher', description="The object being modified, i.e. `voucher`.")
+    id: Optional[StrictStr] = Field(None, description="Identifies the voucher that is being modified, this is the ID that was assigned by the Voucherify API.")
     __properties = ["type", "id"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('voucher',):
             raise ValueError("must be one of enum values ('voucher')")
         return value
@@ -61,6 +64,16 @@ class VouchersBalanceUpdateResponseBodyRelatedObject(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
         return _dict
 
     @classmethod

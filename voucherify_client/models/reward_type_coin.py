@@ -19,16 +19,16 @@ import re  # noqa: F401
 import json
 
 
-
-from pydantic import BaseModel, Field
-from voucherify_client.models.reward_type_coin_coin import RewardTypeCoinCoin
+from typing import Optional, Union
+from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
 class RewardTypeCoin(BaseModel):
     """
-    RewardTypeCoin
+    Defines the ratio by mapping the number of loyalty points in points_ratio to a predefined cash amount in exchange_ratio.  # noqa: E501
     """
-    coin: RewardTypeCoinCoin = Field(...)
-    __properties = ["coin"]
+    exchange_ratio: Optional[Union[StrictFloat, StrictInt]] = Field(None, description="The cash equivalent of the points defined in the points_ratio property.")
+    points_ratio: Optional[StrictInt] = Field(None, description="The number of loyalty points that will map to the predefined cash amount defined by the exchange_ratio property.")
+    __properties = ["exchange_ratio", "points_ratio"]
 
     class Config:
         """Pydantic configuration"""
@@ -54,9 +54,16 @@ class RewardTypeCoin(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
-        # override the default output from pydantic by calling `to_dict()` of coin
-        if self.coin:
-            _dict['coin'] = self.coin.to_dict()
+        # set to None if exchange_ratio (nullable) is None
+        # and __fields_set__ contains the field
+        if self.exchange_ratio is None and "exchange_ratio" in self.__fields_set__:
+            _dict['exchange_ratio'] = None
+
+        # set to None if points_ratio (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points_ratio is None and "points_ratio" in self.__fields_set__:
+            _dict['points_ratio'] = None
+
         return _dict
 
     @classmethod
@@ -69,7 +76,8 @@ class RewardTypeCoin(BaseModel):
             return RewardTypeCoin.parse_obj(obj)
 
         _obj = RewardTypeCoin.parse_obj({
-            "coin": RewardTypeCoinCoin.from_dict(obj.get("coin")) if obj.get("coin") is not None else None
+            "exchange_ratio": obj.get("exchange_ratio"),
+            "points_ratio": obj.get("points_ratio")
         })
         return _obj
 

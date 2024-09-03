@@ -21,31 +21,34 @@ import json
 from datetime import datetime
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictStr, validator
-from voucherify_client.models.loyalty_tier_all_of_config import LoyaltyTierAllOfConfig
-from voucherify_client.models.loyalty_tier_base_points import LoyaltyTierBasePoints
+from voucherify_client.models.loyalties_tiers_get_response_body_config import LoyaltiesTiersGetResponseBodyConfig
+from voucherify_client.models.loyalties_tiers_get_response_body_points import LoyaltiesTiersGetResponseBodyPoints
 from voucherify_client.models.loyalty_tier_expiration import LoyaltyTierExpiration
 
 class LoyaltiesTiersGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/loyalties/{campaignId}/tiers/{loyaltyTierId}`.  # noqa: E501
+    Response body schema for **GET** `v1/loyalties/{campaignId}/tiers/{loyaltyTierId}`.  # noqa: E501
     """
-    name: StrictStr = Field(..., description="Loyalty Tier name.")
+    name: Optional[StrictStr] = Field(None, description="Loyalty Tier name.")
     earning_rules: Optional[Dict[str, Any]] = Field(None, description="Contains a list of earning rule IDs and their points mapping for the given earning rule.")
     rewards: Optional[Dict[str, Any]] = Field(None, description="Contains a list of reward IDs and their points mapping for the given reward.")
-    points: LoyaltyTierBasePoints = Field(...)
-    id: StrictStr = Field(..., description="Unique loyalty tier ID.")
-    campaign_id: StrictStr = Field(..., description="Unique parent campaign ID.")
+    points: Optional[LoyaltiesTiersGetResponseBodyPoints] = None
+    id: Optional[StrictStr] = Field(None, description="Unique loyalty tier ID.")
+    campaign_id: Optional[StrictStr] = Field(None, description="Unique parent campaign ID.")
     metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the loyalty tier. A set of key/value pairs that you can attach to a loyalty tier object. It can be useful for storing additional information about the loyalty tier in a structured format.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the loyalty tier was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty tier was updated in ISO 8601 format.")
-    config: LoyaltyTierAllOfConfig = Field(...)
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty tier was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the loyalty tier was updated. The value is shown in the ISO 8601 format.")
+    config: Optional[LoyaltiesTiersGetResponseBodyConfig] = None
     expiration: Optional[LoyaltyTierExpiration] = None
-    object: StrictStr = Field(..., description="The type of object represented by JSON. This object stores information about the loyalty.")
+    object: Optional[StrictStr] = Field('loyalty_tier', description="The type of the object represented by JSON. This object stores information about the loyalty.")
     __properties = ["name", "earning_rules", "rewards", "points", "id", "campaign_id", "metadata", "created_at", "updated_at", "config", "expiration", "object"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('loyalty_tier',):
             raise ValueError("must be one of enum values ('loyalty_tier')")
         return value
@@ -83,15 +86,60 @@ class LoyaltiesTiersGetResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of expiration
         if self.expiration:
             _dict['expiration'] = self.expiration.to_dict()
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if earning_rules (nullable) is None
+        # and __fields_set__ contains the field
+        if self.earning_rules is None and "earning_rules" in self.__fields_set__:
+            _dict['earning_rules'] = None
+
+        # set to None if rewards (nullable) is None
+        # and __fields_set__ contains the field
+        if self.rewards is None and "rewards" in self.__fields_set__:
+            _dict['rewards'] = None
+
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if campaign_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_id is None and "campaign_id" in self.__fields_set__:
+            _dict['campaign_id'] = None
+
         # set to None if metadata (nullable) is None
         # and __fields_set__ contains the field
         if self.metadata is None and "metadata" in self.__fields_set__:
             _dict['metadata'] = None
 
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
         # set to None if updated_at (nullable) is None
         # and __fields_set__ contains the field
         if self.updated_at is None and "updated_at" in self.__fields_set__:
             _dict['updated_at'] = None
+
+        # set to None if config (nullable) is None
+        # and __fields_set__ contains the field
+        if self.config is None and "config" in self.__fields_set__:
+            _dict['config'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
 
         return _dict
 
@@ -108,13 +156,13 @@ class LoyaltiesTiersGetResponseBody(BaseModel):
             "name": obj.get("name"),
             "earning_rules": obj.get("earning_rules"),
             "rewards": obj.get("rewards"),
-            "points": LoyaltyTierBasePoints.from_dict(obj.get("points")) if obj.get("points") is not None else None,
+            "points": LoyaltiesTiersGetResponseBodyPoints.from_dict(obj.get("points")) if obj.get("points") is not None else None,
             "id": obj.get("id"),
             "campaign_id": obj.get("campaign_id"),
             "metadata": obj.get("metadata"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),
-            "config": LoyaltyTierAllOfConfig.from_dict(obj.get("config")) if obj.get("config") is not None else None,
+            "config": LoyaltiesTiersGetResponseBodyConfig.from_dict(obj.get("config")) if obj.get("config") is not None else None,
             "expiration": LoyaltyTierExpiration.from_dict(obj.get("expiration")) if obj.get("expiration") is not None else None,
             "object": obj.get("object") if obj.get("object") is not None else 'loyalty_tier'
         })

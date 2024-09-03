@@ -24,9 +24,9 @@ from pydantic import BaseModel, Field, StrictInt
 
 class RedemptionGift(BaseModel):
     """
-    Contains the amount being subtracted from the gift card for the redemption.  # noqa: E501
+    Contains the amount subtracted from the gift card for the redemption.  # noqa: E501
     """
-    amount: Optional[StrictInt] = Field(None, description="The amount subtracted from the gift card expressed as the smallest currency unit (e.g. 100 cents for $1.00).")
+    amount: Optional[StrictInt] = Field(None, description="Amount subtracted from the gift card as a result of the redemption. The amount is expressed as the smallest currency unit (e.g. 100 cents for $1.00).")
     __properties = ["amount"]
 
     class Config:
@@ -53,6 +53,11 @@ class RedemptionGift(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if amount (nullable) is None
+        # and __fields_set__ contains the field
+        if self.amount is None and "amount" in self.__fields_set__:
+            _dict['amount'] = None
+
         return _dict
 
     @classmethod

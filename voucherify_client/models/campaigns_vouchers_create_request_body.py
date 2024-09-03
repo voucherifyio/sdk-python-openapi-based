@@ -21,15 +21,15 @@ import json
 from datetime import datetime
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictStr
-from voucherify_client.models.campaigns_import_voucher_item_redemption import CampaignsImportVoucherItemRedemption
+from voucherify_client.models.campaigns_vouchers_create_request_body_redemption import CampaignsVouchersCreateRequestBodyRedemption
 
 class CampaignsVouchersCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/campaigns/{campaignId}/vouchers/{code}`.  # noqa: E501
+    Request body schema for **POST** `v1/campaigns/{campaignId}/vouchers/{code}`.  # noqa: E501
     """
     category: Optional[StrictStr] = Field(None, description="The category assigned to the campaign. Either pass this parameter OR the `category_id`.")
     metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the voucher. A set of key/value pairs that you can attach to a voucher object. It can be useful for storing additional information about the voucher in a structured format.")
-    redemption: Optional[CampaignsImportVoucherItemRedemption] = None
+    redemption: Optional[CampaignsVouchersCreateRequestBodyRedemption] = None
     additional_info: Optional[StrictStr] = Field(None, description="An optional field to keep any extra textual information about the code such as a code description and details.")
     start_date: Optional[datetime] = Field(None, description="Activation timestamp defines when the voucher starts to be active in ISO 8601 format. Voucher is *inactive before* this date. ")
     expiration_date: Optional[datetime] = Field(None, description="Expiration timestamp defines when the voucher expires in ISO 8601 format.  Voucher is *inactive after* this date.")
@@ -62,6 +62,36 @@ class CampaignsVouchersCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of redemption
         if self.redemption:
             _dict['redemption'] = self.redemption.to_dict()
+        # set to None if category (nullable) is None
+        # and __fields_set__ contains the field
+        if self.category is None and "category" in self.__fields_set__:
+            _dict['category'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if redemption (nullable) is None
+        # and __fields_set__ contains the field
+        if self.redemption is None and "redemption" in self.__fields_set__:
+            _dict['redemption'] = None
+
+        # set to None if additional_info (nullable) is None
+        # and __fields_set__ contains the field
+        if self.additional_info is None and "additional_info" in self.__fields_set__:
+            _dict['additional_info'] = None
+
+        # set to None if start_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.start_date is None and "start_date" in self.__fields_set__:
+            _dict['start_date'] = None
+
+        # set to None if expiration_date (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expiration_date is None and "expiration_date" in self.__fields_set__:
+            _dict['expiration_date'] = None
+
         return _dict
 
     @classmethod
@@ -76,7 +106,7 @@ class CampaignsVouchersCreateRequestBody(BaseModel):
         _obj = CampaignsVouchersCreateRequestBody.parse_obj({
             "category": obj.get("category"),
             "metadata": obj.get("metadata"),
-            "redemption": CampaignsImportVoucherItemRedemption.from_dict(obj.get("redemption")) if obj.get("redemption") is not None else None,
+            "redemption": CampaignsVouchersCreateRequestBodyRedemption.from_dict(obj.get("redemption")) if obj.get("redemption") is not None else None,
             "additional_info": obj.get("additional_info"),
             "start_date": obj.get("start_date"),
             "expiration_date": obj.get("expiration_date")

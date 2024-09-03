@@ -19,21 +19,21 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 from voucherify_client.models.customers_permanent_deletion_create_response_body_data_json import CustomersPermanentDeletionCreateResponseBodyDataJson
 
 class CustomersPermanentDeletionCreateResponseBody(BaseModel):
     """
-    Response body schema for **POST** `/customers/{customerId}/permanent-deletion`.  # noqa: E501
+    Response body schema for **POST** `v1/customers/{customerId}/permanent-deletion`.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique permanent deletion object ID.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the customer was requested to be deleted in ISO 8601 format.")
-    related_object_id: StrictStr = Field(..., description="Unique customer ID that is being deleted.")
-    related_object: StrictStr = Field(..., description="Object being deleted.")
-    status: StrictStr = Field(..., description="Deletion status.")
-    data_json: CustomersPermanentDeletionCreateResponseBodyDataJson = Field(...)
-    object: StrictStr = Field(..., description="The type of object represented by JSON.")
+    id: Optional[StrictStr] = Field(None, description="Unique permanent deletion object ID.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the customer was requested to be deleted in ISO 8601 format.")
+    related_object_id: Optional[StrictStr] = Field(None, description="Unique customer ID that is being deleted.")
+    related_object: Optional[StrictStr] = Field('customer', description="Object being deleted.")
+    status: Optional[StrictStr] = Field('DONE', description="Deletion status.")
+    data_json: Optional[CustomersPermanentDeletionCreateResponseBodyDataJson] = None
+    object: Optional[StrictStr] = Field('pernament_deletion', description="The type of the object represented by JSON.")
     __properties = ["id", "created_at", "related_object_id", "related_object", "status", "data_json", "object"]
 
     class Config:
@@ -63,6 +63,41 @@ class CustomersPermanentDeletionCreateResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of data_json
         if self.data_json:
             _dict['data_json'] = self.data_json.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if related_object_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object_id is None and "related_object_id" in self.__fields_set__:
+            _dict['related_object_id'] = None
+
+        # set to None if related_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object is None and "related_object" in self.__fields_set__:
+            _dict['related_object'] = None
+
+        # set to None if status (nullable) is None
+        # and __fields_set__ contains the field
+        if self.status is None and "status" in self.__fields_set__:
+            _dict['status'] = None
+
+        # set to None if data_json (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_json is None and "data_json" in self.__fields_set__:
+            _dict['data_json'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         return _dict
 
     @classmethod

@@ -1,15 +1,15 @@
 # CategoriesCreateResponseBody
 
-Response body schema for **POST** `/categories`.
+Response body schema for **POST** `v1/categories`.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** | Unique category ID assigned by Voucherify. | 
-**name** | **str** | Category name. | 
-**hierarchy** | **int** | Category hierarchy. | 
-**object** | **str** |  | [default to 'category']
-**created_at** | **datetime** | Timestamp representing the date and time when the category was created in ISO 8601 format. | 
+**id** | **str** | Unique category ID assigned by Voucherify. | [optional] 
+**name** | **str** | Category name. | [optional] 
+**hierarchy** | **int** | Category hierarchy. | [optional] 
+**object** | **str** |  | [optional] [default to 'category']
+**created_at** | **datetime** | Timestamp representing the date and time when the category was created. The value is shown in the ISO 8601 format. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

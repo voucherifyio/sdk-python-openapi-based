@@ -21,18 +21,18 @@ import json
 
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, constr
-from voucherify_client.models.client_events_create_request_body_loyalty import ClientEventsCreateRequestBodyLoyalty
-from voucherify_client.models.client_events_create_request_body_referral import ClientEventsCreateRequestBodyReferral
 from voucherify_client.models.customer import Customer
+from voucherify_client.models.events_create_request_body_loyalty import EventsCreateRequestBodyLoyalty
+from voucherify_client.models.events_create_request_body_referral import EventsCreateRequestBodyReferral
 
 class EventsCreateRequestBody(BaseModel):
     """
-    Request body schema for **POST** `/events`.  # noqa: E501
+    Request body schema for **POST** `v1/events`.  # noqa: E501
     """
-    event: constr(strict=True, max_length=300, min_length=1) = Field(..., description="Event name. This is the same name that you used to define a custom event in the **Dashboard** > **Project Settings** > **Event Schema**.")
+    event: Optional[constr(strict=True, max_length=300, min_length=1)] = Field(None, description="Event name. This is the same name that you used to define a custom event in the **Dashboard** > **Project Settings** > **Event Schema**.")
     customer: Customer = Field(...)
-    referral: Optional[ClientEventsCreateRequestBodyReferral] = None
-    loyalty: Optional[ClientEventsCreateRequestBodyLoyalty] = None
+    referral: Optional[EventsCreateRequestBodyReferral] = None
+    loyalty: Optional[EventsCreateRequestBodyLoyalty] = None
     metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the event. A set of key/value pairs that you can attach to an event object. It can be useful for storing additional information about the event in a structured format. Event metadata schema is defined in the **Dashboard** > **Project Settings** > **Event Schema** > **Edit particular event** > **Metadata property definition**.")
     __properties = ["event", "customer", "referral", "loyalty", "metadata"]
 
@@ -69,6 +69,26 @@ class EventsCreateRequestBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of loyalty
         if self.loyalty:
             _dict['loyalty'] = self.loyalty.to_dict()
+        # set to None if event (nullable) is None
+        # and __fields_set__ contains the field
+        if self.event is None and "event" in self.__fields_set__:
+            _dict['event'] = None
+
+        # set to None if referral (nullable) is None
+        # and __fields_set__ contains the field
+        if self.referral is None and "referral" in self.__fields_set__:
+            _dict['referral'] = None
+
+        # set to None if loyalty (nullable) is None
+        # and __fields_set__ contains the field
+        if self.loyalty is None and "loyalty" in self.__fields_set__:
+            _dict['loyalty'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
         return _dict
 
     @classmethod
@@ -83,8 +103,8 @@ class EventsCreateRequestBody(BaseModel):
         _obj = EventsCreateRequestBody.parse_obj({
             "event": obj.get("event"),
             "customer": Customer.from_dict(obj.get("customer")) if obj.get("customer") is not None else None,
-            "referral": ClientEventsCreateRequestBodyReferral.from_dict(obj.get("referral")) if obj.get("referral") is not None else None,
-            "loyalty": ClientEventsCreateRequestBodyLoyalty.from_dict(obj.get("loyalty")) if obj.get("loyalty") is not None else None,
+            "referral": EventsCreateRequestBodyReferral.from_dict(obj.get("referral")) if obj.get("referral") is not None else None,
+            "loyalty": EventsCreateRequestBodyLoyalty.from_dict(obj.get("loyalty")) if obj.get("loyalty") is not None else None,
             "metadata": obj.get("metadata")
         })
         return _obj

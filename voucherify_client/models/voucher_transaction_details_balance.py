@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictInt, constr, validator
 from voucherify_client.models.voucher_transaction_details_balance_related_object import VoucherTransactionDetailsBalanceRelatedObject
 
@@ -27,17 +27,20 @@ class VoucherTransactionDetailsBalance(BaseModel):
     """
     Contains information on how the balance was affected by the transaction.  # noqa: E501
     """
-    type: constr(strict=True) = Field(..., description="The type of voucher whose balance is being adjusted due to the transaction.")
-    total: StrictInt = Field(..., description="The available points prior to the transaction.")
-    object: constr(strict=True) = Field(..., description="The type of object represented by the JSON.")
-    points: StrictInt = Field(..., description="The amount of points being used up in the transaction.")
-    balance: StrictInt = Field(..., description="The points balance on the loyalty card after the points in the transaction are subtracted from the loyalty card.")
-    related_object: VoucherTransactionDetailsBalanceRelatedObject = Field(...)
+    type: Optional[constr(strict=True)] = Field('loyalty_card', description="The type of voucher whose balance is being adjusted due to the transaction.")
+    total: Optional[StrictInt] = Field(None, description="The number of all points accumulated on the card as affected by add or subtract operations.")
+    object: Optional[constr(strict=True)] = Field('balance', description="The type of the object represented by the JSON.")
+    points: Optional[StrictInt] = Field(None, description="Points added or subtracted in the transaction.")
+    balance: Optional[StrictInt] = Field(None, description="The available points on the card after the transaction as affected by redemption or rollback.")
+    related_object: Optional[VoucherTransactionDetailsBalanceRelatedObject] = None
     __properties = ["type", "total", "object", "points", "balance", "related_object"]
 
     @validator('type')
     def type_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"loyalty_card", value):
             raise ValueError(r"must validate the regular expression /loyalty_card/")
         return value
@@ -45,6 +48,9 @@ class VoucherTransactionDetailsBalance(BaseModel):
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('loyalty_card',):
             raise ValueError("must be one of enum values ('loyalty_card')")
         return value
@@ -52,6 +58,9 @@ class VoucherTransactionDetailsBalance(BaseModel):
     @validator('object')
     def object_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"balance", value):
             raise ValueError(r"must validate the regular expression /balance/")
         return value
@@ -59,6 +68,9 @@ class VoucherTransactionDetailsBalance(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('balance',):
             raise ValueError("must be one of enum values ('balance')")
         return value
@@ -90,6 +102,36 @@ class VoucherTransactionDetailsBalance(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of related_object
         if self.related_object:
             _dict['related_object'] = self.related_object.to_dict()
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if points (nullable) is None
+        # and __fields_set__ contains the field
+        if self.points is None and "points" in self.__fields_set__:
+            _dict['points'] = None
+
+        # set to None if balance (nullable) is None
+        # and __fields_set__ contains the field
+        if self.balance is None and "balance" in self.__fields_set__:
+            _dict['balance'] = None
+
+        # set to None if related_object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.related_object is None and "related_object" in self.__fields_set__:
+            _dict['related_object'] = None
+
         return _dict
 
     @classmethod

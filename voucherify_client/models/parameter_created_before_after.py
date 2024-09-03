@@ -26,8 +26,8 @@ class ParameterCreatedBeforeAfter(BaseModel):
     """
     ParameterCreatedBeforeAfter
     """
-    before: Optional[datetime] = Field(None, description="Timestamp representing the date and time before the voucher was created in ISO 8601 format.")
-    after: Optional[datetime] = Field(None, description="Timestamp representing the date and time after the voucher was created in ISO 8601 format.")
+    before: Optional[datetime] = Field(None, description="Timestamp representing the date and time before the voucher was created. The value is shown in the ISO 8601 format.")
+    after: Optional[datetime] = Field(None, description="Timestamp representing the date and time after the voucher was created. The value is shown in the ISO 8601 format.")
     __properties = ["before", "after"]
 
     class Config:
@@ -54,6 +54,16 @@ class ParameterCreatedBeforeAfter(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if before (nullable) is None
+        # and __fields_set__ contains the field
+        if self.before is None and "before" in self.__fields_set__:
+            _dict['before'] = None
+
+        # set to None if after (nullable) is None
+        # and __fields_set__ contains the field
+        if self.after is None and "after" in self.__fields_set__:
+            _dict['after'] = None
+
         return _dict
 
     @classmethod

@@ -19,15 +19,15 @@ import re  # noqa: F401
 import json
 
 
-
+from typing import Optional
 from pydantic import BaseModel, Field, StrictStr
 
 class VoucherTransactionDetailsOrder(BaseModel):
     """
     Contains information about the original order.  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique order ID.")
-    source_id: StrictStr = Field(..., description="The merchant’s order ID if it is different from the Voucherify order ID. It is really useful in case of integration between multiple systems. It can be an order ID from CRM, database or 3rd party service.")
+    id: Optional[StrictStr] = Field(None, description="Unique order ID.")
+    source_id: Optional[StrictStr] = Field(None, description="The merchant's order ID if it is different from the Voucherify order ID. It is really useful in case of integration between multiple systems. It can be an order ID from CRM, database or 3rd party service.")
     __properties = ["id", "source_id"]
 
     class Config:
@@ -54,6 +54,16 @@ class VoucherTransactionDetailsOrder(BaseModel):
                           exclude={
                           },
                           exclude_none=True)
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if source_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.source_id is None and "source_id" in self.__fields_set__:
+            _dict['source_id'] = None
+
         return _dict
 
     @classmethod

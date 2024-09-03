@@ -67,6 +67,21 @@ class RedemptionRewardResultParameters(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of coin
         if self.coin:
             _dict['coin'] = self.coin.to_dict()
+        # set to None if campaign (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign is None and "campaign" in self.__fields_set__:
+            _dict['campaign'] = None
+
+        # set to None if product (nullable) is None
+        # and __fields_set__ contains the field
+        if self.product is None and "product" in self.__fields_set__:
+            _dict['product'] = None
+
+        # set to None if coin (nullable) is None
+        # and __fields_set__ contains the field
+        if self.coin is None and "coin" in self.__fields_set__:
+            _dict['coin'] = None
+
         return _dict
 
     @classmethod

@@ -21,29 +21,32 @@ import json
 from datetime import datetime
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field, StrictInt, StrictStr, validator
-from voucherify_client.models.reward_attributes import RewardAttributes
+from voucherify_client.models.loyalties_reward_assignments_reward_get_response_body_attributes import LoyaltiesRewardAssignmentsRewardGetResponseBodyAttributes
 from voucherify_client.models.reward_type import RewardType
 
 class LoyaltiesRewardAssignmentsRewardGetResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/loyalties/{campaignId}/reward-assignments/{assignmentId}/reward`  # noqa: E501
+    Response body schema for **GET** `v1/loyalties/{campaignId}/reward-assignments/{assignmentId}/reward`  # noqa: E501
     """
-    id: StrictStr = Field(..., description="Unique reward ID, assigned by Voucherify.")
-    name: StrictStr = Field(..., description="Reward name.")
+    id: Optional[StrictStr] = Field(None, description="Unique reward ID, assigned by Voucherify.")
+    name: Optional[StrictStr] = Field(None, description="Reward name.")
     stock: Optional[StrictInt] = Field(None, description="Configurable for **material rewards**. The number of units of the product that you want to share as reward.")
     redeemed: Optional[StrictInt] = Field(None, description="Defines the number of already invoked (successful) reward redemptions. ")
-    attributes: Optional[RewardAttributes] = None
-    metadata: Dict[str, Any] = Field(..., description="The metadata object stores all custom attributes assigned to the reward. A set of key/value pairs that you can attach to a reward object. It can be useful for storing additional information about the reward in a structured format.")
-    type: StrictStr = Field(..., description="Reward type.")
+    attributes: Optional[LoyaltiesRewardAssignmentsRewardGetResponseBodyAttributes] = None
+    metadata: Optional[Dict[str, Any]] = Field(None, description="The metadata object stores all custom attributes assigned to the reward. A set of key/value pairs that you can attach to a reward object. It can be useful for storing additional information about the reward in a structured format.")
+    type: Optional[StrictStr] = Field(None, description="Reward type.")
     parameters: Optional[RewardType] = None
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the reward was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the reward was updated in ISO 8601 format.")
-    object: StrictStr = Field(..., description="The type of object represented by the JSON. This object stores information about the reward.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the reward was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the reward was updated. The value is shown in the ISO 8601 format.")
+    object: StrictStr = Field(..., description="The type of the object represented by the JSON. This object stores information about the reward.")
     __properties = ["id", "name", "stock", "redeemed", "attributes", "metadata", "type", "parameters", "created_at", "updated_at", "object"]
 
     @validator('type')
     def type_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('CAMPAIGN', 'COIN', 'MATERIAL',):
             raise ValueError("must be one of enum values ('CAMPAIGN', 'COIN', 'MATERIAL')")
         return value
@@ -85,6 +88,16 @@ class LoyaltiesRewardAssignmentsRewardGetResponseBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of parameters
         if self.parameters:
             _dict['parameters'] = self.parameters.to_dict()
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
         # set to None if stock (nullable) is None
         # and __fields_set__ contains the field
         if self.stock is None and "stock" in self.__fields_set__:
@@ -94,6 +107,26 @@ class LoyaltiesRewardAssignmentsRewardGetResponseBody(BaseModel):
         # and __fields_set__ contains the field
         if self.redeemed is None and "redeemed" in self.__fields_set__:
             _dict['redeemed'] = None
+
+        # set to None if attributes (nullable) is None
+        # and __fields_set__ contains the field
+        if self.attributes is None and "attributes" in self.__fields_set__:
+            _dict['attributes'] = None
+
+        # set to None if metadata (nullable) is None
+        # and __fields_set__ contains the field
+        if self.metadata is None and "metadata" in self.__fields_set__:
+            _dict['metadata'] = None
+
+        # set to None if type (nullable) is None
+        # and __fields_set__ contains the field
+        if self.type is None and "type" in self.__fields_set__:
+            _dict['type'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
 
         # set to None if updated_at (nullable) is None
         # and __fields_set__ contains the field
@@ -116,7 +149,7 @@ class LoyaltiesRewardAssignmentsRewardGetResponseBody(BaseModel):
             "name": obj.get("name"),
             "stock": obj.get("stock"),
             "redeemed": obj.get("redeemed"),
-            "attributes": RewardAttributes.from_dict(obj.get("attributes")) if obj.get("attributes") is not None else None,
+            "attributes": LoyaltiesRewardAssignmentsRewardGetResponseBodyAttributes.from_dict(obj.get("attributes")) if obj.get("attributes") is not None else None,
             "metadata": obj.get("metadata"),
             "type": obj.get("type"),
             "parameters": RewardType.from_dict(obj.get("parameters")) if obj.get("parameters") is not None else None,

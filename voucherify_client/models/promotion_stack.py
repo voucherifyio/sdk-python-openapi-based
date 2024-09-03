@@ -22,26 +22,29 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conlist, validator
 from voucherify_client.models.category import Category
-from voucherify_client.models.promotion_stack_base_tiers import PromotionStackBaseTiers
+from voucherify_client.models.promotion_stack_tiers import PromotionStackTiers
 
 class PromotionStack(BaseModel):
     """
     PromotionStack
     """
-    name: StrictStr = Field(..., description="Promotion stack name.")
-    tiers: PromotionStackBaseTiers = Field(...)
-    id: StrictStr = Field(..., description="Unique promotion stack ID.")
-    created_at: datetime = Field(..., description="Timestamp representing the date and time when the promotion stack was created in ISO 8601 format.")
-    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the promotion stack was updated in ISO 8601 format.")
-    campaign_id: StrictStr = Field(..., description="Promotion stack's parent campaign's unique ID.")
-    object: StrictStr = Field(..., description="The type of object represented by JSON. ")
+    name: Optional[StrictStr] = Field(None, description="Promotion stack name.")
+    tiers: Optional[PromotionStackTiers] = None
+    id: Optional[StrictStr] = Field(None, description="Unique promotion stack ID.")
+    created_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the promotion stack was created. The value is shown in the ISO 8601 format.")
+    updated_at: Optional[datetime] = Field(None, description="Timestamp representing the date and time when the promotion stack was updated. The value is shown in the ISO 8601 format.")
+    campaign_id: Optional[StrictStr] = Field(None, description="Promotion stack's parent campaign's unique ID.")
+    object: Optional[StrictStr] = Field('promotion_stack', description="The type of the object represented by JSON. ")
     category_id: Optional[StrictStr] = Field(None, description="Promotion stack category ID.")
-    categories: conlist(Category) = Field(..., description="Details about the category assigned to the promotion stack.")
+    categories: Optional[conlist(Category)] = Field(None, description="Details about the category assigned to the promotion stack.")
     __properties = ["name", "tiers", "id", "created_at", "updated_at", "campaign_id", "object", "category_id", "categories"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('promotion_stack',):
             raise ValueError("must be one of enum values ('promotion_stack')")
         return value
@@ -80,10 +83,50 @@ class PromotionStack(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['categories'] = _items
+        # set to None if name (nullable) is None
+        # and __fields_set__ contains the field
+        if self.name is None and "name" in self.__fields_set__:
+            _dict['name'] = None
+
+        # set to None if tiers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tiers is None and "tiers" in self.__fields_set__:
+            _dict['tiers'] = None
+
+        # set to None if id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.id is None and "id" in self.__fields_set__:
+            _dict['id'] = None
+
+        # set to None if created_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.created_at is None and "created_at" in self.__fields_set__:
+            _dict['created_at'] = None
+
+        # set to None if updated_at (nullable) is None
+        # and __fields_set__ contains the field
+        if self.updated_at is None and "updated_at" in self.__fields_set__:
+            _dict['updated_at'] = None
+
+        # set to None if campaign_id (nullable) is None
+        # and __fields_set__ contains the field
+        if self.campaign_id is None and "campaign_id" in self.__fields_set__:
+            _dict['campaign_id'] = None
+
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
         # set to None if category_id (nullable) is None
         # and __fields_set__ contains the field
         if self.category_id is None and "category_id" in self.__fields_set__:
             _dict['category_id'] = None
+
+        # set to None if categories (nullable) is None
+        # and __fields_set__ contains the field
+        if self.categories is None and "categories" in self.__fields_set__:
+            _dict['categories'] = None
 
         return _dict
 
@@ -98,7 +141,7 @@ class PromotionStack(BaseModel):
 
         _obj = PromotionStack.parse_obj({
             "name": obj.get("name"),
-            "tiers": PromotionStackBaseTiers.from_dict(obj.get("tiers")) if obj.get("tiers") is not None else None,
+            "tiers": PromotionStackTiers.from_dict(obj.get("tiers")) if obj.get("tiers") is not None else None,
             "id": obj.get("id"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),

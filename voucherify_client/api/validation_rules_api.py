@@ -22,12 +22,14 @@ from pydantic import validate_arguments, ValidationError
 from typing_extensions import Annotated
 from datetime import datetime
 
-from pydantic import Field, StrictStr, conint
+from pydantic import Field, StrictBool, StrictStr, conint
 
 from typing import Optional
 
 from voucherify_client.models.parameter_order_list_validation_rule_assignments import ParameterOrderListValidationRuleAssignments
 from voucherify_client.models.parameter_order_list_validation_rules import ParameterOrderListValidationRules
+from voucherify_client.models.validation_rules_assignments_create_request_body import ValidationRulesAssignmentsCreateRequestBody
+from voucherify_client.models.validation_rules_assignments_create_response_body import ValidationRulesAssignmentsCreateResponseBody
 from voucherify_client.models.validation_rules_assignments_list_response_body import ValidationRulesAssignmentsListResponseBody
 from voucherify_client.models.validation_rules_create_request_body import ValidationRulesCreateRequestBody
 from voucherify_client.models.validation_rules_create_response_body import ValidationRulesCreateResponseBody
@@ -55,6 +57,169 @@ class ValidationRulesApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+    @validate_arguments
+    def create_validation_rule_assignment(self, validation_rule_id : Annotated[StrictStr, Field(..., description="Unique validation rule ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the previous assignment with the same data will be deleted and a new one will be added.")] = None, validation_rules_assignments_create_request_body : Annotated[Optional[ValidationRulesAssignmentsCreateRequestBody], Field(description="Specify the resource that you would like to assign the validation rule to.")] = None, **kwargs) -> ValidationRulesAssignmentsCreateResponseBody:  # noqa: E501
+        """Create Validation Rules Assignments  # noqa: E501
+
+        Assign validation rule to either one of the following objects: voucher, campaign, promotion tier, earning rule, reward, distribution.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_validation_rule_assignment(validation_rule_id, force, validation_rules_assignments_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param validation_rule_id: Unique validation rule ID. (required)
+        :type validation_rule_id: str
+        :param force: If this flag is set to true, the previous assignment with the same data will be deleted and a new one will be added.
+        :type force: bool
+        :param validation_rules_assignments_create_request_body: Specify the resource that you would like to assign the validation rule to.
+        :type validation_rules_assignments_create_request_body: ValidationRulesAssignmentsCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _request_timeout: timeout setting for this request.
+               If one number provided, it will be total request
+               timeout. It can also be a pair (tuple) of
+               (connection, read) timeouts.
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: ValidationRulesAssignmentsCreateResponseBody
+        """
+        kwargs['_return_http_data_only'] = True
+        if '_preload_content' in kwargs:
+            message = "Error! Please call the create_validation_rule_assignment_with_http_info method with `_preload_content` instead and obtain raw data from ApiResponse.raw_data"  # noqa: E501
+            raise ValueError(message)
+        return self.create_validation_rule_assignment_with_http_info(validation_rule_id, force, validation_rules_assignments_create_request_body, **kwargs)  # noqa: E501
+
+    @validate_arguments
+    def create_validation_rule_assignment_with_http_info(self, validation_rule_id : Annotated[StrictStr, Field(..., description="Unique validation rule ID.")], force : Annotated[Optional[StrictBool], Field(description="If this flag is set to true, the previous assignment with the same data will be deleted and a new one will be added.")] = None, validation_rules_assignments_create_request_body : Annotated[Optional[ValidationRulesAssignmentsCreateRequestBody], Field(description="Specify the resource that you would like to assign the validation rule to.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+        """Create Validation Rules Assignments  # noqa: E501
+
+        Assign validation rule to either one of the following objects: voucher, campaign, promotion tier, earning rule, reward, distribution.  # noqa: E501
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+
+        >>> thread = api.create_validation_rule_assignment_with_http_info(validation_rule_id, force, validation_rules_assignments_create_request_body, async_req=True)
+        >>> result = thread.get()
+
+        :param validation_rule_id: Unique validation rule ID. (required)
+        :type validation_rule_id: str
+        :param force: If this flag is set to true, the previous assignment with the same data will be deleted and a new one will be added.
+        :type force: bool
+        :param validation_rules_assignments_create_request_body: Specify the resource that you would like to assign the validation rule to.
+        :type validation_rules_assignments_create_request_body: ValidationRulesAssignmentsCreateRequestBody
+        :param async_req: Whether to execute the request asynchronously.
+        :type async_req: bool, optional
+        :param _preload_content: if False, the ApiResponse.data will
+                                 be set to none and raw_data will store the
+                                 HTTP response body without reading/decoding.
+                                 Default is True.
+        :type _preload_content: bool, optional
+        :param _return_http_data_only: response data instead of ApiResponse
+                                       object with status code, headers, etc
+        :type _return_http_data_only: bool, optional
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the authentication
+                              in the spec for a single request.
+        :type _request_auth: dict, optional
+        :type _content_type: string, optional: force content-type for the request
+        :return: Returns the result object.
+                 If the method is called asynchronously,
+                 returns the request thread.
+        :rtype: tuple(ValidationRulesAssignmentsCreateResponseBody, status_code(int), headers(HTTPHeaderDict))
+        """
+
+        _params = locals()
+
+        _all_params = [
+            'validation_rule_id',
+            'force',
+            'validation_rules_assignments_create_request_body'
+        ]
+        _all_params.extend(
+            [
+                'async_req',
+                '_return_http_data_only',
+                '_preload_content',
+                '_request_timeout',
+                '_request_auth',
+                '_content_type',
+                '_headers'
+            ]
+        )
+
+        # validate the arguments
+        for _key, _val in _params['kwargs'].items():
+            if _key not in _all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method create_validation_rule_assignment" % _key
+                )
+            _params[_key] = _val
+        del _params['kwargs']
+
+        _collection_formats = {}
+
+        # process the path parameters
+        _path_params = {}
+        if _params['validation_rule_id']:
+            _path_params['validationRuleId'] = _params['validation_rule_id']
+
+
+        # process the query parameters
+        _query_params = []
+        if _params.get('force') is not None:  # noqa: E501
+            _query_params.append(('force', _params['force']))
+
+        # process the header parameters
+        _header_params = dict(_params.get('_headers', {}))
+        # process the form parameters
+        _form_params = []
+        _files = {}
+        # process the body parameter
+        _body_params = None
+        if _params['validation_rules_assignments_create_request_body'] is not None:
+            _body_params = _params['validation_rules_assignments_create_request_body']
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            ['application/json'])  # noqa: E501
+
+        # set the HTTP header `Content-Type`
+        _content_types_list = _params.get('_content_type',
+            self.api_client.select_header_content_type(
+                ['application/json']))
+        if _content_types_list:
+                _header_params['Content-Type'] = _content_types_list
+
+        # authentication setting
+        _auth_settings = ['X-App-Id', 'X-App-Token']  # noqa: E501
+
+        _response_types_map = {
+            '200': "ValidationRulesAssignmentsCreateResponseBody",
+        }
+
+        return self.api_client.call_api(
+            '/v1/validation-rules/{validationRuleId}/assignments', 'POST',
+            _path_params,
+            _query_params,
+            _header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            response_types_map=_response_types_map,
+            auth_settings=_auth_settings,
+            async_req=_params.get('async_req'),
+            _return_http_data_only=_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=_params.get('_preload_content', True),
+            _request_timeout=_params.get('_request_timeout'),
+            collection_formats=_collection_formats,
+            _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
     def create_validation_rules(self, validation_rules_create_request_body : Annotated[Optional[ValidationRulesCreateRequestBody], Field(description="Specify the validation rules parameters.")] = None, **kwargs) -> ValidationRulesCreateResponseBody:  # noqa: E501
@@ -620,7 +785,7 @@ class ValidationRulesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_validation_rule_assignments(self, validation_rule_id : Annotated[StrictStr, Field(..., description="Unique validation rule ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrderListValidationRuleAssignments], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ValidationRulesAssignmentsListResponseBody:  # noqa: E501
+    def list_validation_rule_assignments(self, validation_rule_id : Annotated[StrictStr, Field(..., description="Unique validation rule ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListValidationRuleAssignments], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ValidationRulesAssignmentsListResponseBody:  # noqa: E501
         """List Validation Rule Assignments  # noqa: E501
 
         Retrieve validation rule assignments for a specific validation rule.  # noqa: E501
@@ -632,11 +797,11 @@ class ValidationRulesApi:
 
         :param validation_rule_id: Unique validation rule ID. (required)
         :type validation_rule_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListValidationRuleAssignments
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -656,7 +821,7 @@ class ValidationRulesApi:
         return self.list_validation_rule_assignments_with_http_info(validation_rule_id, limit, page, order, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_validation_rule_assignments_with_http_info(self, validation_rule_id : Annotated[StrictStr, Field(..., description="Unique validation rule ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrderListValidationRuleAssignments], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_validation_rule_assignments_with_http_info(self, validation_rule_id : Annotated[StrictStr, Field(..., description="Unique validation rule ID.")], limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListValidationRuleAssignments], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Validation Rule Assignments  # noqa: E501
 
         Retrieve validation rule assignments for a specific validation rule.  # noqa: E501
@@ -668,11 +833,11 @@ class ValidationRulesApi:
 
         :param validation_rule_id: Unique validation rule ID. (required)
         :type validation_rule_id: str
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListValidationRuleAssignments
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -784,7 +949,7 @@ class ValidationRulesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_validation_rules(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrderListValidationRules], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must start on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ValidationRulesListResponseBody:  # noqa: E501
+    def list_validation_rules(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListValidationRules], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must start on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ValidationRulesListResponseBody:  # noqa: E501
         """List Validation Rules  # noqa: E501
 
         Retrieve validation rules.  # noqa: E501
@@ -794,11 +959,11 @@ class ValidationRulesApi:
         >>> thread = api.list_validation_rules(limit, page, order, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListValidationRules
         :param start_date: Timestamp representing the date and time which results must start on. Represented in ISO 8601 format.
         :type start_date: datetime
@@ -822,7 +987,7 @@ class ValidationRulesApi:
         return self.list_validation_rules_with_http_info(limit, page, order, start_date, end_date, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_validation_rules_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, order : Annotated[Optional[ParameterOrderListValidationRules], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must start on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_validation_rules_with_http_info(self, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, order : Annotated[Optional[ParameterOrderListValidationRules], Field(description="This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.")] = None, start_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must start on. Represented in ISO 8601 format.")] = None, end_date : Annotated[Optional[datetime], Field(description="Timestamp representing the date and time which results must end on. Represented in ISO 8601 format.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Validation Rules  # noqa: E501
 
         Retrieve validation rules.  # noqa: E501
@@ -832,11 +997,11 @@ class ValidationRulesApi:
         >>> thread = api.list_validation_rules_with_http_info(limit, page, order, start_date, end_date, async_req=True)
         >>> result = thread.get()
 
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: This is a property that controls the sorting direction of the results. Sort the results using one of the filtering options, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: ParameterOrderListValidationRules
         :param start_date: Timestamp representing the date and time which results must start on. Represented in ISO 8601 format.
         :type start_date: datetime
@@ -962,10 +1127,10 @@ class ValidationRulesApi:
             _request_auth=_params.get('_request_auth'))
 
     @validate_arguments
-    def list_validation_rules_assignments(self, related_object_id : Annotated[Optional[StrictStr], Field(description="The resource ID to which the validation rule was assigned; this could be, for example, a resource ID of a voucher, campaign, earning rule, reward assignment, promotion tier, or distribution.")] = None, rule : Annotated[Optional[StrictStr], Field(description="Validation rule ID.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, order : Annotated[Optional[StrictStr], Field(description="Sorts the results using one of the filtering options: `-created_at`, `created_at`, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ValidationRulesAssignmentsListResponseBody:  # noqa: E501
+    def list_validation_rules_assignments(self, related_object_id : Annotated[Optional[StrictStr], Field(description="The resource ID to which the validation rule was assigned; this could be, for example, a resource ID of a voucher, campaign, earning rule, reward assignment, promotion tier, or distribution.")] = None, rule : Annotated[Optional[StrictStr], Field(description="Validation rule ID.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[StrictStr], Field(description="Sorts the results using one of the filtering options: -created_at, created_at, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ValidationRulesAssignmentsListResponseBody:  # noqa: E501
         """List Validation Rules' Assignment(s)  # noqa: E501
 
-        List all validation rules' assignments or filter the results using the related object ID or the validation rule ID query parameters.   ## How to retrieve specific validation rule assignments(s)  ### Related object ID  To find an assignment for a particular resource, you can use the ID of the object to which the validation rule was assigned. This could be, for example, an ID of a: voucher, campaign, distribution, reward assignment, earning rule, promotion tier.     <!-- title: \"Request\" lineNumbers: true --> ```curl curl -X GET \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" \\   -H \"Content-Type: application/json\" \\   https://api.voucherify.io/v1/validation-rules-assignments?related_object_id=promo_kJliy076IuJYtuYWSHE9fSuT ``` <!-- title: \"Response\" lineNumbers: true --> ```json {     \"object\": \"list\",     \"data_ref\": \"data\",     \"data\": [         {             \"id\": \"asgm_tZaqxeO8gP4q91jG\",             \"rule_id\": \"val_WB6ETAiFztw5\",             \"related_object_id\": \"promo_kJliy076IuJYtuYWSHE9fSuT\",             \"related_object_type\": \"promotion_tier\",             \"created_at\": \"2022-08-10T10:30:39.986Z\",             \"object\": \"validation_rules_assignment\"         }     ],     \"total\": 1 } ```  ### Validation rule ID  You can use the validation rule ID to find assignment(s) for a specific validation rule.   <!-- title: \"Request\" lineNumbers: true --> ```curl curl -X GET \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" \\   -H \"Content-Type: application/json\" \\   https://api.voucherify.io/v1/validation-rules-assignments?rule=val_ZEZmA9oit8aU ``` <!-- title: \"Response\" lineNumbers: true --> ```json {     \"object\": \"list\",     \"data_ref\": \"data\",     \"data\": [         {             \"id\": \"asgm_vef0G6d9Al0rABxq\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"camp_rRsfatlwN7unSeUIJDCYedal\",             \"related_object_type\": \"campaign\",             \"created_at\": \"2022-06-29T11:43:52.953Z\",             \"object\": \"validation_rules_assignment\"         },         {             \"id\": \"asgm_sFV4wEFvldwIvgfb\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"distr_9QKI02wqgjWyvZXeQkFEPmkkYe\",             \"related_object_type\": \"distribution\",             \"created_at\": \"2022-06-29T11:41:07.680Z\",             \"object\": \"validation_rules_assignment\"         },         {             \"id\": \"asgm_69Qifyv6UZynFIIQ\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"promo_g83qUzYZpfX0OMAFOVoQuOYG\",             \"related_object_type\": \"promotion_tier\",             \"created_at\": \"2022-06-29T11:29:41.906Z\",             \"object\": \"validation_rules_assignment\"         }     ],     \"total\": 3 } ```   # noqa: E501
+        List all validation rules assignments or filter the results using the related object ID or the validation rule ID query parameters.  # How to retrieve specific validation rule assignments(s) ## Related object ID To find an assignment for a particular resource, you can use the ID of the object to which the validation rule was assigned. This could be, for example, an ID of a: voucher, campaign, distribution, reward assignment, earning rule, promotion tier.    ## Validation rule ID You can use the validation rule ID to find assignment(s) for a specific validation rule.    # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -976,11 +1141,11 @@ class ValidationRulesApi:
         :type related_object_id: str
         :param rule: Validation rule ID.
         :type rule: str
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param order: Sorts the results using one of the filtering options: `-created_at`, `created_at`, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options: -created_at, created_at, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional
@@ -1000,10 +1165,10 @@ class ValidationRulesApi:
         return self.list_validation_rules_assignments_with_http_info(related_object_id, rule, page, limit, order, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_validation_rules_assignments_with_http_info(self, related_object_id : Annotated[Optional[StrictStr], Field(description="The resource ID to which the validation rule was assigned; this could be, for example, a resource ID of a voucher, campaign, earning rule, reward assignment, promotion tier, or distribution.")] = None, rule : Annotated[Optional[StrictStr], Field(description="Validation rule ID.")] = None, page : Annotated[Optional[conint(strict=True, le=100)], Field(description="Which page of results to return.")] = None, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="A limit on the number of objects to be returned. Limit can range between 1 and 100 items.")] = None, order : Annotated[Optional[StrictStr], Field(description="Sorts the results using one of the filtering options: `-created_at`, `created_at`, where the dash `-` preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
+    def list_validation_rules_assignments_with_http_info(self, related_object_id : Annotated[Optional[StrictStr], Field(description="The resource ID to which the validation rule was assigned; this could be, for example, a resource ID of a voucher, campaign, earning rule, reward assignment, promotion tier, or distribution.")] = None, rule : Annotated[Optional[StrictStr], Field(description="Validation rule ID.")] = None, page : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Which page of results to return. The lowest value is 1.")] = None, limit : Annotated[Optional[conint(strict=True, le=100, ge=1)], Field(description="Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.")] = None, order : Annotated[Optional[StrictStr], Field(description="Sorts the results using one of the filtering options: -created_at, created_at, where the dash - preceding a sorting option means sorting in a descending order.")] = None, **kwargs) -> ApiResponse:  # noqa: E501
         """List Validation Rules' Assignment(s)  # noqa: E501
 
-        List all validation rules' assignments or filter the results using the related object ID or the validation rule ID query parameters.   ## How to retrieve specific validation rule assignments(s)  ### Related object ID  To find an assignment for a particular resource, you can use the ID of the object to which the validation rule was assigned. This could be, for example, an ID of a: voucher, campaign, distribution, reward assignment, earning rule, promotion tier.     <!-- title: \"Request\" lineNumbers: true --> ```curl curl -X GET \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" \\   -H \"Content-Type: application/json\" \\   https://api.voucherify.io/v1/validation-rules-assignments?related_object_id=promo_kJliy076IuJYtuYWSHE9fSuT ``` <!-- title: \"Response\" lineNumbers: true --> ```json {     \"object\": \"list\",     \"data_ref\": \"data\",     \"data\": [         {             \"id\": \"asgm_tZaqxeO8gP4q91jG\",             \"rule_id\": \"val_WB6ETAiFztw5\",             \"related_object_id\": \"promo_kJliy076IuJYtuYWSHE9fSuT\",             \"related_object_type\": \"promotion_tier\",             \"created_at\": \"2022-08-10T10:30:39.986Z\",             \"object\": \"validation_rules_assignment\"         }     ],     \"total\": 1 } ```  ### Validation rule ID  You can use the validation rule ID to find assignment(s) for a specific validation rule.   <!-- title: \"Request\" lineNumbers: true --> ```curl curl -X GET \\   -H \"X-App-Id: c70a6f00-cf91-4756-9df5-47628850002b\" \\   -H \"X-App-Token: 3266b9f8-e246-4f79-bdf0-833929b1380c\" \\   -H \"Content-Type: application/json\" \\   https://api.voucherify.io/v1/validation-rules-assignments?rule=val_ZEZmA9oit8aU ``` <!-- title: \"Response\" lineNumbers: true --> ```json {     \"object\": \"list\",     \"data_ref\": \"data\",     \"data\": [         {             \"id\": \"asgm_vef0G6d9Al0rABxq\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"camp_rRsfatlwN7unSeUIJDCYedal\",             \"related_object_type\": \"campaign\",             \"created_at\": \"2022-06-29T11:43:52.953Z\",             \"object\": \"validation_rules_assignment\"         },         {             \"id\": \"asgm_sFV4wEFvldwIvgfb\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"distr_9QKI02wqgjWyvZXeQkFEPmkkYe\",             \"related_object_type\": \"distribution\",             \"created_at\": \"2022-06-29T11:41:07.680Z\",             \"object\": \"validation_rules_assignment\"         },         {             \"id\": \"asgm_69Qifyv6UZynFIIQ\",             \"rule_id\": \"val_ZEZmA9oit8aU\",             \"related_object_id\": \"promo_g83qUzYZpfX0OMAFOVoQuOYG\",             \"related_object_type\": \"promotion_tier\",             \"created_at\": \"2022-06-29T11:29:41.906Z\",             \"object\": \"validation_rules_assignment\"         }     ],     \"total\": 3 } ```   # noqa: E501
+        List all validation rules assignments or filter the results using the related object ID or the validation rule ID query parameters.  # How to retrieve specific validation rule assignments(s) ## Related object ID To find an assignment for a particular resource, you can use the ID of the object to which the validation rule was assigned. This could be, for example, an ID of a: voucher, campaign, distribution, reward assignment, earning rule, promotion tier.    ## Validation rule ID You can use the validation rule ID to find assignment(s) for a specific validation rule.    # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -1014,11 +1179,11 @@ class ValidationRulesApi:
         :type related_object_id: str
         :param rule: Validation rule ID.
         :type rule: str
-        :param page: Which page of results to return.
+        :param page: Which page of results to return. The lowest value is 1.
         :type page: int
-        :param limit: A limit on the number of objects to be returned. Limit can range between 1 and 100 items.
+        :param limit: Limits the number of objects to be returned. The limit can range between 1 and 100 items. If no limit is set, it returns 10 items.
         :type limit: int
-        :param order: Sorts the results using one of the filtering options: `-created_at`, `created_at`, where the dash `-` preceding a sorting option means sorting in a descending order.
+        :param order: Sorts the results using one of the filtering options: -created_at, created_at, where the dash - preceding a sorting option means sorting in a descending order.
         :type order: str
         :param async_req: Whether to execute the request asynchronously.
         :type async_req: bool, optional

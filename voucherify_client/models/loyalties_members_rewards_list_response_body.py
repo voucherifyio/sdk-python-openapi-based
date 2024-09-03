@@ -19,23 +19,26 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictStr, conint, conlist, validator
 from voucherify_client.models.loyalties_members_rewards_list_response_body_data_item import LoyaltiesMembersRewardsListResponseBodyDataItem
 
 class LoyaltiesMembersRewardsListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/loyalties/members/{memberId}/rewards`  # noqa: E501
+    Response body schema for **GET** `v1/loyalties/members/{memberId}/rewards`  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the attribute that contains the array of loyalty reward objects.")
-    data: conlist(LoyaltiesMembersRewardsListResponseBodyDataItem) = Field(..., description="Contains array of loyalty reward objects.")
-    total: conint(strict=True, ge=0) = Field(..., description="Total number of loyalty reward objects.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON.")
+    data_ref: Optional[StrictStr] = Field('data', description="Identifies the name of the attribute that contains the array of loyalty reward objects.")
+    data: Optional[conlist(LoyaltiesMembersRewardsListResponseBodyDataItem)] = Field(None, description="Contains array of loyalty reward objects.")
+    total: Optional[conint(strict=True, ge=0)] = Field(None, description="Total number of loyalty reward objects.")
     __properties = ["object", "data_ref", "data", "total"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('list',):
             raise ValueError("must be one of enum values ('list')")
         return value
@@ -43,6 +46,9 @@ class LoyaltiesMembersRewardsListResponseBody(BaseModel):
     @validator('data_ref')
     def data_ref_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('data',):
             raise ValueError("must be one of enum values ('data')")
         return value
@@ -78,6 +84,26 @@ class LoyaltiesMembersRewardsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['data'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if data (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data is None and "data" in self.__fields_set__:
+            _dict['data'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
         return _dict
 
     @classmethod

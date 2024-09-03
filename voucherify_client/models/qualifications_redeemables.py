@@ -27,17 +27,20 @@ class QualificationsRedeemables(BaseModel):
     """
     List of redeemables for examine qualification.  # noqa: E501
     """
-    object: StrictStr = Field(..., description="The type of object represented by JSON. Default is `list`.")
-    data_ref: StrictStr = Field(..., description="Identifies the name of the attribute that contains the array of qualified redeemables.")
-    data: conlist(QualificationsRedeemable) = Field(..., description="Array of qualified redeemables.")
-    total: StrictInt = Field(..., description="The number of redeemables returned in the API request.")
-    has_more: StrictBool = Field(..., description="As results are always limited, the `has_more` flag indicates whether there are more records for given parameters. This let's you know if you are able to run another request (with different options) to get more records returned in the results.")
-    more_starting_after: Optional[datetime] = Field(None, description="Timestamp representing the date and time to use in starting_after cursor to get more redeemables.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. Default is `list`.")
+    data_ref: Optional[StrictStr] = Field('data', description="Identifies the name of the attribute that contains the array of qualified redeemables.")
+    data: Optional[conlist(QualificationsRedeemable)] = Field(None, description="Array of qualified redeemables.")
+    total: Optional[StrictInt] = Field(None, description="The number of redeemables returned in the API request.")
+    has_more: Optional[StrictBool] = Field(None, description="As results are always limited, the `has_more` flag indicates if there are more records for given parameters. This lets you know if you can run another request (with different options) to get more records returned in the results.")
+    more_starting_after: Optional[datetime] = Field(None, description="Timestamp representing the date and time to use in `starting_after` cursor to get more redeemables.")
     __properties = ["object", "data_ref", "data", "total", "has_more", "more_starting_after"]
 
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('list',):
             raise ValueError("must be one of enum values ('list')")
         return value
@@ -45,6 +48,9 @@ class QualificationsRedeemables(BaseModel):
     @validator('data_ref')
     def data_ref_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('data',):
             raise ValueError("must be one of enum values ('data')")
         return value
@@ -80,6 +86,36 @@ class QualificationsRedeemables(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['data'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if data (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data is None and "data" in self.__fields_set__:
+            _dict['data'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
+        # set to None if has_more (nullable) is None
+        # and __fields_set__ contains the field
+        if self.has_more is None and "has_more" in self.__fields_set__:
+            _dict['has_more'] = None
+
+        # set to None if more_starting_after (nullable) is None
+        # and __fields_set__ contains the field
+        if self.more_starting_after is None and "more_starting_after" in self.__fields_set__:
+            _dict['more_starting_after'] = None
+
         return _dict
 
     @classmethod

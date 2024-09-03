@@ -21,15 +21,15 @@ import json
 
 from typing import Optional
 from pydantic import BaseModel
-from voucherify_client.models.loyalties_members_transfers_create_response_body_assets_barcode import LoyaltiesMembersTransfersCreateResponseBodyAssetsBarcode
-from voucherify_client.models.loyalties_members_transfers_create_response_body_assets_qr import LoyaltiesMembersTransfersCreateResponseBodyAssetsQr
+from voucherify_client.models.voucher_assets_barcode import VoucherAssetsBarcode
+from voucherify_client.models.voucher_assets_qr import VoucherAssetsQr
 
 class VoucherAssets(BaseModel):
     """
     Stores links to images of QR and barcode that correspond to an encrypted voucher code.  # noqa: E501
     """
-    qr: Optional[LoyaltiesMembersTransfersCreateResponseBodyAssetsQr] = None
-    barcode: Optional[LoyaltiesMembersTransfersCreateResponseBodyAssetsBarcode] = None
+    qr: Optional[VoucherAssetsQr] = None
+    barcode: Optional[VoucherAssetsBarcode] = None
     __properties = ["qr", "barcode"]
 
     class Config:
@@ -62,6 +62,16 @@ class VoucherAssets(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of barcode
         if self.barcode:
             _dict['barcode'] = self.barcode.to_dict()
+        # set to None if qr (nullable) is None
+        # and __fields_set__ contains the field
+        if self.qr is None and "qr" in self.__fields_set__:
+            _dict['qr'] = None
+
+        # set to None if barcode (nullable) is None
+        # and __fields_set__ contains the field
+        if self.barcode is None and "barcode" in self.__fields_set__:
+            _dict['barcode'] = None
+
         return _dict
 
     @classmethod
@@ -74,8 +84,8 @@ class VoucherAssets(BaseModel):
             return VoucherAssets.parse_obj(obj)
 
         _obj = VoucherAssets.parse_obj({
-            "qr": LoyaltiesMembersTransfersCreateResponseBodyAssetsQr.from_dict(obj.get("qr")) if obj.get("qr") is not None else None,
-            "barcode": LoyaltiesMembersTransfersCreateResponseBodyAssetsBarcode.from_dict(obj.get("barcode")) if obj.get("barcode") is not None else None
+            "qr": VoucherAssetsQr.from_dict(obj.get("qr")) if obj.get("qr") is not None else None,
+            "barcode": VoucherAssetsBarcode.from_dict(obj.get("barcode")) if obj.get("barcode") is not None else None
         })
         return _obj
 

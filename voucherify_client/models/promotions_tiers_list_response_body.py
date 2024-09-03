@@ -25,13 +25,13 @@ from voucherify_client.models.promotion_tier import PromotionTier
 
 class PromotionsTiersListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/promotions/{campaignId}/tiers`.  # noqa: E501
+    Response body schema for **GET** `v1/promotions/{campaignId}/tiers` and **GET** `v1/promotions/tiers`.  # noqa: E501
     """
-    object: Optional[StrictStr] = Field('list', description="The type of object represented by JSON. This object stores information about promotion tiers in a dictionary.")
+    object: Optional[StrictStr] = Field('list', description="The type of the object represented by JSON. This object stores information about promotion tiers in a dictionary.")
     data_ref: Optional[StrictStr] = Field('tiers', description="Identifies the name of the attribute that contains the array of promotion tier objects.")
     tiers: Optional[conlist(PromotionTier)] = Field(None, description="Contains array of promotion tier objects.")
     total: Optional[StrictInt] = Field(None, description="Total number of promotion tiers.")
-    has_more: Optional[StrictBool] = Field(None, description="As query results are always limited (by the limit parameter), the `has_more` flag indicates whether there are more records for given filter parameters. This let's you know if you are able to run another request (with a different page or a different start date filter) to get more records returned in the results.")
+    has_more: Optional[StrictBool] = Field(None, description="As query results are always limited (by the limit parameter), the `has_more` flag indicates if there are more records for given filter parameters. This lets you know if you can run another request (with a different page or a different start date filter) to get more records returned in the results.")
     __properties = ["object", "data_ref", "tiers", "total", "has_more"]
 
     class Config:
@@ -65,6 +65,31 @@ class PromotionsTiersListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['tiers'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if tiers (nullable) is None
+        # and __fields_set__ contains the field
+        if self.tiers is None and "tiers" in self.__fields_set__:
+            _dict['tiers'] = None
+
+        # set to None if total (nullable) is None
+        # and __fields_set__ contains the field
+        if self.total is None and "total" in self.__fields_set__:
+            _dict['total'] = None
+
+        # set to None if has_more (nullable) is None
+        # and __fields_set__ contains the field
+        if self.has_more is None and "has_more" in self.__fields_set__:
+            _dict['has_more'] = None
+
         return _dict
 
     @classmethod

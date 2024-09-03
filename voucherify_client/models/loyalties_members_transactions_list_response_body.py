@@ -19,23 +19,26 @@ import re  # noqa: F401
 import json
 
 
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, StrictBool, conlist, constr, validator
 from voucherify_client.models.loyalty_card_transaction import LoyaltyCardTransaction
 
 class LoyaltiesMembersTransactionsListResponseBody(BaseModel):
     """
-    Response body schema for **GET** `/loyalties/{campaignId}/members/{memberId}/transactions` and `/loyalties/members/{memberId}/transactions`.  # noqa: E501
+    Response body schema for **GET** `v1/loyalties/{campaignId}/members/{memberId}/transactions` and `/loyalties/members/{memberId}/transactions`.  # noqa: E501
     """
-    object: constr(strict=True) = Field(..., description="The type of object represented by JSON.")
-    data_ref: constr(strict=True) = Field(..., description="Identifies the name of the attribute that contains the array of transaction objects.")
-    data: conlist(LoyaltyCardTransaction) = Field(..., description="A dictionary that contains an array of transactions. Each entry in the array is a separate transaction object.")
-    has_more: StrictBool = Field(..., description="As query results are always limited (by the limit parameter), the has_more flag indicates whether there are more records for given filter parameters. This let's you know if you are able to run another request (with a different page or a different start date filter) to get more records returned in the results.")
+    object: Optional[constr(strict=True)] = Field('list', description="The type of the object represented by JSON.")
+    data_ref: Optional[constr(strict=True)] = Field('data', description="Identifies the name of the attribute that contains the array of transaction objects.")
+    data: Optional[conlist(LoyaltyCardTransaction)] = Field(None, description="A dictionary that contains an array of transactions. Each entry in the array is a separate transaction object.")
+    has_more: Optional[StrictBool] = Field(None, description="As query results are always limited (by the limit parameter), the has_more flag indicates if there are more records for given filter parameters. This lets you know if you can run another request (with a different page or a different start date filter) to get more records returned in the results.")
     __properties = ["object", "data_ref", "data", "has_more"]
 
     @validator('object')
     def object_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"list", value):
             raise ValueError(r"must validate the regular expression /list/")
         return value
@@ -43,6 +46,9 @@ class LoyaltiesMembersTransactionsListResponseBody(BaseModel):
     @validator('object')
     def object_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('list',):
             raise ValueError("must be one of enum values ('list')")
         return value
@@ -50,6 +56,9 @@ class LoyaltiesMembersTransactionsListResponseBody(BaseModel):
     @validator('data_ref')
     def data_ref_validate_regular_expression(cls, value):
         """Validates the regular expression"""
+        if value is None:
+            return value
+
         if not re.match(r"data", value):
             raise ValueError(r"must validate the regular expression /data/")
         return value
@@ -57,6 +66,9 @@ class LoyaltiesMembersTransactionsListResponseBody(BaseModel):
     @validator('data_ref')
     def data_ref_validate_enum(cls, value):
         """Validates the enum"""
+        if value is None:
+            return value
+
         if value not in ('data',):
             raise ValueError("must be one of enum values ('data')")
         return value
@@ -92,6 +104,26 @@ class LoyaltiesMembersTransactionsListResponseBody(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['data'] = _items
+        # set to None if object (nullable) is None
+        # and __fields_set__ contains the field
+        if self.object is None and "object" in self.__fields_set__:
+            _dict['object'] = None
+
+        # set to None if data_ref (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data_ref is None and "data_ref" in self.__fields_set__:
+            _dict['data_ref'] = None
+
+        # set to None if data (nullable) is None
+        # and __fields_set__ contains the field
+        if self.data is None and "data" in self.__fields_set__:
+            _dict['data'] = None
+
+        # set to None if has_more (nullable) is None
+        # and __fields_set__ contains the field
+        if self.has_more is None and "has_more" in self.__fields_set__:
+            _dict['has_more'] = None
+
         return _dict
 
     @classmethod

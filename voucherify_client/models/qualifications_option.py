@@ -82,10 +82,30 @@ class QualificationsOption(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of filters
         if self.filters:
             _dict['filters'] = self.filters.to_dict()
+        # set to None if limit (nullable) is None
+        # and __fields_set__ contains the field
+        if self.limit is None and "limit" in self.__fields_set__:
+            _dict['limit'] = None
+
         # set to None if starting_after (nullable) is None
         # and __fields_set__ contains the field
         if self.starting_after is None and "starting_after" in self.__fields_set__:
             _dict['starting_after'] = None
+
+        # set to None if filters (nullable) is None
+        # and __fields_set__ contains the field
+        if self.filters is None and "filters" in self.__fields_set__:
+            _dict['filters'] = None
+
+        # set to None if expand (nullable) is None
+        # and __fields_set__ contains the field
+        if self.expand is None and "expand" in self.__fields_set__:
+            _dict['expand'] = None
+
+        # set to None if sorting_rule (nullable) is None
+        # and __fields_set__ contains the field
+        if self.sorting_rule is None and "sorting_rule" in self.__fields_set__:
+            _dict['sorting_rule'] = None
 
         return _dict
 
